@@ -30,8 +30,10 @@ import Section from './Section.astro';
 
       <!-- Phone mockup -->
       <div class="relative w-72 sm:w-80">
+        <!-- Ambient glow behind phone -->
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-[500px] rounded-full bg-primary/10 blur-[80px] dark:bg-primary/[0.07] pointer-events-none" aria-hidden="true"></div>
         <!-- Phone frame -->
-        <div class="rounded-[2.5rem] border-[3px] border-foreground/15 dark:border-white/15 bg-foreground/5 dark:bg-white/5 p-3 shadow-xl">
+        <div class="rounded-[2.5rem] border-[3px] border-foreground/10 dark:border-white/10 bg-white/60 dark:bg-slate-800/60 backdrop-blur-xl p-3 shadow-xl shadow-primary/5">
           <!-- Notch -->
           <div class="absolute top-3 left-1/2 -translate-x-1/2 w-24 h-6 bg-foreground/10 dark:bg-white/10 rounded-full z-10"></div>
 

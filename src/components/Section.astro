@@ -26,8 +26,14 @@ const paddingStyles = {
 };
 ---
 
-<section id={id} class:list={[paddingStyles[padding], bgStyles[background], className]}>
+<section id={id} class:list={[paddingStyles[padding], bgStyles[background], background === 'muted' ? 'relative' : '', className]}>
+  {background === 'muted' && (
+    <div class="pointer-events-none absolute inset-x-0 top-0 h-16 bg-gradient-to-b from-background to-transparent dark:from-dark-bg" aria-hidden="true"></div>
+  )}
   <div class="container-wide">
     <slot />
   </div>
+  {background === 'muted' && (
+    <div class="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-background to-transparent dark:from-dark-bg" aria-hidden="true"></div>
+  )}
 </section>

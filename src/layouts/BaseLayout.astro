@@ -105,6 +105,13 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     <slot name="head" />
   </head>
   <body class="min-h-screen bg-background text-foreground flex flex-col">
+    <!-- Dot grid background texture -->
+    <div class="fixed inset-0 bg-dot-pattern pointer-events-none -z-10" aria-hidden="true"></div>
+
+    <!-- Mouse-follow spotlight -->
+    <div id="spotlight" class="fixed inset-0 pointer-events-none -z-10 opacity-0 transition-opacity duration-300" aria-hidden="true"
+      style="background: radial-gradient(circle 200px at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(99,102,241,0.06), transparent);"></div>
+
     <slot name="header" />
     <main class="flex-1">
       <slot />
@@ -113,6 +120,21 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
     <!-- Scroll reveal -->
     <script src="../scripts/scroll-reveal.ts"></script>
+
+    <!-- Mouse-follow spotlight -->
+    <script>
+      function initSpotlight(): void {
+        const el = document.getElementById('spotlight');
+        if (!el || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+        el.style.opacity = '1';
+        document.addEventListener('mousemove', (e: MouseEvent) => {
+          el.style.setProperty('--mouse-x', e.clientX + 'px');
+          el.style.setProperty('--mouse-y', e.clientY + 'px');
+        }, { passive: true });
+      }
+      initSpotlight();
+      document.addEventListener('astro:after-swap', initSpotlight);
+    </script>
   </body>
 </html>
 

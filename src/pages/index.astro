@@ -13,6 +13,7 @@ import HowItWorks from '@components/HowItWorks.astro';
 import PricingTable from '@components/PricingTable.astro';
 import FAQ from '@components/FAQ.astro';
 import Button from '@components/Button.astro';
+import SocialProof from '@components/SocialProof.astro';
 ---
 
 <BaseLayout
@@ -23,6 +24,9 @@ import Button from '@components/Button.astro';
 
   <!-- Hero -->
   <Hero />
+
+  <!-- Social Proof -->
+  <SocialProof />
 
   <!-- Viewport Demo (interactive simulated viewer) -->
   <ViewportDemo />
@@ -48,6 +52,7 @@ import Button from '@components/Button.astro';
       <div class="reveal reveal-delay-1">
         <FeatureCard
           icon="viewport"
+          accent="indigo"
           title="Preview at Any Resolution"
           description="Check a 27-inch desktop layout on your iPhone. Switch to the iPad view on your MacBook. Viewpo renders the actual site at whatever resolution you choose — on whatever device you're holding."
         />
@@ -55,6 +60,7 @@ import Button from '@components/Button.astro';
       <div class="reveal reveal-delay-2">
         <FeatureCard
           icon="notification"
+          accent="orange"
           title="Preview Your Website Updates Instantly"
           description="No more hunting for preview links. Viewpo automatically pulls your latest website updates and displays them the moment they deploy — so you can review, refine, and share across all your providers."
         />
@@ -62,6 +68,7 @@ import Button from '@components/Button.astro';
       <div class="reveal reveal-delay-3">
         <FeatureCard
           icon="team"
+          accent="emerald"
           title="Get Feedback from Your Team"
           description="Share a preview link or QR code with designers, PMs, clients, or anyone on your team. They can view the latest version and give feedback on the look and feel — no dashboard access needed."
         />
@@ -69,6 +76,7 @@ import Button from '@components/Button.astro';
       <div class="reveal reveal-delay-4">
         <FeatureCard
           icon="oauth"
+          accent="sky"
           title="Link Your Accounts in Seconds"
           description="Connect your Cloudflare Pages and GitHub accounts with a single tap — no API keys, no config files. Viewpo uses secure sign-in under the hood so setup is effortless. More providers coming soon."
         />
@@ -89,8 +97,14 @@ import Button from '@components/Button.astro';
   <FAQ />
 
   <!-- Final CTA -->
-  <Section id="cta" padding="lg">
-    <div class="max-w-2xl mx-auto text-center reveal">
+  <Section id="cta" padding="lg" class="relative overflow-hidden">
+    <!-- Aurora background -->
+    <div class="pointer-events-none absolute inset-0" aria-hidden="true">
+      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-primary/15 blur-[150px] dark:bg-primary/10"></div>
+      <div class="absolute top-0 right-0 w-[300px] h-[300px] rounded-full bg-secondary/10 blur-[100px] dark:bg-secondary/[0.06]"></div>
+      <div class="absolute bottom-0 left-0 w-[250px] h-[250px] rounded-full bg-indigo-300/10 blur-[80px] dark:bg-indigo-400/[0.06]"></div>
+    </div>
+    <div class="max-w-2xl mx-auto text-center reveal relative z-10">
       <h2 class="font-heading font-bold text-3xl md:text-4xl mb-4">
         Ready to preview with confidence?
       </h2>
