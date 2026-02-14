@@ -76,16 +76,16 @@ export const PRICING_TIERS: PricingTier[] = [
 
 export const FAQ_ITEMS = [
   {
+    question: 'What is Viewpo?',
+    answer: 'Viewpo is a native app that brings together website previews from Cloudflare Pages, GitHub Pages, Vercel, and Netlify into one dashboard. Whether you code by hand or use AI tools to build, its key feature is the viewport viewer — which lets you see how any preview looks at any screen size, from any device.',
+  },
+  {
     question: 'How does the viewport viewer work?',
     answer: 'The viewport viewer uses a native WebView (not an iframe) to load the actual website at your chosen resolution. This means it works with any site — even those that block iframe embedding. You can view a 27-inch desktop layout right on your iPhone, pan around to see different parts, and switch between device presets instantly.',
   },
   {
     question: 'Can I really see a desktop layout on my phone?',
     answer: 'Yes! The viewport viewer renders the actual website at your chosen resolution — whether that\'s a 27-inch desktop (2560×1440) or a small phone (393×852). You can pan around to see different parts of the page, just like looking through a viewfinder. It\'s a native WebView, so it\'s the real site — not a screenshot.',
-  },
-  {
-    question: 'What is Viewpo?',
-    answer: 'Viewpo is a native app that brings together website previews from Cloudflare Pages, GitHub Pages, Vercel, and Netlify into one dashboard. Whether you code by hand or use AI tools to build, its key feature is the viewport viewer — which lets you see how any preview looks at any screen size, from any device.',
   },
   {
     question: 'Do I need to be a developer to use Viewpo?',
