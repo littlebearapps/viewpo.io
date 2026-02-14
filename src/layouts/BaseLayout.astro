@@ -15,7 +15,7 @@ const {
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 const isHomepage = Astro.url.pathname === '/' || Astro.url.pathname === '/index.html';
-const currentDate = '2026-02-14';
+const currentDate = new Date().toISOString().split('T')[0];
 ---
 
 <!doctype html>
@@ -74,8 +74,17 @@ const currentDate = '2026-02-14';
           "@type": "SoftwareApplication",
           "name": "Viewpo",
           "applicationCategory": "DeveloperApplication",
-          "operatingSystem": "iOS, iPadOS, macOS",
+          "applicationSubCategory": "Utility",
+          "operatingSystem": ["iOS", "iPadOS", "macOS"],
           "description": "Aggregates preview deployments from Cloudflare Pages, Vercel, Netlify, and GitHub Pages into one dashboard with a viewport viewer.",
+          "featureList": [
+            "Viewport viewer at any screen resolution",
+            "Preview aggregation from multiple hosting providers",
+            "Shareable preview links and QR codes",
+            "Team workspaces with feedback",
+            "Real-time deploy notifications",
+            "OAuth account linking"
+          ],
           "datePublished": "2026-02-01",
           "dateModified": currentDate,
           "offers": {

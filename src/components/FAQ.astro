@@ -32,6 +32,7 @@ import { FAQ_ITEMS } from '@utils/constants';
 <script type="application/ld+json" set:html={JSON.stringify({
   "@context": "https://schema.org",
   "@type": "FAQPage",
+  "dateModified": new Date().toISOString().split('T')[0],
   "mainEntity": FAQ_ITEMS.map((item) => ({
     "@type": "Question",
     "name": item.question,
