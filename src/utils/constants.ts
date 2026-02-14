@@ -31,7 +31,7 @@ export const PRICING_TIERS: PricingTier[] = [
     name: 'Free',
     price: '$0',
     period: 'forever',
-    description: 'For solo developers with a few projects.',
+    description: 'For individuals with a few projects.',
     features: [
       'Up to 3 projects',
       '1 provider connection',
@@ -46,7 +46,7 @@ export const PRICING_TIERS: PricingTier[] = [
     name: 'Starter',
     price: '$9',
     period: '/month',
-    description: 'For developers juggling multiple projects.',
+    description: 'For creators juggling multiple projects.',
     features: [
       'Unlimited projects',
       'All provider connections',
@@ -61,7 +61,7 @@ export const PRICING_TIERS: PricingTier[] = [
     name: 'Pro',
     price: '$29',
     period: '/month',
-    description: 'For teams and agencies reviewing deploys together.',
+    description: 'For teams and agencies reviewing together.',
     features: [
       'Everything in Starter',
       'Team workspaces (up to 10)',
@@ -85,11 +85,15 @@ export const FAQ_ITEMS = [
   },
   {
     question: 'What is Viewpo?',
-    answer: 'Viewpo is a native app that aggregates preview deployments from Cloudflare Pages, GitHub Pages, Vercel, and Netlify into one dashboard. Its key feature is the viewport viewer — which lets you see how any deployment looks at any screen resolution, from any device.',
+    answer: 'Viewpo is a native app that brings together website previews from Cloudflare Pages, GitHub Pages, Vercel, and Netlify into one dashboard. Whether you code by hand or use AI tools to build, its key feature is the viewport viewer — which lets you see how any preview looks at any screen size, from any device.',
+  },
+  {
+    question: 'Do I need to be a developer to use Viewpo?',
+    answer: 'No. If you deploy websites through Cloudflare Pages, GitHub Pages, Vercel, or Netlify, Viewpo works for you — whether you write code yourself or use AI tools like Cursor, v0, or Bolt to build. You just need an account with one of the supported providers.',
   },
   {
     question: 'How do I connect my accounts?',
-    answer: 'Just link your Cloudflare Pages or GitHub account with a single tap — Viewpo uses OAuth under the hood, so there are no API keys, tokens, or config files to deal with. Once connected, it discovers your projects and branches automatically.',
+    answer: 'Just link your Cloudflare Pages or GitHub account with a single tap — Viewpo uses secure sign-in under the hood, so there are no API keys, tokens, or config files to deal with. Once connected, it discovers your projects automatically.',
   },
   {
     question: 'Which deployment providers are supported?',
