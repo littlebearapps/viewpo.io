@@ -3,7 +3,7 @@ export const SITE_URL = 'https://viewpo.io';
 export const SITE_DESCRIPTION = 'See your preview deploys on any device, at any viewport. One dashboard for Cloudflare Pages, Vercel, Netlify, and GitHub Pages.';
 
 export const API_BASE_URL = 'https://platform.littlebearapps.com';
-export const TURNSTILE_SITE_KEY = 'VIEWPO_TURNSTILE_SITE_KEY'; // TODO: Replace with actual key from dash.cloudflare.com/turnstile
+export const TURNSTILE_SITE_KEY = '0x4AAAAAACcgsYVs4BfNtUGF';
 
 export const PROVIDERS = [
   { name: 'Cloudflare Pages', icon: 'cloudflare' },
