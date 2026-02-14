@@ -134,11 +134,15 @@ const currentDate = '2026-02-14';
       plausible.init();
     </script>
 
-    <!-- Theme persistence (prevent flash) -->
+    <!-- Theme persistence (prevent flash + survive View Transitions) -->
     <script is:inline>
       (function() {
-        const isDark = localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches);
-        if (isDark) document.documentElement.classList.add('dark');
+        function applyTheme() {
+          const isDark = localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches);
+          document.documentElement.classList.toggle('dark', isDark);
+        }
+        applyTheme();
+        document.addEventListener('astro:after-swap', applyTheme);
       })();
     </script>
 
