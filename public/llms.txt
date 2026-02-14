@@ -1,0 +1,47 @@
+# Viewpo
+
+> Viewpo is a preview deployment aggregator with a built-in viewport viewer for iOS, iPadOS, and macOS. It brings together preview deploys from Cloudflare Pages, Vercel, Netlify, and GitHub Pages into one dashboard, letting you see how any website looks at any screen size — from a phone to a 27-inch desktop — on whatever device you have.
+
+## Product
+
+- [Homepage](https://viewpo.io/): Overview of Viewpo's features, pricing, and how it works
+- [Viewpo for Teams](https://viewpo.io/teams/): Shareable preview links, QR codes, team workspaces, and feedback for agencies and dev teams
+- [Viewpo for Creators](https://viewpo.io/creators/): Preview AI-built websites on every screen size — works with Cursor, v0, Bolt, Lovable, and Replit projects
+
+## How It Works
+
+1. Link your Cloudflare Pages or GitHub account with a single tap
+2. Push your code or publish your site — Viewpo shows build status in real time
+3. Open any preview in the viewport viewer at any resolution
+
+## Pricing
+
+- **Free**: 3 projects, 1 provider, full viewport viewer access
+- **Starter** ($9/month): Unlimited projects, all providers, shareable links and QR codes
+- **Pro** ($29/month): Team workspaces (up to 10 members), priority support
+
+## Supported Providers
+
+- Cloudflare Pages
+- GitHub Pages
+- Vercel (coming soon)
+- Netlify (coming soon)
+
+## Key Features
+
+- Viewport viewer renders real sites at exact device resolutions
+- Preview aggregation across multiple hosting providers
+- Shareable preview links and QR codes (no account needed to view)
+- Team workspaces with feedback on look and feel
+- Real-time deploy notifications
+- OAuth account linking (no API keys or config files)
+
+## Platform
+
+- Available on iOS, iPadOS, and macOS
+- Built by [Little Bear Apps](https://littlebearapps.com)
+
+## Legal
+
+- [Privacy Policy](https://viewpo.io/privacy/): Privacy-first Plausible analytics, no cookies, OAuth authentication, GDPR compliant
+- [Terms of Service](https://viewpo.io/terms/): Beta programme terms, acceptable use, account policies
