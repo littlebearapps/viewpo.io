@@ -1,0 +1,245 @@
+---
+import { TURNSTILE_SITE_KEY, API_BASE_URL } from '@utils/constants';
+---
+
+<dialog id="contact-modal" class="modal-dialog" aria-labelledby="contact-modal-title">
+  <div class="modal-content">
+    <!-- Close button -->
+    <button type="button" class="modal-close" aria-label="Close" data-close-modal>
+      <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+      </svg>
+    </button>
+
+    <!-- Header -->
+    <div class="text-center mb-6">
+      <h2 id="contact-modal-title" class="font-heading font-bold text-2xl md:text-3xl mb-2">
+        Get in Touch
+      </h2>
+      <p class="text-foreground/60 text-sm">
+        Questions, feedback, or partnership enquiries? Drop us a message.
+      </p>
+    </div>
+
+    <!-- Form -->
+    <form id="contact-form" class="space-y-4" novalidate>
+      <div>
+        <label for="contact-name" class="block text-sm font-medium text-foreground/70 mb-1.5">
+          Name <span class="text-red-500">*</span>
+        </label>
+        <input
+          type="text"
+          id="contact-name"
+          name="name"
+          required
+          maxlength="100"
+          placeholder="Your name"
+          autocomplete="name"
+          class="modal-input"
+        />
+      </div>
+
+      <div>
+        <label for="contact-email" class="block text-sm font-medium text-foreground/70 mb-1.5">
+          Email address <span class="text-red-500">*</span>
+        </label>
+        <input
+          type="email"
+          id="contact-email"
+          name="email"
+          required
+          placeholder="you@example.com"
+          autocomplete="email"
+          class="modal-input"
+        />
+      </div>
+
+      <div>
+        <label for="contact-message" class="block text-sm font-medium text-foreground/70 mb-1.5">
+          Message <span class="text-red-500">*</span>
+        </label>
+        <textarea
+          id="contact-message"
+          name="message"
+          required
+          maxlength="5000"
+          rows="4"
+          placeholder="How can we help?"
+          class="modal-input resize-y min-h-[100px]"
+        ></textarea>
+      </div>
+
+      <!-- Turnstile widget container -->
+      <div id="contact-turnstile" class="flex justify-center"></div>
+
+      <button
+        type="submit"
+        id="contact-submit"
+        class="w-full inline-flex items-center justify-center gap-2 bg-primary hover:bg-primary-hover text-white font-heading font-semibold px-6 py-3 rounded-xl transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary disabled:opacity-50 disabled:cursor-not-allowed"
+      >
+        <span id="contact-submit-text">Send Message</span>
+        <svg id="contact-spinner" class="hidden w-5 h-5 animate-spin" viewBox="0 0 24 24" fill="none">
+          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+        </svg>
+      </button>
+
+      <!-- Status message -->
+      <div id="contact-status" class="hidden text-center text-sm py-2 px-3 rounded-lg" role="alert"></div>
+    </form>
+
+    <!-- Success state (hidden initially) -->
+    <div id="contact-success" class="hidden text-center py-4">
+      <div class="inline-flex items-center justify-center w-14 h-14 bg-success/10 rounded-full mb-4">
+        <svg class="w-7 h-7 text-success" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+        </svg>
+      </div>
+      <h3 class="font-heading font-semibold text-xl mb-2">Message sent</h3>
+      <p class="text-foreground/60 text-sm mb-4">
+        Thanks for reaching out. We'll get back to you as soon as we can.
+      </p>
+      <button type="button" class="text-sm text-links hover:text-primary transition-colors" data-close-modal>
+        Close
+      </button>
+    </div>
+  </div>
+</dialog>
+
+<script define:vars={{ TURNSTILE_SITE_KEY, API_BASE_URL }}>
+  function initContactModal() {
+    const dialog = document.getElementById('contact-modal');
+    const form = document.getElementById('contact-form');
+    const submitBtn = document.getElementById('contact-submit');
+    const submitText = document.getElementById('contact-submit-text');
+    const spinner = document.getElementById('contact-spinner');
+    const statusEl = document.getElementById('contact-status');
+    const successEl = document.getElementById('contact-success');
+    const turnstileContainer = document.getElementById('contact-turnstile');
+
+    if (!dialog || !form) return;
+
+    let turnstileWidgetId = null;
+
+    // Open modal from any element with data-open-contact
+    function bindTriggers() {
+      document.querySelectorAll('[data-open-contact]').forEach((trigger) => {
+        trigger.addEventListener('click', (e) => {
+          e.preventDefault();
+          openModal();
+        });
+      });
+    }
+
+    function openModal() {
+      dialog.showModal();
+      // Render Turnstile widget after dialog is visible
+      if (window.turnstile && turnstileContainer && turnstileWidgetId === null) {
+        turnstileWidgetId = window.turnstile.render(turnstileContainer, {
+          sitekey: TURNSTILE_SITE_KEY,
+          theme: document.documentElement.classList.contains('dark') ? 'dark' : 'light',
+        });
+      }
+    }
+
+    // Close handlers
+    dialog.querySelectorAll('[data-close-modal]').forEach((btn) => {
+      btn.addEventListener('click', () => dialog.close());
+    });
+
+    // Click backdrop to close
+    dialog.addEventListener('click', (e) => {
+      if (e.target === dialog) dialog.close();
+    });
+
+    // Reset form when modal closes
+    dialog.addEventListener('close', () => {
+      form.classList.remove('hidden');
+      successEl.classList.add('hidden');
+      statusEl.classList.add('hidden');
+      form.reset();
+      if (window.turnstile && turnstileWidgetId !== null) {
+        window.turnstile.reset(turnstileWidgetId);
+      }
+    });
+
+    // Form submission
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const name = form.querySelector('[name="name"]').value.trim();
+      const email = form.querySelector('[name="email"]').value.trim();
+      const message = form.querySelector('[name="message"]').value.trim();
+
+      // Get Turnstile token
+      let turnstileToken = null;
+      if (window.turnstile && turnstileWidgetId !== null) {
+        turnstileToken = window.turnstile.getResponse(turnstileWidgetId);
+      }
+
+      if (!turnstileToken) {
+        showStatus('Please complete the verification.', 'error');
+        return;
+      }
+
+      // Loading state
+      submitBtn.disabled = true;
+      submitText.textContent = 'Sending...';
+      spinner.classList.remove('hidden');
+      statusEl.classList.add('hidden');
+
+      try {
+        const params = new URLSearchParams();
+        params.set('name', name);
+        params.set('email', email);
+        params.set('message', message);
+        params.set('cf-turnstile-response', turnstileToken);
+
+        const res = await fetch(`${API_BASE_URL}/api/submit-contact-prelaunch`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: params.toString(),
+        });
+
+        const data = await res.json();
+
+        if (data.success) {
+          // Show success state
+          form.classList.add('hidden');
+          successEl.classList.remove('hidden');
+          // Track with Plausible
+          if (window.plausible) {
+            window.plausible('Contact+Submit');
+          }
+        } else {
+          showStatus(data.error || 'Something went wrong. Please try again.', 'error');
+          if (window.turnstile && turnstileWidgetId !== null) {
+            window.turnstile.reset(turnstileWidgetId);
+          }
+        }
+      } catch {
+        showStatus('Network error. Please check your connection and try again.', 'error');
+      }
+
+      // Reset button
+      submitBtn.disabled = false;
+      submitText.textContent = 'Send Message';
+      spinner.classList.add('hidden');
+    });
+
+    function showStatus(message, type) {
+      statusEl.textContent = message;
+      statusEl.classList.remove('hidden', 'bg-red-50', 'text-red-700', 'dark:bg-red-900/20', 'dark:text-red-400', 'bg-green-50', 'text-green-700', 'dark:bg-green-900/20', 'dark:text-green-400');
+      if (type === 'error') {
+        statusEl.classList.add('bg-red-50', 'text-red-700', 'dark:bg-red-900/20', 'dark:text-red-400');
+      } else {
+        statusEl.classList.add('bg-green-50', 'text-green-700', 'dark:bg-green-900/20', 'dark:text-green-400');
+      }
+    }
+
+    bindTriggers();
+  }
+
+  initContactModal();
+  document.addEventListener('astro:after-swap', initContactModal);
+</script>
