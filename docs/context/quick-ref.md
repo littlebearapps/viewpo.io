@@ -15,7 +15,7 @@
 | **Alt Domains** | viewpo.app, viewpo.dev (both redirect to viewpo.io) |
 | **CF Pages Project** | `viewpo-io` |
 | **CF Zone** | `840ca9d145596b47b9868868e4cd7b81` |
-| **Status** | Marketing site live — homepage + /teams/ + /creators/ |
+| **Status** | Marketing site live — 5 pages, dark mode, Plausible analytics, SEO/GEO optimised |
 
 ---
 
@@ -30,18 +30,34 @@ npm run build            # Build to dist/
 
 ---
 
+## Pages
+
+| Page | URL | File | Audience |
+|------|-----|------|----------|
+| Homepage | `/` | `src/pages/index.astro` | All segments — hero, features, pricing, FAQ |
+| Teams | `/teams/` | `src/pages/teams.astro` | Team leads, agencies, PMs, designers |
+| Creators | `/creators/` | `src/pages/creators.astro` | Vibe coders, AI builders |
+| Privacy | `/privacy/` | `src/pages/privacy.astro` | Legal — privacy policy |
+| Terms | `/terms/` | `src/pages/terms.astro` | Legal — terms of service |
+
+---
+
 ## Key Paths
 
 | Path | Description |
 |------|-------------|
-| `src/pages/index.astro` | Homepage — hero, features, pricing, FAQ |
-| `src/pages/teams.astro` | /teams/ landing page — team leads, agencies, PMs |
-| `src/pages/creators.astro` | /creators/ landing page — vibe coders, AI builders |
-| `src/layouts/BaseLayout.astro` | Page layout with meta, JSON-LD |
-| `src/components/` | All components (Hero, ProblemHook, HowItWorks, etc.) |
-| `src/styles/global.css` | Brand tokens and animations |
+| `src/pages/` | All 5 pages |
+| `src/layouts/BaseLayout.astro` | Shared layout — meta tags, JSON-LD schemas, fonts, Plausible analytics, theme persistence, View Transitions |
+| `src/components/` | 15 components (Hero, FAQ, PricingTable, ViewportDemo, Footer, Header, ThemeToggle, etc.) |
+| `src/styles/global.css` | Brand tokens, animations, `@variant dark` for Tailwind v4 |
 | `src/utils/constants.ts` | Device presets, pricing tiers, FAQ data |
-| `public/` | Static assets, robots.txt, _headers |
+| `src/scripts/scroll-reveal.ts` | IntersectionObserver scroll animation |
+| `public/robots.txt` | AI crawlers explicitly allowed (GPTBot, ClaudeBot, etc.) |
+| `public/llms.txt` | AI-readable site navigation index (llmstxt.org standard) |
+| `public/_headers` | CF Pages headers — security + `/_astro/*` immutable cache |
+| `public/og-default.png` | OG social share image (1200x630, 15KB) |
+| `public/logo.png` | Logo for Organization schema (512x512) |
+| `public/favicon.svg` / `favicon.png` | Favicons (indigo V mark) |
 | `.github/workflows/ci.yml` | CI — build check on PRs and main |
 | `.github/workflows/deploy-production.yml` | Deploy to CF Pages on push to main |
 | `docs/viewpo-purpose.md` | Product purpose document |
@@ -64,8 +80,46 @@ npm run build            # Build to dist/
 | Text | `#1E293B` | slate-800 | Body text |
 | Muted | `#F1F5F9` | slate-100 | Secondary bg |
 
-**Typography**: Outfit (headings) + Inter (body)
+**Typography**: Outfit (headings) + Inter (body) — loaded via Google Fonts `<link>` in BaseLayout
 **Rule**: Indigo for primary CTAs only. White text on coloured backgrounds.
+
+---
+
+## Structured Data (JSON-LD)
+
+All schemas in `BaseLayout.astro`:
+- **Organization** — every page (name, logo, knowsAbout, parentOrganization: Little Bear Apps)
+- **WebPage** — every page (datePublished, dateModified — dynamic at build time)
+- **SoftwareApplication** — homepage only (featureList x6, applicationSubCategory, operatingSystem array)
+- **WebSite** — homepage only
+- **FAQPage** — homepage (`FAQ.astro`), `/teams/`, `/creators/` (all with dateModified)
+
+---
+
+## SEO / GEO
+
+| Item | Status |
+|------|--------|
+| Google Search Console | Verified (DNS), sitemap submitted |
+| Plausible Analytics | Live — async script in BaseLayout, event tracking on CTAs + FAQ toggles |
+| AI crawlers (robots.txt) | Explicitly allowed — GPTBot, ClaudeBot, Google-Extended, PerplexityBot, Applebot-Extended, CCBot, ChatGPT-User |
+| llms.txt | Live at `/llms.txt` — curated site index for AI engines |
+| CF AI bot blocking | Disabled — managed robots.txt OFF, all AI crawlers set to "Allow" in CF Dashboard |
+| Sitemap | Auto-generated via `@astrojs/sitemap` at `/sitemap-index.xml` |
+| Meta tags | Unique title + description per page, OG + Twitter cards |
+| Canonical URLs | Set per page via `Astro.url` |
+| Content signals | Conversational headings, FAQ sections, comparison content, definition-first paragraphs |
+
+---
+
+## Dark Mode
+
+Class-based (`.dark` on `<html>`) with localStorage persistence.
+
+- **Toggle**: `src/components/ThemeToggle.astro`
+- **Persistence**: `BaseLayout.astro` inline script with `astro:after-swap` handler for View Transitions
+- **CSS**: `@variant dark (&:where(.dark, .dark *))` in `global.css` (Tailwind v4 class-based dark mode)
+- **Key**: All pages use dark mode tokens consistently — backgrounds, text, cards, borders
 
 ---
 
@@ -78,13 +132,6 @@ Viewpo is a native iOS/macOS app that aggregates preview deployments from multip
 2. **Vibe Coder / AI Builder** — uses Cursor, v0, Bolt, Lovable, Replit; deploys via provider but lacks device preview tools
 3. **Non-Technical Reviewer** — designer, PM, client, stakeholder who receives preview links and needs to check how things look
 
-### Pages
-| Page | URL | Audience | Revenue Target |
-|------|-----|----------|----------------|
-| Homepage | `/` | All three segments | Awareness → Free tier |
-| Teams | `/teams/` | Team leads, agencies, PMs, designers | Pro tier ($29/mo) |
-| Creators | `/creators/` | Vibe coders, AI builders | Free → Starter ($9/mo) |
-
 ### Pricing
 - **Free**: 3 projects, 1 provider, viewport viewer
 - **Starter** ($9/mo): Unlimited projects, all providers, sharing
@@ -94,9 +141,9 @@ Viewpo is a native iOS/macOS app that aggregates preview deployments from multip
 
 ## Deployment
 
-Deploy to CF Pages is automatic on push to `main` via GitHub Actions (`deploy-production.yml`).
+Auto-deploy on push to `main` via GitHub Actions (`deploy-production.yml`).
 
-**GitHub Actions Secrets** (set via `gh secret set`):
+**GitHub Actions Secrets** (from bws via `gh secret set`):
 - `CLOUDFLARE_API_TOKEN` — from bws `cloudflare-api-token`
 - `CLOUDFLARE_ACCOUNT_ID` — from bws `cloudflare-account-id`
 
@@ -108,19 +155,25 @@ Deploy to CF Pages is automatic on push to `main` via GitHub Actions (`deploy-pr
 
 ## Content Guidelines
 
-Homepage and subpages follow the multi-audience content strategy defined in the `marketing-copy` skill:
 - **Jargon avoidance**: "deploy" → "changes go live", "OAuth" → "secure sign-in", "WebView" → "real browser engine"
 - **Readability**: Grade 6 headlines, Grade 8-10 body copy
 - **Progressive disclosure**: Simple headline → specific subheading → detailed body
 - **Banned patterns**: "seamless", "leverage", "robust" without detail (see `content-writing` rule)
+- **Australian English**: realise, colour, organise (in content — US spelling OK in code)
 
 ---
 
 ## Deferred (Not Yet Implemented)
 
 - Blog, docs, changelog pages
-- Email signup / waitlist form
+- Email signup / waitlist form (CTA buttons are placeholders)
 - Product screenshots (MVP UI not finalised)
-- Plausible analytics (tracking attributes already in markup)
 - Playwright E2E tests
 - PR preview deploys (CI only runs build, no CF Pages preview)
+- Comparison pages (Viewpo vs Responsively, vs BrowserStack)
+- Self-hosted Google Fonts (currently loaded via Google CDN)
+- ABN number in Terms page (placeholder `[TBA]`)
+- Dedicated OG images for /teams/ and /creators/ (currently use default)
+- BreadcrumbList schema on subpages
+- HowTo schema on homepage How It Works section
+- hreflang tags
