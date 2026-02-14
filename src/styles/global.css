@@ -155,11 +155,45 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Gradient text */
 .gradient-text-primary {
-  background: linear-gradient(135deg, #6366F1 0%, #818CF8 100%);
+  background: linear-gradient(
+    135deg,
+    #6366F1 0%,
+    #818CF8 33%,
+    #6366F1 66%,
+    #818CF8 100%
+  );
+  background-size: 300% 300%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  animation: gradient-shift 8s ease-in-out infinite;
 }
+
+@keyframes gradient-shift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+/* Dot grid background */
+.bg-dot-pattern {
+  background-image: radial-gradient(circle, var(--color-foreground) 0.5px, transparent 0.5px);
+  background-size: 24px 24px;
+  opacity: 0.03;
+}
+
+.dark .bg-dot-pattern {
+  background-image: radial-gradient(circle, #94A3B8 0.5px, transparent 0.5px);
+  opacity: 0.04;
+}
+
+/* Floating decorative shapes */
+@keyframes float-slow {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-10px) rotate(3deg); }
+}
+
+.float-slow { animation: float-slow 6s ease-in-out infinite; }
+.float-slow-reverse { animation: float-slow 8s ease-in-out infinite reverse; }
 
 /* Container */
 .container-wide {
@@ -188,5 +222,15 @@ h1, h2, h3, h4, h5, h6 {
 
   .card-lift:hover {
     transform: none;
+  }
+
+  .gradient-text-primary {
+    animation: none;
+    background-size: 100% 100%;
+  }
+
+  .float-slow,
+  .float-slow-reverse {
+    animation: none;
   }
 }

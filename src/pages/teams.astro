@@ -57,6 +57,10 @@ const teamFaqItems = [
 
   <!-- Hero -->
   <section class="relative overflow-hidden py-20 md:py-32">
+    <!-- Ambient glow orbs -->
+    <div class="pointer-events-none absolute -top-40 -left-40 w-[500px] h-[500px] rounded-full bg-primary/20 blur-[120px] dark:bg-primary/10" aria-hidden="true"></div>
+    <div class="pointer-events-none absolute -bottom-20 -right-32 w-[400px] h-[400px] rounded-full bg-secondary/15 blur-[100px] dark:bg-secondary/[0.08]" aria-hidden="true"></div>
+
     <div class="container-wide">
       <div class="max-w-3xl mx-auto text-center">
         <div class="hero-entrance inline-flex items-center gap-2 bg-primary/10 text-primary dark:text-indigo-300 text-sm font-medium px-4 py-1.5 rounded-full mb-8">
@@ -124,6 +128,7 @@ const teamFaqItems = [
       <div class="reveal reveal-delay-1">
         <FeatureCard
           icon="share"
+          accent="indigo"
           title="Shareable Preview Links & QR Codes"
           description="Generate a link or QR code for any preview. Drop it in Slack, email it to a client, or show it in a meeting. Anyone with the link can view the site at any screen size — no login needed."
         />
@@ -131,6 +136,7 @@ const teamFaqItems = [
       <div class="reveal reveal-delay-2">
         <FeatureCard
           icon="team"
+          accent="emerald"
           title="Team Workspaces"
           description="Organise projects by client, team, or however makes sense. Each workspace has shared access and roles, so everyone sees the right projects without digging through dashboards."
         />
@@ -138,6 +144,7 @@ const teamFaqItems = [
       <div class="reveal reveal-delay-3">
         <FeatureCard
           icon="notification"
+          accent="orange"
           title="Always-Fresh Preview Links"
           description="Share a 'latest for this branch' link that always shows the newest version. Your team always sees the freshest preview — no need to send a new link after every deploy."
         />
@@ -145,6 +152,7 @@ const teamFaqItems = [
       <div class="reveal reveal-delay-4">
         <FeatureCard
           icon="viewport"
+          accent="sky"
           title="Feedback on Look and Feel"
           description="Team members check the preview at desktop, tablet, and phone sizes — then give feedback on the look and feel directly within the preview context. No dev tools required."
         />
@@ -219,8 +227,14 @@ const teamFaqItems = [
   })} />
 
   <!-- Final CTA -->
-  <Section id="teams-cta" padding="lg">
-    <div class="max-w-2xl mx-auto text-center reveal">
+  <Section id="teams-cta" padding="lg" class="relative overflow-hidden">
+    <!-- Aurora background -->
+    <div class="pointer-events-none absolute inset-0" aria-hidden="true">
+      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-primary/15 blur-[150px] dark:bg-primary/10"></div>
+      <div class="absolute top-0 right-0 w-[300px] h-[300px] rounded-full bg-secondary/10 blur-[100px] dark:bg-secondary/[0.06]"></div>
+      <div class="absolute bottom-0 left-0 w-[250px] h-[250px] rounded-full bg-indigo-300/10 blur-[80px] dark:bg-indigo-400/[0.06]"></div>
+    </div>
+    <div class="max-w-2xl mx-auto text-center reveal relative z-10">
       <h2 class="font-heading font-bold text-3xl md:text-4xl mb-4">
         Start your team on Viewpo
       </h2>

@@ -49,6 +49,10 @@ const creatorFaqItems = [
 
   <!-- Hero -->
   <section class="relative overflow-hidden py-20 md:py-32">
+    <!-- Ambient glow orbs -->
+    <div class="pointer-events-none absolute -top-40 -left-40 w-[500px] h-[500px] rounded-full bg-primary/20 blur-[120px] dark:bg-primary/10" aria-hidden="true"></div>
+    <div class="pointer-events-none absolute -bottom-20 -right-32 w-[400px] h-[400px] rounded-full bg-secondary/15 blur-[100px] dark:bg-secondary/[0.08]" aria-hidden="true"></div>
+
     <div class="container-wide">
       <div class="max-w-3xl mx-auto text-center">
         <div class="hero-entrance inline-flex items-center gap-2 bg-secondary/10 text-secondary dark:text-orange-300 text-sm font-medium px-4 py-1.5 rounded-full mb-8">
@@ -116,6 +120,7 @@ const creatorFaqItems = [
       <div class="reveal reveal-delay-1">
         <FeatureCard
           icon="viewport"
+          accent="indigo"
           title="See Your Site at Any Screen Size"
           description="Check how your website looks on a phone, tablet, laptop, or 27-inch desktop — all from whatever device you have. Viewpo renders the real site, not a screenshot."
         />
@@ -123,6 +128,7 @@ const creatorFaqItems = [
       <div class="reveal reveal-delay-2">
         <FeatureCard
           icon="notification"
+          accent="orange"
           title="Know When Your Changes Go Live"
           description="Every time you deploy an update, Viewpo shows you the result instantly. No more refreshing dashboards or hunting for preview links."
         />
@@ -130,6 +136,7 @@ const creatorFaqItems = [
       <div class="reveal reveal-delay-3">
         <FeatureCard
           icon="share"
+          accent="emerald"
           title="Share a Preview Link to Get Feedback"
           description="Send a link or QR code to a friend or client. They can see your site at any screen size and tell you what they think — no account required."
         />
@@ -137,6 +144,7 @@ const creatorFaqItems = [
       <div class="reveal reveal-delay-4">
         <FeatureCard
           icon="oauth"
+          accent="sky"
           title="No Complex Setup"
           description="Link your hosting account with a single tap. Viewpo finds your projects automatically. No API keys, no config files, no terminal commands."
         />
@@ -298,8 +306,14 @@ const creatorFaqItems = [
   })} />
 
   <!-- Final CTA -->
-  <Section id="creators-cta" padding="lg" background="muted">
-    <div class="max-w-2xl mx-auto text-center reveal">
+  <Section id="creators-cta" padding="lg" class="relative overflow-hidden">
+    <!-- Aurora background -->
+    <div class="pointer-events-none absolute inset-0" aria-hidden="true">
+      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-primary/15 blur-[150px] dark:bg-primary/10"></div>
+      <div class="absolute top-0 right-0 w-[300px] h-[300px] rounded-full bg-secondary/10 blur-[100px] dark:bg-secondary/[0.06]"></div>
+      <div class="absolute bottom-0 left-0 w-[250px] h-[250px] rounded-full bg-indigo-300/10 blur-[80px] dark:bg-indigo-400/[0.06]"></div>
+    </div>
+    <div class="max-w-2xl mx-auto text-center reveal relative z-10">
       <h2 class="font-heading font-bold text-3xl md:text-4xl mb-4">
         Check how your site looks — for free
       </h2>

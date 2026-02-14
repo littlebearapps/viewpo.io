@@ -31,14 +31,21 @@ const steps = [
     </p>
   </div>
 
-  <div class="grid md:grid-cols-3 gap-8 md:gap-12 max-w-4xl mx-auto">
+  <div class="grid md:grid-cols-3 gap-8 md:gap-12 max-w-4xl mx-auto relative">
+    <!-- Horizontal connector line (desktop only) -->
+    <div class="hidden md:block absolute top-8 left-[calc(16.67%+2rem)] right-[calc(16.67%+2rem)] h-px bg-gradient-to-r from-primary/30 via-primary/10 to-primary/30" aria-hidden="true"></div>
+
     {steps.map((step, i) => (
-      <div class={`reveal reveal-delay-${i + 1} text-center`}>
-        <div class="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center mx-auto mb-6">
+      <div class={`reveal reveal-delay-${i + 1} text-center relative`}>
+        <div class="relative z-10 w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center mx-auto mb-6">
           <svg class="w-8 h-8 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
             <Fragment set:html={step.icon} />
           </svg>
         </div>
+        {/* Mobile vertical connector (not on last item) */}
+        {i < steps.length - 1 && (
+          <div class="md:hidden w-px h-8 bg-gradient-to-b from-primary/20 to-transparent mx-auto -mb-4 -order-1" aria-hidden="true"></div>
+        )}
         <div class="text-sm font-heading font-semibold text-primary uppercase tracking-wider mb-2">
           Step {step.number}
         </div>
