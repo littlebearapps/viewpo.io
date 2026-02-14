@@ -42,7 +42,7 @@ export const PRICING_TIERS: PricingTier[] = [
       'Device presets (iPhone, iPad, Desktop)',
       'Build status notifications',
     ],
-    cta: 'Get Started',
+    cta: 'Join the Beta',
     highlighted: false,
   },
   {
@@ -57,7 +57,7 @@ export const PRICING_TIERS: PricingTier[] = [
       'Share links & QR codes',
       'Custom viewport sizes',
     ],
-    cta: 'Start Free Trial',
+    cta: 'Notify Me',
     highlighted: true,
   },
   {
@@ -72,7 +72,7 @@ export const PRICING_TIERS: PricingTier[] = [
       'Priority support',
       'API access',
     ],
-    cta: 'Start Free Trial',
+    cta: 'Notify Me',
     highlighted: false,
   },
 ];
