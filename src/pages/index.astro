@@ -12,7 +12,6 @@ import PlatformAvailability from '@components/PlatformAvailability.astro';
 import HowItWorks from '@components/HowItWorks.astro';
 import PricingTable from '@components/PricingTable.astro';
 import FAQ from '@components/FAQ.astro';
-import Button from '@components/Button.astro';
 import SocialProof from '@components/SocialProof.astro';
 ---
 
@@ -112,12 +111,15 @@ import SocialProof from '@components/SocialProof.astro';
         Viewpo is coming soon. Join the beta to help shape it, or sign up to be notified when it launches.
       </p>
       <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-        <Button size="lg" icon="arrow" class="plausible-event-name=CTA+Join+Beta">
+        <button type="button" data-open-signup class="inline-flex items-center justify-center gap-2 font-heading font-medium rounded-xl transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 hover:scale-[1.02] active:scale-[0.98] px-8 py-4 text-lg bg-primary text-white hover:bg-primary-hover focus:ring-primary shadow-md hover:shadow-lg plausible-event-name=CTA+Join+Beta">
           Join the Beta
-        </Button>
-        <Button variant="ghost" size="lg" class="plausible-event-name=CTA+Notify+Launch">
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+          </svg>
+        </button>
+        <button type="button" data-open-signup class="inline-flex items-center justify-center gap-2 font-heading font-medium rounded-xl transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 hover:scale-[1.02] active:scale-[0.98] px-8 py-4 text-lg text-foreground hover:bg-foreground/5 focus:ring-primary/50 plausible-event-name=CTA+Notify+Launch">
           Notify Me at Launch
-        </Button>
+        </button>
       </div>
       <p class="text-foreground/40 text-sm mt-6">
         Launching first on iOS, iPadOS, and macOS. More platforms to follow.
@@ -125,5 +127,43 @@ import SocialProof from '@components/SocialProof.astro';
     </div>
   </Section>
 
+  <!-- Error toast for confirmation redirects -->
+  <div id="error-toast" class="hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-50 bg-red-50 dark:bg-red-900/90 text-red-700 dark:text-red-200 border border-red-200 dark:border-red-800 rounded-xl px-5 py-3 shadow-lg text-sm font-medium max-w-md text-center" role="alert">
+    <span id="error-toast-text"></span>
+  </div>
+
   <Footer slot="footer" />
 </BaseLayout>
+
+<script>
+  function checkErrorParams(): void {
+    const params = new URLSearchParams(window.location.search);
+    const error = params.get('error');
+    if (!error) return;
+
+    const toast = document.getElementById('error-toast');
+    const text = document.getElementById('error-toast-text');
+    if (!toast || !text) return;
+
+    const messages: Record<string, string> = {
+      'invalid-token': 'This confirmation link is invalid or has expired.',
+      'already-confirmed': 'This email has already been confirmed.',
+    };
+
+    text.textContent = messages[error] || 'Something went wrong.';
+    toast.classList.remove('hidden');
+
+    // Clean URL
+    const url = new URL(window.location.href);
+    url.searchParams.delete('error');
+    window.history.replaceState({}, '', url.pathname);
+
+    // Auto-dismiss after 6 seconds
+    setTimeout(() => {
+      toast.classList.add('hidden');
+    }, 6000);
+  }
+
+  checkErrorParams();
+  document.addEventListener('astro:after-swap', checkErrorParams);
+</script>

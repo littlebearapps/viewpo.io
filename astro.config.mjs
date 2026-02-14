@@ -7,7 +7,12 @@ export default defineConfig({
   site: 'https://viewpo.io',
   output: 'static',
   adapter: cloudflare(),
-  integrations: [sitemap()],
+  integrations: [
+    sitemap({
+      filter: (page) =>
+        !page.includes('/confirmed') && !page.includes('/preferences'),
+    }),
+  ],
   vite: {
     plugins: [tailwindcss()],
   },

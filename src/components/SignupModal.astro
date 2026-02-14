@@ -1,0 +1,234 @@
+---
+import { TURNSTILE_SITE_KEY, API_BASE_URL } from '@utils/constants';
+---
+
+<dialog id="signup-modal" class="modal-dialog" aria-labelledby="signup-modal-title">
+  <div class="modal-content">
+    <!-- Close button -->
+    <button type="button" class="modal-close" aria-label="Close" data-close-modal>
+      <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+      </svg>
+    </button>
+
+    <!-- Header -->
+    <div class="text-center mb-6">
+      <div class="inline-flex items-center gap-2 bg-primary/10 text-primary dark:text-indigo-300 text-sm font-medium px-3 py-1 rounded-full mb-4">
+        <span class="w-2 h-2 bg-success rounded-full animate-pulse"></span>
+        Beta spots opening soon
+      </div>
+      <h2 id="signup-modal-title" class="font-heading font-bold text-2xl md:text-3xl mb-2">
+        Join the Viewpo Beta
+      </h2>
+      <p class="text-foreground/60 text-sm">
+        Be among the first to try Viewpo. We'll email you when beta spots open up.
+      </p>
+    </div>
+
+    <!-- Form -->
+    <form id="signup-form" class="space-y-4" novalidate>
+      <div>
+        <label for="signup-email" class="block text-sm font-medium text-foreground/70 mb-1.5">
+          Email address <span class="text-red-500">*</span>
+        </label>
+        <input
+          type="email"
+          id="signup-email"
+          name="email"
+          required
+          placeholder="you@example.com"
+          autocomplete="email"
+          class="modal-input"
+        />
+      </div>
+
+      <div>
+        <label for="signup-name" class="block text-sm font-medium text-foreground/70 mb-1.5">
+          First name <span class="text-foreground/40">(optional)</span>
+        </label>
+        <input
+          type="text"
+          id="signup-name"
+          name="first_name"
+          placeholder="Your first name"
+          autocomplete="given-name"
+          class="modal-input"
+        />
+      </div>
+
+      <!-- Turnstile widget container -->
+      <div id="signup-turnstile" class="flex justify-center"></div>
+
+      <button
+        type="submit"
+        id="signup-submit"
+        class="w-full inline-flex items-center justify-center gap-2 bg-primary hover:bg-primary-hover text-white font-heading font-semibold px-6 py-3 rounded-xl transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary disabled:opacity-50 disabled:cursor-not-allowed"
+      >
+        <span id="signup-submit-text">Join the Beta</span>
+        <svg id="signup-spinner" class="hidden w-5 h-5 animate-spin" viewBox="0 0 24 24" fill="none">
+          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+        </svg>
+      </button>
+
+      <!-- Status message -->
+      <div id="signup-status" class="hidden text-center text-sm py-2 px-3 rounded-lg" role="alert"></div>
+    </form>
+
+    <!-- Success state (hidden initially) -->
+    <div id="signup-success" class="hidden text-center py-4">
+      <div class="inline-flex items-center justify-center w-14 h-14 bg-success/10 rounded-full mb-4">
+        <svg class="w-7 h-7 text-success" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+        </svg>
+      </div>
+      <h3 class="font-heading font-semibold text-xl mb-2">Check your inbox</h3>
+      <p class="text-foreground/60 text-sm mb-4">
+        We've sent a confirmation link to your email. Click it to complete your signup.
+      </p>
+      <button type="button" class="text-sm text-links hover:text-primary transition-colors" data-close-modal>
+        Close
+      </button>
+    </div>
+
+    <p class="text-foreground/40 text-xs text-center mt-4">
+      No spam, ever. Unsubscribe anytime. <a href="/privacy/" class="text-links hover:text-primary transition-colors underline underline-offset-2">Privacy Policy</a>
+    </p>
+  </div>
+</dialog>
+
+<script define:vars={{ TURNSTILE_SITE_KEY, API_BASE_URL }}>
+  function initSignupModal() {
+    const dialog = document.getElementById('signup-modal');
+    const form = document.getElementById('signup-form');
+    const submitBtn = document.getElementById('signup-submit');
+    const submitText = document.getElementById('signup-submit-text');
+    const spinner = document.getElementById('signup-spinner');
+    const statusEl = document.getElementById('signup-status');
+    const successEl = document.getElementById('signup-success');
+    const turnstileContainer = document.getElementById('signup-turnstile');
+
+    if (!dialog || !form) return;
+
+    let turnstileWidgetId = null;
+
+    // Open modal from any element with data-open-signup
+    function bindTriggers() {
+      document.querySelectorAll('[data-open-signup]').forEach((trigger) => {
+        trigger.addEventListener('click', (e) => {
+          e.preventDefault();
+          openModal();
+        });
+      });
+    }
+
+    function openModal() {
+      dialog.showModal();
+      // Render Turnstile widget after dialog is visible
+      if (window.turnstile && turnstileContainer && turnstileWidgetId === null) {
+        turnstileWidgetId = window.turnstile.render(turnstileContainer, {
+          sitekey: TURNSTILE_SITE_KEY,
+          theme: document.documentElement.classList.contains('dark') ? 'dark' : 'light',
+        });
+      }
+    }
+
+    // Close handlers
+    dialog.querySelectorAll('[data-close-modal]').forEach((btn) => {
+      btn.addEventListener('click', () => dialog.close());
+    });
+
+    // Click backdrop to close
+    dialog.addEventListener('click', (e) => {
+      if (e.target === dialog) dialog.close();
+    });
+
+    // Reset form when modal closes
+    dialog.addEventListener('close', () => {
+      form.classList.remove('hidden');
+      successEl.classList.add('hidden');
+      statusEl.classList.add('hidden');
+      form.reset();
+      if (window.turnstile && turnstileWidgetId !== null) {
+        window.turnstile.reset(turnstileWidgetId);
+      }
+    });
+
+    // Form submission
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const email = form.querySelector('[name="email"]').value.trim();
+      const firstName = form.querySelector('[name="first_name"]').value.trim();
+
+      // Get Turnstile token
+      let turnstileToken = null;
+      if (window.turnstile && turnstileWidgetId !== null) {
+        turnstileToken = window.turnstile.getResponse(turnstileWidgetId);
+      }
+
+      if (!turnstileToken) {
+        showStatus('Please complete the verification.', 'error');
+        return;
+      }
+
+      // Loading state
+      submitBtn.disabled = true;
+      submitText.textContent = 'Signing up...';
+      spinner.classList.remove('hidden');
+      statusEl.classList.add('hidden');
+
+      try {
+        const res = await fetch(`${API_BASE_URL}/api/newsletter-signup`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            email,
+            first_name: firstName || undefined,
+            products: ['all'],
+            turnstileToken,
+          }),
+        });
+
+        const data = await res.json();
+
+        if (data.success) {
+          // Show success state
+          form.classList.add('hidden');
+          successEl.classList.remove('hidden');
+          // Track with Plausible
+          if (window.plausible) {
+            window.plausible('Signup+Submit', { props: { email_domain: email.split('@')[1] } });
+          }
+        } else {
+          showStatus(data.error || 'Something went wrong. Please try again.', 'error');
+          if (window.turnstile && turnstileWidgetId !== null) {
+            window.turnstile.reset(turnstileWidgetId);
+          }
+        }
+      } catch {
+        showStatus('Network error. Please check your connection and try again.', 'error');
+      }
+
+      // Reset button
+      submitBtn.disabled = false;
+      submitText.textContent = 'Join the Beta';
+      spinner.classList.add('hidden');
+    });
+
+    function showStatus(message, type) {
+      statusEl.textContent = message;
+      statusEl.classList.remove('hidden', 'bg-red-50', 'text-red-700', 'dark:bg-red-900/20', 'dark:text-red-400', 'bg-green-50', 'text-green-700', 'dark:bg-green-900/20', 'dark:text-green-400');
+      if (type === 'error') {
+        statusEl.classList.add('bg-red-50', 'text-red-700', 'dark:bg-red-900/20', 'dark:text-red-400');
+      } else {
+        statusEl.classList.add('bg-green-50', 'text-green-700', 'dark:bg-green-900/20', 'dark:text-green-400');
+      }
+    }
+
+    bindTriggers();
+  }
+
+  initSignupModal();
+  document.addEventListener('astro:after-swap', initSignupModal);
+</script>

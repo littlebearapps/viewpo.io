@@ -1,5 +1,7 @@
 ---
 import { ViewTransitions } from 'astro:transitions';
+import SignupModal from '@components/SignupModal.astro';
+import ContactModal from '@components/ContactModal.astro';
 
 interface Props {
   title: string;
@@ -136,6 +138,9 @@ const currentDate = new Date().toISOString().split('T')[0];
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Outfit:wght@500;600;700&display=swap" />
 
+    <!-- Turnstile (bot protection for forms) -->
+    <script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" async defer></script>
+
     <!-- Analytics -->
     <script is:inline async src="https://plausible.io/js/pa-XnY0rOrxQvpStF2a1FD0y.js"></script>
     <script is:inline>
@@ -179,6 +184,10 @@ const currentDate = new Date().toISOString().split('T')[0];
       <slot />
     </main>
     <slot name="footer" />
+
+    <!-- Global modals -->
+    <SignupModal />
+    <ContactModal />
 
     <!-- Scroll reveal -->
     <script src="../scripts/scroll-reveal.ts"></script>
