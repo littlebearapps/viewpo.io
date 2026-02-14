@@ -295,6 +295,7 @@ const creatorFaqItems = [
   <script type="application/ld+json" set:html={JSON.stringify({
     "@context": "https://schema.org",
     "@type": "FAQPage",
+    "dateModified": new Date().toISOString().split('T')[0],
     "mainEntity": creatorFaqItems.map((item) => ({
       "@type": "Question",
       "name": item.question,
