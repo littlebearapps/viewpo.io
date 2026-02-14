@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FAFAFA"/>
+      <stop offset="100%" stop-color="#EEF2FF"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#6366F1"/>
+      <stop offset="100%" stop-color="#4F46E5"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bg)"/>
+
+  <!-- Subtle dot grid pattern -->
+  <pattern id="dots" x="0" y="0" width="24" height="24" patternUnits="userSpaceOnUse">
+    <circle cx="12" cy="12" r="0.8" fill="#1E293B" opacity="0.04"/>
+  </pattern>
+  <rect width="1200" height="630" fill="url(#dots)"/>
+
+  <!-- Decorative glow -->
+  <ellipse cx="900" cy="315" rx="300" ry="250" fill="#6366F1" opacity="0.06"/>
+
+  <!-- Logo mark (V) -->
+  <g transform="translate(80, 200)">
+    <rect width="100" height="100" rx="20" fill="url(#accent)"/>
+    <path d="M28 25 L50 78 L72 25" fill="none" stroke="white" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+
+  <!-- Title -->
+  <text x="200" y="260" font-family="system-ui, -apple-system, sans-serif" font-size="64" font-weight="700" fill="#1E293B">Viewpo</text>
+
+  <!-- Tagline -->
+  <text x="80" y="340" font-family="system-ui, -apple-system, sans-serif" font-size="28" fill="#475569">Preview any website at any screen size,</text>
+  <text x="80" y="378" font-family="system-ui, -apple-system, sans-serif" font-size="28" fill="#475569">from any device.</text>
+
+  <!-- Provider badges -->
+  <g transform="translate(80, 420)">
+    <rect width="180" height="36" rx="18" fill="#6366F1" opacity="0.1"/>
+    <text x="90" y="24" font-family="system-ui, sans-serif" font-size="14" fill="#6366F1" text-anchor="middle" font-weight="500">Cloudflare Pages</text>
+  </g>
+  <g transform="translate(280, 420)">
+    <rect width="110" height="36" rx="18" fill="#6366F1" opacity="0.1"/>
+    <text x="55" y="24" font-family="system-ui, sans-serif" font-size="14" fill="#6366F1" text-anchor="middle" font-weight="500">Vercel</text>
+  </g>
+  <g transform="translate(410, 420)">
+    <rect width="110" height="36" rx="18" fill="#6366F1" opacity="0.1"/>
+    <text x="55" y="24" font-family="system-ui, sans-serif" font-size="14" fill="#6366F1" text-anchor="middle" font-weight="500">Netlify</text>
+  </g>
+  <g transform="translate(540, 420)">
+    <rect width="150" height="36" rx="18" fill="#6366F1" opacity="0.1"/>
+    <text x="75" y="24" font-family="system-ui, sans-serif" font-size="14" fill="#6366F1" text-anchor="middle" font-weight="500">GitHub Pages</text>
+  </g>
+
+  <!-- Phone mockup on right -->
+  <g transform="translate(800, 80)">
+    <!-- Phone frame -->
+    <rect x="0" y="0" width="220" height="440" rx="32" fill="white" stroke="#E2E8F0" stroke-width="3"/>
+    <!-- Notch -->
+    <rect x="70" y="8" width="80" height="20" rx="10" fill="#F1F5F9"/>
+    <!-- Screen content -->
+    <rect x="12" y="36" width="196" height="392" rx="24" fill="#F8FAFC"/>
+    <!-- Simulated toolbar -->
+    <rect x="12" y="36" width="196" height="50" rx="24" fill="#FAFAFA"/>
+    <circle cx="32" cy="61" r="4" fill="#10B981"/>
+    <rect x="42" y="57" width="60" height="8" rx="4" fill="#E2E8F0"/>
+    <!-- Simulated viewport content -->
+    <rect x="24" y="96" width="172" height="12" rx="4" fill="#E2E8F0"/>
+    <rect x="24" y="116" width="140" height="8" rx="4" fill="#F1F5F9"/>
+    <rect x="24" y="132" width="160" height="8" rx="4" fill="#F1F5F9"/>
+    <rect x="24" y="156" width="80" height="28" rx="8" fill="#6366F1"/>
+    <rect x="112" y="156" width="80" height="28" rx="8" fill="none" stroke="#6366F1" stroke-width="2"/>
+    <!-- Grid -->
+    <rect x="24" y="200" width="80" height="60" rx="8" fill="white" stroke="#E2E8F0" stroke-width="1"/>
+    <rect x="112" y="200" width="80" height="60" rx="8" fill="white" stroke="#E2E8F0" stroke-width="1"/>
+    <rect x="24" y="268" width="80" height="60" rx="8" fill="white" stroke="#E2E8F0" stroke-width="1"/>
+    <rect x="112" y="268" width="80" height="60" rx="8" fill="white" stroke="#E2E8F0" stroke-width="1"/>
+    <!-- Resolution label -->
+    <text x="110" y="360" font-family="monospace" font-size="10" fill="#94A3B8" text-anchor="middle">2560 × 1440</text>
+    <!-- Device preset buttons -->
+    <rect x="50" y="372" width="30" height="20" rx="4" fill="#F1F5F9"/>
+    <rect x="86" y="372" width="30" height="20" rx="4" fill="#F1F5F9"/>
+    <rect x="122" y="372" width="30" height="20" rx="4" fill="#6366F1" opacity="0.15"/>
+  </g>
+
+  <!-- Bottom bar: branding -->
+  <rect x="0" y="590" width="1200" height="40" fill="#6366F1" opacity="0.05"/>
+  <text x="80" y="616" font-family="system-ui, sans-serif" font-size="14" fill="#6366F1" font-weight="500">viewpo.io</text>
+  <text x="1120" y="616" font-family="system-ui, sans-serif" font-size="12" fill="#94A3B8" text-anchor="end">by Little Bear Apps</text>
+</svg>

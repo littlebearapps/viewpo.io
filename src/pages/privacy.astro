@@ -1,0 +1,91 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Header from '@components/Header.astro';
+import Footer from '@components/Footer.astro';
+---
+
+<BaseLayout
+  title="Privacy Policy | Viewpo"
+  description="How Viewpo collects, uses, and protects your data. Privacy-first analytics, OAuth authentication, and GDPR compliance."
+>
+  <Header slot="header" />
+
+  <section class="py-16 md:py-24">
+    <div class="container-wide">
+      <div class="max-w-3xl mx-auto prose prose-slate dark:prose-invert">
+        <h1 class="font-heading font-bold text-4xl md:text-5xl mb-4">Privacy Policy</h1>
+        <p class="text-foreground/50 text-sm mb-12">Last updated: 14 February 2026</p>
+
+        <h2 class="font-heading font-semibold text-2xl mt-12 mb-4">Who we are</h2>
+        <p class="text-foreground/70 leading-relaxed mb-6">
+          Viewpo is built by <a href="https://littlebearapps.com" class="text-primary hover:underline" target="_blank" rel="noopener noreferrer">Little Bear Apps</a>, an Australian indie software studio. We build practical, privacy-friendly developer tools.
+        </p>
+
+        <h2 class="font-heading font-semibold text-2xl mt-12 mb-4">What data we collect</h2>
+
+        <h3 class="font-heading font-semibold text-xl mt-8 mb-3">Website (viewpo.io)</h3>
+        <ul class="text-foreground/70 space-y-2 mb-6 list-disc pl-6">
+          <li><strong>Analytics:</strong> We use <a href="https://plausible.io" class="text-primary hover:underline" target="_blank" rel="noopener noreferrer">Plausible Analytics</a>, a privacy-first analytics tool. It collects no personal data, uses no cookies, and is fully GDPR-compliant. We see aggregate page views, referrers, and device types — nothing that identifies you.</li>
+          <li><strong>Email address:</strong> If you sign up for the beta or waitlist, we collect your email address to send you launch notifications and beta access details. We don't sell, share, or use your email for anything else.</li>
+        </ul>
+
+        <h3 class="font-heading font-semibold text-xl mt-8 mb-3">Viewpo app</h3>
+        <ul class="text-foreground/70 space-y-2 mb-6 list-disc pl-6">
+          <li><strong>Authentication:</strong> We use OAuth (Sign in with Apple, GitHub, Cloudflare) for secure sign-in. We never see or store your passwords.</li>
+          <li><strong>Provider access:</strong> When you link a hosting provider (Cloudflare Pages, GitHub Pages, etc.), we request only the permissions needed to list your projects and preview deployments. We don't read, modify, or delete your code or hosting configuration.</li>
+          <li><strong>Preview URLs:</strong> Viewpo accesses your deployment preview URLs to render them in the viewport viewer. These URLs are only visible to you and anyone you explicitly share them with.</li>
+          <li><strong>Usage data:</strong> We may collect anonymised usage data (features used, viewport sizes selected) to improve the app. This data is never linked to your identity.</li>
+        </ul>
+
+        <h2 class="font-heading font-semibold text-2xl mt-12 mb-4">What we don't do</h2>
+        <ul class="text-foreground/70 space-y-2 mb-6 list-disc pl-6">
+          <li>We don't sell your data to anyone</li>
+          <li>We don't use tracking cookies</li>
+          <li>We don't serve targeted advertising</li>
+          <li>We don't share your data with third-party marketing platforms</li>
+          <li>We don't access your source code or modify your deployments</li>
+        </ul>
+
+        <h2 class="font-heading font-semibold text-2xl mt-12 mb-4">Data storage and security</h2>
+        <p class="text-foreground/70 leading-relaxed mb-6">
+          Your data is stored securely using industry-standard encryption in transit (TLS) and at rest. Our infrastructure is hosted on Cloudflare and Apple's cloud services. We follow security best practices and regularly review our data handling processes.
+        </p>
+
+        <h2 class="font-heading font-semibold text-2xl mt-12 mb-4">Your rights</h2>
+        <p class="text-foreground/70 leading-relaxed mb-4">
+          Under GDPR, the Australian Privacy Act, and other applicable privacy laws, you have the right to:
+        </p>
+        <ul class="text-foreground/70 space-y-2 mb-6 list-disc pl-6">
+          <li>Access the personal data we hold about you</li>
+          <li>Request correction of inaccurate data</li>
+          <li>Request deletion of your data</li>
+          <li>Withdraw consent for email communications at any time</li>
+          <li>Export your data in a portable format</li>
+        </ul>
+        <p class="text-foreground/70 leading-relaxed mb-6">
+          To exercise any of these rights, email us at <a href="mailto:privacy@littlebearapps.com" class="text-primary hover:underline">privacy@littlebearapps.com</a>.
+        </p>
+
+        <h2 class="font-heading font-semibold text-2xl mt-12 mb-4">Third-party services</h2>
+        <ul class="text-foreground/70 space-y-2 mb-6 list-disc pl-6">
+          <li><strong>Plausible Analytics</strong> — Privacy-first web analytics (no cookies, GDPR-compliant)</li>
+          <li><strong>Cloudflare</strong> — Website hosting and CDN</li>
+          <li><strong>Apple</strong> — App distribution (App Store) and Sign in with Apple</li>
+          <li><strong>GitHub</strong> — OAuth authentication and GitHub Pages integration</li>
+        </ul>
+
+        <h2 class="font-heading font-semibold text-2xl mt-12 mb-4">Changes to this policy</h2>
+        <p class="text-foreground/70 leading-relaxed mb-6">
+          We may update this policy from time to time. We'll notify you of significant changes by email (if you've signed up) or by posting a notice on the website.
+        </p>
+
+        <h2 class="font-heading font-semibold text-2xl mt-12 mb-4">Contact</h2>
+        <p class="text-foreground/70 leading-relaxed mb-6">
+          If you have questions about this privacy policy or how we handle your data, email us at <a href="mailto:privacy@littlebearapps.com" class="text-primary hover:underline">privacy@littlebearapps.com</a>.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <Footer slot="footer" />
+</BaseLayout>
