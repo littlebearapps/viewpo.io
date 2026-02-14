@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://viewpo.io/sitemap-index.xml

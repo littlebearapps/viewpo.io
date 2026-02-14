@@ -1,0 +1,114 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Header from '@components/Header.astro';
+import Footer from '@components/Footer.astro';
+import Hero from '@components/Hero.astro';
+import Section from '@components/Section.astro';
+import FeatureCard from '@components/FeatureCard.astro';
+import HowItWorks from '@components/HowItWorks.astro';
+import PricingTable from '@components/PricingTable.astro';
+import FAQ from '@components/FAQ.astro';
+import Button from '@components/Button.astro';
+---
+
+<BaseLayout
+  title="Preview Deploys, Any Device, Any Viewport"
+  description="Viewpo aggregates preview deployments from Cloudflare Pages, Vercel, Netlify, and GitHub Pages into one dashboard with a viewport viewer. See any screen size, from any device."
+>
+  <Header slot="header" />
+
+  <!-- Hero -->
+  <Hero />
+
+  <!-- Problem Section -->
+  <Section background="muted">
+    <div class="max-w-3xl mx-auto text-center">
+      <h2 class="font-heading font-bold text-3xl md:text-4xl mb-6 reveal">
+        Preview deployments are scattered
+      </h2>
+      <p class="text-foreground/60 text-lg leading-relaxed mb-8 reveal reveal-delay-1">
+        Cloudflare Pages, Vercel, Netlify, GitHub Pages — each has its own dashboard, its own deploy URLs, its own way of telling you whether a build succeeded. Finding the right preview link means logging in, navigating to the right project, finding the right branch, and hoping the build didn't fail. That's tedious on a laptop. It's painful on a phone.
+      </p>
+      <p class="text-foreground/60 text-lg leading-relaxed reveal reveal-delay-2">
+        And even when you find the link — you can only see it at whatever screen size you happen to be on. Want to check the desktop layout from your iPhone? Good luck.
+      </p>
+    </div>
+  </Section>
+
+  <!-- Features -->
+  <Section id="features">
+    <div class="text-center mb-16">
+      <h2 class="font-heading font-bold text-3xl md:text-4xl mb-4 reveal">
+        Everything you need to review deploys
+      </h2>
+      <p class="text-foreground/60 text-lg max-w-2xl mx-auto reveal reveal-delay-1">
+        One app. Every provider. Any viewport.
+      </p>
+    </div>
+
+    <div class="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+      <div class="reveal reveal-delay-1">
+        <FeatureCard
+          icon="viewport"
+          title="Viewport Viewer"
+          description="See a 27-inch desktop layout on your iPhone. The native WebView renders the actual site — not a screenshot — at any resolution you choose. Pan around, switch presets, check responsiveness."
+        />
+      </div>
+      <div class="reveal reveal-delay-2">
+        <FeatureCard
+          icon="providers"
+          title="Multi-Provider Dashboard"
+          description="Connect Cloudflare Pages, GitHub Pages, Vercel, and Netlify. See all your projects and their latest deploy status in one place. No more switching between dashboards."
+        />
+      </div>
+      <div class="reveal reveal-delay-3">
+        <FeatureCard
+          icon="pin"
+          title="Branch Pinning & Notifications"
+          description="Pin the branches you care about. Get notified when a deploy succeeds or fails. Stop refreshing dashboards — Viewpo tells you when it's ready."
+        />
+      </div>
+      <div class="reveal reveal-delay-4">
+        <FeatureCard
+          icon="share"
+          title="Share Links & QR Codes"
+          description="Generate a shareable link or QR code for any deploy. Share a specific version or a 'latest for this branch' link that always shows the newest deployment."
+        />
+      </div>
+    </div>
+  </Section>
+
+  <!-- How It Works -->
+  <HowItWorks />
+
+  <!-- Pricing -->
+  <PricingTable />
+
+  <!-- FAQ -->
+  <FAQ />
+
+  <!-- Final CTA -->
+  <Section id="cta" padding="lg">
+    <div class="max-w-2xl mx-auto text-center reveal">
+      <h2 class="font-heading font-bold text-3xl md:text-4xl mb-4">
+        Ready to simplify your preview workflow?
+      </h2>
+      <p class="text-foreground/60 text-lg mb-8 leading-relaxed">
+        Join the TestFlight beta and be among the first to try Viewpo. Free to get started, no credit card required.
+      </p>
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+        <Button size="lg" icon="arrow">
+          Join TestFlight Beta
+        </Button>
+        <Button variant="ghost" size="lg">
+          Android Waitlist
+        </Button>
+      </div>
+      <p class="text-foreground/40 text-sm mt-6">
+        Available on iOS, iPadOS, and macOS. Android coming later.
+      </p>
+    </div>
+  </Section>
+
+  <Footer slot="footer" />
+</BaseLayout>

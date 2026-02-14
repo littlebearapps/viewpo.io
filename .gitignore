@@ -1,0 +1,55 @@
+# === macOS ===
+.DS_Store
+._*
+
+# === Windows ===
+Thumbs.db
+[Dd]esktop.ini
+
+# === Linux ===
+*~
+.nfs*
+
+# === Editors ===
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# === Node.js ===
+node_modules/
+dist/
+build/
+*.tsbuildinfo
+package-lock.json
+.cache/
+npm-debug.log*
+
+# === Astro ===
+.astro/
+
+# === Cloudflare ===
+.wrangler/
+.dev.vars
+
+# === Environment ===
+.env
+.env.local
+.env.*.local
+.env.production
+
+# === Tooling ===
+.direnv/
+.envrc.local
+.claude-context
+.claude/settings.local.json
+
+# === Secrets ===
+secrets/
+*.key
+*.pem
+
+# === Testing ===
+coverage/
+test-results/
+playwright-report/

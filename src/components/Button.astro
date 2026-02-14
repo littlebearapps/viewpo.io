@@ -1,0 +1,64 @@
+---
+interface Props {
+  variant?: 'primary' | 'secondary' | 'outline' | 'ghost';
+  href?: string;
+  size?: 'sm' | 'md' | 'lg';
+  class?: string;
+  icon?: 'arrow' | 'external' | 'none';
+}
+
+const {
+  variant = 'primary',
+  href,
+  size = 'md',
+  class: className = '',
+  icon = 'none',
+} = Astro.props;
+
+const baseStyles = 'inline-flex items-center justify-center gap-2 font-heading font-medium rounded-xl transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 hover:scale-[1.02] active:scale-[0.98]';
+
+const sizeStyles = {
+  sm: 'px-4 py-2 text-sm',
+  md: 'px-6 py-3 text-base',
+  lg: 'px-8 py-4 text-lg',
+};
+
+const variantStyles = {
+  primary: 'bg-primary text-white hover:bg-primary-hover focus:ring-primary shadow-md hover:shadow-lg',
+  secondary: 'bg-secondary text-white hover:bg-orange-600 focus:ring-secondary shadow-md hover:shadow-lg',
+  outline: 'border-2 border-primary text-primary hover:bg-primary/10 focus:ring-primary dark:text-indigo-300 dark:border-indigo-400',
+  ghost: 'text-foreground hover:bg-foreground/5 focus:ring-foreground/20',
+};
+
+const classes = `${baseStyles} ${sizeStyles[size]} ${variantStyles[variant]} ${className}`;
+---
+
+{href ? (
+  <a
+    href={href}
+    class={classes}
+    target={icon === 'external' ? '_blank' : undefined}
+    rel={icon === 'external' ? 'noopener noreferrer' : undefined}
+  >
+    <slot />
+    {icon === 'arrow' && (
+      <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+      </svg>
+    )}
+    {icon === 'external' && (
+      <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+      </svg>
+    )}
+  </a>
+) : (
+  <button class={classes}>
+    <slot />
+    {icon === 'arrow' && (
+      <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+      </svg>
+    )}
+  </button>
+)}

@@ -1,0 +1,33 @@
+---
+interface Props {
+  id?: string;
+  class?: string;
+  background?: 'default' | 'muted' | 'dark';
+  padding?: 'sm' | 'md' | 'lg';
+}
+
+const {
+  id,
+  class: className = '',
+  background = 'default',
+  padding = 'lg',
+} = Astro.props;
+
+const bgStyles = {
+  default: '',
+  muted: 'bg-muted dark:bg-slate-800/50',
+  dark: 'bg-dark-bg text-white',
+};
+
+const paddingStyles = {
+  sm: 'py-12 md:py-16',
+  md: 'py-16 md:py-20',
+  lg: 'py-20 md:py-28',
+};
+---
+
+<section id={id} class:list={[paddingStyles[padding], bgStyles[background], className]}>
+  <div class="container-wide">
+    <slot />
+  </div>
+</section>

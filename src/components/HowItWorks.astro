@@ -1,0 +1,50 @@
+---
+import Section from './Section.astro';
+
+const steps = [
+  {
+    number: '1',
+    title: 'Connect',
+    description: 'Link your Cloudflare Pages, GitHub Pages, Vercel, or Netlify accounts. Viewpo discovers your projects automatically.',
+    icon: `<path stroke-linecap="round" stroke-linejoin="round" d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m9.86-9.86a4.5 4.5 0 00-6.364 0l-4.5 4.5a4.5 4.5 0 001.242 7.244" />`,
+  },
+  {
+    number: '2',
+    title: 'Deploy',
+    description: 'Push your code. Viewpo shows build status in real time — success, failure, in progress. No more checking provider dashboards.',
+    icon: `<path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5" />`,
+  },
+  {
+    number: '3',
+    title: 'View',
+    description: 'Open any preview in the viewport viewer. See a 27-inch desktop layout on your phone. Swipe between device sizes. Pin branches for notifications.',
+    icon: `<path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" /><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />`,
+  },
+];
+---
+
+<Section id="how-it-works" background="muted">
+  <div class="text-center mb-16">
+    <h2 class="font-heading font-bold text-3xl md:text-4xl mb-4 reveal">How It Works</h2>
+    <p class="text-foreground/60 text-lg max-w-2xl mx-auto reveal reveal-delay-1">
+      Three steps from push to preview. No more hunting through dashboards.
+    </p>
+  </div>
+
+  <div class="grid md:grid-cols-3 gap-8 md:gap-12 max-w-4xl mx-auto">
+    {steps.map((step, i) => (
+      <div class={`reveal reveal-delay-${i + 1} text-center`}>
+        <div class="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center mx-auto mb-6">
+          <svg class="w-8 h-8 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+            <Fragment set:html={step.icon} />
+          </svg>
+        </div>
+        <div class="text-sm font-heading font-semibold text-primary uppercase tracking-wider mb-2">
+          Step {step.number}
+        </div>
+        <h3 class="font-heading font-semibold text-xl mb-3">{step.title}</h3>
+        <p class="text-foreground/60 leading-relaxed">{step.description}</p>
+      </div>
+    ))}
+  </div>
+</Section>
