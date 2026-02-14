@@ -15,7 +15,7 @@
 | **Alt Domains** | viewpo.app, viewpo.dev (both redirect to viewpo.io) |
 | **CF Pages Project** | `viewpo-io` |
 | **CF Zone** | `840ca9d145596b47b9868868e4cd7b81` |
-| **Status** | Pre-launch scaffold |
+| **Status** | Marketing site live — homepage + /teams/ + /creators/ |
 
 ---
 
@@ -34,14 +34,18 @@ npm run build            # Build to dist/
 
 | Path | Description |
 |------|-------------|
-| `src/pages/index.astro` | Single-page homepage |
+| `src/pages/index.astro` | Homepage — hero, features, pricing, FAQ |
+| `src/pages/teams.astro` | /teams/ landing page — team leads, agencies, PMs |
+| `src/pages/creators.astro` | /creators/ landing page — vibe coders, AI builders |
 | `src/layouts/BaseLayout.astro` | Page layout with meta, JSON-LD |
-| `src/components/` | All components |
+| `src/components/` | All components (Hero, ProblemHook, HowItWorks, etc.) |
 | `src/styles/global.css` | Brand tokens and animations |
 | `src/utils/constants.ts` | Device presets, pricing tiers, FAQ data |
 | `public/` | Static assets, robots.txt, _headers |
-| `.github/workflows/` | CI and deploy workflows |
+| `.github/workflows/ci.yml` | CI — build check on PRs and main |
+| `.github/workflows/deploy-production.yml` | Deploy to CF Pages on push to main |
 | `docs/viewpo-purpose.md` | Product purpose document |
+| `docs/content/features-and-benefits.md` | Feature copy reference |
 
 ---
 
@@ -70,9 +74,16 @@ npm run build            # Build to dist/
 Viewpo is a native iOS/macOS app that aggregates preview deployments from multiple providers (Cloudflare Pages, Vercel, Netlify, GitHub Pages) into one dashboard with a viewport viewer. See `docs/viewpo-purpose.md` for full product context.
 
 ### Target Audiences
-1. **Solo developers** — juggling multiple projects across providers
-2. **Small teams** — devs, designers, stakeholders reviewing deploys
-3. **Agencies** — managing client sites across hosting providers
+1. **Seasoned Developer** — juggling multiple projects across providers, wants unified dashboard
+2. **Vibe Coder / AI Builder** — uses Cursor, v0, Bolt, Lovable, Replit; deploys via provider but lacks device preview tools
+3. **Non-Technical Reviewer** — designer, PM, client, stakeholder who receives preview links and needs to check how things look
+
+### Pages
+| Page | URL | Audience | Revenue Target |
+|------|-----|----------|----------------|
+| Homepage | `/` | All three segments | Awareness → Free tier |
+| Teams | `/teams/` | Team leads, agencies, PMs, designers | Pro tier ($29/mo) |
+| Creators | `/creators/` | Vibe coders, AI builders | Free → Starter ($9/mo) |
 
 ### Pricing
 - **Free**: 3 projects, 1 provider, viewport viewer
@@ -81,10 +92,35 @@ Viewpo is a native iOS/macOS app that aggregates preview deployments from multip
 
 ---
 
+## Deployment
+
+Deploy to CF Pages is automatic on push to `main` via GitHub Actions (`deploy-production.yml`).
+
+**GitHub Actions Secrets** (set via `gh secret set`):
+- `CLOUDFLARE_API_TOKEN` — from bws `cloudflare-api-token`
+- `CLOUDFLARE_ACCOUNT_ID` — from bws `cloudflare-account-id`
+
+**No preview deploys** — CI runs build check on PRs but doesn't deploy previews. Only production deploys on merge to main.
+
+**CF Pages project**: `viewpo-io`
+
+---
+
+## Content Guidelines
+
+Homepage and subpages follow the multi-audience content strategy defined in the `marketing-copy` skill:
+- **Jargon avoidance**: "deploy" → "changes go live", "OAuth" → "secure sign-in", "WebView" → "real browser engine"
+- **Readability**: Grade 6 headlines, Grade 8-10 body copy
+- **Progressive disclosure**: Simple headline → specific subheading → detailed body
+- **Banned patterns**: "seamless", "leverage", "robust" without detail (see `content-writing` rule)
+
+---
+
 ## Deferred (Not Yet Implemented)
 
 - Blog, docs, changelog pages
 - Email signup / waitlist form
 - Product screenshots (MVP UI not finalised)
-- Analytics (Plausible — add once live)
+- Plausible analytics (tracking attributes already in markup)
 - Playwright E2E tests
+- PR preview deploys (CI only runs build, no CF Pages preview)
