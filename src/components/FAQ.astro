@@ -13,7 +13,7 @@ import { FAQ_ITEMS } from '@utils/constants';
 
   <div class="max-w-3xl mx-auto space-y-3">
     {FAQ_ITEMS.map((item, i) => (
-      <details class={`accordion-item reveal reveal-delay-${Math.min(i + 1, 4)} group rounded-xl border border-foreground/10 dark:border-white/10 bg-white dark:bg-slate-800/50 overflow-hidden`}>
+      <details class={`accordion-item reveal reveal-delay-${Math.min(i + 1, 4)} group rounded-xl border border-foreground/10 dark:border-white/10 bg-white dark:bg-slate-800/50 overflow-hidden`} data-question={item.question}>
         <summary class="flex items-center justify-between gap-4 p-5 cursor-pointer select-none list-none font-heading font-semibold text-base hover:bg-foreground/[0.02] dark:hover:bg-white/[0.02] transition-colors">
           {item.question}
           <svg class="w-5 h-5 text-foreground/40 flex-shrink-0 transition-transform duration-200 group-open:rotate-45" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -41,3 +41,18 @@ import { FAQ_ITEMS } from '@utils/constants';
     },
   })),
 })} />
+
+<script>
+  function initFaqTracking(): void {
+    document.querySelectorAll<HTMLDetailsElement>('#faq details[data-question]').forEach((details) => {
+      details.addEventListener('toggle', () => {
+        if (details.open && window.plausible) {
+          window.plausible('FAQ Toggle', { props: { question: details.dataset.question } });
+        }
+      });
+    });
+  }
+
+  initFaqTracking();
+  document.addEventListener('astro:after-swap', initFaqTracking);
+</script>

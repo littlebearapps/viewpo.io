@@ -1,0 +1,37 @@
+---
+import Section from './Section.astro';
+---
+
+<Section background="muted">
+  <div class="max-w-3xl mx-auto">
+    <!-- Icon -->
+    <div class="flex justify-center mb-8 reveal">
+      <div class="w-14 h-14 rounded-2xl bg-secondary/10 flex items-center justify-center">
+        <svg class="w-7 h-7 text-secondary" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
+        </svg>
+      </div>
+    </div>
+
+    <div class="text-center">
+      <h2 class="font-heading font-bold text-3xl md:text-4xl mb-6 reveal">
+        Preview deployments are scattered
+      </h2>
+      <p class="text-foreground/60 text-lg leading-relaxed mb-6 reveal reveal-delay-1">
+        Cloudflare Pages, Vercel, Netlify, GitHub Pages — each has its own dashboard, its own deploy URLs, its own way of telling you whether a build succeeded. Finding the right preview link means logging in, navigating to the right project, finding the right branch, and hoping the build didn't fail.
+      </p>
+      <p class="text-foreground/60 text-lg leading-relaxed mb-8 reveal reveal-delay-2">
+        And even when you find the link — you can only see it at whatever screen size you're on. Want to check the desktop layout from your iPhone? You're stuck waiting until you're back at your desk.
+      </p>
+
+      <!-- Transition line -->
+      <div class="reveal reveal-delay-3 flex items-center justify-center gap-4">
+        <div class="h-px w-12 bg-primary/30"></div>
+        <p class="text-primary dark:text-indigo-300 font-heading font-semibold text-lg">
+          There's a better way
+        </p>
+        <div class="h-px w-12 bg-primary/30"></div>
+      </div>
+    </div>
+  </div>
+</Section>

@@ -35,7 +35,8 @@ export const PRICING_TIERS: PricingTier[] = [
     features: [
       'Up to 3 projects',
       '1 provider connection',
-      'Viewport viewer with presets',
+      'Full viewport viewer (any resolution)',
+      'Device presets (iPhone, iPad, Desktop)',
       'Build status notifications',
     ],
     cta: 'Get Started',
@@ -75,12 +76,20 @@ export const PRICING_TIERS: PricingTier[] = [
 
 export const FAQ_ITEMS = [
   {
-    question: 'What is Viewpo?',
-    answer: 'Viewpo aggregates preview deployments from multiple providers — Cloudflare Pages, Vercel, Netlify, GitHub Pages — into one dashboard. It includes a viewport viewer that lets you see how any deployment looks at any screen resolution, from any device.',
+    question: 'How does the viewport viewer work?',
+    answer: 'The viewport viewer uses a native WebView (not an iframe) to load the actual website at your chosen resolution. This means it works with any site — even those that block iframe embedding. You can view a 27-inch desktop layout right on your iPhone, pan around to see different parts, and switch between device presets instantly.',
   },
   {
-    question: 'How does the viewport viewer work?',
-    answer: 'The viewport viewer uses a native WebView (not an iframe) to load the actual website at your chosen resolution. This means it works with any site — even those that block iframe embedding. You can view a 27-inch desktop layout right on your iPhone.',
+    question: 'Can I really see a desktop layout on my phone?',
+    answer: 'Yes! The viewport viewer renders the actual website at your chosen resolution — whether that\'s a 27-inch desktop (2560×1440) or a small phone (393×852). You can pan around to see different parts of the page, just like looking through a viewfinder. It\'s a native WebView, so it\'s the real site — not a screenshot.',
+  },
+  {
+    question: 'What is Viewpo?',
+    answer: 'Viewpo is a native app that aggregates preview deployments from Cloudflare Pages, GitHub Pages, Vercel, and Netlify into one dashboard. Its key feature is the viewport viewer — which lets you see how any deployment looks at any screen resolution, from any device.',
+  },
+  {
+    question: 'How do I connect my accounts?',
+    answer: 'Just link your Cloudflare Pages or GitHub account with a single tap — Viewpo uses OAuth under the hood, so there are no API keys, tokens, or config files to deal with. Once connected, it discovers your projects and branches automatically.',
   },
   {
     question: 'Which deployment providers are supported?',
@@ -88,15 +97,15 @@ export const FAQ_ITEMS = [
   },
   {
     question: 'Is there a free tier?',
-    answer: 'Yes! The free tier includes up to 3 projects, 1 provider connection, and full access to the viewport viewer with device presets. No credit card required.',
+    answer: 'Yes! The free tier includes up to 3 projects, 1 provider connection, and full access to the viewport viewer at any resolution with device presets. No credit card required.',
   },
   {
     question: 'Which platforms is Viewpo available on?',
-    answer: 'Viewpo launches on iOS and iPadOS via the App Store, with macOS support via Mac Catalyst. Android and Windows versions are planned for later via Tauri.',
+    answer: 'Viewpo is coming soon — launching first on iOS and iPadOS via the App Store, with macOS support via Mac Catalyst. Android, Windows, and Linux versions will follow. Sign up for the beta or get notified when it launches.',
   },
   {
     question: 'Can I share preview links with my team?',
-    answer: 'Yes — on Starter and Pro plans, you can generate shareable links and QR codes for any deployment. You can share a specific deploy or a "latest for this branch" link that always shows the newest version.',
+    answer: 'Yes — on Starter and Pro plans, you can generate shareable links and QR codes for any deployment. You can share a specific deploy or a "latest for this branch" link that always shows the newest version. Team members can view and provide feedback without needing provider dashboard access.',
   },
   {
     question: 'Is Viewpo made by Little Bear Apps?',

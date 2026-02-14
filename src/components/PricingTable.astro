@@ -51,7 +51,7 @@ import { PRICING_TIERS } from '@utils/constants';
         <Button
           href="#cta"
           variant={tier.highlighted ? 'primary' : 'outline'}
-          class="w-full justify-center"
+          class={`w-full justify-center plausible-event-name=Pricing+${tier.name}`}
         >
           {tier.cta}
         </Button>

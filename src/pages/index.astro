@@ -5,6 +5,10 @@ import Footer from '@components/Footer.astro';
 import Hero from '@components/Hero.astro';
 import Section from '@components/Section.astro';
 import FeatureCard from '@components/FeatureCard.astro';
+import ViewportDemo from '@components/ViewportDemo.astro';
+import ProblemHook from '@components/ProblemHook.astro';
+import ViewportFeatureSpotlight from '@components/ViewportFeatureSpotlight.astro';
+import PlatformAvailability from '@components/PlatformAvailability.astro';
 import HowItWorks from '@components/HowItWorks.astro';
 import PricingTable from '@components/PricingTable.astro';
 import FAQ from '@components/FAQ.astro';
@@ -20,29 +24,23 @@ import Button from '@components/Button.astro';
   <!-- Hero -->
   <Hero />
 
-  <!-- Problem Section -->
-  <Section background="muted">
-    <div class="max-w-3xl mx-auto text-center">
-      <h2 class="font-heading font-bold text-3xl md:text-4xl mb-6 reveal">
-        Preview deployments are scattered
-      </h2>
-      <p class="text-foreground/60 text-lg leading-relaxed mb-8 reveal reveal-delay-1">
-        Cloudflare Pages, Vercel, Netlify, GitHub Pages — each has its own dashboard, its own deploy URLs, its own way of telling you whether a build succeeded. Finding the right preview link means logging in, navigating to the right project, finding the right branch, and hoping the build didn't fail. That's tedious on a laptop. It's painful on a phone.
-      </p>
-      <p class="text-foreground/60 text-lg leading-relaxed reveal reveal-delay-2">
-        And even when you find the link — you can only see it at whatever screen size you happen to be on. Want to check the desktop layout from your iPhone? Good luck.
-      </p>
-    </div>
-  </Section>
+  <!-- Viewport Demo (interactive simulated viewer) -->
+  <ViewportDemo />
 
-  <!-- Features -->
-  <Section id="features">
+  <!-- Problem Hook -->
+  <ProblemHook />
+
+  <!-- Primary Feature: Viewport Viewer Spotlight -->
+  <ViewportFeatureSpotlight />
+
+  <!-- Supporting Features -->
+  <Section background="muted">
     <div class="text-center mb-16">
       <h2 class="font-heading font-bold text-3xl md:text-4xl mb-4 reveal">
         Everything you need to review deploys
       </h2>
       <p class="text-foreground/60 text-lg max-w-2xl mx-auto reveal reveal-delay-1">
-        One app. Every provider. Any viewport.
+        Responsive previews, instant updates, seamless connections, and team feedback — all in one app.
       </p>
     </div>
 
@@ -50,33 +48,36 @@ import Button from '@components/Button.astro';
       <div class="reveal reveal-delay-1">
         <FeatureCard
           icon="viewport"
-          title="Viewport Viewer"
-          description="See a 27-inch desktop layout on your iPhone. The native WebView renders the actual site — not a screenshot — at any resolution you choose. Pan around, switch presets, check responsiveness."
+          title="Preview at Any Resolution"
+          description="Check a 27-inch desktop layout on your iPhone. Switch to the iPad view on your MacBook. Viewpo renders the actual site at whatever resolution you choose — on whatever device you're holding."
         />
       </div>
       <div class="reveal reveal-delay-2">
         <FeatureCard
-          icon="providers"
-          title="Multi-Provider Dashboard"
-          description="Connect Cloudflare Pages, GitHub Pages, Vercel, and Netlify. See all your projects and their latest deploy status in one place. No more switching between dashboards."
+          icon="notification"
+          title="Preview Your Website Updates Instantly"
+          description="No more hunting for preview links. Viewpo automatically pulls your latest website updates and displays them the moment they deploy — so you can review, refine, and share across all your providers."
         />
       </div>
       <div class="reveal reveal-delay-3">
         <FeatureCard
-          icon="pin"
-          title="Branch Pinning & Notifications"
-          description="Pin the branches you care about. Get notified when a deploy succeeds or fails. Stop refreshing dashboards — Viewpo tells you when it's ready."
+          icon="team"
+          title="Get Feedback from Your Team"
+          description="Share a preview link or QR code with designers, stakeholders, or clients. They can view the deploy and give feedback on the look and feel — no provider dashboard access needed."
         />
       </div>
       <div class="reveal reveal-delay-4">
         <FeatureCard
-          icon="share"
-          title="Share Links & QR Codes"
-          description="Generate a shareable link or QR code for any deploy. Share a specific version or a 'latest for this branch' link that always shows the newest deployment."
+          icon="oauth"
+          title="Link Your Accounts in Seconds"
+          description="Connect your Cloudflare Pages and GitHub accounts with a single tap — no API keys, no config files. Viewpo uses OAuth under the hood so setup is effortless. More providers coming soon."
         />
       </div>
     </div>
   </Section>
+
+  <!-- Platform Availability -->
+  <PlatformAvailability />
 
   <!-- How It Works -->
   <HowItWorks />
@@ -94,18 +95,18 @@ import Button from '@components/Button.astro';
         Ready to simplify your preview workflow?
       </h2>
       <p class="text-foreground/60 text-lg mb-8 leading-relaxed">
-        Join the TestFlight beta and be among the first to try Viewpo. Free to get started, no credit card required.
+        Viewpo is coming soon. Join the beta to help shape it, or sign up to be notified when it launches.
       </p>
       <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-        <Button size="lg" icon="arrow">
-          Join TestFlight Beta
+        <Button size="lg" icon="arrow" class="plausible-event-name=CTA+Join+Beta">
+          Join the Beta
         </Button>
-        <Button variant="ghost" size="lg">
-          Android Waitlist
+        <Button variant="ghost" size="lg" class="plausible-event-name=CTA+Notify+Launch">
+          Notify Me at Launch
         </Button>
       </div>
       <p class="text-foreground/40 text-sm mt-6">
-        Available on iOS, iPadOS, and macOS. Android coming later.
+        Launching first on iOS, iPadOS, and macOS. More platforms to follow.
       </p>
     </div>
   </Section>

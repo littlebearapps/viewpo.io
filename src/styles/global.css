@@ -1,4 +1,5 @@
 @import 'tailwindcss';
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Outfit:wght@500;600;700&display=swap');
 
 /* Enable class-based dark mode (Tailwind 4) */
 @variant dark (&:where(.dark, .dark *));
@@ -43,9 +44,6 @@
   --duration-normal: 300ms;
   --duration-slow: 500ms;
 }
-
-/* Google Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Outfit:wght@500;600;700&display=swap');
 
 /* Base styles */
 html {

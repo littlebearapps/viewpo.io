@@ -23,7 +23,7 @@ const navLinks = [
     <!-- Desktop Nav -->
     <nav class="hidden md:flex items-center gap-8" aria-label="Main navigation">
       {navLinks.map(({ label, href }) => (
-        <a href={href} class="text-sm font-medium text-foreground/70 hover:text-foreground transition-colors">
+        <a href={href} class={`text-sm font-medium text-foreground/70 hover:text-foreground transition-colors plausible-event-name=Nav+${label}`}>
           {label}
         </a>
       ))}
@@ -34,9 +34,9 @@ const navLinks = [
       <ThemeToggle />
       <a
         href="#cta"
-        class="hidden sm:inline-flex items-center gap-2 bg-primary hover:bg-primary-hover text-white text-sm font-heading font-medium px-4 py-2 rounded-lg transition-all hover:scale-[1.02] active:scale-[0.98]"
+        class="hidden sm:inline-flex items-center gap-2 bg-primary hover:bg-primary-hover text-white text-sm font-heading font-medium px-4 py-2 rounded-lg transition-all hover:scale-[1.02] active:scale-[0.98] plausible-event-name=CTA+Header+Join+Beta"
       >
-        Join Beta
+        Join the Beta
       </a>
 
       <!-- Mobile menu button -->
@@ -61,15 +61,15 @@ const navLinks = [
   >
     <div class="container-wide py-4 flex flex-col gap-3">
       {navLinks.map(({ label, href }) => (
-        <a href={href} class="text-base font-medium text-foreground/70 hover:text-foreground py-2 transition-colors">
+        <a href={href} class={`text-base font-medium text-foreground/70 hover:text-foreground py-2 transition-colors plausible-event-name=Nav+${label}`}>
           {label}
         </a>
       ))}
       <a
         href="#cta"
-        class="inline-flex items-center justify-center bg-primary hover:bg-primary-hover text-white text-sm font-heading font-medium px-4 py-2.5 rounded-lg transition-all mt-2"
+        class="inline-flex items-center justify-center bg-primary hover:bg-primary-hover text-white text-sm font-heading font-medium px-4 py-2.5 rounded-lg transition-all mt-2 plausible-event-name=CTA+Header+Join+Beta"
       >
-        Join Beta
+        Join the Beta
       </a>
     </div>
   </nav>

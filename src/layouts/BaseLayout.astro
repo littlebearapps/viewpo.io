@@ -83,6 +83,13 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
+    <!-- Analytics -->
+    <script is:inline async src="https://plausible.io/js/pa-XnY0rOrxQvpStF2a1FD0y.js"></script>
+    <script is:inline>
+      window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)};plausible.init=plausible.init||function(i){plausible.o=i||{}};
+      plausible.init();
+    </script>
+
     <!-- Theme persistence (prevent flash) -->
     <script is:inline>
       (function() {
