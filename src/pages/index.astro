@@ -5,9 +5,7 @@ import Footer from '@components/Footer.astro';
 import Hero from '@components/Hero.astro';
 import Section from '@components/Section.astro';
 import FeatureCard from '@components/FeatureCard.astro';
-import ViewportDemo from '@components/ViewportDemo.astro';
 import ProblemHook from '@components/ProblemHook.astro';
-import ViewportFeatureSpotlight from '@components/ViewportFeatureSpotlight.astro';
 import PlatformAvailability from '@components/PlatformAvailability.astro';
 import HowItWorks from '@components/HowItWorks.astro';
 import PricingTable from '@components/PricingTable.astro';
@@ -16,8 +14,8 @@ import SocialProof from '@components/SocialProof.astro';
 ---
 
 <BaseLayout
-  title="Viewpo — Preview Any Website at Any Resolution"
-  description="See how your website looks at any screen size. Viewpo aggregates previews from Cloudflare Pages, Vercel, Netlify, and GitHub Pages with a built-in viewport viewer."
+  title="Viewpo — Instantly Preview Any Website at Any Resolution"
+  description="Push a change, check it instantly. Viewpo shows your website at any screen size on any device, and aggregates deploy previews from Cloudflare Pages, Vercel, Netlify, and GitHub Pages."
 >
   <Header slot="header" />
 
@@ -27,14 +25,8 @@ import SocialProof from '@components/SocialProof.astro';
   <!-- Social Proof -->
   <SocialProof />
 
-  <!-- Viewport Demo (interactive simulated viewer) -->
-  <ViewportDemo />
-
-  <!-- Problem Hook -->
+  <!-- Problem → Solution (merged ProblemHook + ViewportFeatureSpotlight) -->
   <ProblemHook />
-
-  <!-- Primary Feature: Viewport Viewer Spotlight -->
-  <ViewportFeatureSpotlight />
 
   <!-- Supporting Features -->
   <Section background="muted">
