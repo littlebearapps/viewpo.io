@@ -10,7 +10,10 @@ export default defineConfig({
   integrations: [
     sitemap({
       filter: (page) =>
-        !page.includes('/confirmed') && !page.includes('/preferences'),
+        !page.includes('/confirmed') &&
+        !page.includes('/preferences') &&
+        !page.includes('/js/') &&
+        !page.includes('/api/'),
     }),
   ],
   vite: {
