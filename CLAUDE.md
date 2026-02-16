@@ -148,4 +148,4 @@ Auto-deploy on push to `main` via GitHub Actions (`deploy-production.yml`).
 - PR preview deploys
 - Comparison pages (Viewpo vs Responsively, vs BrowserStack)
 - Self-hosted Google Fonts (currently loaded via Google CDN)
-- ABN number in Terms page (placeholder `[TBA]`)
+- Register "Viewpo" as additional business name on ABN via ASIC

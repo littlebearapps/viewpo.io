@@ -193,7 +193,7 @@ SignupModal and ContactModal both POST to `platform.littlebearapps.com`. The ful
 - PR preview deploys (CI only runs build, no CF Pages preview)
 - Comparison pages (Viewpo vs Responsively, vs BrowserStack)
 - Self-hosted Google Fonts (currently loaded via Google CDN)
-- ABN number in Terms page (placeholder `[TBA]`)
+- Register "Viewpo" as additional business name on ABN via ASIC
 - Dedicated OG images for /teams/ and /creators/ (currently use default)
 - BreadcrumbList schema on subpages
 - HowTo schema on homepage How It Works section
