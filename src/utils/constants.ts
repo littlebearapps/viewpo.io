@@ -2,7 +2,7 @@ export const SITE_NAME = 'Viewpo';
 export const SITE_URL = 'https://viewpo.io';
 export const SITE_DESCRIPTION = 'See your preview deploys on any device, at any viewport. One dashboard for Cloudflare Pages, Vercel, Netlify, and GitHub Pages.';
 
-export const API_BASE_URL = 'https://platform.littlebearapps.com';
+export const API_BASE_URL = 'https://email.viewpo.io';
 export const TURNSTILE_SITE_KEY = '0x4AAAAAACcgsYVs4BfNtUGF';
 
 export const PROVIDERS = [
