@@ -39,8 +39,8 @@ npm run build            # Build to dist/
 | Creators | `/creators/` | `src/pages/creators.astro` | Vibe coders, AI builders |
 | Confirmed | `/confirmed/` | `src/pages/confirmed.astro` | Post-email-confirmation landing page |
 | Preferences | `/preferences/` | `src/pages/preferences.astro` | Email preferences / unsubscribe |
-| Privacy | `/privacy/` | `src/pages/privacy.astro` | Legal — privacy policy |
-| Terms | `/terms/` | `src/pages/terms.astro` | Legal — terms of service |
+| Privacy | `/privacy/` | `src/pages/privacy.astro` | Legal — privacy policy (ACL, GDPR, APP-compliant) |
+| Terms | `/terms/` | `src/pages/terms.astro` | Legal — terms of service (ACL-compliant, Lemon Squeezy MoR) |
 
 ---
 
@@ -141,6 +141,8 @@ Viewpo is a native iOS/macOS app that aggregates preview deployments from multip
 - **Free**: 3 projects, 1 provider, viewport viewer
 - **Starter** ($9/mo): Unlimited projects, all providers, sharing
 - **Pro** ($29/mo): Team workspaces, deploy comparison, API access
+- **Payment**: Lemon Squeezy (Merchant of Record) — handles tax/VAT/GST, refunds, chargebacks
+- **Currency**: USD base. "Prices exclude tax" disclosure on pricing page. Lemon Squeezy handles currency conversion
 
 ---
 

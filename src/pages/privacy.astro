@@ -32,7 +32,7 @@ import Footer from '@components/Footer.astro';
 
         <h3 class="font-heading font-semibold text-xl mt-8 mb-3">Viewpo app</h3>
         <ul class="text-foreground/70 space-y-2 mb-6 list-disc pl-6">
-          <li><strong>Authentication:</strong> We use OAuth (Sign in with Apple, GitHub, Cloudflare) for secure sign-in. We never see or store your passwords.</li>
+          <li><strong>Authentication:</strong> We use OAuth (Sign in with Apple, GitHub, Cloudflare) for secure sign-in. We never see or store your passwords. When you authenticate, we receive your email address and a unique provider identifier to create your account. Access tokens are encrypted and stored securely. We request only read-only access to list your projects and deployment URLs — we do not request write access to your code, repositories, or hosting configuration.</li>
           <li><strong>Provider access:</strong> When you link a hosting provider (Cloudflare Pages, GitHub Pages, etc.), we request only the permissions needed to list your projects and preview deployments. We don't read, modify, or delete your code or hosting configuration.</li>
           <li><strong>Preview URLs:</strong> Viewpo accesses your deployment preview URLs to render them in the viewport viewer. These URLs are only visible to you and anyone you explicitly share them with.</li>
           <li><strong>Usage data:</strong> We may collect anonymised usage data (features used, viewport sizes selected) to improve the app. This data is never linked to your identity.</li>
@@ -45,12 +45,22 @@ import Footer from '@components/Footer.astro';
           <li>We don't serve targeted advertising</li>
           <li>We don't share your data with third-party marketing platforms</li>
           <li>We don't access your source code or modify your deployments</li>
+          <li>We don't act as a data broker or sell, rent, or trade your personal information to any third party for their own marketing purposes</li>
         </ul>
 
         <h2 class="font-heading font-semibold text-2xl mt-12 mb-4">Data storage and security</h2>
         <p class="text-foreground/70 leading-relaxed mb-6">
           Your data is stored securely using industry-standard encryption in transit (TLS) and at rest. Our infrastructure is hosted on Cloudflare and Apple's cloud services. We follow security best practices and regularly review our data handling processes.
         </p>
+
+        <h2 class="font-heading font-semibold text-2xl mt-12 mb-4">Data retention</h2>
+        <ul class="text-foreground/70 space-y-2 mb-6 list-disc pl-6">
+          <li><strong>Account data:</strong> Deleted within 30 days of account termination</li>
+          <li><strong>Backups:</strong> Encrypted backups may retain data for up to 90 days before automatic deletion</li>
+          <li><strong>Analytics:</strong> Plausible analytics data is aggregate and cannot be linked to individuals. Retained indefinitely for trend analysis</li>
+          <li><strong>Financial records:</strong> Transaction records are held by Lemon Squeezy (Merchant of Record) in accordance with tax compliance requirements (typically 7 years) and are not stored by Viewpo</li>
+          <li><strong>Email addresses:</strong> Retained until you unsubscribe or request deletion</li>
+        </ul>
 
         <h2 class="font-heading font-semibold text-2xl mt-12 mb-4">Your rights</h2>
         <p class="text-foreground/70 leading-relaxed mb-4">
@@ -63,9 +73,22 @@ import Footer from '@components/Footer.astro';
           <li>Withdraw consent for email communications at any time</li>
           <li>Export your data in a portable format</li>
         </ul>
-        <p class="text-foreground/70 leading-relaxed mb-6">
+        <p class="text-foreground/70 leading-relaxed mb-4">
           To exercise any of these rights, email us at <a href="mailto:privacy@littlebearapps.com" class="text-links hover:text-primary transition-colors">privacy@littlebearapps.com</a>.
         </p>
+        <p class="text-foreground/70 leading-relaxed mb-6">
+          You can delete your account at any time through the Viewpo app. Upon deletion, your data will be removed in accordance with the data retention schedule above.
+        </p>
+
+        <h2 class="font-heading font-semibold text-2xl mt-12 mb-4">Legal basis for processing (GDPR)</h2>
+        <p class="text-foreground/70 leading-relaxed mb-4">
+          If you are in the European Economic Area or the United Kingdom, we process your data based on:
+        </p>
+        <ul class="text-foreground/70 space-y-2 mb-6 list-disc pl-6">
+          <li><strong>Contractual necessity</strong> — to provide the Viewpo service (account creation, fetching previews, managing provider connections)</li>
+          <li><strong>Legitimate interest</strong> — to improve the app via anonymised analytics, ensure security, and prevent abuse</li>
+          <li><strong>Consent</strong> — for marketing emails, which you can withdraw at any time via the <a href="/preferences/" class="text-links hover:text-primary transition-colors">preferences page</a> or by contacting us</li>
+        </ul>
 
         <h2 class="font-heading font-semibold text-2xl mt-12 mb-4">Third-party services</h2>
         <ul class="text-foreground/70 space-y-2 mb-6 list-disc pl-6">
@@ -73,7 +96,23 @@ import Footer from '@components/Footer.astro';
           <li><strong>Cloudflare</strong> — Website hosting and CDN</li>
           <li><strong>Apple</strong> — App distribution (App Store) and Sign in with Apple</li>
           <li><strong>GitHub</strong> — OAuth authentication and GitHub Pages integration</li>
+          <li><strong>Lemon Squeezy</strong> — Payment processing and subscription management (Merchant of Record)</li>
         </ul>
+
+        <h2 class="font-heading font-semibold text-2xl mt-12 mb-4">Overseas data disclosure</h2>
+        <p class="text-foreground/70 leading-relaxed mb-6">
+          Your personal data may be stored and processed on servers located outside Australia, primarily in the United States and globally via Cloudflare's edge network. Our third-party service providers (Cloudflare, Lemon Squeezy) maintain data protection standards consistent with Australian Privacy Principles. By using the Service, you consent to this transfer.
+        </p>
+
+        <h2 class="font-heading font-semibold text-2xl mt-12 mb-4">International data transfers</h2>
+        <p class="text-foreground/70 leading-relaxed mb-6">
+          We use service providers (Cloudflare, Lemon Squeezy) that process data in the United States and globally. These transfers are protected by Standard Contractual Clauses (SCCs) and, where applicable, the EU-US Data Privacy Framework. We take reasonable steps to ensure your data remains protected to the standards required by GDPR and the Australian Privacy Act.
+        </p>
+
+        <h2 class="font-heading font-semibold text-2xl mt-12 mb-4">Complaints</h2>
+        <p class="text-foreground/70 leading-relaxed mb-6">
+          If you believe we have breached the Australian Privacy Principles, contact us at <a href="mailto:privacy@littlebearapps.com" class="text-links hover:text-primary transition-colors">privacy@littlebearapps.com</a>. We will investigate and respond within 30 days. If you are not satisfied with our response, you may lodge a complaint with the <a href="https://www.oaic.gov.au/privacy/privacy-complaints" class="text-links hover:text-primary transition-colors" target="_blank" rel="noopener noreferrer">Office of the Australian Information Commissioner (OAIC)</a>.
+        </p>
 
         <h2 class="font-heading font-semibold text-2xl mt-12 mb-4">Changes to this policy</h2>
         <p class="text-foreground/70 leading-relaxed mb-6">
