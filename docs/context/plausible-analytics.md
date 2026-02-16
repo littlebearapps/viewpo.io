@@ -195,15 +195,19 @@ window.plausible('Beta+Signup+Submit', {
 });
 ```
 
-### Queue Stub
+### Queue Stub + Endpoint Override
 
-`BaseLayout.astro` includes a queue stub so `window.plausible()` calls never fail even if the script hasn't loaded yet:
+`BaseLayout.astro` includes a combined queue stub and endpoint override so:
+1. `window.plausible()` calls never fail even if the script hasn't loaded yet
+2. `plausible.init()` captures the proxy endpoint config before the script loads
 
 ```javascript
-window.plausible = window.plausible || function() {
-  (window.plausible.q = window.plausible.q || []).push(arguments)
-}
+window.plausible=window.plausible||function(){(window.plausible.q=window.plausible.q||[]).push(arguments)};
+plausible.init=plausible.init||function(i){plausible.o=i||{}};
+plausible.init({ endpoint: '/api/event/' });
 ```
+
+When the hashed script loads, its `S()` function calls `Object.assign(config, plausible.o)`, picking up the endpoint override from `plausible.o`.
 
 ---
 
@@ -216,20 +220,24 @@ As of 2026-02-16, Plausible is proxied through viewpo.io for ~85% adblocker bypa
 | Component | Path | Source File | What It Does |
 |-----------|------|------------|--------------|
 | Script proxy | `/js/script.js` | `src/pages/js/script.js.ts` | Fetches `pa-XnY0rOrxQvpStF2a1FD0y.js` from plausible.io, serves with 24h cache |
-| Event proxy | `/api/event` | `src/pages/api/event.ts` | Forwards event POSTs to plausible.io, strips cookies, preserves client IP |
+| Event proxy | `/api/event/` | `src/pages/api/event.ts` | Forwards event POSTs to plausible.io, strips cookies, preserves client IP |
 
-### BaseLayout.astro Script Tag
+### BaseLayout.astro Configuration (lines 144-149)
 
 ```html
-<script defer data-domain="viewpo.io" data-api="/api/event" src="/js/script.js"></script>
-<script>
-  window.plausible=window.plausible||function(){(window.plausible.q=window.plausible.q||[]).push(arguments)};
+<!-- Analytics (proxied through viewpo.io for accurate tracking of developer audience) -->
+<script is:inline defer src="/js/script.js"></script>
+<script is:inline>
+  window.plausible=window.plausible||function(){(window.plausible.q=window.plausible.q||[]).push(arguments)};plausible.init=plausible.init||function(i){plausible.o=i||{}};
+  plausible.init({ endpoint: '/api/event/' });
 </script>
 ```
 
-- `data-domain="viewpo.io"` — tells the Plausible script which site to track (replaces `plausible.init()`)
-- `data-api="/api/event"` — routes events through the proxy instead of direct to plausible.io
-- `src="/js/script.js"` — loads the script from the proxy instead of plausible.io
+- `src="/js/script.js"` — loads the hashed Plausible script from the proxy instead of plausible.io
+- `plausible.init({ endpoint: '/api/event/' })` — routes events through the proxy (the hashed script reads this during its `S()` init function)
+- The **queue stub** ensures `window.plausible()` calls never fail before the script loads, and `plausible.init()` is stubbed so the endpoint config is captured even if the script hasn't loaded yet
+
+**Critical**: The hashed script (`pa-*.js`) does NOT read `data-api` or `data-domain` HTML attributes — those only work with Plausible's standard `script.js`. The endpoint MUST include a trailing slash (`/api/event/`) because Astro's `trailingSlash: 'always'` redirects POST → GET without one, losing the request body.
 
 ### Why Proxy?
 
