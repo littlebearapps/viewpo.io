@@ -360,7 +360,7 @@ import { TURNSTILE_SITE_KEY, API_BASE_URL } from '@utils/constants';
             window.plausible(config.plausibleEvent, { props: { email_domain: email.split('@')[1] } });
           }
         } else {
-          showStatus(data.error || 'Something went wrong. Please try again.', 'error');
+          showStatus((data.errors ? data.errors.join(', ') : data.error) || 'Something went wrong. Please try again.', 'error');
           if (window.turnstile && turnstileWidgetId !== null) {
             window.turnstile.reset(turnstileWidgetId);
           }
