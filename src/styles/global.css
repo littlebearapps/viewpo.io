@@ -336,6 +336,12 @@ h1, h2, h3, h4, h5, h6 {
   }
 }
 
+/* Device card stack — 3D perspective for hero diagram */
+.card-stack {
+  perspective: 1200px;
+  transform-style: preserve-3d;
+}
+
 /* Reduced motion */
 @media (prefers-reduced-motion: reduce) {
   .reveal {
