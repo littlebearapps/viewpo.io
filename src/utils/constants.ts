@@ -122,4 +122,12 @@ export const FAQ_ITEMS = [
     question: 'When does Viewpo launch?',
     answer: 'Viewpo is currently in development. Join the TestFlight beta to be among the first to try it. Sign up above to get notified when spots open up.',
   },
+  {
+    question: 'How can I get help or contact support?',
+    answer: 'Email us at support@viewpo.io or use the contact form in the footer. We aim to respond within 2 business days. You can also check the FAQ sections on this page, the Teams page, and the Creators page for quick answers.',
+  },
+  {
+    question: 'What does priority support mean?',
+    answer: 'Pro plan members get faster response times — within 1 business day — and a dedicated email thread for ongoing issues. Free and Starter plan members receive support within 2 business days via the same email and contact form.',
+  },
 ];
