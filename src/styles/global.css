@@ -290,6 +290,41 @@ h1, h2, h3, h4, h5, h6 {
   opacity: 0.4;
 }
 
+/* Platform selector buttons */
+.platform-option {
+  border-color: rgb(0 0 0 / 0.1);
+  color: rgb(0 0 0 / 0.4);
+  background: transparent;
+  cursor: pointer;
+}
+
+.platform-option:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+.platform-option-active {
+  border-color: var(--color-primary);
+  background: rgb(99 102 241 / 0.1);
+  color: var(--color-primary);
+}
+
+.dark .platform-option {
+  border-color: rgb(255 255 255 / 0.1);
+  color: rgb(255 255 255 / 0.4);
+}
+
+.dark .platform-option:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+.dark .platform-option-active {
+  border-color: var(--color-primary);
+  background: rgb(99 102 241 / 0.15);
+  color: var(--color-primary);
+}
+
 @keyframes modal-enter {
   from {
     opacity: 0;

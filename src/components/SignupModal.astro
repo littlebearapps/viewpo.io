@@ -72,6 +72,27 @@ import { TURNSTILE_SITE_KEY, API_BASE_URL } from '@utils/constants';
         />
       </div>
 
+      <!-- Platform selector (notify mode only) -->
+      <div id="signup-platform-selector" class="hidden">
+        <label class="block text-sm font-medium text-foreground/70 mb-2">
+          Notify me for
+        </label>
+        <div class="flex flex-wrap gap-2">
+          <button type="button" class="platform-option platform-option-active text-xs font-heading font-medium px-3 py-1.5 rounded-lg border transition-all" data-platform="all">
+            All platforms
+          </button>
+          <button type="button" class="platform-option text-xs font-heading font-medium px-3 py-1.5 rounded-lg border transition-all" data-platform="android">
+            Android
+          </button>
+          <button type="button" class="platform-option text-xs font-heading font-medium px-3 py-1.5 rounded-lg border transition-all" data-platform="windows">
+            Windows
+          </button>
+          <button type="button" class="platform-option text-xs font-heading font-medium px-3 py-1.5 rounded-lg border transition-all" data-platform="linux">
+            Linux
+          </button>
+        </div>
+      </div>
+
       <!-- Turnstile widget container -->
       <div id="signup-turnstile" class="flex justify-center"></div>
 
@@ -142,11 +163,14 @@ import { TURNSTILE_SITE_KEY, API_BASE_URL } from '@utils/constants';
     const headerBetaEl = document.getElementById('signup-header-beta');
     const headerNotifyEl = document.getElementById('signup-header-notify');
     const turnstileContainer = document.getElementById('signup-turnstile');
+    const platformSelectorEl = document.getElementById('signup-platform-selector');
+    const platformButtons = document.querySelectorAll('.platform-option');
 
     if (!dialog || !form) return;
 
     let turnstileWidgetId = null;
     let currentMode = 'beta'; // 'beta' or 'notify'
+    let selectedPlatforms = new Set(['all']); // default: all
 
     const modeConfig = {
       beta: {
@@ -162,6 +186,50 @@ import { TURNSTILE_SITE_KEY, API_BASE_URL } from '@utils/constants';
         plausibleEvent: 'Launch+Notify+Submit',
       },
     };
+
+    // Platform selector logic
+    const individualPlatforms = ['android', 'windows', 'linux'];
+
+    function updatePlatformUI() {
+      platformButtons.forEach((btn) => {
+        const platform = btn.dataset.platform;
+        const isActive = selectedPlatforms.has(platform);
+        btn.classList.toggle('platform-option-active', isActive);
+      });
+    }
+
+    platformButtons.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const platform = btn.dataset.platform;
+
+        if (platform === 'all') {
+          // Clicking "All" selects only "all", deselects individuals
+          selectedPlatforms.clear();
+          selectedPlatforms.add('all');
+        } else {
+          // Clicking an individual platform
+          selectedPlatforms.delete('all');
+
+          if (selectedPlatforms.has(platform)) {
+            selectedPlatforms.delete(platform);
+            // If nothing selected, revert to "all"
+            if (selectedPlatforms.size === 0) {
+              selectedPlatforms.add('all');
+            }
+          } else {
+            selectedPlatforms.add(platform);
+          }
+
+          // If all three individuals are selected, switch to "all"
+          if (individualPlatforms.every((p) => selectedPlatforms.has(p))) {
+            selectedPlatforms.clear();
+            selectedPlatforms.add('all');
+          }
+        }
+
+        updatePlatformUI();
+      });
+    });
 
     // Open modal from any element with data-open-signup
     // data-open-signup (no value or "beta") = beta mode
@@ -183,6 +251,16 @@ import { TURNSTILE_SITE_KEY, API_BASE_URL } from '@utils/constants';
       // Swap header
       headerBetaEl.classList.toggle('hidden', mode !== 'beta');
       headerNotifyEl.classList.toggle('hidden', mode !== 'notify');
+
+      // Show/hide platform selector
+      if (platformSelectorEl) {
+        platformSelectorEl.classList.toggle('hidden', mode !== 'notify');
+      }
+
+      // Reset platform selection
+      selectedPlatforms.clear();
+      selectedPlatforms.add('all');
+      updatePlatformUI();
 
       // Set submit button text
       submitText.textContent = config.submitLabel;
@@ -246,13 +324,23 @@ import { TURNSTILE_SITE_KEY, API_BASE_URL } from '@utils/constants';
       statusEl.classList.add('hidden');
 
       try {
+        // Build products array with platform tags for notify mode
+        const products = [...config.products];
+        if (currentMode === 'notify') {
+          if (selectedPlatforms.has('all')) {
+            products.push('viewpo-launch-android', 'viewpo-launch-windows', 'viewpo-launch-linux');
+          } else {
+            selectedPlatforms.forEach((p) => products.push(`viewpo-launch-${p}`));
+          }
+        }
+
         const res = await fetch(`${API_BASE_URL}/api/newsletter-signup`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             email,
             first_name: firstName || undefined,
-            products: config.products,
+            products,
             turnstileToken,
           }),
         });

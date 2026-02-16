@@ -1,31 +1,25 @@
 ---
 import Section from './Section.astro';
-import Button from './Button.astro';
 
-const platforms = [
-  {
-    name: 'iOS & iPadOS',
-    status: 'first',
-    icon: `<path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z" />`,
-  },
-  {
-    name: 'macOS',
-    status: 'first',
-    icon: `<path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z" />`,
-  },
+const appleIcon = `<path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z" />`;
+
+const launchingFirst = [
+  { name: 'iOS', icon: appleIcon },
+  { name: 'iPadOS', icon: appleIcon },
+  { name: 'macOS', icon: appleIcon },
+];
+
+const comingLater = [
   {
     name: 'Android',
-    status: 'later',
     icon: `<path d="M17.6 9.48l1.84-3.18c.16-.31.04-.69-.27-.86-.31-.16-.69-.04-.86.27l-1.87 3.23C14.78 8.35 13.06 8 12 8c-1.06 0-2.78.35-4.44.94L5.69 5.71c-.16-.31-.54-.43-.86-.27-.31.16-.43.55-.27.86L6.4 9.48C3.63 11.16 1.75 14 1.75 17h20.5c0-3-1.88-5.84-4.65-7.52zM7 15.25a1.25 1.25 0 110-2.5 1.25 1.25 0 010 2.5zm10 0a1.25 1.25 0 110-2.5 1.25 1.25 0 010 2.5z" />`,
   },
   {
     name: 'Windows',
-    status: 'later',
     icon: `<path d="M3 5.548l7.195-1.008v6.96H3V5.548zm0 12.904l7.195 1.008V12.5H3v5.952zm8.01 1.12L21 21V12.5H11.01v7.072zm0-14.144V12.5H21V3l-9.99 1.428z" />`,
   },
   {
     name: 'Linux',
-    status: 'later',
     icon: `<path d="M12.503 18.04c-.553 0-1.002-.125-1.337-.375-.335-.25-.502-.596-.502-1.037 0-.09.009-.182.027-.278l.63-3.278c.018-.09.027-.166.027-.228 0-.275-.107-.412-.32-.412-.16 0-.37.105-.63.315l-.273-.34c.606-.532 1.15-.798 1.63-.798.394 0 .703.12.928.36.224.24.337.558.337.953 0 .12-.014.25-.04.39l-.627 3.238c-.014.063-.02.132-.02.206 0 .296.122.444.365.444.16 0 .377-.105.65-.315l.26.34c-.58.54-1.12.81-1.62.81l-.085-.015zM13.503 9.5a1.25 1.25 0 110-2.5 1.25 1.25 0 010 2.5z" />`,
   },
 ];
@@ -41,36 +35,43 @@ const platforms = [
     </p>
   </div>
 
-  <div class="flex flex-wrap justify-center gap-4 md:gap-6 max-w-3xl mx-auto mb-10">
-    {platforms.map((platform, i) => (
-      <div class={`reveal reveal-delay-${Math.min(i + 1, 4)} flex items-center gap-3 px-5 py-3 rounded-xl border ${
-        platform.status === 'first'
-          ? 'border-primary/20 bg-primary/5 dark:bg-primary/10'
-          : 'border-foreground/5 dark:border-white/5 bg-white dark:bg-slate-800/50'
-      }`}>
-        <svg class={`w-5 h-5 ${platform.status === 'first' ? 'text-foreground/70' : 'text-foreground/30'}`} viewBox="0 0 24 24" fill="currentColor">
+  <!-- Launching first row -->
+  <div class="flex flex-wrap justify-center gap-4 md:gap-6 max-w-3xl mx-auto mb-4">
+    {launchingFirst.map((platform, i) => (
+      <div class={`reveal reveal-delay-${i + 1} flex items-center gap-3 px-5 py-3 rounded-xl border border-primary/20 bg-primary/5 dark:bg-primary/10`}>
+        <svg class="w-5 h-5 text-foreground/70" viewBox="0 0 24 24" fill="currentColor">
           <Fragment set:html={platform.icon} />
         </svg>
-        <span class={`font-heading font-medium text-sm ${platform.status === 'first' ? 'text-foreground/80' : 'text-foreground/40'}`}>
+        <span class="font-heading font-medium text-sm text-foreground/80">
           {platform.name}
         </span>
-        {platform.status === 'first' && (
-          <span class="text-[10px] font-heading font-semibold text-primary dark:text-indigo-300 bg-primary/10 px-2 py-0.5 rounded-full">
-            Launching First
-          </span>
-        )}
-        {platform.status === 'later' && (
-          <span class="text-[10px] font-heading font-semibold text-foreground/30 bg-foreground/5 dark:bg-white/5 px-2 py-0.5 rounded-full">
-            Coming Later
-          </span>
-        )}
+        <span class="text-[10px] font-heading font-semibold text-primary dark:text-indigo-300 bg-primary/10 px-2 py-0.5 rounded-full">
+          Launching First
+        </span>
+      </div>
+    ))}
+  </div>
+
+  <!-- Coming later row -->
+  <div class="flex flex-wrap justify-center gap-4 md:gap-6 max-w-3xl mx-auto mb-10">
+    {comingLater.map((platform, i) => (
+      <div class={`reveal reveal-delay-4 flex items-center gap-3 px-5 py-3 rounded-xl border border-foreground/5 dark:border-white/5 bg-white dark:bg-slate-800/50`}>
+        <svg class="w-5 h-5 text-foreground/30" viewBox="0 0 24 24" fill="currentColor">
+          <Fragment set:html={platform.icon} />
+        </svg>
+        <span class="font-heading font-medium text-sm text-foreground/40">
+          {platform.name}
+        </span>
+        <span class="text-[10px] font-heading font-semibold text-foreground/30 bg-foreground/5 dark:bg-white/5 px-2 py-0.5 rounded-full">
+          Coming Later
+        </span>
       </div>
     ))}
   </div>
 
   <div class="flex justify-center reveal reveal-delay-4">
-    <Button href="#cta" variant="outline" size="md" class="plausible-event-name=CTA+Platforms+Notify">
+    <button type="button" data-open-signup="notify" class="inline-flex items-center justify-center gap-2 font-heading font-medium rounded-xl transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 hover:scale-[1.02] active:scale-[0.98] px-6 py-3 text-base border-2 border-foreground/10 dark:border-white/10 text-foreground/70 dark:text-white/70 hover:border-primary/30 hover:text-primary focus:ring-primary/50 plausible-event-name=CTA+Platforms+Notify">
       Get notified when it launches
-    </Button>
+    </button>
   </div>
 </Section>
