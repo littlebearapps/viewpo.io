@@ -55,11 +55,11 @@ import Button from './Button.astro';
       <!-- Ambient glow behind card cluster -->
       <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[400px] rounded-full bg-primary/10 blur-[100px] dark:bg-primary/[0.06] pointer-events-none" aria-hidden="true"></div>
 
-      <!-- Card stack: flex container, all items bottom-aligned and right-aligned -->
-      <div class="card-stack flex items-end justify-end w-full max-w-3xl mx-auto" aria-hidden="true">
+      <!-- Card stack: CSS Grid pile — all items in same cell, aligned bottom-right -->
+      <div class="card-stack grid grid-cols-1 justify-items-end items-end w-full max-w-3xl mx-auto pb-6" aria-hidden="true">
 
         <!-- === 27" Monitor (very back, biggest) === -->
-        <div class="reveal -mr-[140px] sm:-mr-[180px] lg:-mr-[220px] relative z-0 opacity-75 w-[260px] sm:w-[340px] lg:w-[420px] shrink-0">
+        <div class="reveal col-start-1 row-start-1 relative z-0 opacity-75 w-[260px] sm:w-[340px] lg:w-[420px] mr-[120px] sm:mr-[160px] lg:mr-[200px]">
           <div class="rounded-xl border border-foreground/[0.08] dark:border-white/[0.08] bg-white dark:bg-slate-800 shadow overflow-hidden">
             <div class="h-6 flex items-center px-3 gap-1.5 bg-slate-50 dark:bg-slate-700 border-b border-slate-200/60 dark:border-slate-600/60">
               <div class="w-1.5 h-1.5 rounded-full bg-red-400/40"></div>
@@ -96,8 +96,8 @@ import Button from './Button.astro';
               </div>
             </div>
           </div>
-          <!-- Monitor stand -->
-          <div class="flex flex-col items-center">
+          <!-- Monitor stand — absolutely positioned so it doesn't affect grid cell height -->
+          <div class="absolute top-full left-1/2 -translate-x-1/2 flex flex-col items-center">
             <div class="w-8 h-4 bg-slate-200 dark:bg-slate-600 rounded-b-sm"></div>
             <div class="w-16 h-1 bg-slate-200 dark:bg-slate-600 rounded-full"></div>
           </div>
@@ -108,7 +108,7 @@ import Button from './Button.astro';
         </div>
 
         <!-- === Laptop (second from back) === -->
-        <div class="reveal reveal-delay-1 -mr-[100px] sm:-mr-[120px] lg:-mr-[140px] relative z-10 opacity-85 w-[200px] sm:w-[240px] lg:w-[280px] shrink-0">
+        <div class="reveal reveal-delay-1 col-start-1 row-start-1 relative z-10 opacity-85 w-[200px] sm:w-[240px] lg:w-[280px] mr-[80px] sm:mr-[100px] lg:mr-[120px]">
           <div class="rounded-xl border border-foreground/10 dark:border-white/10 bg-white dark:bg-slate-800 shadow-md overflow-hidden">
             <div class="h-6 flex items-center px-3 gap-1.5 bg-slate-50 dark:bg-slate-700 border-b border-slate-200 dark:border-slate-600">
               <div class="w-2 h-2 rounded-full bg-red-400/60"></div>
@@ -159,7 +159,7 @@ import Button from './Button.astro';
         </div>
 
         <!-- === iPad (third from back) === -->
-        <div class="reveal reveal-delay-2 -mr-[60px] sm:-mr-[70px] lg:-mr-[80px] relative z-20 w-[150px] sm:w-[176px] lg:w-[200px] shrink-0">
+        <div class="reveal reveal-delay-2 col-start-1 row-start-1 relative z-20 w-[150px] sm:w-[176px] lg:w-[200px] mr-[40px] sm:mr-[48px] lg:mr-[56px]">
           <div class="rounded-xl border border-foreground/10 dark:border-white/10 bg-white dark:bg-slate-800 shadow-lg overflow-hidden">
             <div class="h-5 flex items-center justify-center bg-slate-50 dark:bg-slate-700 border-b border-slate-200 dark:border-slate-600">
               <div class="w-10 h-1 bg-foreground/10 dark:bg-white/10 rounded-full"></div>
@@ -198,7 +198,7 @@ import Button from './Button.astro';
         </div>
 
         <!-- === Phone (front, smallest, right edge) — shows DESKTOP wireframe inside === -->
-        <div class="reveal reveal-delay-3 relative z-30 w-[110px] sm:w-[128px] lg:w-[144px] shrink-0">
+        <div class="reveal reveal-delay-3 col-start-1 row-start-1 relative z-30 w-[110px] sm:w-[128px] lg:w-[144px]">
           <div class="rounded-2xl border-2 border-primary/30 dark:border-primary/20 bg-white dark:bg-slate-800 shadow-xl shadow-primary/10 overflow-hidden">
             <!-- Phone notch -->
             <div class="h-5 flex items-center justify-center bg-slate-50 dark:bg-slate-700 border-b border-slate-200 dark:border-slate-600">
@@ -262,15 +262,15 @@ import Button from './Button.astro';
           <div class="absolute -top-2.5 -right-2.5 px-2.5 py-1 rounded-full bg-primary text-[10px] font-heading font-semibold text-white shadow-md">
             2560 × 1440
           </div>
-          <!-- "on iPhone" label below phone -->
-          <div class="text-center mt-1">
+          <!-- "on iPhone" label — absolutely positioned so it doesn't affect grid cell height -->
+          <div class="absolute top-full left-0 right-0 text-center mt-1">
             <span class="text-[9px] font-heading font-medium text-primary/60 dark:text-primary/40">on your iPhone</span>
           </div>
         </div>
       </div>
 
-      <!-- Caption below cards -->
-      <div class="mt-4 flex items-center justify-center gap-2" aria-hidden="true">
+      <!-- Caption below cards (extra top margin for monitor stand + phone label hanging below grid) -->
+      <div class="mt-10 flex items-center justify-center gap-2" aria-hidden="true">
         <div class="h-px w-8 bg-primary/20"></div>
         <span class="text-[11px] font-heading font-medium text-foreground/40 dark:text-white/40">
           One site. Every screen size. Previewed instantly.
