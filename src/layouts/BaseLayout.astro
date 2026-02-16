@@ -141,11 +141,10 @@ const currentDate = new Date().toISOString().split('T')[0];
     <!-- Turnstile (bot protection for forms) -->
     <script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" async defer></script>
 
-    <!-- Analytics -->
-    <script is:inline async src="https://plausible.io/js/pa-XnY0rOrxQvpStF2a1FD0y.js"></script>
+    <!-- Analytics (proxied through viewpo.io for accurate tracking of developer audience) -->
+    <script is:inline defer data-domain="viewpo.io" data-api="/api/event" src="/js/script.js"></script>
     <script is:inline>
-      window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)};plausible.init=plausible.init||function(i){plausible.o=i||{}};
-      plausible.init();
+      window.plausible=window.plausible||function(){(window.plausible.q=window.plausible.q||[]).push(arguments)};
     </script>
 
     <!-- Theme persistence (prevent flash + survive View Transitions) -->
