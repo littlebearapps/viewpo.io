@@ -47,7 +47,9 @@ npm run build            # Build to dist/
 | Path | Description |
 |------|-------------|
 | `src/pages/` | All 5 pages |
-| `src/layouts/BaseLayout.astro` | Shared layout — meta tags, JSON-LD schemas, fonts, Plausible analytics, theme persistence, View Transitions |
+| `src/layouts/BaseLayout.astro` | Shared layout — meta tags, JSON-LD schemas, fonts, Plausible proxy + `plausible.init()`, theme persistence, View Transitions |
+| `src/pages/js/script.js.ts` | Plausible script proxy (Astro API route, `prerender = false`) |
+| `src/pages/api/event.ts` | Plausible event proxy (Astro API route, `prerender = false`) |
 | `src/components/` | 15 components (Hero, FAQ, PricingTable, ViewportDemo, Footer, Header, ThemeToggle, etc.) |
 | `src/styles/global.css` | Brand tokens, animations, `@variant dark` for Tailwind v4 |
 | `src/utils/constants.ts` | Device presets, pricing tiers, FAQ data |
@@ -62,6 +64,7 @@ npm run build            # Build to dist/
 | `.github/workflows/deploy-production.yml` | Deploy to CF Pages on push to main |
 | `docs/viewpo-purpose.md` | Product purpose document |
 | `docs/content/features-and-benefits.md` | Feature copy reference |
+| `docs/context/plausible-analytics.md` | Full Plausible setup — 32 goals, proxy config, funnels, properties |
 
 ---
 
@@ -101,7 +104,7 @@ All schemas in `BaseLayout.astro`:
 | Item | Status |
 |------|--------|
 | Google Search Console | Verified (DNS), sitemap submitted |
-| Plausible Analytics | Live — async script in BaseLayout, event tracking on CTAs + FAQ toggles |
+| Plausible Analytics | Live — self-managed proxy via Astro API routes (`/js/script.js` + `/api/event/`), 32 goals, 3 funnels. See `docs/context/plausible-analytics.md` |
 | AI crawlers (robots.txt) | Explicitly allowed — GPTBot, ClaudeBot, Google-Extended, PerplexityBot, Applebot-Extended, CCBot, ChatGPT-User |
 | llms.txt | Live at `/llms.txt` — curated site index for AI engines |
 | CF AI bot blocking | Disabled — managed robots.txt OFF, all AI crawlers set to "Allow" in CF Dashboard |
@@ -166,7 +169,7 @@ Auto-deploy on push to `main` via GitHub Actions (`deploy-production.yml`).
 ## Deferred (Not Yet Implemented)
 
 - Blog, docs, changelog pages
-- Email signup / waitlist form (CTA buttons are placeholders)
+- Email signup backend (SignupModal + ContactModal UI exist, POST to API, but API endpoint may not be deployed yet)
 - Product screenshots (MVP UI not finalised)
 - Playwright E2E tests
 - PR preview deploys (CI only runs build, no CF Pages preview)
