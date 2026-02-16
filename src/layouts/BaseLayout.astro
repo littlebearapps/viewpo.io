@@ -206,6 +206,15 @@ const currentDate = new Date().toISOString().split('T')[0];
       initSpotlight();
       document.addEventListener('astro:after-swap', initSpotlight);
     </script>
+
+    <!-- Ad click ID capture (dormant until Google Ads campaigns are active) -->
+    <script is:inline>
+      (function() {
+        var p = new URLSearchParams(window.location.search);
+        var g = p.get('gclid');
+        if (g) sessionStorage.setItem('gclid', g);
+      })();
+    </script>
   </body>
 </html>
 

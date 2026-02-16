@@ -334,6 +334,8 @@ import { TURNSTILE_SITE_KEY, API_BASE_URL } from '@utils/constants';
           }
         }
 
+        const gclid = sessionStorage.getItem('gclid');
+
         const res = await fetch(`${API_BASE_URL}/api/newsletter-signup`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -342,6 +344,7 @@ import { TURNSTILE_SITE_KEY, API_BASE_URL } from '@utils/constants';
             first_name: firstName || undefined,
             products,
             turnstileToken,
+            ...(gclid && { gclid }),
           }),
         });
 

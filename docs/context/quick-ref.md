@@ -49,7 +49,7 @@ npm run build            # Build to dist/
 | Path | Description |
 |------|-------------|
 | `src/pages/` | All 7 pages |
-| `src/layouts/BaseLayout.astro` | Shared layout — meta tags, JSON-LD schemas, fonts, Plausible proxy + `plausible.init()`, theme persistence, View Transitions |
+| `src/layouts/BaseLayout.astro` | Shared layout — meta tags, JSON-LD schemas, fonts, Plausible proxy + `plausible.init()`, theme persistence, View Transitions, gclid capture (dormant) |
 | `src/pages/js/script.js.ts` | Plausible script proxy (Astro API route, `prerender = false`) |
 | `src/pages/api/event.ts` | Plausible event proxy (Astro API route, `prerender = false`) |
 | `src/components/` | 17 components (Hero, FAQ, PricingTable, ViewportDemo, SignupModal, ContactModal, Footer, Header, ThemeToggle, etc.) |
@@ -178,6 +178,8 @@ SignupModal and ContactModal both POST to `platform.littlebearapps.com`. The ful
 4. User sees the `/confirmed/` landing page
 
 **Error handling**: SignupModal handles both `data.errors` (plural array from validation) and `data.error` (singular string).
+
+**Ad click tracking (dormant)**: BaseLayout captures `gclid` parameter from URL into `sessionStorage`. SignupModal includes gclid in the form POST body if present. This is for future Google Ads Offline Conversion Import (OCI) — the code is a no-op until Google Ads campaigns are running and the Platform API is updated to store the gclid. Privacy page discloses ad measurement. Trello card: https://trello.com/c/Uy1PTo1E
 
 ---
 
