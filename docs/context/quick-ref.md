@@ -15,7 +15,7 @@
 | **Alt Domains** | viewpo.app, viewpo.dev (both redirect to viewpo.io) |
 | **CF Pages Project** | `viewpo-io` |
 | **CF Zone** | `840ca9d145596b47b9868868e4cd7b81` |
-| **Status** | Marketing site live — 5 pages, dark mode, Plausible analytics, SEO/GEO optimised |
+| **Status** | Marketing site live — 7 pages, dark mode, Plausible analytics, SEO/GEO optimised |
 
 ---
 
@@ -37,6 +37,8 @@ npm run build            # Build to dist/
 | Homepage | `/` | `src/pages/index.astro` | All segments — hero, features, pricing, FAQ |
 | Teams | `/teams/` | `src/pages/teams.astro` | Team leads, agencies, PMs, designers |
 | Creators | `/creators/` | `src/pages/creators.astro` | Vibe coders, AI builders |
+| Confirmed | `/confirmed/` | `src/pages/confirmed.astro` | Post-email-confirmation landing page |
+| Preferences | `/preferences/` | `src/pages/preferences.astro` | Email preferences / unsubscribe |
 | Privacy | `/privacy/` | `src/pages/privacy.astro` | Legal — privacy policy |
 | Terms | `/terms/` | `src/pages/terms.astro` | Legal — terms of service |
 
@@ -46,13 +48,13 @@ npm run build            # Build to dist/
 
 | Path | Description |
 |------|-------------|
-| `src/pages/` | All 5 pages |
+| `src/pages/` | All 7 pages |
 | `src/layouts/BaseLayout.astro` | Shared layout — meta tags, JSON-LD schemas, fonts, Plausible proxy + `plausible.init()`, theme persistence, View Transitions |
 | `src/pages/js/script.js.ts` | Plausible script proxy (Astro API route, `prerender = false`) |
 | `src/pages/api/event.ts` | Plausible event proxy (Astro API route, `prerender = false`) |
-| `src/components/` | 15 components (Hero, FAQ, PricingTable, ViewportDemo, Footer, Header, ThemeToggle, etc.) |
+| `src/components/` | 17 components (Hero, FAQ, PricingTable, ViewportDemo, SignupModal, ContactModal, Footer, Header, ThemeToggle, etc.) |
 | `src/styles/global.css` | Brand tokens, animations, `@variant dark` for Tailwind v4 |
-| `src/utils/constants.ts` | Device presets, pricing tiers, FAQ data |
+| `src/utils/constants.ts` | Device presets, pricing tiers, FAQ data (13 items incl. support expectations) |
 | `src/scripts/scroll-reveal.ts` | IntersectionObserver scroll animation |
 | `public/robots.txt` | AI crawlers explicitly allowed (GPTBot, ClaudeBot, etc.) |
 | `public/llms.txt` | AI-readable site navigation index (llmstxt.org standard) |
@@ -166,10 +168,22 @@ Auto-deploy on push to `main` via GitHub Actions (`deploy-production.yml`).
 
 ---
 
+## Email Signup & Confirmation Flow
+
+SignupModal and ContactModal both POST to `platform.littlebearapps.com`. The full email confirmation flow:
+
+1. User signs up via SignupModal → POST to Platform API
+2. Platform API sends confirmation email with link to `platform.littlebearapps.com/api/confirm-email?token=xxx`
+3. Platform API confirms the email, then redirects to `viewpo.io/confirmed`
+4. User sees the `/confirmed/` landing page
+
+**Error handling**: SignupModal handles both `data.errors` (plural array from validation) and `data.error` (singular string).
+
+---
+
 ## Deferred (Not Yet Implemented)
 
 - Blog, docs, changelog pages
-- Email signup backend (SignupModal + ContactModal UI exist, POST to API, but API endpoint may not be deployed yet)
 - Product screenshots (MVP UI not finalised)
 - Playwright E2E tests
 - PR preview deploys (CI only runs build, no CF Pages preview)
