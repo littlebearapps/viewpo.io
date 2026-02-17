@@ -87,7 +87,7 @@ const statusStyles: Record<string, { text: string; bg: string }> = {
               </svg>
             </div>
             <h2 class="font-heading font-semibold text-sm text-foreground">{col.name}</h2>
-            <span class="text-xs text-foreground/40 ml-auto">{col.items.length}</span>
+            <span class="text-xs text-foreground/40 ml-auto column-count">{col.items.length}</span>
           </div>
 
           <!-- Cards -->
@@ -144,7 +144,7 @@ const statusStyles: Record<string, { text: string; bg: string }> = {
         // Update column counts
         grid.querySelectorAll<HTMLElement>('.roadmap-column').forEach((col) => {
           const visibleCards = col.querySelectorAll<HTMLElement>('[data-labels]:not([style*="display: none"])');
-          const countEl = col.querySelector<HTMLElement>('.font-heading + span');
+          const countEl = col.querySelector<HTMLElement>('.column-count');
           if (countEl) countEl.textContent = String(visibleCards.length);
         });
       });
@@ -220,10 +220,19 @@ const statusStyles: Record<string, { text: string; bg: string }> = {
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ itemId }),
         });
-        const data = await res.json() as { votes: number; alreadyVoted: boolean };
+        const data = await res.json() as { votes?: number; alreadyVoted?: boolean; error?: string };
+
+        if (!res.ok || data.error) {
+          // Server error — revert optimistic update
+          countEl.textContent = String(currentCount);
+          markAsUnvoted(btn);
+          votedItems.delete(itemId);
+          saveVotedItems(votedItems);
+          return;
+        }
 
         // Update with server count
-        countEl.textContent = String(data.votes);
+        countEl.textContent = String(data.votes ?? currentCount + 1);
 
         if (data.alreadyVoted) {
           // Already voted server-side — keep voted state but use server count
