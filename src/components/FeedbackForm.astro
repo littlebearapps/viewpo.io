@@ -1,0 +1,292 @@
+---
+import { TURNSTILE_SITE_KEY, FEEDBACK_CATEGORIES } from '@utils/constants';
+---
+
+<section id="feedback-section" class="mt-16 pt-12 border-t border-slate-200 dark:border-slate-700/50">
+  <div class="max-w-xl mx-auto">
+    <div class="text-center mb-8">
+      <h2 class="font-heading font-bold text-2xl md:text-3xl text-foreground mb-2">
+        Suggest a Feature
+      </h2>
+      <p class="text-foreground/60 text-sm">
+        Got an idea for Viewpo? Tell us what you'd like to see — every suggestion is reviewed.
+      </p>
+    </div>
+
+    <form id="feedback-form" class="space-y-4" novalidate>
+      <!-- Honeypot (hidden from users, bots fill it) -->
+      <div class="absolute -left-[9999px]" aria-hidden="true">
+        <label for="feedback-website">Website</label>
+        <input type="text" id="feedback-website" name="website" tabindex="-1" autocomplete="off" />
+      </div>
+
+      <div>
+        <label for="feedback-title" class="block text-sm font-medium text-foreground/70 mb-1.5">
+          Title <span class="text-red-500">*</span>
+        </label>
+        <input
+          type="text"
+          id="feedback-title"
+          name="title"
+          required
+          maxlength="100"
+          placeholder="Short summary of your idea"
+          class="modal-input"
+        />
+      </div>
+
+      <div>
+        <label for="feedback-description" class="block text-sm font-medium text-foreground/70 mb-1.5">
+          Description <span class="text-red-500">*</span>
+        </label>
+        <textarea
+          id="feedback-description"
+          name="description"
+          required
+          maxlength="5000"
+          rows="4"
+          placeholder="What problem does this solve? How would it work?"
+          class="modal-input resize-y min-h-[100px]"
+        ></textarea>
+      </div>
+
+      <div>
+        <label for="feedback-category" class="block text-sm font-medium text-foreground/70 mb-1.5">
+          Category <span class="text-red-500">*</span>
+        </label>
+        <select
+          id="feedback-category"
+          name="category"
+          required
+          class="modal-input appearance-none bg-[url('data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2212%22%20height%3D%2212%22%20viewBox%3D%220%200%2012%2012%22%3E%3Cpath%20fill%3D%22%23666%22%20d%3D%22M6%208L1%203h10z%22%2F%3E%3C%2Fsvg%3E')] bg-no-repeat bg-[right_0.75rem_center]"
+        >
+          <option value="">Select a category</option>
+          {FEEDBACK_CATEGORIES.map((cat) => (
+            <option value={cat}>{cat}</option>
+          ))}
+        </select>
+      </div>
+
+      <div>
+        <label for="feedback-name" class="block text-sm font-medium text-foreground/70 mb-1.5">
+          Name <span class="text-foreground/40">(optional)</span>
+        </label>
+        <input
+          type="text"
+          id="feedback-name"
+          name="name"
+          maxlength="100"
+          placeholder="Your name"
+          autocomplete="name"
+          class="modal-input"
+        />
+      </div>
+
+      <div>
+        <label for="feedback-email" class="block text-sm font-medium text-foreground/70 mb-1.5">
+          Email <span class="text-foreground/40">(optional)</span>
+        </label>
+        <input
+          type="email"
+          id="feedback-email"
+          name="email"
+          maxlength="254"
+          placeholder="you@example.com"
+          autocomplete="email"
+          class="modal-input"
+        />
+        <div id="feedback-consent" class="hidden mt-2">
+          <label class="flex items-start gap-2 text-sm text-foreground/60 cursor-pointer">
+            <input
+              type="checkbox"
+              id="feedback-consent-check"
+              name="email_consent"
+              class="mt-0.5 rounded border-slate-300 text-primary focus:ring-primary"
+            />
+            <span>You can contact me about this feedback</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Turnstile widget -->
+      <div id="feedback-turnstile" class="flex justify-center"></div>
+
+      <button
+        type="submit"
+        id="feedback-submit"
+        class="w-full inline-flex items-center justify-center gap-2 bg-primary hover:bg-primary-hover text-white font-heading font-semibold px-6 py-3 rounded-xl transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary disabled:opacity-50 disabled:cursor-not-allowed"
+      >
+        <span id="feedback-submit-text">Submit Feedback</span>
+        <svg id="feedback-spinner" class="hidden w-5 h-5 animate-spin" viewBox="0 0 24 24" fill="none">
+          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+        </svg>
+      </button>
+
+      <!-- Status message -->
+      <div id="feedback-status" class="hidden text-center text-sm py-2 px-3 rounded-lg" role="alert"></div>
+    </form>
+
+    <!-- Success state -->
+    <div id="feedback-success" class="hidden text-center py-8">
+      <div class="inline-flex items-center justify-center w-14 h-14 bg-success/10 rounded-full mb-4">
+        <svg class="w-7 h-7 text-success" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+        </svg>
+      </div>
+      <h3 class="font-heading font-semibold text-xl mb-2">Thanks for your feedback!</h3>
+      <p class="text-foreground/60 text-sm mb-4">
+        We review every suggestion. If it's a good fit, you'll see it appear on the roadmap.
+      </p>
+      <button
+        type="button"
+        id="feedback-reset-btn"
+        class="text-sm text-links hover:text-primary transition-colors"
+      >
+        Submit another idea
+      </button>
+    </div>
+  </div>
+</section>
+
+<script define:vars={{ TURNSTILE_SITE_KEY }}>
+  function initFeedbackForm() {
+    const form = document.getElementById('feedback-form');
+    const submitBtn = document.getElementById('feedback-submit');
+    const submitText = document.getElementById('feedback-submit-text');
+    const spinner = document.getElementById('feedback-spinner');
+    const statusEl = document.getElementById('feedback-status');
+    const successEl = document.getElementById('feedback-success');
+    const turnstileContainer = document.getElementById('feedback-turnstile');
+    const emailInput = document.getElementById('feedback-email');
+    const consentEl = document.getElementById('feedback-consent');
+    const consentCheck = document.getElementById('feedback-consent-check');
+    const resetBtn = document.getElementById('feedback-reset-btn');
+
+    if (!form) return;
+
+    let turnstileWidgetId = null;
+
+    // Show/hide email consent checkbox
+    if (emailInput && consentEl) {
+      emailInput.addEventListener('input', () => {
+        consentEl.classList.toggle('hidden', !emailInput.value.trim());
+      });
+    }
+
+    // Render Turnstile widget
+    function renderTurnstile() {
+      if (window.turnstile && turnstileContainer && turnstileWidgetId === null) {
+        turnstileWidgetId = window.turnstile.render(turnstileContainer, {
+          sitekey: TURNSTILE_SITE_KEY,
+          theme: document.documentElement.classList.contains('dark') ? 'dark' : 'light',
+        });
+      }
+    }
+
+    // Try rendering immediately, retry if Turnstile script not loaded yet
+    if (window.turnstile) {
+      renderTurnstile();
+    } else {
+      const observer = new MutationObserver(() => {
+        if (window.turnstile) {
+          renderTurnstile();
+          observer.disconnect();
+        }
+      });
+      observer.observe(document.head, { childList: true, subtree: true });
+      // Fallback timeout
+      setTimeout(renderTurnstile, 3000);
+    }
+
+    // Form submission
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      // Get Turnstile token
+      let turnstileToken = null;
+      if (window.turnstile && turnstileWidgetId !== null) {
+        turnstileToken = window.turnstile.getResponse(turnstileWidgetId);
+      }
+
+      if (!turnstileToken) {
+        showStatus('Please complete the verification.', 'error');
+        return;
+      }
+
+      // Check email consent
+      if (emailInput && emailInput.value.trim() && consentCheck && !consentCheck.checked) {
+        showStatus('Please confirm we can contact you about this feedback, or remove your email.', 'error');
+        return;
+      }
+
+      // Loading state
+      submitBtn.disabled = true;
+      submitText.textContent = 'Submitting...';
+      spinner.classList.remove('hidden');
+      statusEl.classList.add('hidden');
+
+      try {
+        const formData = new FormData(form);
+        // Don't send email if consent not given
+        if (consentCheck && !consentCheck.checked) {
+          formData.delete('email');
+        }
+
+        const res = await fetch('/api/feedback/', {
+          method: 'POST',
+          body: formData,
+        });
+        const data = await res.json();
+
+        if (data.success) {
+          form.classList.add('hidden');
+          successEl.classList.remove('hidden');
+          // Track with Plausible
+          if (window.plausible) {
+            window.plausible('Feedback+Submit');
+          }
+        } else {
+          showStatus(data.error || 'Something went wrong. Please try again.', 'error');
+          if (window.turnstile && turnstileWidgetId !== null) {
+            window.turnstile.reset(turnstileWidgetId);
+          }
+        }
+      } catch {
+        showStatus('Network error. Please check your connection and try again.', 'error');
+      }
+
+      // Reset button
+      submitBtn.disabled = false;
+      submitText.textContent = 'Submit Feedback';
+      spinner.classList.add('hidden');
+    });
+
+    // Reset to submit another
+    if (resetBtn) {
+      resetBtn.addEventListener('click', () => {
+        form.reset();
+        form.classList.remove('hidden');
+        successEl.classList.add('hidden');
+        statusEl.classList.add('hidden');
+        if (consentEl) consentEl.classList.add('hidden');
+        if (window.turnstile && turnstileWidgetId !== null) {
+          window.turnstile.reset(turnstileWidgetId);
+        }
+      });
+    }
+
+    function showStatus(message, type) {
+      statusEl.textContent = message;
+      statusEl.classList.remove('hidden', 'bg-red-50', 'text-red-700', 'dark:bg-red-900/20', 'dark:text-red-400', 'bg-green-50', 'text-green-700');
+      if (type === 'error') {
+        statusEl.classList.add('bg-red-50', 'text-red-700', 'dark:bg-red-900/20', 'dark:text-red-400');
+      } else {
+        statusEl.classList.add('bg-green-50', 'text-green-700');
+      }
+    }
+  }
+
+  initFeedbackForm();
+  document.addEventListener('astro:after-swap', initFeedbackForm);
+</script>

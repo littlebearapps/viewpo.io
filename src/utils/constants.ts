@@ -5,6 +5,15 @@ export const SITE_DESCRIPTION = 'See your preview deploys on any device, at any 
 export const API_BASE_URL = 'https://email.viewpo.io';
 export const TURNSTILE_SITE_KEY = '0x4AAAAAACcgsYVs4BfNtUGF';
 
+export const FEEDBACK_CATEGORIES = [
+  'Feature',
+  'Enhancement',
+  'Bug Fix',
+  'Integration',
+  'UI/UX',
+  'Other',
+] as const;
+
 export const PROVIDERS = [
   { name: 'Cloudflare Pages', icon: 'cloudflare' },
   { name: 'GitHub Pages', icon: 'github' },
