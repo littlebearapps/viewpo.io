@@ -8,20 +8,38 @@ const currentYear = new Date().getFullYear();
 
   <div class="container-wide">
     <!-- Main footer grid -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-16 mb-12">
+    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 lg:gap-10 mb-12">
 
       <!-- Column 1: Brand + description -->
-      <div class="lg:col-span-1">
+      <div class="col-span-2 md:col-span-3 lg:col-span-1">
         <a href="/" class="inline-flex items-center gap-2 font-heading font-bold text-lg text-foreground mb-3">
           <img src="/viewpo-icon.svg" alt="" width="24" height="24" class="w-6 h-6 rounded-md" />
           <span>Viewpo</span>
         </a>
-        <p class="text-sm text-foreground/60 leading-relaxed">
+        <p class="text-sm text-foreground/60 leading-relaxed mb-5">
           Preview deploys from Cloudflare Pages, Vercel, Netlify, and GitHub Pages — all in one dashboard with a built-in viewport viewer for iOS, iPadOS, and macOS.
         </p>
+        <button
+          type="button"
+          data-open-signup
+          class="inline-flex items-center gap-2 bg-primary hover:bg-primary-hover text-white text-sm font-heading font-medium px-4 py-2 rounded-lg transition-all hover:scale-[1.02] active:scale-[0.98] plausible-event-name=CTA+Footer+Join+Beta"
+        >
+          Join the Beta
+        </button>
+        <p class="text-xs text-foreground/40 mt-2">Requires Apple TestFlight</p>
       </div>
 
-      <!-- Column 2: Use Cases -->
+      <!-- Column 2: Viewpo -->
+      <div>
+        <h3 class="font-heading font-semibold text-sm text-foreground mb-4">Viewpo</h3>
+        <ul class="space-y-2.5">
+          <li><a href="/#features" class="text-sm text-foreground/60 hover:text-foreground transition-colors">Features</a></li>
+          <li><a href="/#pricing" class="text-sm text-foreground/60 hover:text-foreground transition-colors">Pricing</a></li>
+          <li><a href="/roadmap/" class="text-sm text-foreground/60 hover:text-foreground transition-colors">Roadmap</a></li>
+        </ul>
+      </div>
+
+      <!-- Column 3: Use Cases -->
       <div>
         <h3 class="font-heading font-semibold text-sm text-foreground mb-4">Use Cases</h3>
         <ul class="space-y-2.5">
@@ -30,20 +48,19 @@ const currentYear = new Date().getFullYear();
         </ul>
       </div>
 
-      <!-- Column 3: Support -->
+      <!-- Column 4: Support -->
       <div>
         <h3 class="font-heading font-semibold text-sm text-foreground mb-4">Support</h3>
         <ul class="space-y-2.5">
           <li><a href="/help/" class="text-sm text-foreground/60 hover:text-foreground transition-colors">Help Centre</a></li>
           <li><a href="/help/getting-started/" class="text-sm text-foreground/60 hover:text-foreground transition-colors">Getting Started</a></li>
           <li><a href="/help/faq/" class="text-sm text-foreground/60 hover:text-foreground transition-colors">FAQ</a></li>
-          <li><a href="/roadmap/" class="text-sm text-foreground/60 hover:text-foreground transition-colors">Roadmap</a></li>
           <li><button type="button" data-open-contact class="text-sm text-foreground/60 hover:text-foreground transition-colors cursor-pointer bg-transparent border-none p-0 font-normal">Contact Us</button></li>
         </ul>
       </div>
 
-      <!-- Column 4: Stay Updated (newsletter placeholder) -->
-      <div>
+      <!-- Column 5: Stay Updated (newsletter placeholder) -->
+      <div class="col-span-2 md:col-span-1">
         <h3 class="font-heading font-semibold text-sm text-foreground mb-4">Stay Updated</h3>
         <p class="text-sm text-foreground/60 leading-relaxed mb-4">
           Get product updates, new features, and tips delivered to your inbox.
@@ -75,8 +92,6 @@ const currentYear = new Date().getFullYear();
         &copy; {currentYear} <a href="https://littlebearapps.com" class="hover:text-foreground transition-colors" target="_blank" rel="noopener noreferrer">Little Bear Apps</a> &middot; Made in Australia
       </p>
       <div class="flex items-center gap-4 text-sm text-foreground/40">
-        <a href="/#features" class="hover:text-foreground transition-colors">Features</a>
-        <a href="/#pricing" class="hover:text-foreground transition-colors">Pricing</a>
         <a href="/privacy/" class="hover:text-foreground transition-colors">Privacy</a>
         <a href="/terms/" class="hover:text-foreground transition-colors">Terms</a>
       </div>
