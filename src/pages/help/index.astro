@@ -1,0 +1,93 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Header from '@components/Header.astro';
+import Footer from '@components/Footer.astro';
+import HelpSidebar from '@components/HelpSidebar.astro';
+
+const title = 'Help Centre — Viewpo';
+const description = 'Get help with Viewpo — the preview deployment aggregator with viewport viewer for iOS, iPadOS, and macOS.';
+
+const cards = [
+  {
+    title: 'Getting Started',
+    description: 'New to Viewpo? Learn how to connect your first provider, discover your projects, and use the viewport viewer.',
+    href: '/help/getting-started/',
+    icon: 'M13 10V3L4 14h7v7l9-11h-7z',
+  },
+  {
+    title: 'Frequently Asked Questions',
+    description: 'Quick answers about providers, pricing, platforms, sharing, and more.',
+    href: '/help/faq/',
+    icon: 'M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z',
+  },
+  {
+    title: 'Contact Support',
+    description: "Can't find what you need? Reach out to our team — we aim to respond within 2 business days.",
+    href: '/help/contact/',
+    icon: 'M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z',
+  },
+  {
+    title: 'Roadmap & Feature Requests',
+    description: "See what we're building next, vote on features, and suggest new ideas.",
+    href: '/roadmap/',
+    icon: 'M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z',
+  },
+];
+---
+
+<BaseLayout title={title} description={description}>
+  <Header slot="header" />
+
+  <section class="py-16 sm:py-24">
+    <div class="container-wide">
+      <div class="flex flex-col lg:flex-row gap-12">
+        <!-- Sidebar (desktop) -->
+        <aside class="hidden lg:block w-64 shrink-0">
+          <div class="sticky top-24">
+            <HelpSidebar />
+          </div>
+        </aside>
+
+        <!-- Main content -->
+        <div class="flex-1 min-w-0">
+          <div class="max-w-3xl">
+            <h1 class="text-4xl sm:text-5xl font-heading font-bold text-foreground mb-4">
+              Help Centre
+            </h1>
+            <p class="text-lg text-foreground/60 leading-relaxed mb-12">
+              Find answers, get started, and make the most of Viewpo.
+            </p>
+          </div>
+
+          <!-- Card grid -->
+          <div class="grid sm:grid-cols-2 gap-6">
+            {cards.map((card) => (
+              <a
+                href={card.href}
+                class="group block p-6 rounded-xl border border-foreground/10 bg-background hover:border-primary/30 hover:shadow-lg transition-all"
+              >
+                <div class="flex items-start gap-4">
+                  <div class="shrink-0 w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
+                    <svg class="w-5 h-5 text-primary" viewBox="0 0 24 24" fill="currentColor">
+                      <path d={card.icon} />
+                    </svg>
+                  </div>
+                  <div>
+                    <h2 class="font-heading font-semibold text-foreground group-hover:text-primary transition-colors mb-2">
+                      {card.title}
+                    </h2>
+                    <p class="text-sm text-foreground/60 leading-relaxed">
+                      {card.description}
+                    </p>
+                  </div>
+                </div>
+              </a>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <Footer slot="footer" />
+</BaseLayout>

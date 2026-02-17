@@ -1,6 +1,8 @@
 ---
 title: Frequently Asked Questions
 description: Quick answers about Viewpo — providers, pricing, platforms, viewport viewer, sharing, and support.
+order: 2
+category: Reference
 ---
 
 ## General
@@ -29,7 +31,7 @@ The viewport viewer uses a native WebView (not an iframe) to load the actual web
 
 ### Can I really see a desktop layout on my phone?
 
-Yes! The viewport viewer renders the actual website at your chosen resolution — whether that's a 27-inch desktop (2560×1440) or a small phone (393×852). You can pan around to see different parts of the page, just like looking through a viewfinder. It's a native WebView, so it's the real site — not a screenshot.
+Yes! The viewport viewer renders the actual website at your chosen resolution — whether that's a 27-inch desktop (2560x1440) or a small phone (393x852). You can pan around to see different parts of the page, just like looking through a viewfinder. It's a native WebView, so it's the real site — not a screenshot.
 
 ## Providers & Setup
 

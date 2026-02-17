@@ -1,9 +1,8 @@
 /*
  * Viewpo Shared Design Tokens
  *
- * Shared between marketing pages (global.css) and Starlight help pages (starlight-custom.css).
- * Contains ONLY theme tokens, dark variant, and utilities needed by shared components
- * (Header, Footer, ThemeToggle). Does NOT include Tailwind imports, base element styles,
+ * Brand tokens, dark variant, and shared utilities used across all pages.
+ * Imported by global.css. Does NOT include Tailwind imports, base element styles,
  * or animations — those stay in global.css.
  */
 

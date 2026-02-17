@@ -1,0 +1,58 @@
+---
+import { getCollection } from 'astro:content';
+
+interface Props {
+  currentSlug?: string;
+}
+
+const { currentSlug } = Astro.props;
+
+const helpPages = (await getCollection('help'))
+  .filter((entry) => entry.id !== 'index')
+  .sort((a, b) => (a.data.order ?? 99) - (b.data.order ?? 99));
+---
+
+<nav class="help-sidebar" aria-label="Help navigation">
+  <div class="mb-6">
+    <a
+      href="/help/"
+      class:list={[
+        'block text-lg font-heading font-semibold transition-colors',
+        !currentSlug ? 'text-primary' : 'text-foreground hover:text-primary',
+      ]}
+    >
+      Help Centre
+    </a>
+  </div>
+
+  <ul class="space-y-1">
+    {helpPages.map((page) => {
+      const isActive = currentSlug === page.id;
+      return (
+        <li>
+          <a
+            href={`/help/${page.id}/`}
+            class:list={[
+              'block px-3 py-2 rounded-lg text-sm font-medium transition-colors',
+              isActive
+                ? 'bg-primary/10 text-primary'
+                : 'text-foreground/60 hover:text-foreground hover:bg-foreground/5',
+            ]}
+            aria-current={isActive ? 'page' : undefined}
+          >
+            {page.data.title}
+          </a>
+        </li>
+      );
+    })}
+  </ul>
+
+  <div class="mt-8 pt-6 border-t border-foreground/10">
+    <a
+      href="/roadmap/"
+      class="block px-3 py-2 rounded-lg text-sm font-medium text-foreground/60 hover:text-foreground hover:bg-foreground/5 transition-colors"
+    >
+      Roadmap & Feature Requests
+    </a>
+  </div>
+</nav>
