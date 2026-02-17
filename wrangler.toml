@@ -1,0 +1,7 @@
+# Viewpo.io - Cloudflare Pages configuration
+# D1 binding for roadmap voting system
+
+[[d1_databases]]
+binding = "DB"
+database_name = "viewpo-roadmap"
+database_id = "204cba78-763c-43f6-a525-f2ab918f0f5b"

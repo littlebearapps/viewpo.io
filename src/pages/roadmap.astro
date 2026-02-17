@@ -1,10 +1,123 @@
 ---
+export const prerender = false;
+
 import BaseLayout from '@layouts/BaseLayout.astro';
 import Header from '@components/Header.astro';
 import Footer from '@components/Footer.astro';
+import RoadmapGrid from '@components/RoadmapGrid.astro';
+import FeedbackForm from '@components/FeedbackForm.astro';
 
-const title = 'Roadmap & Feature Requests — Viewpo';
-const description = 'See what we\'re building next, vote on features, and suggest new ideas for Viewpo.';
+import type { RoadmapColumn } from '@/lib/roadmap/types';
+import { TrelloAdapter } from '@/lib/roadmap/adapter';
+import { MockAdapter } from '@/lib/roadmap/mock';
+import { getCachedRoadmap, setCachedRoadmap } from '@/lib/roadmap/cache';
+
+const title = 'Roadmap — What We\'re Building | Viewpo';
+const description = 'See what\'s planned, in progress, and shipped for Viewpo. Vote on features and suggest new ideas.';
+
+// Access CF environment
+const env = (Astro.locals as { runtime: { env: Record<string, unknown>; ctx?: { waitUntil(p: Promise<unknown>): void } } }).runtime.env;
+const ctx = (Astro.locals as { runtime: { ctx?: { waitUntil(p: Promise<unknown>): void } } }).runtime.ctx;
+
+const apiKey = env.TRELLO_API_KEY as string | undefined;
+const apiToken = env.TRELLO_API_TOKEN as string | undefined;
+const boardId = env.TRELLO_BOARD_ID as string | undefined;
+const ideasListId = env.TRELLO_IDEAS_LIST_ID as string | undefined;
+
+const useMock = !apiKey;
+
+let columns: RoadmapColumn[] = [];
+let fetchError = false;
+
+try {
+  if (useMock) {
+    // Local dev without Trello credentials
+    const adapter = new MockAdapter();
+    columns = await adapter.fetchColumns();
+  } else {
+    // Production: use cache + Trello adapter
+    const { data: cached, isStale } = await getCachedRoadmap();
+
+    if (cached && !isStale) {
+      columns = cached.columns;
+    } else {
+      const adapter = new TrelloAdapter({
+        apiKey: apiKey!,
+        apiToken: apiToken!,
+        boardId: boardId!,
+        ideasListId: ideasListId!,
+      });
+
+      if (cached && isStale) {
+        // Serve stale, revalidate in background
+        columns = cached.columns;
+        const revalidate = adapter.fetchColumns().then((fresh) => setCachedRoadmap(fresh)).catch(() => {});
+        if (ctx?.waitUntil) {
+          ctx.waitUntil(revalidate);
+        }
+      } else {
+        // No cache — block on fresh fetch
+        const fresh = await adapter.fetchColumns();
+        columns = fresh;
+        await setCachedRoadmap(fresh);
+      }
+    }
+  }
+
+  // Merge vote counts from D1
+  const db = env.DB as { prepare(q: string): { all<T>(): Promise<{ results: T[] }> } } | undefined;
+  if (db) {
+    try {
+      const voteRows = await db.prepare('SELECT item_id, count FROM votes').all<{ item_id: string; count: number }>();
+      const voteMap = new Map(voteRows.results.map((r) => [r.item_id, r.count]));
+
+      for (const col of columns) {
+        for (const item of col.items) {
+          const votes = voteMap.get(item.id);
+          if (votes !== undefined) item.votes = votes;
+        }
+        // Sort by votes descending within each column
+        col.items.sort((a, b) => b.votes - a.votes);
+      }
+    } catch {
+      // D1 read failure is non-fatal — items keep default vote counts
+    }
+  }
+} catch {
+  fetchError = true;
+}
+
+// FAQPage JSON-LD for GEO
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    {
+      '@type': 'Question',
+      name: 'How can I suggest a feature for Viewpo?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Use the feedback form at the bottom of our roadmap page. Submit a title, description, and category for your idea. Every suggestion is reviewed by our team and, if approved, added to the public roadmap.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'How often is the Viewpo roadmap updated?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'The roadmap updates in real time as we move items between stages. When a feature moves from Planned to In Progress, Testing, or Shipped, it reflects on the roadmap page within minutes.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'Can I vote on features I want to see built?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Yes! Each roadmap item has a vote button. Click it to upvote features you care about. Votes help us prioritise what to build next. You can vote once per item.',
+      },
+    },
+  ],
+};
 ---
 
 <BaseLayout title={title} description={description}>
@@ -12,30 +125,43 @@ const description = 'See what we\'re building next, vote on features, and sugges
 
   <section class="py-16 sm:py-24">
     <div class="container-wide">
-      <!-- Header -->
+      <!-- Hero -->
       <div class="max-w-2xl mx-auto text-center mb-12">
         <h1 class="text-4xl sm:text-5xl font-heading font-bold text-foreground mb-4">
-          Roadmap & Feature Requests
+          What We're Building
         </h1>
         <p class="text-lg text-foreground/60 leading-relaxed">
-          See what we're working on, vote on features that matter to you, and suggest new ideas.
+          Our roadmap is public. See what's planned, vote on what matters to you, and suggest new ideas.
         </p>
       </div>
 
-      <!-- UserJot Embed -->
-      <div class="max-w-5xl mx-auto">
-        <iframe
-          src="https://viewpo.userjot.com"
-          width="100%"
-          height="800"
-          style="border: none; border-radius: 0.75rem;"
-          title="Viewpo Roadmap and Feature Requests"
-          loading="lazy"
-          allow="clipboard-write"
-        ></iframe>
-      </div>
+      {fetchError ? (
+        <!-- Error state -->
+        <div class="max-w-md mx-auto text-center py-16">
+          <div class="inline-flex items-center justify-center w-14 h-14 bg-attention/10 rounded-full mb-4">
+            <svg class="w-7 h-7 text-attention" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z" />
+            </svg>
+          </div>
+          <h2 class="font-heading font-semibold text-xl mb-2">Roadmap temporarily unavailable</h2>
+          <p class="text-foreground/60 text-sm mb-4">
+            We're having trouble loading the roadmap. Please try again in a few minutes, or
+            <a href="/contact/" class="text-links hover:text-primary transition-colors underline underline-offset-2">get in touch</a>
+            if the problem persists.
+          </p>
+        </div>
+      ) : (
+        <!-- Roadmap grid -->
+        <RoadmapGrid columns={columns} />
+
+        <!-- Feedback form -->
+        <FeedbackForm />
+      )}
     </div>
   </section>
+
+  <!-- FAQ Schema for GEO -->
+  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
 
   <Footer slot="footer" />
 </BaseLayout>
