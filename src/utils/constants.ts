@@ -11,6 +11,7 @@ export const FEEDBACK_CATEGORIES = [
   'Bug Fix',
   'Integration',
   'UI/UX',
+  'Other',
 ] as const;
 
 export const PROVIDERS = [
