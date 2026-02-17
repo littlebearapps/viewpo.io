@@ -73,4 +73,3 @@ See the full [pricing details](https://viewpo.io/#pricing) on the homepage.
 
 - Browse the [FAQ](/help/faq/) for quick answers
 - [Contact support](/help/contact/) — we respond within 2 business days
-- Check the [roadmap](/roadmap/) to see what's coming next

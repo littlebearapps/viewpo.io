@@ -24,18 +24,11 @@ To help us resolve your issue quickly, please include:
 
 ## Feature requests
 
-Have an idea for Viewpo? Visit the [Roadmap & Feature Requests](/roadmap/) page to:
-
-- See what we're building next
-- Vote on features that matter to you
-- Suggest new ideas
+Have an idea for Viewpo? Email us at [support@viewpo.io](mailto:support@viewpo.io) — we read every suggestion and use your feedback to shape what we build next.
 
 ## Bug reports
 
-Found a bug? You can either:
-
-- Email us at [support@viewpo.io](mailto:support@viewpo.io) with the details above
-- Submit it on the [Roadmap & Feature Requests](/roadmap/) page
+Found a bug? Email us at [support@viewpo.io](mailto:support@viewpo.io) with the details above.
 
 ## About Viewpo
 

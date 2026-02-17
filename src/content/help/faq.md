@@ -71,4 +71,4 @@ Email us at [support@viewpo.io](mailto:support@viewpo.io) or use the [contact fo
 
 ### Where can I request features or report issues?
 
-Visit the [Roadmap & Feature Requests](/roadmap/) page to see what we're building, vote on features, and suggest new ideas.
+Email us at [support@viewpo.io](mailto:support@viewpo.io) with your idea or bug report. We read every message.
