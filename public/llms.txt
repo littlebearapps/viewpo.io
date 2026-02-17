@@ -41,6 +41,17 @@
 - Available on iOS, iPadOS, and macOS
 - Built by [Little Bear Apps](https://littlebearapps.com)
 
+## Help
+
+- [Help Centre](https://viewpo.io/help/): Get help with Viewpo — guides, FAQ, and support contact
+- [Getting Started](https://viewpo.io/help/getting-started/): Connect a provider, discover projects, and use the viewport viewer
+- [FAQ](https://viewpo.io/help/faq/): Answers about providers, pricing, platforms, sharing, and support
+- [Contact Support](https://viewpo.io/help/contact/): Email support, bug reports, and feature requests
+
+## Roadmap
+
+- [Roadmap & Feature Requests](https://viewpo.io/roadmap/): See what we're building next, vote on features, and suggest ideas
+
 ## Legal
 
 - [Privacy Policy](https://viewpo.io/privacy/): Privacy-first Plausible analytics, no cookies, OAuth authentication, GDPR compliant

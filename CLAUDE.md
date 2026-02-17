@@ -27,8 +27,13 @@ npm run build            # Build to dist/
 | Creators | `src/pages/creators.astro` | Vibe coders, AI builders (Cursor, v0, Bolt, Lovable, Replit) |
 | Confirmed | `src/pages/confirmed.astro` | Post-email-confirmation landing page |
 | Preferences | `src/pages/preferences.astro` | Email preferences / unsubscribe |
+| Roadmap | `src/pages/roadmap.astro` | All users — public roadmap + feature requests (UserJot embed placeholder) |
 | Privacy | `src/pages/privacy.astro` | Legal — privacy policy (ACL, GDPR, APP-compliant) |
 | Terms | `src/pages/terms.astro` | Legal — terms of service (ACL-compliant, Lemon Squeezy MoR) |
+| Help Centre | `src/content/docs/help/index.mdx` | All users — Starlight-powered help centre landing |
+| Getting Started | `src/content/docs/help/getting-started.md` | New users — setup guide |
+| FAQ | `src/content/docs/help/faq.md` | All users — extended FAQ |
+| Contact | `src/content/docs/help/contact.md` | All users — support contact info |
 
 ---
 
@@ -56,7 +61,10 @@ npm run build            # Build to dist/
 
 | Path | Description |
 |------|-------------|
-| `src/pages/` | All 7 pages (index, teams, creators, confirmed, preferences, privacy, terms) |
+| `src/pages/` | 8 pages (index, teams, creators, roadmap, confirmed, preferences, privacy, terms) |
+| `src/content/docs/help/` | 4 Starlight help pages (index, getting-started, faq, contact) |
+| `src/content.config.ts` | Content collection config for Starlight docs |
+| `src/styles/starlight-custom.css` | Starlight brand overrides (indigo accent, Outfit/Inter fonts, slate grays) |
 | `src/layouts/BaseLayout.astro` | Shared layout — meta tags, JSON-LD schemas, fonts, Plausible proxy + `plausible.init()`, theme persistence, View Transitions, gclid capture (dormant) |
 | `src/components/` | 17 components (Hero, FAQ, PricingTable, ViewportDemo, SignupModal, ContactModal, etc.) |
 | `src/styles/global.css` | Brand tokens, animations, dark mode variant |
@@ -145,7 +153,7 @@ Auto-deploy on push to `main` via GitHub Actions (`deploy-production.yml`).
 
 ## Deferred (Not Yet Implemented)
 
-- Blog, docs, changelog pages
+- Blog, changelog pages
 - Product screenshots (MVP UI not finalised)
 - Playwright E2E tests
 - PR preview deploys

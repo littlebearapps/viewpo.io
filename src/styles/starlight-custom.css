@@ -1,0 +1,55 @@
+/* Load Google Fonts for Starlight pages (Starlight uses its own layout, not BaseLayout) */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Outfit:wght@500;600;700&display=swap');
+
+/* Viewpo brand overrides for Starlight help pages */
+
+/* Import starlight-tailwind bridge for Tailwind v4 compatibility */
+@import '@astrojs/starlight-tailwind';
+@import 'tailwindcss/theme.css' layer(theme);
+@import 'tailwindcss/utilities.css' layer(utilities);
+
+/* Override accent colours to Viewpo indigo palette */
+@theme {
+  --color-accent-200: #c7d2fe; /* indigo-200 */
+  --color-accent-600: #4f46e5; /* indigo-600 — Viewpo primary-hover */
+  --color-accent-900: #312e81; /* indigo-900 */
+  --color-accent-950: #1e1b4b; /* indigo-950 */
+
+  /* Override gray scale to slate (matches Viewpo dark bg #0F172A = slate-900) */
+  --color-gray-50: #f8fafc;
+  --color-gray-100: #f1f5f9;
+  --color-gray-200: #e2e8f0;
+  --color-gray-300: #cbd5e1;
+  --color-gray-400: #94a3b8;
+  --color-gray-500: #64748b;
+  --color-gray-600: #475569;
+  --color-gray-700: #334155;
+  --color-gray-800: #1e293b;
+  --color-gray-900: #0f172a;
+  --color-gray-950: #020617;
+
+  /* Use Viewpo fonts */
+  --font-sans: 'Inter', sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+}
+
+/* Heading font override — Starlight uses --sl-font for all text */
+:root {
+  --sl-font: 'Inter', sans-serif;
+}
+
+/* Use Outfit for Starlight headings */
+.sl-markdown-content h1,
+.sl-markdown-content h2,
+.sl-markdown-content h3,
+.sl-markdown-content h4,
+.sl-markdown-content h5,
+.sl-markdown-content h6,
+starlight-head h1 {
+  font-family: 'Outfit', sans-serif;
+}
+
+/* Site title in sidebar uses Outfit */
+.site-title {
+  font-family: 'Outfit', sans-serif;
+}
