@@ -61,7 +61,8 @@ npm run build            # Build to dist/
 | `public/_headers` | CF Pages headers — security + `/_astro/*` immutable cache |
 | `public/og-default.png` | OG social share image (1200x630, 15KB) |
 | `public/logo.png` | Logo for Organization schema (512x512) |
-| `public/favicon.svg` / `favicon.png` | Favicons (indigo V mark) |
+| `public/favicon.svg` / `favicon.png` | Favicons (purple Vi mark) |
+| `public/.well-known/microsoft-identity-association.json` | Microsoft domain verification for Entra ID OAuth — DO NOT DELETE (see Domain Verification section below) |
 | `.github/workflows/ci.yml` | CI — build check on PRs and main |
 | `.github/workflows/deploy-production.yml` | Deploy to CF Pages on push to main |
 | `docs/viewpo-purpose.md` | Product purpose document |
@@ -143,6 +144,21 @@ Viewpo is a native iOS/macOS app that aggregates preview deployments from multip
 - **Pro** ($29/mo): Team workspaces, deploy comparison, API access
 - **Payment**: Lemon Squeezy (Merchant of Record) — handles tax/VAT/GST, refunds, chargebacks
 - **Currency**: USD base. "Prices exclude tax" disclosure on pricing page. Lemon Squeezy handles currency conversion
+
+---
+
+## Domain Verification
+
+### Microsoft Entra ID (OAuth)
+
+The Viewpo app uses Microsoft OAuth for user login (Microsoft account sign-in). Microsoft requires domain verification via a `.well-known` file:
+
+- **File**: `public/.well-known/microsoft-identity-association.json`
+- **URL**: `https://viewpo.io/.well-known/microsoft-identity-association.json`
+- **App ID**: `8d0f3b24-9b66-4f9a-82d5-a9244ac1cdc3`
+- **Purpose**: Proves viewpo.io ownership to Microsoft Entra ID so the OAuth consent screen shows a verified publisher
+
+**DO NOT DELETE this file.** Removing it will break Microsoft OAuth domain verification and may cause the app's Microsoft login to show "unverified publisher" warnings to users.
 
 ---
 
