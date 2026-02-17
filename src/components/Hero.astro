@@ -59,7 +59,7 @@ import Button from './Button.astro';
       <div class="card-stack grid grid-cols-1 justify-items-end items-end w-full max-w-3xl mx-auto pb-6" aria-hidden="true">
 
         <!-- === 27" Monitor (very back, biggest) === -->
-        <div class="reveal col-start-1 row-start-1 relative z-0 opacity-75 w-[320px] sm:w-[440px] lg:w-[560px]">
+        <div class="reveal col-start-1 row-start-1 relative z-0 opacity-75 w-[340px] sm:w-[600px] lg:w-[720px]">
           <div class="rounded-xl border border-foreground/[0.08] dark:border-white/[0.08] bg-white dark:bg-slate-800 shadow overflow-hidden">
             <div class="h-6 flex items-center px-3 gap-1.5 bg-slate-50 dark:bg-slate-700 border-b border-slate-200/60 dark:border-slate-600/60">
               <div class="w-1.5 h-1.5 rounded-full bg-red-400/40"></div>
@@ -108,7 +108,7 @@ import Button from './Button.astro';
         </div>
 
         <!-- === Laptop (second from back) === -->
-        <div class="reveal reveal-delay-1 col-start-1 row-start-1 relative z-10 opacity-85 w-[200px] sm:w-[260px] lg:w-[300px]">
+        <div class="reveal reveal-delay-1 col-start-1 row-start-1 relative z-10 opacity-85 w-[200px] sm:w-[330px] lg:w-[400px]">
           <div class="rounded-xl border border-foreground/10 dark:border-white/10 bg-white dark:bg-slate-800 shadow-md overflow-hidden">
             <div class="h-6 flex items-center px-3 gap-1.5 bg-slate-50 dark:bg-slate-700 border-b border-slate-200 dark:border-slate-600">
               <div class="w-2 h-2 rounded-full bg-red-400/60"></div>
@@ -159,7 +159,7 @@ import Button from './Button.astro';
         </div>
 
         <!-- === iPad (third from back) === -->
-        <div class="reveal reveal-delay-2 col-start-1 row-start-1 relative z-20 w-[140px] sm:w-[168px] lg:w-[192px]">
+        <div class="reveal reveal-delay-2 col-start-1 row-start-1 relative z-20 w-[135px] sm:w-[210px] lg:w-[255px]">
           <div class="rounded-xl border border-foreground/10 dark:border-white/10 bg-white dark:bg-slate-800 shadow-lg overflow-hidden">
             <div class="h-5 flex items-center justify-center bg-slate-50 dark:bg-slate-700 border-b border-slate-200 dark:border-slate-600">
               <div class="w-10 h-1 bg-foreground/10 dark:bg-white/10 rounded-full"></div>
@@ -198,18 +198,18 @@ import Button from './Button.astro';
         </div>
 
         <!-- === Phone (front, smallest, right edge) — shows DESKTOP wireframe inside === -->
-        <div class="reveal reveal-delay-3 col-start-1 row-start-1 relative z-30 w-[100px] sm:w-[116px] lg:w-[128px]">
+        <div class="reveal reveal-delay-3 col-start-1 row-start-1 relative z-30 w-[90px] sm:w-[96px] lg:w-[96px]">
           <div class="rounded-2xl border-2 border-primary/30 dark:border-primary/20 bg-white dark:bg-slate-800 shadow-xl shadow-primary/10 overflow-hidden">
             <!-- Phone notch -->
             <div class="h-5 flex items-center justify-center bg-slate-50 dark:bg-slate-700 border-b border-slate-200 dark:border-slate-600">
               <div class="w-12 h-2.5 bg-foreground/10 dark:bg-white/10 rounded-full"></div>
             </div>
             <!-- KEY: Desktop wireframe INSIDE the phone (shows "any resolution on any device") -->
-            <div class="relative overflow-hidden h-32 sm:h-36 lg:h-40">
+            <div class="relative overflow-hidden h-28 sm:h-32 lg:h-32">
               <!-- Fade-out at bottom to show content continues -->
               <div class="absolute bottom-0 left-0 right-0 h-8 bg-gradient-to-t from-white dark:from-slate-800 to-transparent z-10 pointer-events-none"></div>
               <!-- Scaled-down desktop wireframe (shows 3-col layout crammed into phone) -->
-              <div class="origin-top-left" style="transform: scale(0.3); width: 400px;">
+              <div class="origin-top-left" style="transform: scale(0.22); width: 400px;">
                 <!-- Desktop nav -->
                 <div class="h-10 bg-slate-100 dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 flex items-center px-4">
                   <div class="w-16 h-3 bg-slate-300 dark:bg-slate-500 rounded"></div>
