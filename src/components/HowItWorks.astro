@@ -32,12 +32,13 @@ const steps = [
   </div>
 
   <div class="grid md:grid-cols-3 gap-8 md:gap-12 max-w-4xl mx-auto relative">
-    <!-- Horizontal connector line (desktop only) -->
-    <div class="hidden md:block absolute top-8 left-[calc(16.67%+2rem)] right-[calc(16.67%+2rem)] h-px bg-gradient-to-r from-primary/30 via-primary/10 to-primary/30" aria-hidden="true"></div>
+    <!-- Horizontal connector lines (desktop only) — two segments that stop before each icon -->
+    <div class="hidden md:block absolute top-8 left-[calc(16.67%+3rem)] right-[calc(50%+2.5rem)] h-px bg-gradient-to-r from-primary/30 to-primary/10" aria-hidden="true"></div>
+    <div class="hidden md:block absolute top-8 left-[calc(50%+2.5rem)] right-[calc(16.67%+3rem)] h-px bg-gradient-to-r from-primary/10 to-primary/30" aria-hidden="true"></div>
 
     {steps.map((step, i) => (
       <div class={`reveal reveal-delay-${i + 1} text-center relative`}>
-        <div class="relative z-10 w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center mx-auto mb-6 ring-[6px] ring-muted dark:ring-slate-800">
+        <div class="relative z-10 w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center mx-auto mb-6">
           <svg class="w-8 h-8 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
             <Fragment set:html={step.icon} />
           </svg>
