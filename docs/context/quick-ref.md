@@ -15,7 +15,7 @@
 | **Alt Domains** | viewpo.app, viewpo.dev (both redirect to viewpo.io) |
 | **CF Pages Project** | `viewpo-io` |
 | **CF Zone** | `840ca9d145596b47b9868868e4cd7b81` |
-| **Status** | Marketing site live — 7 pages, dark mode, Plausible analytics, SEO/GEO optimised |
+| **Status** | Marketing site live — 10+ pages, dark mode, Plausible analytics, SEO/GEO optimised, Trello-powered roadmap with D1 voting |
 
 ---
 
@@ -37,6 +37,11 @@ npm run build            # Build to dist/
 | Homepage | `/` | `src/pages/index.astro` | All segments — hero, features, pricing, FAQ |
 | Teams | `/teams/` | `src/pages/teams.astro` | Team leads, agencies, PMs, designers |
 | Creators | `/creators/` | `src/pages/creators.astro` | Vibe coders, AI builders |
+| Roadmap | `/roadmap/` | `src/pages/roadmap.astro` | SSR — Trello-powered roadmap with voting + feedback form |
+| Help Centre | `/help/` | `src/pages/help/index.astro` | Help hub |
+| Getting Started | `/help/getting-started/` | `src/pages/help/[...slug].astro` | Getting started guide |
+| FAQ | `/help/faq/` | `src/pages/help/[...slug].astro` | Frequently asked questions |
+| Contact | `/help/contact/` | `src/pages/help/[...slug].astro` | Contact form |
 | Confirmed | `/confirmed/` | `src/pages/confirmed.astro` | Post-email-confirmation landing page |
 | Preferences | `/preferences/` | `src/pages/preferences.astro` | Email preferences / unsubscribe |
 | Privacy | `/privacy/` | `src/pages/privacy.astro` | Legal — privacy policy (ACL, GDPR, APP-compliant) |
@@ -48,13 +53,18 @@ npm run build            # Build to dist/
 
 | Path | Description |
 |------|-------------|
-| `src/pages/` | All 7 pages |
-| `src/layouts/BaseLayout.astro` | Shared layout — meta tags, JSON-LD schemas, fonts, Plausible proxy + `plausible.init()`, theme persistence, View Transitions, gclid capture (dormant) |
+| `src/pages/` | All pages (static + SSR) |
+| `src/layouts/BaseLayout.astro` | Shared layout — meta tags, JSON-LD schemas, fonts, Plausible proxy + `plausible.init()`, Turnstile script, theme persistence, View Transitions, gclid capture (dormant) |
 | `src/pages/js/script.js.ts` | Plausible script proxy (Astro API route, `prerender = false`) |
 | `src/pages/api/event.ts` | Plausible event proxy (Astro API route, `prerender = false`) |
-| `src/components/` | 17 components (Hero, FAQ, PricingTable, ViewportDemo, SignupModal, ContactModal, Footer, Header, ThemeToggle, etc.) |
+| `src/pages/api/vote.ts` | Roadmap vote API (SSR, D1 + SHA-256 fingerprint dedup) |
+| `src/pages/api/feedback.ts` | Feedback form API (SSR, Turnstile + Trello card creation) |
+| `src/lib/roadmap/` | Roadmap library — `types.ts`, `adapter.ts` (Trello), `cache.ts` (CF Cache SWR), `mock.ts` |
+| `src/components/` | 20 components (Hero, FAQ, PricingTable, ViewportDemo, SignupModal, ContactModal, RoadmapGrid, RoadmapCard, FeedbackForm, Footer, Header, ThemeToggle, etc.) |
 | `src/styles/global.css` | Brand tokens, animations, `@variant dark` for Tailwind v4 |
-| `src/utils/constants.ts` | API base URL (email.viewpo.io), device presets, pricing tiers, FAQ data (13 items incl. support expectations) |
+| `src/utils/constants.ts` | API base URL (email.viewpo.io), Turnstile site key, feedback categories, device presets, pricing tiers, FAQ data (13 items incl. support expectations) |
+| `wrangler.toml` | D1 binding (`DB` → `viewpo-roadmap`) for roadmap voting |
+| `migrations/0001_create_votes.sql` | D1 schema — `votes` + `voter_fingerprints` tables |
 | `src/scripts/scroll-reveal.ts` | IntersectionObserver scroll animation |
 | `public/robots.txt` | AI crawlers explicitly allowed (GPTBot, ClaudeBot, etc.) |
 | `public/llms.txt` | AI-readable site navigation index (llmstxt.org standard) |
@@ -98,7 +108,7 @@ All schemas in `BaseLayout.astro`:
 - **WebPage** — every page (datePublished, dateModified — dynamic at build time)
 - **SoftwareApplication** — homepage only (featureList x6, applicationSubCategory, operatingSystem array)
 - **WebSite** — homepage only
-- **FAQPage** — homepage (`FAQ.astro`), `/teams/`, `/creators/` (all with dateModified)
+- **FAQPage** — homepage (`FAQ.astro`), `/teams/`, `/creators/`, `/roadmap/` (all with dateModified)
 
 ---
 
@@ -162,6 +172,27 @@ The Viewpo app uses Microsoft OAuth for user login (Microsoft account sign-in). 
 
 ---
 
+## Roadmap & Feedback System
+
+Trello-powered public roadmap at `/roadmap/` with anonymous voting and a feedback form.
+
+| Component | Detail |
+|-----------|--------|
+| **Data source** | Trello board `69942bf614bc8d8dacf69f52` |
+| **Lists** | Ideas (hidden), Planned, In Progress, Testing, Shipped |
+| **Voting** | D1 database `viewpo-roadmap` (`204cba78-763c-43f6-a525-f2ab918f0f5b`), SHA-256 fingerprint dedup |
+| **Feedback** | Turnstile-protected form → creates Trello card in Ideas list |
+| **Caching** | CF Cache API, stale-while-revalidate (10min fresh, 1hr stale) |
+| **Bot protection** | Cloudflare Turnstile (site key in constants.ts) + honeypot field |
+| **Labels** | Feature, Enhancement, Bug Fix, Integration, UI/UX, Other |
+
+**CF Pages Secrets** (set via `wrangler pages secret put`):
+- `TRELLO_API_KEY`, `TRELLO_API_TOKEN`, `TRELLO_BOARD_ID`, `TRELLO_IDEAS_LIST_ID`, `TURNSTILE_SECRET_KEY`
+
+**Turnstile allowed domains**: `viewpo.io`, `www.viewpo.io`, `viewpo-io.pages.dev`
+
+---
+
 ## Deployment
 
 Auto-deploy on push to `main` via GitHub Actions (`deploy-production.yml`).
@@ -170,7 +201,10 @@ Auto-deploy on push to `main` via GitHub Actions (`deploy-production.yml`).
 - `CLOUDFLARE_API_TOKEN` — from bws `cloudflare-api-token`
 - `CLOUDFLARE_ACCOUNT_ID` — from bws `cloudflare-account-id`
 
-**No preview deploys** — CI runs build check on PRs but doesn't deploy previews. Only production deploys on merge to main.
+**CF Pages Secrets** (from bws via `wrangler pages secret put`):
+- `TRELLO_API_KEY`, `TRELLO_API_TOKEN`, `TRELLO_BOARD_ID`, `TRELLO_IDEAS_LIST_ID`, `TURNSTILE_SECRET_KEY`
+
+**No preview deploys** — CI runs build check on PRs but doesn't deploy previews. Manual preview via `wrangler pages deploy dist/ --project-name viewpo-io --branch <branch-name>`.
 
 **CF Pages project**: `viewpo-io`
 
@@ -206,11 +240,11 @@ SignupModal and ContactModal both POST to `email.viewpo.io`. The full email conf
 - Blog, docs, changelog pages
 - Product screenshots (MVP UI not finalised)
 - Playwright E2E tests
-- PR preview deploys (CI only runs build, no CF Pages preview)
 - Comparison pages (Viewpo vs Responsively, vs BrowserStack)
 - Self-hosted Google Fonts (currently loaded via Google CDN)
 - Register "Viewpo" as additional business name on ABN via ASIC
-- Dedicated OG images for /teams/ and /creators/ (currently use default)
+- Dedicated OG images for /teams/, /creators/, /roadmap/ (currently use default)
 - BreadcrumbList schema on subpages
 - HowTo schema on homepage How It Works section
 - hreflang tags
+- Roadmap vote rate limiting (currently dedup only, no rate limit)
