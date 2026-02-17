@@ -1,12 +1,12 @@
-/* Load Google Fonts for Starlight pages (Starlight uses its own layout, not BaseLayout) */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Outfit:wght@500;600;700&display=swap');
-
 /* Viewpo brand overrides for Starlight help pages */
 
 /* Import starlight-tailwind bridge for Tailwind v4 compatibility */
 @import '@astrojs/starlight-tailwind';
 @import 'tailwindcss/theme.css' layer(theme);
 @import 'tailwindcss/utilities.css' layer(utilities);
+
+/* Import shared Viewpo tokens so Header/Footer Tailwind utilities resolve correctly */
+@import './viewpo-tokens.css';
 
 /* Override accent colours to Viewpo indigo palette */
 @theme {
@@ -52,4 +52,63 @@ starlight-head h1 {
 /* Site title in sidebar uses Outfit */
 .site-title {
   font-family: 'Outfit', sans-serif;
+}
+
+/*
+ * Layout overrides for custom Viewpo Header/Footer.
+ *
+ * Starlight's PageFrame uses a fixed-position header bar.
+ * Our custom Header component renders the Viewpo site Header inside that bar.
+ * We need to adjust the styling to accommodate the different header height.
+ */
+
+/* Make the Starlight header bar accommodate the Viewpo header */
+.page > .header {
+  position: sticky;
+  height: auto;
+  padding: 0;
+  background-color: transparent;
+  border-bottom: none;
+}
+
+/* Adjust sidebar to account for non-fixed header */
+@media (min-width: 50rem) {
+  .sidebar-pane {
+    position: sticky;
+    top: 4rem;
+    height: calc(100vh - 4rem);
+  }
+}
+
+/* Dark mode: map Viewpo's .dark class to Starlight's background colours */
+.dark .page > .header {
+  background-color: transparent;
+}
+
+/* Ensure Starlight content area backgrounds match Viewpo */
+:root[data-theme='light'] {
+  --sl-color-bg: #fafafa;
+  --sl-color-bg-nav: transparent;
+  --sl-color-bg-sidebar: #f8fafc;
+}
+
+:root[data-theme='dark'] {
+  --sl-color-bg: #0f172a;
+  --sl-color-bg-nav: transparent;
+  --sl-color-bg-sidebar: #0f172a;
+}
+
+/* Search bar in sidebar (moved from header to content area) */
+.sl-search-in-sidebar {
+  padding: 0.75rem var(--sl-sidebar-pad-x, 1rem);
+  border-bottom: 1px solid var(--sl-color-gray-6);
+}
+
+.sl-search-in-sidebar site-search {
+  width: 100%;
+}
+
+.sl-search-in-sidebar button[data-open-modal] {
+  width: 100%;
+  max-width: none;
 }

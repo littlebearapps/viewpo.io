@@ -12,6 +12,13 @@ export default defineConfig({
       title: 'Viewpo Help',
       disable404Route: true,
       customCss: ['./src/styles/starlight-custom.css'],
+      components: {
+        Header: './src/components/starlight/Header.astro',
+        Footer: './src/components/starlight/Footer.astro',
+        Head: './src/components/starlight/Head.astro',
+        ThemeProvider: './src/components/starlight/ThemeProvider.astro',
+        Sidebar: './src/components/starlight/Sidebar.astro',
+      },
       sidebar: [
         {
           label: 'Help Centre',

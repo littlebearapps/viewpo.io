@@ -1,50 +1,7 @@
 @import 'tailwindcss';
+@import './viewpo-tokens.css';
 
-/* Enable class-based dark mode (Tailwind 4) */
-@variant dark (&:where(.dark, .dark *));
-
-/* Viewpo Brand Tokens */
-@theme {
-  /* Colours — "Viewport Lens" palette (Indigo + Coral) */
-  --color-primary: #6366F1;
-  --color-primary-hover: #4F46E5;
-  --color-secondary: #F97316;
-  --color-links: #818CF8;
-  --color-success: #10B981;
-  --color-attention: #FB923C;
-  --color-background: #FAFAFA;
-  --color-foreground: #1E293B;
-  --color-muted: #F1F5F9;
-  --color-dark-bg: #0F172A;
-
-  /* Typography */
-  --font-heading: 'Outfit', sans-serif;
-  --font-body: 'Inter', sans-serif;
-
-  /* Border Radius */
-  --radius-default: 8px;
-  --radius-lg: 12px;
-  --radius-xl: 16px;
-
-  /* Shadows */
-  --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
-  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-  --shadow-card: 0 4px 20px -4px rgb(0 0 0 / 0.08);
-  --shadow-card-hover: 0 12px 32px -8px rgb(0 0 0 / 0.12);
-
-  /* Gradients */
-  --gradient-hero: linear-gradient(135deg, var(--color-background) 0%, #EEF2FF 100%);
-  --gradient-primary: linear-gradient(135deg, #6366F1 0%, #4F46E5 100%);
-
-  /* Animation */
-  --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
-  --duration-fast: 150ms;
-  --duration-normal: 300ms;
-  --duration-slow: 500ms;
-}
-
-/* Base styles */
+/* Base styles (marketing pages only — NOT loaded on Starlight) */
 html {
   font-family: var(--font-body);
   background-color: var(--color-background);
@@ -53,13 +10,6 @@ html {
 
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-heading);
-}
-
-/* Dark Mode */
-.dark {
-  --color-background: #0F172A;
-  --color-foreground: #E2E8F0;
-  --color-muted: #1E293B;
 }
 
 .dark body {
@@ -194,12 +144,7 @@ h1, h2, h3, h4, h5, h6 {
 .float-slow { animation: float-slow 6s ease-in-out infinite; }
 .float-slow-reverse { animation: float-slow 8s ease-in-out infinite reverse; }
 
-/* Container */
-.container-wide {
-  max-width: 1220px;
-  margin-inline: auto;
-  padding-inline: 1.5rem;
-}
+/* Container — defined in viewpo-tokens.css (shared with Starlight) */
 
 /* Modal Dialog */
 .modal-dialog {

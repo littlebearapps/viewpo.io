@@ -24,9 +24,12 @@
 
     toggle.addEventListener('click', () => {
       const isDark = document.documentElement.classList.toggle('dark');
-      localStorage.theme = isDark ? 'dark' : 'light';
+      const theme = isDark ? 'dark' : 'light';
+      localStorage.theme = theme;
+      // Sync Starlight's data-theme attribute (used on help pages)
+      document.documentElement.dataset.theme = theme;
       if (window.plausible) {
-        window.plausible('Theme Toggle', { props: { theme: isDark ? 'dark' : 'light' } });
+        window.plausible('Theme Toggle', { props: { theme } });
       }
     });
   }
