@@ -2,42 +2,84 @@
 const currentYear = new Date().getFullYear();
 ---
 
-<footer class="relative py-12">
+<footer class="relative pt-16 pb-8">
   <!-- Gradient top divider -->
   <div class="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent" aria-hidden="true"></div>
 
   <div class="container-wide">
-    <div class="flex flex-col md:flex-row items-center justify-between gap-6">
-      <!-- Brand -->
-      <div class="flex flex-col items-center md:items-start gap-2">
-        <a href="/" class="relative flex items-center gap-2 font-heading font-bold text-lg text-foreground">
-          <div class="absolute -inset-2 bg-primary/10 rounded-full blur-md dark:bg-primary/[0.07]" aria-hidden="true"></div>
-          <img src="/viewpo-icon.svg" alt="" width="24" height="24" class="relative w-6 h-6 rounded-md" />
-          <span class="relative">Viewpo</span>
+    <!-- Main footer grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-8 mb-12">
+
+      <!-- Column 1: Brand + description -->
+      <div class="lg:col-span-1">
+        <a href="/" class="inline-flex items-center gap-2 font-heading font-bold text-lg text-foreground mb-3">
+          <img src="/viewpo-icon.svg" alt="" width="24" height="24" class="w-6 h-6 rounded-md" />
+          <span>Viewpo</span>
         </a>
-        <p class="text-sm text-foreground/50">
-          A <a href="https://littlebearapps.com" class="text-links hover:text-primary transition-colors" target="_blank" rel="noopener noreferrer">Little Bear Apps</a> product
+        <p class="text-sm text-foreground/60 leading-relaxed">
+          Preview deploys from Cloudflare Pages, Vercel, Netlify, and GitHub Pages — all in one dashboard with a built-in viewport viewer for iOS, iPadOS, and macOS.
         </p>
       </div>
 
-      <!-- Links -->
-      <div class="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-sm text-foreground/50">
-        <a href="/#features" class="hover:text-foreground transition-colors">Features</a>
-        <a href="/#pricing" class="hover:text-foreground transition-colors">Pricing</a>
-        <a href="/#faq" class="hover:text-foreground transition-colors">FAQ</a>
-        <a href="/teams/" class="hover:text-foreground transition-colors">Teams</a>
-        <a href="/creators/" class="hover:text-foreground transition-colors">Creators</a>
-        <a href="/roadmap/" class="hover:text-foreground transition-colors">Roadmap</a>
-        <a href="/help/" class="hover:text-foreground transition-colors">Help</a>
-        <a href="/privacy/" class="hover:text-foreground transition-colors">Privacy</a>
-        <a href="/terms/" class="hover:text-foreground transition-colors">Terms</a>
-        <button type="button" data-open-contact class="hover:text-foreground transition-colors cursor-pointer bg-transparent border-none p-0 text-sm text-foreground/50 font-normal">Contact</button>
+      <!-- Column 2: Product -->
+      <div>
+        <h3 class="font-heading font-semibold text-sm text-foreground mb-4">Product</h3>
+        <ul class="space-y-2.5">
+          <li><a href="/#features" class="text-sm text-foreground/60 hover:text-foreground transition-colors">Features</a></li>
+          <li><a href="/#pricing" class="text-sm text-foreground/60 hover:text-foreground transition-colors">Pricing</a></li>
+          <li><a href="/teams/" class="text-sm text-foreground/60 hover:text-foreground transition-colors">Teams</a></li>
+          <li><a href="/creators/" class="text-sm text-foreground/60 hover:text-foreground transition-colors">Creators</a></li>
+          <li><a href="/roadmap/" class="text-sm text-foreground/60 hover:text-foreground transition-colors">Roadmap</a></li>
+        </ul>
       </div>
 
-      <!-- Copyright -->
+      <!-- Column 3: Support -->
+      <div>
+        <h3 class="font-heading font-semibold text-sm text-foreground mb-4">Support</h3>
+        <ul class="space-y-2.5">
+          <li><a href="/help/" class="text-sm text-foreground/60 hover:text-foreground transition-colors">Help Centre</a></li>
+          <li><a href="/help/getting-started/" class="text-sm text-foreground/60 hover:text-foreground transition-colors">Getting Started</a></li>
+          <li><a href="/help/faq/" class="text-sm text-foreground/60 hover:text-foreground transition-colors">FAQ</a></li>
+          <li><button type="button" data-open-contact class="text-sm text-foreground/60 hover:text-foreground transition-colors cursor-pointer bg-transparent border-none p-0 font-normal">Contact Us</button></li>
+        </ul>
+      </div>
+
+      <!-- Column 4: Stay Updated (newsletter placeholder) -->
+      <div>
+        <h3 class="font-heading font-semibold text-sm text-foreground mb-4">Stay Updated</h3>
+        <p class="text-sm text-foreground/60 leading-relaxed mb-4">
+          Get product updates, new features, and tips delivered to your inbox.
+        </p>
+        <!-- Newsletter signup — wire up when email marketing is ready -->
+        <form class="flex gap-2" onsubmit="return false;">
+          <input
+            type="email"
+            placeholder="you@example.com"
+            aria-label="Email address for newsletter"
+            disabled
+            class="flex-1 min-w-0 bg-foreground/5 border border-foreground/10 rounded-lg px-3 py-2 text-sm text-foreground placeholder:text-foreground/30 disabled:opacity-50 disabled:cursor-not-allowed"
+          />
+          <button
+            type="submit"
+            disabled
+            class="bg-primary text-white text-sm font-medium px-4 py-2 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            Subscribe
+          </button>
+        </form>
+        <p class="text-xs text-foreground/30 mt-2">Coming soon</p>
+      </div>
+    </div>
+
+    <!-- Bottom bar: copyright + legal links -->
+    <div class="border-t border-foreground/10 pt-6 flex flex-col sm:flex-row items-center justify-between gap-4">
       <p class="text-sm text-foreground/40">
-        &copy; {currentYear} Little Bear Apps &middot; Made in Australia &middot; <a href="mailto:support@viewpo.io" class="hover:text-foreground transition-colors">support@viewpo.io</a>
+        &copy; {currentYear} Little Bear Apps &middot; Made in Australia
       </p>
+      <div class="flex items-center gap-4 text-sm text-foreground/40">
+        <a href="/privacy/" class="hover:text-foreground transition-colors">Privacy</a>
+        <a href="/terms/" class="hover:text-foreground transition-colors">Terms</a>
+      </div>
     </div>
   </div>
 </footer>
