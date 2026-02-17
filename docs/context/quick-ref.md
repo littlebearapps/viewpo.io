@@ -54,7 +54,7 @@ npm run build            # Build to dist/
 | `src/pages/api/event.ts` | Plausible event proxy (Astro API route, `prerender = false`) |
 | `src/components/` | 17 components (Hero, FAQ, PricingTable, ViewportDemo, SignupModal, ContactModal, Footer, Header, ThemeToggle, etc.) |
 | `src/styles/global.css` | Brand tokens, animations, `@variant dark` for Tailwind v4 |
-| `src/utils/constants.ts` | Device presets, pricing tiers, FAQ data (13 items incl. support expectations) |
+| `src/utils/constants.ts` | API base URL (email.viewpo.io), device presets, pricing tiers, FAQ data (13 items incl. support expectations) |
 | `src/scripts/scroll-reveal.ts` | IntersectionObserver scroll animation |
 | `public/robots.txt` | AI crawlers explicitly allowed (GPTBot, ClaudeBot, etc.) |
 | `public/llms.txt` | AI-readable site navigation index (llmstxt.org standard) |
@@ -172,10 +172,10 @@ Auto-deploy on push to `main` via GitHub Actions (`deploy-production.yml`).
 
 ## Email Signup & Confirmation Flow
 
-SignupModal and ContactModal both POST to `platform.littlebearapps.com`. The full email confirmation flow:
+SignupModal and ContactModal both POST to `email.viewpo.io`. The full email confirmation flow:
 
 1. User signs up via SignupModal → POST to Platform API
-2. Platform API sends confirmation email with link to `platform.littlebearapps.com/api/confirm-email?token=xxx`
+2. Platform API sends confirmation email with link to `email.viewpo.io/api/confirm-email?token=xxx`
 3. Platform API confirms the email, then redirects to `viewpo.io/confirmed`
 4. User sees the `/confirmed/` landing page
 

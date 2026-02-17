@@ -25,8 +25,10 @@ npm run build            # Build to dist/
 | Homepage | `src/pages/index.astro` | All segments — features, pricing, FAQ, CTA |
 | Teams | `src/pages/teams.astro` | Team leads, agencies, PMs, designers |
 | Creators | `src/pages/creators.astro` | Vibe coders, AI builders (Cursor, v0, Bolt, Lovable, Replit) |
-| Privacy | `src/pages/privacy.astro` | Legal — privacy policy |
-| Terms | `src/pages/terms.astro` | Legal — terms of service |
+| Confirmed | `src/pages/confirmed.astro` | Post-email-confirmation landing page |
+| Preferences | `src/pages/preferences.astro` | Email preferences / unsubscribe |
+| Privacy | `src/pages/privacy.astro` | Legal — privacy policy (ACL, GDPR, APP-compliant) |
+| Terms | `src/pages/terms.astro` | Legal — terms of service (ACL-compliant, Lemon Squeezy MoR) |
 
 ---
 
@@ -54,11 +56,11 @@ npm run build            # Build to dist/
 
 | Path | Description |
 |------|-------------|
-| `src/pages/` | All 5 pages (index, teams, creators, privacy, terms) |
-| `src/layouts/BaseLayout.astro` | Shared layout — meta tags, JSON-LD schemas, fonts, analytics, theme persistence, View Transitions |
-| `src/components/` | 15 components (Hero, FAQ, PricingTable, ViewportDemo, etc.) |
+| `src/pages/` | All 7 pages (index, teams, creators, confirmed, preferences, privacy, terms) |
+| `src/layouts/BaseLayout.astro` | Shared layout — meta tags, JSON-LD schemas, fonts, Plausible proxy + `plausible.init()`, theme persistence, View Transitions, gclid capture (dormant) |
+| `src/components/` | 17 components (Hero, FAQ, PricingTable, ViewportDemo, SignupModal, ContactModal, etc.) |
 | `src/styles/global.css` | Brand tokens, animations, dark mode variant |
-| `src/utils/constants.ts` | Device presets, pricing tiers, FAQ data |
+| `src/utils/constants.ts` | API base URL (email.viewpo.io), device presets, pricing tiers, FAQ data |
 | `public/robots.txt` | AI crawlers explicitly allowed (GPTBot, ClaudeBot, etc.) |
 | `public/llms.txt` | AI-readable site index following llmstxt.org standard |
 | `public/_headers` | Security headers + `/_astro/*` immutable cache |
@@ -88,7 +90,7 @@ All schemas in `BaseLayout.astro`:
 | Item | Status |
 |------|--------|
 | Google Search Console | Verified (DNS), sitemap submitted |
-| Plausible Analytics | Live — async script, Plausible event tracking on CTAs and FAQ toggles |
+| Plausible Analytics | Live — self-managed proxy via Astro API routes (`/js/script.js` + `/api/event/`), 32 goals, 3 funnels. See `docs/context/plausible-analytics.md` |
 | AI crawlers (robots.txt) | Explicitly allowed — GPTBot, ClaudeBot, Google-Extended, PerplexityBot, Applebot-Extended, CCBot, ChatGPT-User |
 | llms.txt | Live — curated site index for AI engines |
 | Cloudflare AI bot blocking | Disabled — managed robots.txt OFF, AI crawlers allowed |
@@ -136,13 +138,14 @@ Auto-deploy on push to `main` via GitHub Actions (`deploy-production.yml`).
 - **Free**: 3 projects, 1 provider, viewport viewer
 - **Starter** ($9/mo): Unlimited projects, all providers, sharing
 - **Pro** ($29/mo): Team workspaces, deploy comparison, API access
+- **Payment**: Lemon Squeezy (Merchant of Record) — handles tax/VAT/GST, refunds, chargebacks
+- **Currency**: USD base. "Prices exclude tax" disclosure on pricing page. Lemon Squeezy handles currency conversion
 
 ---
 
 ## Deferred (Not Yet Implemented)
 
 - Blog, docs, changelog pages
-- Email signup / waitlist form (CTA buttons are placeholders)
 - Product screenshots (MVP UI not finalised)
 - Playwright E2E tests
 - PR preview deploys
