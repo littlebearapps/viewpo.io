@@ -7,8 +7,8 @@ const currentYear = new Date().getFullYear();
   <div class="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent" aria-hidden="true"></div>
 
   <div class="container-wide">
-    <!-- Main footer grid -->
-    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 lg:gap-10 mb-12">
+    <!-- Main footer grid: outer columns wider, inner columns thinner -->
+    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-[2fr_1fr_1fr_1fr_2fr] gap-8 lg:gap-8 mb-12">
 
       <!-- Column 1: Brand + description -->
       <div class="col-span-2 md:col-span-3 lg:col-span-1">
@@ -35,6 +35,8 @@ const currentYear = new Date().getFullYear();
         <ul class="space-y-2.5">
           <li><a href="/#features" class="text-sm text-foreground/60 hover:text-foreground transition-colors">Features</a></li>
           <li><a href="/#pricing" class="text-sm text-foreground/60 hover:text-foreground transition-colors">Pricing</a></li>
+          <li><a href="/roadmap/" class="text-sm text-foreground/60 hover:text-foreground transition-colors">Roadmap</a></li>
+          <li><a href="/roadmap/#feedback-section" class="text-sm text-foreground/60 hover:text-foreground transition-colors">Feature Requests</a></li>
         </ul>
       </div>
 
@@ -47,9 +49,9 @@ const currentYear = new Date().getFullYear();
         </ul>
       </div>
 
-      <!-- Column 4: Support -->
+      <!-- Column 4: Help -->
       <div>
-        <h3 class="font-heading font-semibold text-sm text-foreground mb-4">Support</h3>
+        <h3 class="font-heading font-semibold text-sm text-foreground mb-4">Help</h3>
         <ul class="space-y-2.5">
           <li><a href="/help/" class="text-sm text-foreground/60 hover:text-foreground transition-colors">Help Centre</a></li>
           <li><a href="/help/getting-started/" class="text-sm text-foreground/60 hover:text-foreground transition-colors">Getting Started</a></li>
