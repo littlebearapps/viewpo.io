@@ -37,7 +37,7 @@ const steps = [
 
     {steps.map((step, i) => (
       <div class={`reveal reveal-delay-${i + 1} text-center relative`}>
-        <div class="relative z-10 w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center mx-auto mb-6">
+        <div class="relative z-10 w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center mx-auto mb-6 ring-[6px] ring-muted dark:ring-slate-800">
           <svg class="w-8 h-8 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
             <Fragment set:html={step.icon} />
           </svg>
