@@ -194,38 +194,45 @@
   </div>
 
 {:else}
-  <!-- MOBILE: Horizontal scroll carousel -->
+  <!-- MOBILE: 2x2 grid (shows all cards without scrolling) -->
   <div
-    class="flex gap-2.5 overflow-x-auto pb-2 snap-x snap-mandatory scrollbar-hide"
+    class="grid grid-cols-2 gap-3"
     role="tablist"
     aria-label="Choose your role"
   >
     {#each cards as card, i}
       <button
-        class="mobile-card flex-shrink-0 w-[180px] snap-start relative text-left rounded-xl overflow-hidden cursor-pointer transition-all duration-300 border-t-2 p-3
+        class="mobile-card relative text-left rounded-xl overflow-hidden cursor-pointer transition-all duration-300 border-t-2 p-3.5
+          backdrop-blur-sm border border-neutral-200 dark:border-neutral-700/50
           {i === activeIndex
-            ? `bg-foreground/[0.06] dark:bg-white/[0.07] ${card.borderTop}`
-            : 'border-t-transparent opacity-50 hover:opacity-100'}"
+            ? `bg-white/70 dark:bg-white/[0.08] ${card.borderTop} shadow-md`
+            : 'bg-white/40 dark:bg-white/[0.03] border-t-transparent opacity-60 hover:opacity-100'}"
         role="tab"
         tabindex="0"
         aria-selected={i === activeIndex}
         onclick={() => selectCard(i)}
         onkeydown={(e) => handleKeydown(e, i)}
       >
-        <div class="flex items-center gap-2">
-          <div class="w-7 h-7 rounded-md flex items-center justify-center flex-shrink-0 {i === activeIndex ? card.iconColour : 'text-foreground/30 dark:text-white/30'}">
-            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+        <div class="flex items-start gap-2.5">
+          <div class="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 transition-colors duration-300
+            {i === activeIndex ? card.iconColour : 'text-foreground/30 dark:text-white/30'}">
+            <svg class="w-[18px] h-[18px]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
               <path stroke-linecap="round" stroke-linejoin="round" d={icons[card.icon]} />
             </svg>
           </div>
-          <div class="min-w-0">
-            <span class="block text-[9px] font-heading font-bold uppercase tracking-[0.12em]
+          <div class="min-w-0 flex-1">
+            <span class="block text-[10px] font-heading font-bold uppercase tracking-[0.12em] mb-0.5
               {i === activeIndex ? 'text-foreground/50 dark:text-white/50' : 'text-foreground/20 dark:text-white/20'}">
               {card.label}
             </span>
-            <span class="block font-heading font-bold text-[11px] leading-snug truncate
+            <span class="block font-heading font-bold text-xs leading-snug
               {i === activeIndex ? 'text-foreground dark:text-white' : 'text-foreground/40 dark:text-white/35'}">
               {card.hook}
+            </span>
+            <!-- Description — visible on active card -->
+            <span class="block text-[11px] leading-relaxed mt-1 transition-all duration-300
+              {i === activeIndex ? 'text-foreground/50 dark:text-white/40 max-h-16 opacity-100' : 'max-h-0 opacity-0 overflow-hidden'}">
+              {card.description}
             </span>
           </div>
         </div>
