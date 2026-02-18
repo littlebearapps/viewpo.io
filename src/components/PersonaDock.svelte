@@ -214,12 +214,6 @@
         onkeydown={(e) => handleKeydown(e, i)}
       >
         <div class="flex items-start gap-3">
-          <div class="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0 transition-colors duration-300
-            {i === activeIndex ? card.iconColour : 'text-foreground/30 dark:text-white/30'}">
-            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-              <path stroke-linecap="round" stroke-linejoin="round" d={icons[card.icon]} />
-            </svg>
-          </div>
           <div class="min-w-0 flex-1">
             <span class="block text-[11px] font-heading font-bold uppercase tracking-[0.12em] mb-0.5
               {i === activeIndex ? 'text-foreground/50 dark:text-white/50' : 'text-foreground/20 dark:text-white/20'}">
@@ -229,6 +223,12 @@
               {i === activeIndex ? 'text-foreground dark:text-white' : 'text-foreground/40 dark:text-white/35'}">
               {card.hook}
             </span>
+          </div>
+          <div class="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0 transition-colors duration-300
+            {i === activeIndex ? card.iconColour : 'text-foreground/30 dark:text-white/30'}">
+            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d={icons[card.icon]} />
+            </svg>
           </div>
         </div>
         <!-- Description — full width below icon+heading row -->
