@@ -4,46 +4,54 @@ import Section from './Section.astro';
 const providers = [
   {
     name: 'Vercel',
+    available: true,
+    activeColor: 'text-foreground dark:text-white',
     brandColor: 'group-hover:text-foreground dark:group-hover:text-white',
     icon: `<path d="m12 1.608 12 20.784H0Z"/>`,
   },
   {
     name: 'Cloudflare Pages',
-    brandColor: 'group-hover:text-orange-400',
+    available: true,
+    activeColor: 'text-orange-400',
+    brandColor: 'group-hover:text-orange-500',
     icon: `<path d="M16.5088 16.8447c.1475-.5068.0908-.9707-.1553-1.3154-.2246-.3164-.6045-.499-1.0615-.5205l-8.6592-.1123a.1559.1559 0 0 1-.1333-.0713c-.0283-.042-.0351-.0986-.021-.1553.0278-.084.1123-.1484.2036-.1562l8.7359-.1123c1.0351-.0489 2.1601-.8868 2.5537-1.9136l.499-1.3013c.0215-.0561.0293-.1128.0147-.168-.5625-2.5463-2.835-4.4453-5.5499-4.4453-2.5039 0-4.6284 1.6177-5.3876 3.8614-.4927-.3658-1.1187-.5625-1.794-.499-1.2026.119-2.1665 1.083-2.2861 2.2856-.0283.31-.0069.6128.0635.894C1.5683 13.171 0 14.7754 0 16.752c0 .1748.0142.3515.0352.5273.0141.083.0844.1475.1689.1475h15.9814c.0909 0 .1758-.0645.2032-.1553l.12-.4268zm2.7568-5.5634c-.0771 0-.1611 0-.2383.0112-.0566 0-.1054.0415-.127.0976l-.3378 1.1744c-.1475.5068-.0918.9707.1543 1.3164.2256.3164.6055.498 1.0625.5195l1.8437.1133c.0557 0 .1055.0263.1329.0703.0283.043.0351.1074.0214.1562-.0283.084-.1132.1485-.204.1553l-1.921.1123c-1.041.0488-2.1582.8867-2.5527 1.914l-.1406.3585c-.0283.0713.0215.1416.0986.1416h6.5977c.0771 0 .1474-.0489.169-.126.1122-.4082.1757-.837.1757-1.2803 0-2.6025-2.125-4.727-4.7344-4.727"/>`,
   },
   {
     name: 'GitHub',
+    available: true,
+    activeColor: 'text-foreground dark:text-white',
     brandColor: 'group-hover:text-foreground dark:group-hover:text-white',
     icon: `<path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/>`,
   },
   {
     name: 'Netlify',
-    brandColor: 'group-hover:text-teal-400',
+    available: true,
+    activeColor: 'text-teal-400',
+    brandColor: 'group-hover:text-teal-500',
     icon: `<path d="M6.49 19.04h-.23L5.13 17.9v-.23l1.73-1.71h1.2l.15.15v1.2L6.5 19.04ZM5.13 6.31V6.1l1.13-1.13h.23L8.2 6.68v1.2l-.15.15h-1.2L5.13 6.31Zm9.96 9.09h-1.65l-.14-.13v-3.83c0-.68-.27-1.2-1.1-1.23-.42 0-.9 0-1.43.02l-.07.08v4.96l-.14.14H8.9l-.13-.14V8.73l.13-.14h3.7a2.6 2.6 0 0 1 2.61 2.6v4.08l-.13.14Zm-8.37-2.44H.14L0 12.82v-1.64l.14-.14h6.58l.14.14v1.64l-.14.14Zm17.14 0h-6.58l-.14-.14v-1.64l.14-.14h6.58l.14.14v1.64l-.14.14ZM11.05 6.55V1.64l.14-.14h1.65l.14.14v4.9l-.14.14h-1.65l-.14-.13Zm0 15.81v-4.9l.14-.14h1.65l.14.13v4.91l-.14.14h-1.65l-.14-.14Z"/>`,
   },
   {
     name: 'GitLab',
+    roadmap: true,
     brandColor: 'group-hover:text-orange-500',
-    comingSoon: true,
     icon: `<path d="m23.6004 9.5927-.0337-.0862L20.3.9814a.851.851 0 0 0-.3362-.405.8748.8748 0 0 0-.9997.0539.8748.8748 0 0 0-.29.4399l-2.2055 6.748H7.5375l-2.2057-6.748a.8573.8573 0 0 0-.29-.4412.8748.8748 0 0 0-.9997-.0537.8585.8585 0 0 0-.3362.4049L.4332 9.5015l-.0325.0862a6.0657 6.0657 0 0 0 2.0119 7.0105l.0113.0087.03.0213 4.976 3.7264 2.462 1.8633 1.4995 1.1321a1.0085 1.0085 0 0 0 1.2197 0l1.4995-1.1321 2.4619-1.8633 5.006-3.7489.0125-.01a6.0682 6.0682 0 0 0 2.0094-7.003z"/>`,
   },
   {
     name: 'Bitbucket',
+    roadmap: true,
     brandColor: 'group-hover:text-blue-500',
-    comingSoon: true,
     icon: `<path d="M.778 1.213a.768.768 0 00-.768.892l3.263 19.81c.084.5.515.868 1.022.873H19.95a.772.772 0 00.77-.646l3.27-20.03a.768.768 0 00-.768-.891zM14.52 15.53H9.522L8.17 8.466h7.561z"/>`,
   },
   {
     name: 'Figma',
+    roadmap: true,
     brandColor: 'group-hover:text-purple-500',
-    comingSoon: true,
     icon: `<path d="M15.852 8.981h-4.588V0h4.588c2.476 0 4.49 2.014 4.49 4.49s-2.014 4.491-4.49 4.491zM12.735 7.51h3.117c1.665 0 3.019-1.355 3.019-3.019s-1.355-3.019-3.019-3.019h-3.117V7.51zm0 1.471H8.148c-2.476 0-4.49-2.014-4.49-4.49S5.672 0 8.148 0h4.588v8.981zm-4.587-7.51c-1.665 0-3.019 1.355-3.019 3.019s1.354 3.02 3.019 3.02h3.117V1.471H8.148zm4.587 15.019H8.148c-2.476 0-4.49-2.014-4.49-4.49s2.014-4.49 4.49-4.49h4.588v8.98zM8.148 8.981c-1.665 0-3.019 1.355-3.019 3.019s1.355 3.019 3.019 3.019h3.117V8.981H8.148zM8.172 24c-2.489 0-4.515-2.014-4.515-4.49s2.014-4.49 4.49-4.49h4.588v4.441c0 2.503-2.047 4.539-4.563 4.539zm-.024-7.51a3.023 3.023 0 0 0-3.019 3.019c0 1.665 1.365 3.019 3.044 3.019 1.705 0 3.093-1.376 3.093-3.068v-2.97H8.148zm7.704 0h-.098c-2.476 0-4.49-2.014-4.49-4.49s2.014-4.49 4.49-4.49h.098c2.476 0 4.49 2.014 4.49 4.49s-2.014 4.49-4.49 4.49zm-.097-7.509c-1.665 0-3.019 1.355-3.019 3.019s1.355 3.019 3.019 3.019h.098c1.665 0 3.019-1.355 3.019-3.019s-1.355-3.019-3.019-3.019h-.098z"/>`,
   },
   {
     name: 'WordPress',
+    roadmap: true,
     brandColor: 'group-hover:text-sky-600',
-    comingSoon: true,
     icon: `<path d="M21.469 6.825c.84 1.537 1.318 3.3 1.318 5.175 0 3.979-2.156 7.456-5.363 9.325l3.295-9.527c.615-1.54.82-2.771.82-3.864 0-.405-.026-.78-.07-1.11m-7.981.105c.647-.03 1.232-.105 1.232-.105.582-.075.514-.93-.067-.899 0 0-1.755.135-2.88.135-1.064 0-2.85-.15-2.85-.15-.585-.03-.661.855-.075.885 0 0 .54.061 1.125.09l1.68 4.605-2.37 7.08L5.354 6.9c.649-.03 1.234-.1 1.234-.1.585-.075.516-.93-.065-.896 0 0-1.746.138-2.874.138-.2 0-.438-.008-.69-.015C4.911 3.15 8.235 1.215 12 1.215c2.809 0 5.365 1.072 7.286 2.833-.046-.003-.091-.009-.141-.009-1.06 0-1.812.923-1.812 1.914 0 .89.513 1.643 1.06 2.531.411.72.89 1.643.89 2.977 0 .915-.354 1.994-.821 3.479l-1.075 3.585-3.9-11.61.001.014zM12 22.784c-1.059 0-2.081-.153-3.048-.437l3.237-9.406 3.315 9.087c.024.053.05.101.078.149-1.12.393-2.325.609-3.582.609M1.211 12c0-1.564.336-3.05.935-4.39L7.29 21.709C3.694 19.96 1.212 16.271 1.211 12M12 0C5.385 0 0 5.385 0 12s5.385 12 12 12 12-5.385 12-12S18.615 0 12 0"/>`,
   },
 ];
@@ -73,24 +81,32 @@ const providers = [
       {providers.map((provider, i) => (
         <div class={`reveal reveal-delay-${Math.min(i + 1, 4)} group flex flex-col items-center gap-3`}>
           <!-- Logo circle -->
-          <div class="relative w-16 h-16 sm:w-18 sm:h-18 md:w-20 md:h-20 rounded-2xl bg-white/80 dark:bg-neutral-900/60 backdrop-blur-sm border border-neutral-200 dark:border-neutral-800 flex items-center justify-center transition-all duration-300 group-hover:border-neutral-400 dark:group-hover:border-neutral-600 group-hover:shadow-lg group-hover:scale-105">
+          <div class={`relative w-16 h-16 sm:w-18 sm:h-18 md:w-20 md:h-20 rounded-2xl backdrop-blur-sm border flex items-center justify-center transition-all duration-300 group-hover:shadow-lg group-hover:scale-105 ${provider.available ? 'bg-white dark:bg-neutral-900/80 border-neutral-200 dark:border-neutral-700 group-hover:border-neutral-400 dark:group-hover:border-neutral-500' : 'bg-neutral-50/60 dark:bg-neutral-900/40 border-neutral-200/60 dark:border-neutral-800 group-hover:border-neutral-300 dark:group-hover:border-neutral-700'}`}>
             <svg
-              class={`w-7 h-7 sm:w-8 sm:h-8 md:w-9 md:h-9 text-neutral-400 dark:text-neutral-600 transition-colors duration-300 ${provider.brandColor}`}
+              class={`w-7 h-7 sm:w-8 sm:h-8 md:w-9 md:h-9 transition-colors duration-300 ${provider.available ? provider.activeColor + ' ' + provider.brandColor : 'text-neutral-300 dark:text-neutral-700 ' + provider.brandColor}`}
               viewBox="0 0 24 24"
               fill="currentColor"
             >
               <Fragment set:html={provider.icon} />
             </svg>
 
-            {provider.comingSoon && (
-              <span class="absolute -top-2 -right-2 text-[9px] font-mono font-semibold uppercase tracking-wider text-neutral-500 dark:text-neutral-500 bg-neutral-100 dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-full px-1.5 py-0.5 leading-none whitespace-nowrap">
-                Soon
+            {provider.available && (
+              <span class="absolute -top-1.5 -right-1.5 w-5 h-5 bg-emerald-500 rounded-full flex items-center justify-center shadow-sm">
+                <svg class="w-3 h-3 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="20 6 9 17 4 12" />
+                </svg>
+              </span>
+            )}
+
+            {provider.roadmap && (
+              <span class="absolute -top-2 -right-2 text-[8px] font-mono font-semibold uppercase tracking-wider text-neutral-400 dark:text-neutral-500 bg-neutral-100 dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-full px-1.5 py-0.5 leading-none whitespace-nowrap">
+                Roadmap
               </span>
             )}
           </div>
 
           <!-- Provider name -->
-          <span class="font-heading font-medium text-xs sm:text-sm text-foreground/50 dark:text-neutral-500 group-hover:text-foreground dark:group-hover:text-neutral-300 transition-colors duration-300 text-center leading-tight">
+          <span class={`font-heading font-medium text-xs sm:text-sm transition-colors duration-300 text-center leading-tight ${provider.available ? 'text-foreground/70 dark:text-neutral-400 group-hover:text-foreground dark:group-hover:text-neutral-200' : 'text-foreground/40 dark:text-neutral-600 group-hover:text-foreground/60 dark:group-hover:text-neutral-400'}`}>
             {provider.name}
           </span>
         </div>
