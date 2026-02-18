@@ -1,5 +1,6 @@
 ---
 import Button from './Button.astro';
+import Typewriter from './Typewriter.astro';
 ---
 
 <section class="relative overflow-hidden pt-20 md:pt-28 pb-12 md:pb-16">
@@ -25,14 +26,14 @@ import Button from './Button.astro';
 
       <!-- Headline -->
       <h1 class="hero-entrance hero-entrance-delay-1 font-heading font-bold text-4xl md:text-5xl lg:text-6xl leading-tight tracking-tight mb-6">
-        Instantly preview your website at
-        <span class="gradient-text-primary">any resolution.</span>
-        From any device. Even your phone.
+        Instantly preview your website at any resolution on <Typewriter
+          words={["your iPhone.", "your iPad.", "your Mac.", "any screen."]}
+        />
       </h1>
 
       <!-- Subheading -->
       <p class="hero-entrance hero-entrance-delay-2 text-lg md:text-xl text-foreground/60 max-w-xl lg:max-w-2xl mx-auto mb-10 leading-relaxed">
-        Push a change, check it instantly. Viewpo shows your website at any screen size — on whatever device you're holding — and pulls together deploy previews from Cloudflare Pages, GitHub Pages, Vercel, and Netlify the moment they go live.
+        Stop guessing how your website updates look. View GitHub, Cloudflare, Vercel, and Netlify deployments instantly on the device in your hand. Verify layouts, share updates, and get approval from stakeholders — without opening your laptop.
       </p>
 
       <!-- CTAs -->
