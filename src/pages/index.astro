@@ -20,96 +20,109 @@ import FAQ from '@components/FAQ.astro';
   <!-- Hero (includes PersonaDock sidebar + floating logos) -->
   <Hero />
 
-  <!-- Supporting Features -->
-  <Section id="features">
-    <div class="text-center mb-16">
-      <h2 class="font-heading font-bold text-3xl md:text-4xl mb-4 reveal">
-        Everything you need to review deploys
-      </h2>
-      <p class="text-foreground/60 text-lg max-w-2xl mx-auto reveal reveal-delay-1">
-        Responsive previews, instant updates, one-tap account linking, and team feedback — all in one app.
-      </p>
-    </div>
-
-    <div class="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
-      <div class="reveal reveal-delay-1 h-full">
-        <FeatureCard
-          icon="viewport"
-          accent="indigo"
-          title="Preview at Any Resolution"
-          description="Check a 27-inch desktop layout on your iPhone. Switch to the iPad view on your MacBook. Viewpo renders the actual site at whatever resolution you choose — on whatever device you're holding."
-        />
-      </div>
-      <div class="reveal reveal-delay-2 h-full">
-        <FeatureCard
-          icon="notification"
-          accent="orange"
-          title="Preview Your Website Updates Instantly"
-          description="No more hunting for preview links. Viewpo automatically pulls your latest website updates and displays them the moment they deploy — so you can review, refine, and share across all your providers."
-        />
-      </div>
-      <div class="reveal reveal-delay-3 h-full">
-        <FeatureCard
-          icon="team"
-          accent="emerald"
-          title="Get Feedback from Your Team"
-          description="Share a preview link or QR code with designers, PMs, clients, or anyone on your team. They can view the latest version and give feedback on the look and feel — no dashboard access needed."
-        />
-      </div>
-      <div class="reveal reveal-delay-4 h-full">
-        <FeatureCard
-          icon="oauth"
-          accent="sky"
-          title="Link Your Accounts in Seconds"
-          description="Connect your Cloudflare Pages and GitHub accounts with a single tap — no API keys, no config files. Viewpo uses secure sign-in under the hood so setup is effortless. More providers coming soon."
-        />
-      </div>
-    </div>
-  </Section>
-
-  <!-- Platform Availability -->
-  <PlatformAvailability />
-
-  <!-- How It Works -->
-  <HowItWorks />
-
-  <!-- Pricing -->
-  <PricingTable />
-
-  <!-- FAQ -->
-  <FAQ />
-
-  <!-- Final CTA -->
-  <Section id="cta" padding="lg" class="relative overflow-hidden">
-    <!-- Aurora background -->
+  <!-- Page body — ambient glow orbs scattered throughout for continuous colour -->
+  <div class="relative overflow-x-clip">
+    <!-- Ambient glow orbs distributed down the page -->
     <div class="pointer-events-none absolute inset-0" aria-hidden="true">
-      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-primary/15 blur-[150px] dark:bg-primary/10"></div>
-      <div class="absolute top-0 right-0 w-[300px] h-[300px] rounded-full bg-secondary/10 blur-[100px] dark:bg-secondary/[0.06]"></div>
-      <div class="absolute bottom-0 left-0 w-[250px] h-[250px] rounded-full bg-indigo-300/10 blur-[80px] dark:bg-indigo-400/[0.06]"></div>
+      <!-- Near features (top-left primary) -->
+      <div class="absolute top-[5%] -left-40 w-[500px] h-[500px] rounded-full bg-primary/15 blur-[140px] dark:bg-primary/[0.08]"></div>
+      <!-- Near features (right secondary) -->
+      <div class="absolute top-[10%] -right-32 w-[400px] h-[400px] rounded-full bg-secondary/10 blur-[120px] dark:bg-secondary/[0.06]"></div>
+      <!-- Mid-page (left indigo) -->
+      <div class="absolute top-[30%] -left-20 w-[450px] h-[450px] rounded-full bg-indigo-400/10 blur-[130px] dark:bg-indigo-400/[0.06]"></div>
+      <!-- Mid-page (right primary) -->
+      <div class="absolute top-[45%] -right-40 w-[500px] h-[500px] rounded-full bg-primary/12 blur-[150px] dark:bg-primary/[0.07]"></div>
+      <!-- Lower (left secondary) -->
+      <div class="absolute top-[65%] -left-32 w-[400px] h-[400px] rounded-full bg-secondary/10 blur-[120px] dark:bg-secondary/[0.06]"></div>
+      <!-- Near FAQ/CTA (right indigo) -->
+      <div class="absolute top-[80%] -right-20 w-[450px] h-[450px] rounded-full bg-indigo-300/12 blur-[130px] dark:bg-indigo-400/[0.06]"></div>
     </div>
-    <div class="max-w-2xl mx-auto text-center reveal relative z-10">
-      <h2 class="font-heading font-bold text-3xl md:text-4xl mb-4">
-        Ready to preview with confidence?
-      </h2>
-      <p class="text-foreground/60 text-lg mb-8 leading-relaxed">
-        Viewpo is coming soon. Join the beta to help shape it, or sign up to be notified when it launches.
-      </p>
-      <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-        <button type="button" data-open-signup class="inline-flex items-center justify-center gap-2 font-heading font-medium rounded-xl transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 hover:scale-[1.02] active:scale-[0.98] px-8 py-4 text-lg bg-primary text-white hover:bg-primary-hover focus:ring-primary shadow-md hover:shadow-lg plausible-event-name=CTA+Join+Beta">
-          Join the Beta
-          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-          </svg>
-        </button>
-        <button type="button" data-open-signup="notify" class="inline-flex items-center justify-center gap-2 font-heading font-medium rounded-xl transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 hover:scale-[1.02] active:scale-[0.98] px-8 py-4 text-lg text-foreground hover:bg-foreground/5 focus:ring-primary/50 plausible-event-name=CTA+Notify+Launch">
-          Notify Me at Launch
-        </button>
+
+    <!-- Supporting Features -->
+    <Section id="features">
+      <div class="text-center mb-16">
+        <h2 class="font-heading font-bold text-3xl md:text-4xl mb-4 reveal">
+          Everything you need to review deploys
+        </h2>
+        <p class="text-foreground/60 text-lg max-w-2xl mx-auto reveal reveal-delay-1">
+          Responsive previews, instant updates, one-tap account linking, and team feedback — all in one app.
+        </p>
       </div>
-      <p class="text-foreground/40 text-sm mt-6">
-        Launching first on iOS, iPadOS, and macOS. More platforms to follow.
-      </p>
-    </div>
-  </Section>
+
+      <div class="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+        <div class="reveal reveal-delay-1 h-full">
+          <FeatureCard
+            icon="viewport"
+            accent="indigo"
+            title="Preview at Any Resolution"
+            description="Check a 27-inch desktop layout on your iPhone. Switch to the iPad view on your MacBook. Viewpo renders the actual site at whatever resolution you choose — on whatever device you're holding."
+          />
+        </div>
+        <div class="reveal reveal-delay-2 h-full">
+          <FeatureCard
+            icon="notification"
+            accent="orange"
+            title="Preview Your Website Updates Instantly"
+            description="No more hunting for preview links. Viewpo automatically pulls your latest website updates and displays them the moment they deploy — so you can review, refine, and share across all your providers."
+          />
+        </div>
+        <div class="reveal reveal-delay-3 h-full">
+          <FeatureCard
+            icon="team"
+            accent="emerald"
+            title="Get Feedback from Your Team"
+            description="Share a preview link or QR code with designers, PMs, clients, or anyone on your team. They can view the latest version and give feedback on the look and feel — no dashboard access needed."
+          />
+        </div>
+        <div class="reveal reveal-delay-4 h-full">
+          <FeatureCard
+            icon="oauth"
+            accent="sky"
+            title="Link Your Accounts in Seconds"
+            description="Connect your Cloudflare Pages and GitHub accounts with a single tap — no API keys, no config files. Viewpo uses secure sign-in under the hood so setup is effortless. More providers coming soon."
+          />
+        </div>
+      </div>
+    </Section>
+
+    <!-- Platform Availability -->
+    <PlatformAvailability />
+
+    <!-- How It Works -->
+    <HowItWorks />
+
+    <!-- Pricing -->
+    <PricingTable />
+
+    <!-- FAQ -->
+    <FAQ />
+
+    <!-- Final CTA -->
+    <Section id="cta" padding="lg" class="relative">
+      <div class="max-w-2xl mx-auto text-center reveal relative z-10">
+        <h2 class="font-heading font-bold text-3xl md:text-4xl mb-4">
+          Ready to preview with confidence?
+        </h2>
+        <p class="text-foreground/60 text-lg mb-8 leading-relaxed">
+          Viewpo is coming soon. Join the beta to help shape it, or sign up to be notified when it launches.
+        </p>
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+          <button type="button" data-open-signup class="inline-flex items-center justify-center gap-2 font-heading font-medium rounded-xl transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 hover:scale-[1.02] active:scale-[0.98] px-8 py-4 text-lg bg-primary text-white hover:bg-primary-hover focus:ring-primary shadow-md hover:shadow-lg plausible-event-name=CTA+Join+Beta">
+            Join the Beta
+            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+            </svg>
+          </button>
+          <button type="button" data-open-signup="notify" class="inline-flex items-center justify-center gap-2 font-heading font-medium rounded-xl transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 hover:scale-[1.02] active:scale-[0.98] px-8 py-4 text-lg text-foreground hover:bg-foreground/5 focus:ring-primary/50 plausible-event-name=CTA+Notify+Launch">
+            Notify Me at Launch
+          </button>
+        </div>
+        <p class="text-foreground/40 text-sm mt-6">
+          Launching first on iOS, iPadOS, and macOS. More platforms to follow.
+        </p>
+      </div>
+    </Section>
+  </div>
 
   <!-- Error toast for confirmation redirects -->
   <div id="error-toast" class="hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-50 bg-red-50 dark:bg-red-900/90 text-red-700 dark:text-red-200 border border-red-200 dark:border-red-800 rounded-xl px-5 py-3 shadow-lg text-sm font-medium max-w-md text-center" role="alert">
