@@ -43,7 +43,7 @@ export const PRICING_TIERS: PricingTier[] = [
     name: 'Free',
     price: '$0',
     period: 'forever',
-    description: 'For individuals with a few projects.',
+    description: 'For solo developers with a few projects.',
     features: [
       'Up to 3 projects',
       '1 provider connection',
@@ -55,10 +55,10 @@ export const PRICING_TIERS: PricingTier[] = [
     highlighted: false,
   },
   {
-    name: 'Starter',
+    name: 'Pro',
     price: '$9',
     period: '/month',
-    description: 'For creators juggling multiple projects.',
+    description: 'For power users shipping across multiple projects.',
     features: [
       'Unlimited projects',
       'All provider connections',
@@ -70,12 +70,12 @@ export const PRICING_TIERS: PricingTier[] = [
     highlighted: true,
   },
   {
-    name: 'Pro',
-    price: '$29',
+    name: 'Team',
+    price: '$49',
     period: '/month',
-    description: 'For teams and agencies reviewing together.',
+    description: 'For agencies and organisations reviewing together.',
     features: [
-      'Everything in Starter',
+      'Everything in Pro',
       'Team workspaces (up to 10)',
       'Deploy comparison view',
       'Priority support',
