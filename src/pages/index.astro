@@ -3,7 +3,6 @@ import BaseLayout from '@layouts/BaseLayout.astro';
 import Header from '@components/Header.astro';
 import Footer from '@components/Footer.astro';
 import Hero from '@components/Hero.astro';
-import PersonaDock from '@components/PersonaDock.svelte';
 import Section from '@components/Section.astro';
 import FeatureCard from '@components/FeatureCard.astro';
 import PlatformAvailability from '@components/PlatformAvailability.astro';
@@ -18,15 +17,8 @@ import FAQ from '@components/FAQ.astro';
 >
   <Header slot="header" />
 
-  <!-- Hero -->
+  <!-- Hero (includes PersonaDock sidebar + floating logos) -->
   <Hero />
-
-  <!-- Floating Bridge: PersonaDock overlaps hero bottom via negative margin -->
-  <div class="relative z-20 mt-4 lg:-mt-28 px-4 lg:px-8">
-    <div class="max-w-7xl mx-auto">
-      <PersonaDock client:visible />
-    </div>
-  </div>
 
   <!-- Supporting Features -->
   <Section id="features" background="muted">

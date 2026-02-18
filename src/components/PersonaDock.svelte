@@ -7,50 +7,53 @@
     icon: string;
     hook: string;
     description: string;
-    accentFrom: string;
-    accentTo: string;
+    glowColour: string;
+    glowBg: string;
     iconColour: string;
   }
+
+  // Layout prop: 'sidebar' (vertical, desktop) or 'mobile' (horizontal scroll)
+  let { layout = 'sidebar' }: { layout?: 'sidebar' | 'mobile' } = $props();
 
   const cards: PersonaCard[] = [
     {
       id: 'developers',
-      label: 'For Developers',
+      label: 'Developers',
       icon: 'terminal',
       hook: 'Debug Localhost',
       description: 'Push code, get a notification on your phone. Preview the deploy at any resolution — before your CI even finishes.',
-      accentFrom: 'from-cyan-400',
-      accentTo: 'to-blue-500',
+      glowColour: 'border-cyan-400',
+      glowBg: 'bg-cyan-400',
       iconColour: 'text-cyan-400',
     },
     {
       id: 'managers',
-      label: 'For Managers',
+      label: 'Managers',
       icon: 'shield',
       hook: 'Unblock Your Team',
       description: 'Drop a preview link in Slack. Your team views the latest build and approves — no staging server, no waiting.',
-      accentFrom: 'from-emerald-400',
-      accentTo: 'to-green-500',
+      glowColour: 'border-emerald-400',
+      glowBg: 'bg-emerald-400',
       iconColour: 'text-emerald-400',
     },
     {
       id: 'founders',
-      label: 'For Founders',
+      label: 'Founders',
       icon: 'rocket',
       hook: 'Build in Public',
       description: 'Pan around the viewport, screenshot your progress, and share it to X — all from your phone while walking the dog.',
-      accentFrom: 'from-violet-400',
-      accentTo: 'to-purple-500',
+      glowColour: 'border-violet-400',
+      glowBg: 'bg-violet-400',
       iconColour: 'text-violet-400',
     },
     {
       id: 'agencies',
-      label: 'For Agencies',
+      label: 'Agencies',
       icon: 'briefcase',
       hook: 'Get Client Sign-off',
       description: 'Send a link. Your client views the desktop layout on their phone. They reply "Approved" — no call needed.',
-      accentFrom: 'from-orange-400',
-      accentTo: 'to-amber-500',
+      glowColour: 'border-orange-400',
+      glowBg: 'bg-orange-400',
       iconColour: 'text-orange-400',
     },
   ];
@@ -58,7 +61,6 @@
   let activeIndex = $state(0);
   let isPaused = $state(false);
   let timer: ReturnType<typeof setInterval> | null = null;
-  let expandedMobile: number | null = $state(null);
   let progressKey = $state(0);
 
   const AUTOPLAY_INTERVAL = 5000;
@@ -83,7 +85,6 @@
 
   function selectCard(index: number): void {
     activeIndex = index;
-    expandedMobile = expandedMobile === index ? null : index;
     progressKey++;
     startAutoplay();
   }
@@ -111,7 +112,6 @@
     stopAutoplay();
   });
 
-  // SVG icon paths
   const icons: Record<string, string> = {
     terminal: 'M6.75 7.5l3 2.25-3 2.25m4.5 0h3m-9 8.25h13.5A2.25 2.25 0 0021 18V6a2.25 2.25 0 00-2.25-2.25H5.25A2.25 2.25 0 003 6v12a2.25 2.25 0 002.25 2.25z',
     shield: 'M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z',
@@ -120,76 +120,56 @@
   };
 </script>
 
-<!-- Desktop: 4-column command bar | Mobile: vertical accordion -->
-<div
-  class="persona-dock rounded-2xl border border-foreground/10 dark:border-white/20 shadow-xl shadow-black/10 dark:shadow-black/25 p-2 lg:p-3"
-  role="tablist"
-  aria-label="Choose your role"
-  onmouseenter={handleMouseEnter}
-  onmouseleave={handleMouseLeave}
->
-  <!-- Cards -->
-  <div class="grid grid-cols-1 lg:grid-cols-4 gap-2">
+{#if layout === 'sidebar'}
+  <!-- SIDEBAR LAYOUT: Vertical stack with glowing left border -->
+  <div
+    class="flex flex-col gap-1.5"
+    role="tablist"
+    aria-label="Choose your role"
+    onmouseenter={handleMouseEnter}
+    onmouseleave={handleMouseLeave}
+  >
     {#each cards as card, i}
       <div
-        class="persona-card group relative rounded-xl overflow-hidden transition-all duration-300 cursor-pointer
+        class="sidebar-card group relative flex items-center gap-3 px-4 py-3 rounded-xl cursor-pointer transition-all duration-300 overflow-hidden
           {i === activeIndex
-            ? 'bg-foreground/[0.08] dark:bg-white/10 border border-foreground/15 dark:border-white/20 shadow-lg shadow-black/5 dark:shadow-black/15'
-            : 'bg-transparent border border-transparent hover:bg-foreground/[0.04] dark:hover:bg-white/[0.05]'}"
+            ? 'bg-foreground/[0.06] dark:bg-white/[0.07]'
+            : 'hover:bg-foreground/[0.03] dark:hover:bg-white/[0.04]'}"
         role="tab"
         tabindex="0"
         aria-selected={i === activeIndex}
-        aria-controls="persona-panel-{card.id}"
         onclick={() => selectCard(i)}
         onkeydown={(e) => handleKeydown(e, i)}
       >
-        <div class="p-3 lg:p-4">
-          <!-- Flex row: Icon Left, Text Right -->
-          <div class="flex items-center gap-3">
-            <!-- Icon -->
-            <div class="w-10 h-10 lg:w-11 lg:h-11 rounded-xl flex items-center justify-center flex-shrink-0 transition-all duration-300
-              {i === activeIndex
-                ? `bg-gradient-to-br ${card.accentFrom} ${card.accentTo} text-white shadow-md`
-                : 'bg-foreground/[0.05] dark:bg-white/[0.06]'}">
-              <svg class="w-6 h-6 transition-colors duration-300
-                {i === activeIndex ? '' : `${card.iconColour} opacity-50 group-hover:opacity-70`}"
-                fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-                <path stroke-linecap="round" stroke-linejoin="round" d={icons[card.icon]} />
-              </svg>
-            </div>
+        <!-- Glowing left border -->
+        <div class="absolute left-0 top-2 bottom-2 w-[3px] rounded-full transition-all duration-300
+          {i === activeIndex
+            ? `${card.glowBg} shadow-[0_0_8px_rgba(0,0,0,0.3)]`
+            : 'bg-foreground/10 dark:bg-white/10'}"
+          class:glow-active={i === activeIndex}
+          style={i === activeIndex ? `--glow-color: var(--tw-shadow-color, currentColor)` : ''}
+        ></div>
 
-            <!-- Text -->
-            <div class="flex-1 min-w-0">
-              <span class="block text-[10px] font-heading font-bold uppercase tracking-[0.15em] transition-colors duration-300
-                {i === activeIndex ? 'text-foreground/60 dark:text-white/70' : 'text-foreground/25 dark:text-white/30 group-hover:text-foreground/40 dark:group-hover:text-white/40'}">
-                {card.label}
-              </span>
-              <h3 class="font-heading font-bold text-sm lg:text-base leading-snug transition-colors duration-300 truncate
-                {i === activeIndex ? 'text-foreground dark:text-white' : 'text-foreground/40 dark:text-white/40 group-hover:text-foreground/60 dark:group-hover:text-white/60'}">
-                {card.hook}
-              </h3>
-            </div>
+        <!-- Icon -->
+        <div class="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 transition-all duration-300
+          {i === activeIndex
+            ? `${card.iconColour}`
+            : 'text-foreground/30 dark:text-white/30 group-hover:text-foreground/50 dark:group-hover:text-white/50'}">
+          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d={icons[card.icon]} />
+          </svg>
+        </div>
 
-            <!-- Mobile accordion chevron -->
-            <svg
-              class="w-5 h-5 lg:hidden transition-transform duration-300 flex-shrink-0
-                {expandedMobile === i ? 'rotate-180' : ''}
-                {i === activeIndex ? 'text-foreground/50 dark:text-white/70' : 'text-foreground/20 dark:text-white/30'}"
-              fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"
-            >
-              <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
-            </svg>
-          </div>
-
-          <!-- Description (always visible on desktop when active, accordion on mobile) -->
-          <div class="overflow-hidden transition-all duration-300
-            {i === activeIndex ? 'lg:max-h-24 lg:opacity-100 lg:mt-3' : 'lg:max-h-0 lg:opacity-0 lg:mt-0'}
-            {expandedMobile === i ? 'max-h-24 opacity-100 mt-3' : 'max-h-0 opacity-0 mt-0'}
-            lg:{i === activeIndex ? '' : ''}">
-            <p class="text-xs lg:text-sm leading-relaxed text-foreground/45 dark:text-white/50 pl-[52px] lg:pl-0">
-              {card.description}
-            </p>
-          </div>
+        <!-- Text -->
+        <div class="flex-1 min-w-0">
+          <span class="block text-[10px] font-heading font-bold uppercase tracking-[0.15em] transition-colors duration-300
+            {i === activeIndex ? 'text-foreground/50 dark:text-white/60' : 'text-foreground/20 dark:text-white/20 group-hover:text-foreground/30 dark:group-hover:text-white/30'}">
+            {card.label}
+          </span>
+          <span class="block font-heading font-bold text-sm leading-snug transition-colors duration-300 truncate
+            {i === activeIndex ? 'text-foreground dark:text-white' : 'text-foreground/40 dark:text-white/35 group-hover:text-foreground/60 dark:group-hover:text-white/55'}">
+            {card.hook}
+          </span>
         </div>
 
         <!-- Progress bar at bottom of active card -->
@@ -197,9 +177,8 @@
           <div class="absolute bottom-0 left-0 right-0 h-[2px] bg-foreground/5 dark:bg-white/5">
             {#key progressKey}
               <div
-                class="h-full rounded-full bg-gradient-to-r {card.accentFrom} {card.accentTo}"
-                style={isPaused ? 'animation-play-state: paused' : ''}
-                class:progress-animate={!isPaused || true}
+                class="h-full rounded-full {card.glowBg}"
+                class:progress-animate={true}
               ></div>
             {/key}
           </div>
@@ -207,7 +186,61 @@
       </div>
     {/each}
   </div>
-</div>
+
+{:else}
+  <!-- MOBILE LAYOUT: Horizontal scrollable cards -->
+  <div
+    class="flex gap-3 overflow-x-auto pb-2 -mx-4 px-4 snap-x snap-mandatory scrollbar-hide"
+    role="tablist"
+    aria-label="Choose your role"
+  >
+    {#each cards as card, i}
+      <div
+        class="mobile-card flex-shrink-0 w-[200px] snap-start relative rounded-xl overflow-hidden cursor-pointer transition-all duration-300 p-3
+          {i === activeIndex
+            ? 'bg-foreground/[0.08] dark:bg-white/10 border border-foreground/15 dark:border-white/20'
+            : 'bg-foreground/[0.03] dark:bg-white/[0.04] border border-transparent'}"
+        role="tab"
+        tabindex="0"
+        aria-selected={i === activeIndex}
+        onclick={() => selectCard(i)}
+        onkeydown={(e) => handleKeydown(e, i)}
+      >
+        <!-- Glowing top border -->
+        {#if i === activeIndex}
+          <div class="absolute top-0 left-2 right-2 h-[2px] rounded-full {card.glowBg}"></div>
+        {/if}
+
+        <div class="flex items-center gap-2.5">
+          <div class="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 {i === activeIndex ? card.iconColour : 'text-foreground/30 dark:text-white/30'}">
+            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d={icons[card.icon]} />
+            </svg>
+          </div>
+          <div class="min-w-0">
+            <span class="block text-[9px] font-heading font-bold uppercase tracking-[0.15em]
+              {i === activeIndex ? 'text-foreground/50 dark:text-white/60' : 'text-foreground/20 dark:text-white/25'}">
+              {card.label}
+            </span>
+            <span class="block font-heading font-bold text-xs leading-snug truncate
+              {i === activeIndex ? 'text-foreground dark:text-white' : 'text-foreground/40 dark:text-white/35'}">
+              {card.hook}
+            </span>
+          </div>
+        </div>
+
+        <!-- Progress bar at bottom -->
+        {#if i === activeIndex}
+          <div class="absolute bottom-0 left-0 right-0 h-[2px] bg-foreground/5 dark:bg-white/5">
+            {#key progressKey}
+              <div class="h-full rounded-full {card.glowBg}" class:progress-animate={true}></div>
+            {/key}
+          </div>
+        {/if}
+      </div>
+    {/each}
+  </div>
+{/if}
 
 <style>
   @keyframes progress-fill {
@@ -215,27 +248,16 @@
     to { width: 100%; }
   }
 
-  .persona-dock {
-    backdrop-filter: blur(24px);
-    -webkit-backdrop-filter: blur(24px);
-    background: rgba(255, 255, 255, 0.05);
-  }
-
-  :global(.dark) .persona-dock {
-    background: rgba(0, 0, 0, 0.2);
-  }
-
-  .persona-card {
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-  }
-
   .progress-animate {
     animation: progress-fill 5s linear forwards;
   }
 
-  /* Pause the animation when hovered */
-  .persona-dock:hover .progress-animate {
-    animation-play-state: paused;
+  /* Scrollbar hide for mobile horizontal scroll */
+  .scrollbar-hide::-webkit-scrollbar { display: none; }
+  .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+
+  /* Glow effect for active sidebar border */
+  .glow-active {
+    box-shadow: 0 0 8px currentColor, 0 0 4px currentColor;
   }
 </style>
