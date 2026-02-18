@@ -1,9 +1,11 @@
 ---
 import Button from './Button.astro';
 import Typewriter from './Typewriter.astro';
+import DeviceMockup from './DeviceMockup.astro';
+import PersonaDock from './PersonaDock.svelte';
 ---
 
-<section class="relative overflow-hidden pt-20 md:pt-28 pb-12 md:pb-16">
+<section class="relative overflow-visible pt-20 md:pt-28 pb-40 md:pb-48 lg:pb-56">
   <!-- Ambient glow orbs -->
   <div class="pointer-events-none absolute -top-40 -left-40 w-[500px] h-[500px] rounded-full bg-primary/20 blur-[120px] dark:bg-primary/10" aria-hidden="true"></div>
   <div class="pointer-events-none absolute -bottom-20 -right-32 w-[400px] h-[400px] rounded-full bg-secondary/15 blur-[100px] dark:bg-secondary/[0.08]" aria-hidden="true"></div>
@@ -15,7 +17,7 @@ import Typewriter from './Typewriter.astro';
 
   <div class="container-wide">
     <!-- Text content -->
-    <div class="text-center max-w-3xl mx-auto mb-12 lg:mb-16">
+    <div class="text-center max-w-3xl mx-auto mb-10 lg:mb-12">
       <!-- Badge -->
       <a href="#platforms" class="hero-entrance inline-flex items-center gap-2 bg-primary/10 text-primary dark:text-indigo-300 text-sm font-medium px-4 py-1.5 rounded-full mb-8 hover:bg-primary/15 transition-colors">
         <svg class="w-4 h-4 text-foreground/70 dark:text-white/70" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -50,5 +52,16 @@ import Typewriter from './Typewriter.astro';
       </div>
     </div>
 
+    <!-- Device Mockup (centered) -->
+    <div class="hero-entrance hero-entrance-delay-4 mb-8 lg:mb-0">
+      <DeviceMockup />
+    </div>
+  </div>
+
+  <!-- Floating Bridge: PersonaDock -->
+  <div class="absolute bottom-0 left-0 right-0 translate-y-1/2 z-20">
+    <div class="container-wide">
+      <PersonaDock client:visible />
+    </div>
   </div>
 </section>

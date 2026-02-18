@@ -5,7 +5,6 @@ import Footer from '@components/Footer.astro';
 import Hero from '@components/Hero.astro';
 import Section from '@components/Section.astro';
 import FeatureCard from '@components/FeatureCard.astro';
-import ProblemHook from '@components/ProblemHook.astro';
 import PlatformAvailability from '@components/PlatformAvailability.astro';
 import HowItWorks from '@components/HowItWorks.astro';
 import PricingTable from '@components/PricingTable.astro';
@@ -18,14 +17,14 @@ import FAQ from '@components/FAQ.astro';
 >
   <Header slot="header" />
 
-  <!-- Hero -->
+  <!-- Hero + Floating Bridge (PersonaDock overlaps into features section) -->
   <Hero />
 
-  <!-- Problem → Solution -->
-  <ProblemHook />
+  <!-- Spacer to accommodate the floating bridge overlapping from the hero -->
+  <div class="h-24 md:h-32 lg:h-36" aria-hidden="true"></div>
 
   <!-- Supporting Features -->
-  <Section background="muted">
+  <Section id="features" background="muted">
     <div class="text-center mb-16">
       <h2 class="font-heading font-bold text-3xl md:text-4xl mb-4 reveal">
         Everything you need to review deploys
