@@ -1,5 +1,6 @@
 <script lang="ts">
   import { onMount, onDestroy } from 'svelte';
+  import { activePersona } from '../lib/heroStore';
 
   interface PersonaCard {
     id: string;
@@ -7,12 +8,11 @@
     icon: string;
     hook: string;
     description: string;
-    glowColour: string;
+    borderColour: string;
     glowBg: string;
     iconColour: string;
   }
 
-  // Layout prop: 'sidebar' (vertical, desktop) or 'mobile' (horizontal scroll)
   let { layout = 'sidebar' }: { layout?: 'sidebar' | 'mobile' } = $props();
 
   const cards: PersonaCard[] = [
@@ -20,9 +20,9 @@
       id: 'developers',
       label: 'Developers',
       icon: 'terminal',
-      hook: 'Debug Localhost',
-      description: 'Push code, get a notification on your phone. Preview the deploy at any resolution — before your CI even finishes.',
-      glowColour: 'border-cyan-400',
+      hook: 'Preview Deploys Instantly',
+      description: 'Push code, get a notification on your phone. Preview at any resolution before CI finishes.',
+      borderColour: 'border-l-cyan-400',
       glowBg: 'bg-cyan-400',
       iconColour: 'text-cyan-400',
     },
@@ -31,8 +31,8 @@
       label: 'Managers',
       icon: 'shield',
       hook: 'Unblock Your Team',
-      description: 'Drop a preview link in Slack. Your team views the latest build and approves — no staging server, no waiting.',
-      glowColour: 'border-emerald-400',
+      description: 'Share a preview link in Slack. Your team views and approves — no staging server needed.',
+      borderColour: 'border-l-emerald-400',
       glowBg: 'bg-emerald-400',
       iconColour: 'text-emerald-400',
     },
@@ -41,8 +41,8 @@
       label: 'Founders',
       icon: 'rocket',
       hook: 'Build in Public',
-      description: 'Pan around the viewport, screenshot your progress, and share it to X — all from your phone while walking the dog.',
-      glowColour: 'border-violet-400',
+      description: 'Screenshot your progress from your phone and share it to X — while walking the dog.',
+      borderColour: 'border-l-violet-400',
       glowBg: 'bg-violet-400',
       iconColour: 'text-violet-400',
     },
@@ -51,8 +51,8 @@
       label: 'Agencies',
       icon: 'briefcase',
       hook: 'Get Client Sign-off',
-      description: 'Send a link. Your client views the desktop layout on their phone. They reply "Approved" — no call needed.',
-      glowColour: 'border-orange-400',
+      description: 'Send a link. Your client views the desktop layout on their phone. They reply "Approved."',
+      borderColour: 'border-l-orange-400',
       glowBg: 'bg-orange-400',
       iconColour: 'text-orange-400',
     },
@@ -65,6 +65,10 @@
 
   const AUTOPLAY_INTERVAL = 5000;
 
+  function syncStore(): void {
+    activePersona.set(activeIndex);
+  }
+
   function startAutoplay(): void {
     stopAutoplay();
     progressKey++;
@@ -72,6 +76,7 @@
       if (!isPaused) {
         activeIndex = (activeIndex + 1) % cards.length;
         progressKey++;
+        syncStore();
       }
     }, AUTOPLAY_INTERVAL);
   }
@@ -86,6 +91,7 @@
   function selectCard(index: number): void {
     activeIndex = index;
     progressKey++;
+    syncStore();
     startAutoplay();
   }
 
@@ -105,6 +111,7 @@
   }
 
   onMount(() => {
+    syncStore();
     startAutoplay();
   });
 
@@ -121,123 +128,110 @@
 </script>
 
 {#if layout === 'sidebar'}
-  <!-- SIDEBAR LAYOUT: Vertical stack with glowing left border -->
+  <!-- SIDEBAR: Vertical command centre -->
   <div
-    class="flex flex-col gap-1.5"
+    class="flex flex-col gap-1"
     role="tablist"
     aria-label="Choose your role"
     onmouseenter={handleMouseEnter}
     onmouseleave={handleMouseLeave}
   >
     {#each cards as card, i}
-      <div
-        class="sidebar-card group relative flex items-center gap-3 px-4 py-3 rounded-xl cursor-pointer transition-all duration-300 overflow-hidden
+      <button
+        class="sidebar-card group relative text-left rounded-lg cursor-pointer transition-all duration-300 overflow-hidden border-l-2
           {i === activeIndex
-            ? 'bg-foreground/[0.06] dark:bg-white/[0.07]'
-            : 'hover:bg-foreground/[0.03] dark:hover:bg-white/[0.04]'}"
+            ? `bg-foreground/[0.05] dark:bg-white/5 ${card.borderColour}`
+            : 'border-l-transparent opacity-50 hover:opacity-100 hover:bg-foreground/[0.02] dark:hover:bg-white/[0.02]'}"
         role="tab"
         tabindex="0"
         aria-selected={i === activeIndex}
         onclick={() => selectCard(i)}
         onkeydown={(e) => handleKeydown(e, i)}
       >
-        <!-- Glowing left border -->
-        <div class="absolute left-0 top-2 bottom-2 w-[3px] rounded-full transition-all duration-300
-          {i === activeIndex
-            ? `${card.glowBg} shadow-[0_0_8px_rgba(0,0,0,0.3)]`
-            : 'bg-foreground/10 dark:bg-white/10'}"
-          class:glow-active={i === activeIndex}
-          style={i === activeIndex ? `--glow-color: var(--tw-shadow-color, currentColor)` : ''}
-        ></div>
+        <div class="flex items-start gap-3 px-4 py-3">
+          <!-- Icon -->
+          <div class="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5 transition-colors duration-300
+            {i === activeIndex ? card.iconColour : 'text-foreground/40 dark:text-white/40'}">
+            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d={icons[card.icon]} />
+            </svg>
+          </div>
 
-        <!-- Icon -->
-        <div class="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 transition-all duration-300
-          {i === activeIndex
-            ? `${card.iconColour}`
-            : 'text-foreground/30 dark:text-white/30 group-hover:text-foreground/50 dark:group-hover:text-white/50'}">
-          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-            <path stroke-linecap="round" stroke-linejoin="round" d={icons[card.icon]} />
-          </svg>
-        </div>
-
-        <!-- Text -->
-        <div class="flex-1 min-w-0">
-          <span class="block text-[10px] font-heading font-bold uppercase tracking-[0.15em] transition-colors duration-300
-            {i === activeIndex ? 'text-foreground/50 dark:text-white/60' : 'text-foreground/20 dark:text-white/20 group-hover:text-foreground/30 dark:group-hover:text-white/30'}">
-            {card.label}
-          </span>
-          <span class="block font-heading font-bold text-sm leading-snug transition-colors duration-300 truncate
-            {i === activeIndex ? 'text-foreground dark:text-white' : 'text-foreground/40 dark:text-white/35 group-hover:text-foreground/60 dark:group-hover:text-white/55'}">
-            {card.hook}
-          </span>
+          <!-- Text -->
+          <div class="flex-1 min-w-0">
+            <span class="block text-[10px] font-heading font-bold uppercase tracking-[0.12em] mb-0.5 transition-colors duration-300
+              {i === activeIndex ? 'text-foreground/50 dark:text-white/50' : 'text-foreground/25 dark:text-white/25'}">
+              {card.label}
+            </span>
+            <span class="block font-heading font-bold text-sm leading-snug transition-colors duration-300
+              {i === activeIndex ? 'text-foreground dark:text-white' : 'text-foreground/60 dark:text-white/50'}">
+              {card.hook}
+            </span>
+            <!-- Description — visible on active only -->
+            <span class="block text-xs leading-relaxed mt-1 transition-all duration-300
+              {i === activeIndex ? 'text-foreground/40 dark:text-white/40 max-h-12 opacity-100' : 'max-h-0 opacity-0 overflow-hidden'}">
+              {card.description}
+            </span>
+          </div>
         </div>
 
         <!-- Progress bar at bottom of active card -->
         {#if i === activeIndex}
           <div class="absolute bottom-0 left-0 right-0 h-[2px] bg-foreground/5 dark:bg-white/5">
             {#key progressKey}
-              <div
-                class="h-full rounded-full {card.glowBg}"
-                class:progress-animate={true}
-              ></div>
+              <div class="h-full rounded-full {card.glowBg} progress-animate"></div>
             {/key}
           </div>
         {/if}
-      </div>
+      </button>
     {/each}
   </div>
 
 {:else}
-  <!-- MOBILE LAYOUT: Horizontal scrollable cards -->
+  <!-- MOBILE: Horizontal scroll carousel -->
   <div
-    class="flex gap-3 overflow-x-auto pb-2 -mx-4 px-4 snap-x snap-mandatory scrollbar-hide"
+    class="flex gap-2.5 overflow-x-auto pb-2 -mx-4 px-4 snap-x snap-mandatory scrollbar-hide"
     role="tablist"
     aria-label="Choose your role"
   >
     {#each cards as card, i}
-      <div
-        class="mobile-card flex-shrink-0 w-[200px] snap-start relative rounded-xl overflow-hidden cursor-pointer transition-all duration-300 p-3
+      <button
+        class="mobile-card flex-shrink-0 w-[180px] snap-start relative text-left rounded-xl overflow-hidden cursor-pointer transition-all duration-300 border-t-2 p-3
           {i === activeIndex
-            ? 'bg-foreground/[0.08] dark:bg-white/10 border border-foreground/15 dark:border-white/20'
-            : 'bg-foreground/[0.03] dark:bg-white/[0.04] border border-transparent'}"
+            ? `bg-foreground/[0.06] dark:bg-white/[0.07] ${card.borderColour.replace('border-l-', 'border-t-')}`
+            : 'border-t-transparent opacity-50 hover:opacity-100'}"
         role="tab"
         tabindex="0"
         aria-selected={i === activeIndex}
         onclick={() => selectCard(i)}
         onkeydown={(e) => handleKeydown(e, i)}
       >
-        <!-- Glowing top border -->
-        {#if i === activeIndex}
-          <div class="absolute top-0 left-2 right-2 h-[2px] rounded-full {card.glowBg}"></div>
-        {/if}
-
-        <div class="flex items-center gap-2.5">
-          <div class="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 {i === activeIndex ? card.iconColour : 'text-foreground/30 dark:text-white/30'}">
-            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+        <div class="flex items-center gap-2">
+          <div class="w-7 h-7 rounded-md flex items-center justify-center flex-shrink-0 {i === activeIndex ? card.iconColour : 'text-foreground/30 dark:text-white/30'}">
+            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
               <path stroke-linecap="round" stroke-linejoin="round" d={icons[card.icon]} />
             </svg>
           </div>
           <div class="min-w-0">
-            <span class="block text-[9px] font-heading font-bold uppercase tracking-[0.15em]
-              {i === activeIndex ? 'text-foreground/50 dark:text-white/60' : 'text-foreground/20 dark:text-white/25'}">
+            <span class="block text-[9px] font-heading font-bold uppercase tracking-[0.12em]
+              {i === activeIndex ? 'text-foreground/50 dark:text-white/50' : 'text-foreground/20 dark:text-white/20'}">
               {card.label}
             </span>
-            <span class="block font-heading font-bold text-xs leading-snug truncate
+            <span class="block font-heading font-bold text-[11px] leading-snug truncate
               {i === activeIndex ? 'text-foreground dark:text-white' : 'text-foreground/40 dark:text-white/35'}">
               {card.hook}
             </span>
           </div>
         </div>
 
-        <!-- Progress bar at bottom -->
         {#if i === activeIndex}
           <div class="absolute bottom-0 left-0 right-0 h-[2px] bg-foreground/5 dark:bg-white/5">
             {#key progressKey}
-              <div class="h-full rounded-full {card.glowBg}" class:progress-animate={true}></div>
+              <div class="h-full rounded-full {card.glowBg} progress-animate"></div>
             {/key}
           </div>
         {/if}
-      </div>
+      </button>
     {/each}
   </div>
 {/if}
@@ -252,12 +246,6 @@
     animation: progress-fill 5s linear forwards;
   }
 
-  /* Scrollbar hide for mobile horizontal scroll */
   .scrollbar-hide::-webkit-scrollbar { display: none; }
   .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
-
-  /* Glow effect for active sidebar border */
-  .glow-active {
-    box-shadow: 0 0 8px currentColor, 0 0 4px currentColor;
-  }
 </style>
