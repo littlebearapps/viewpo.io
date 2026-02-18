@@ -2,10 +2,9 @@
 import Button from './Button.astro';
 import Typewriter from './Typewriter.astro';
 import DeviceMockup from './DeviceMockup.astro';
-import PersonaDock from './PersonaDock.svelte';
 ---
 
-<section class="relative overflow-visible pt-20 md:pt-28 lg:pt-32 pb-36 md:pb-44 lg:pb-48">
+<section class="relative overflow-visible pt-20 md:pt-28 lg:pt-32 pb-16 md:pb-20 lg:pb-24">
   <!-- Ambient glow orbs -->
   <div class="pointer-events-none absolute -top-40 -left-40 w-[500px] h-[500px] rounded-full bg-primary/20 blur-[120px] dark:bg-primary/10" aria-hidden="true"></div>
   <div class="pointer-events-none absolute -bottom-20 -right-32 w-[400px] h-[400px] rounded-full bg-secondary/15 blur-[100px] dark:bg-secondary/[0.08]" aria-hidden="true"></div>
@@ -63,10 +62,4 @@ import PersonaDock from './PersonaDock.svelte';
     </div>
   </div>
 
-  <!-- Floating Bridge: PersonaDock — spans full width at hero bottom, overlaps next section -->
-  <div class="absolute bottom-0 left-0 right-0 translate-y-1/2 z-20">
-    <div class="container-wide">
-      <PersonaDock client:visible />
-    </div>
-  </div>
 </section>

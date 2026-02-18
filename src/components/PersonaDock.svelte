@@ -122,7 +122,7 @@
 
 <!-- Desktop: 4-column command bar | Mobile: vertical accordion -->
 <div
-  class="persona-dock rounded-2xl border-t border-foreground/10 dark:border-white/20 p-2 lg:p-3"
+  class="persona-dock rounded-2xl border border-foreground/10 dark:border-white/20 shadow-xl shadow-black/10 dark:shadow-black/25 p-2 lg:p-3"
   role="tablist"
   aria-label="Choose your role"
   onmouseenter={handleMouseEnter}
@@ -218,6 +218,11 @@
   .persona-dock {
     backdrop-filter: blur(24px);
     -webkit-backdrop-filter: blur(24px);
+    background: rgba(255, 255, 255, 0.05);
+  }
+
+  :global(.dark) .persona-dock {
+    background: rgba(0, 0, 0, 0.2);
   }
 
   .persona-card {
