@@ -5,7 +5,7 @@ import PersonaDock from './PersonaDock.svelte';
 import PhoneDisplay from './PhoneDisplay.svelte';
 ---
 
-<section class="relative overflow-hidden min-h-[80vh] flex items-center pt-20 md:pt-24 lg:pt-28 pb-24 lg:pb-32">
+<section class="relative overflow-x-clip min-h-[80vh] flex items-center pt-20 md:pt-24 lg:pt-28 pb-24 lg:pb-32">
   <!-- Ambient glow orbs -->
   <div class="pointer-events-none absolute -top-40 -left-40 w-[500px] h-[500px] rounded-full bg-primary/20 blur-[120px] dark:bg-primary/10" aria-hidden="true"></div>
   <div class="pointer-events-none absolute -bottom-20 -right-32 w-[400px] h-[400px] rounded-full bg-secondary/15 blur-[100px] dark:bg-secondary/[0.08]" aria-hidden="true"></div>
@@ -56,8 +56,8 @@ import PhoneDisplay from './PhoneDisplay.svelte';
           <!-- Floating Integration Logos -->
           <div class="hidden md:block" aria-hidden="true">
             <!-- GitHub — top left -->
-            <div class="absolute -top-6 -left-6 lg:-left-10 z-0 float-slow">
-              <div class="w-12 h-12 lg:w-14 lg:h-14 rounded-2xl bg-white/10 dark:bg-white/[0.07] backdrop-blur-sm border border-foreground/10 dark:border-white/10 shadow-lg flex items-center justify-center">
+            <div class="absolute -top-10 -left-12 lg:-left-16 z-0 float-slow">
+              <div class="w-12 h-12 lg:w-14 lg:h-14 rounded-2xl bg-white/80 dark:bg-white/[0.07] backdrop-blur-sm border border-neutral-200 dark:border-white/10 shadow-lg flex items-center justify-center">
                 <svg class="w-7 h-7 lg:w-8 lg:h-8 text-foreground dark:text-white" viewBox="0 0 24 24" fill="currentColor">
                   <path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/>
                 </svg>
@@ -65,28 +65,28 @@ import PhoneDisplay from './PhoneDisplay.svelte';
             </div>
 
             <!-- Vercel — top right -->
-            <div class="absolute -top-8 -right-4 lg:-right-8 z-0 float-slow-reverse">
-              <div class="w-12 h-12 lg:w-14 lg:h-14 rounded-2xl bg-white/10 dark:bg-white/[0.07] backdrop-blur-sm border border-foreground/10 dark:border-white/10 shadow-lg flex items-center justify-center">
+            <div class="absolute -top-12 -right-10 lg:-right-14 z-0 float-slow-reverse">
+              <div class="w-12 h-12 lg:w-14 lg:h-14 rounded-2xl bg-white/80 dark:bg-white/[0.07] backdrop-blur-sm border border-neutral-200 dark:border-white/10 shadow-lg flex items-center justify-center">
                 <svg class="w-6 h-6 lg:w-7 lg:h-7 text-foreground dark:text-white" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M12 1L24 22H0L12 1z"/>
+                  <path d="m12 1.608 12 20.784H0Z"/>
                 </svg>
               </div>
             </div>
 
             <!-- Cloudflare — bottom left -->
-            <div class="absolute -bottom-4 -left-4 lg:-left-6 z-0 float-slow-reverse" style="animation-delay: -2s;">
-              <div class="w-12 h-12 lg:w-14 lg:h-14 rounded-2xl bg-white/10 dark:bg-white/[0.07] backdrop-blur-sm border border-foreground/10 dark:border-white/10 shadow-lg flex items-center justify-center">
+            <div class="absolute -bottom-8 -left-10 lg:-left-14 z-0 float-slow-reverse" style="animation-delay: -2s;">
+              <div class="w-12 h-12 lg:w-14 lg:h-14 rounded-2xl bg-white/80 dark:bg-white/[0.07] backdrop-blur-sm border border-neutral-200 dark:border-white/10 shadow-lg flex items-center justify-center">
                 <svg class="w-7 h-7 lg:w-8 lg:h-8 text-orange-400" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M16.5093 16.8027c.1577-.5493.0986-.9853-.1534-1.3453-.2267-.3307-.622-.5253-1.0787-.5693l-9.1973-.1227c-.0453-.0013-.0907-.008-.1333-.02-.1267-.068-.1734-.1987-.1454-.3147.0174-.0653.0574-.124.1134-.164.0667-.0467.148-.072.2294-.068l9.268.124c.9947.0293 2.068-.7907 2.444-1.8707l.48-1.3773c.0226-.0653.0333-.1347.032-.2027-.4267-3.9933-3.876-7.0973-8.024-7.0973C5.5733 4.1207 1.344 8.0413.6173 13.0933c-.5093-.3773-1.1413-.5907-1.832-.5413-1.224.088-2.2173 1.0587-2.3173 2.2813-.0414.5067.0666.984.2826 1.3907C-4.2387 16.44-4.9387 17.3-4.9387 18.34c0 .052.0014.1053.004.1573.0174.1627.1534.2867.316.2867h20.7947c.1893 0 .3466-.1413.3786-.332l.0054-.036z"/>
+                  <path d="M16.5088 16.8447c.1475-.5068.0908-.9707-.1553-1.3154-.2246-.3164-.6045-.499-1.0615-.5205l-8.6592-.1123a.1559.1559 0 0 1-.1333-.0713c-.0283-.042-.0351-.0986-.021-.1553.0278-.084.1123-.1484.2036-.1562l8.7359-.1123c1.0351-.0489 2.1601-.8868 2.5537-1.9136l.499-1.3013c.0215-.0561.0293-.1128.0147-.168-.5625-2.5463-2.835-4.4453-5.5499-4.4453-2.5039 0-4.6284 1.6177-5.3876 3.8614-.4927-.3658-1.1187-.5625-1.794-.499-1.2026.119-2.1665 1.083-2.2861 2.2856-.0283.31-.0069.6128.0635.894C1.5683 13.171 0 14.7754 0 16.752c0 .1748.0142.3515.0352.5273.0141.083.0844.1475.1689.1475h15.9814c.0909 0 .1758-.0645.2032-.1553l.12-.4268zm2.7568-5.5634c-.0771 0-.1611 0-.2383.0112-.0566 0-.1054.0415-.127.0976l-.3378 1.1744c-.1475.5068-.0918.9707.1543 1.3164.2256.3164.6055.498 1.0625.5195l1.8437.1133c.0557 0 .1055.0263.1329.0703.0283.043.0351.1074.0214.1562-.0283.084-.1132.1485-.204.1553l-1.921.1123c-1.041.0488-2.1582.8867-2.5527 1.914l-.1406.3585c-.0283.0713.0215.1416.0986.1416h6.5977c.0771 0 .1474-.0489.169-.126.1122-.4082.1757-.837.1757-1.2803 0-2.6025-2.125-4.727-4.7344-4.727"/>
                 </svg>
               </div>
             </div>
 
             <!-- Netlify — bottom right -->
-            <div class="absolute -bottom-2 -right-6 lg:-right-10 z-0 float-slow" style="animation-delay: -3s;">
-              <div class="w-12 h-12 lg:w-14 lg:h-14 rounded-2xl bg-white/10 dark:bg-white/[0.07] backdrop-blur-sm border border-foreground/10 dark:border-white/10 shadow-lg flex items-center justify-center">
+            <div class="absolute -bottom-6 -right-12 lg:-right-16 z-0 float-slow" style="animation-delay: -3s;">
+              <div class="w-12 h-12 lg:w-14 lg:h-14 rounded-2xl bg-white/80 dark:bg-white/[0.07] backdrop-blur-sm border border-neutral-200 dark:border-white/10 shadow-lg flex items-center justify-center">
                 <svg class="w-6 h-6 lg:w-7 lg:h-7 text-teal-400" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M17.3877 10.5278L13.2908 6.41525L16.6516 3.05443 17.3877 3.79443V10.5278zM6.48077 12.0278l5.3816-5.3816 4.2448 4.2476H6.48077zm10.5184-.136l-4.0728 4.0724-5.5468-5.5464h1.302l4.2448 4.2476 4.0728-2.7736zm-3.2096 7.3392l-4.9232-4.924 4.924-4.924 4.924 4.924-4.9248 4.924zM3.79043 17.3877V3.05443l9.09737 9.09737-9.09737 5.236z"/>
+                  <path d="M6.49 19.04h-.23L5.13 17.9v-.23l1.73-1.71h1.2l.15.15v1.2L6.5 19.04ZM5.13 6.31V6.1l1.13-1.13h.23L8.2 6.68v1.2l-.15.15h-1.2L5.13 6.31Zm9.96 9.09h-1.65l-.14-.13v-3.83c0-.68-.27-1.2-1.1-1.23-.42 0-.9 0-1.43.02l-.07.08v4.96l-.14.14H8.9l-.13-.14V8.73l.13-.14h3.7a2.6 2.6 0 0 1 2.61 2.6v4.08l-.13.14Zm-8.37-2.44H.14L0 12.82v-1.64l.14-.14h6.58l.14.14v1.64l-.14.14Zm17.14 0h-6.58l-.14-.14v-1.64l.14-.14h6.58l.14.14v1.64l-.14.14ZM11.05 6.55V1.64l.14-.14h1.65l.14.14v4.9l-.14.14h-1.65l-.14-.13Zm0 15.81v-4.9l.14-.14h1.65l.14.13v4.91l-.14.14h-1.65l-.14-.14Z"/>
                 </svg>
               </div>
             </div>

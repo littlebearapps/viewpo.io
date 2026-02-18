@@ -135,7 +135,7 @@
 {#if layout === 'bridge'}
   <!-- BRIDGE: Unified floating bar straddling hero/features boundary -->
   <div
-    class="backdrop-blur-xl bg-neutral-900/90 border border-neutral-700/50 shadow-2xl rounded-2xl overflow-hidden"
+    class="backdrop-blur-xl bg-white/80 dark:bg-neutral-900/90 border border-neutral-200 dark:border-neutral-700/50 shadow-2xl rounded-2xl overflow-hidden"
     role="tablist"
     aria-label="Choose your role"
     onmouseenter={handleMouseEnter}
@@ -145,8 +145,8 @@
       {#each cards as card, i}
         <button
           class="bridge-card group relative text-left cursor-pointer transition-all duration-300 px-5 py-4
-            {i === activeIndex ? 'bg-white/10' : 'hover:bg-white/5'}
-            {i < cards.length - 1 ? 'border-r border-white/10' : ''}"
+            {i === activeIndex ? 'bg-black/[0.04] dark:bg-white/10' : 'hover:bg-black/[0.02] dark:hover:bg-white/5'}
+            {i < cards.length - 1 ? 'border-r border-neutral-200 dark:border-white/10' : ''}"
           role="tab"
           tabindex="0"
           aria-selected={i === activeIndex}
@@ -156,7 +156,7 @@
           <div class="flex items-start gap-3">
             <!-- Icon -->
             <div class="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5 transition-colors duration-300
-              {i === activeIndex ? card.iconColour : 'text-white/40'}">
+              {i === activeIndex ? card.iconColour : 'text-neutral-400 dark:text-white/40'}">
               <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
                 <path stroke-linecap="round" stroke-linejoin="round" d={icons[card.icon]} />
               </svg>
@@ -165,16 +165,16 @@
             <!-- Text -->
             <div class="flex-1 min-w-0">
               <span class="block text-[10px] font-heading font-bold uppercase tracking-[0.12em] mb-0.5 transition-colors duration-300
-                {i === activeIndex ? 'text-white/60' : 'text-white/30'}">
+                {i === activeIndex ? 'text-neutral-500 dark:text-white/60' : 'text-neutral-300 dark:text-white/30'}">
                 {card.label}
               </span>
               <span class="block font-heading font-bold text-sm leading-snug transition-colors duration-300
-                {i === activeIndex ? 'text-white' : 'text-white/50'}">
+                {i === activeIndex ? 'text-neutral-900 dark:text-white' : 'text-neutral-400 dark:text-white/50'}">
                 {card.hook}
               </span>
               <!-- Description — visible on active only -->
               <span class="block text-xs leading-relaxed mt-1 transition-all duration-300
-                {i === activeIndex ? 'text-white/40 max-h-12 opacity-100' : 'max-h-0 opacity-0 overflow-hidden'}">
+                {i === activeIndex ? 'text-neutral-500 dark:text-white/40 max-h-12 opacity-100' : 'max-h-0 opacity-0 overflow-hidden'}">
                 {card.description}
               </span>
             </div>
@@ -182,7 +182,7 @@
 
           <!-- Progress bar at bottom of active segment -->
           {#if i === activeIndex}
-            <div class="absolute bottom-0 left-0 right-0 h-[2px] bg-white/5">
+            <div class="absolute bottom-0 left-0 right-0 h-[2px] bg-neutral-200 dark:bg-white/5">
               {#key progressKey}
                 <div class="h-full rounded-full {card.glowBg} progress-animate"></div>
               {/key}
