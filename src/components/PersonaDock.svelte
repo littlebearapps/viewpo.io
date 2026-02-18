@@ -196,13 +196,13 @@
 {:else}
   <!-- MOBILE: 2x2 grid (shows all cards without scrolling) -->
   <div
-    class="grid grid-cols-2 gap-3"
+    class="grid grid-cols-2 gap-3.5"
     role="tablist"
     aria-label="Choose your role"
   >
     {#each cards as card, i}
       <button
-        class="mobile-card relative text-left rounded-xl overflow-hidden cursor-pointer transition-all duration-300 border-t-2 p-3.5
+        class="mobile-card relative text-left rounded-xl overflow-hidden cursor-pointer transition-all duration-300 border-t-2 p-4
           backdrop-blur-sm border border-neutral-200 dark:border-neutral-700/50
           {i === activeIndex
             ? `bg-white/70 dark:bg-white/[0.08] ${card.borderTop} shadow-md`
@@ -213,25 +213,25 @@
         onclick={() => selectCard(i)}
         onkeydown={(e) => handleKeydown(e, i)}
       >
-        <div class="flex items-start gap-2.5">
-          <div class="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 transition-colors duration-300
+        <div class="flex items-start gap-3">
+          <div class="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0 transition-colors duration-300
             {i === activeIndex ? card.iconColour : 'text-foreground/30 dark:text-white/30'}">
-            <svg class="w-[18px] h-[18px]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
               <path stroke-linecap="round" stroke-linejoin="round" d={icons[card.icon]} />
             </svg>
           </div>
           <div class="min-w-0 flex-1">
-            <span class="block text-[10px] font-heading font-bold uppercase tracking-[0.12em] mb-0.5
+            <span class="block text-[11px] font-heading font-bold uppercase tracking-[0.12em] mb-0.5
               {i === activeIndex ? 'text-foreground/50 dark:text-white/50' : 'text-foreground/20 dark:text-white/20'}">
               {card.label}
             </span>
-            <span class="block font-heading font-bold text-xs leading-snug
+            <span class="block font-heading font-bold text-sm leading-snug
               {i === activeIndex ? 'text-foreground dark:text-white' : 'text-foreground/40 dark:text-white/35'}">
               {card.hook}
             </span>
             <!-- Description — visible on active card -->
-            <span class="block text-[11px] leading-relaxed mt-1 transition-all duration-300
-              {i === activeIndex ? 'text-foreground/50 dark:text-white/40 max-h-16 opacity-100' : 'max-h-0 opacity-0 overflow-hidden'}">
+            <span class="block text-xs leading-relaxed mt-1.5 transition-all duration-300
+              {i === activeIndex ? 'text-foreground/50 dark:text-white/40 max-h-20 opacity-100' : 'max-h-0 opacity-0 overflow-hidden'}">
               {card.description}
             </span>
           </div>
