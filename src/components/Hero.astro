@@ -5,7 +5,7 @@ import PersonaDock from './PersonaDock.svelte';
 import PhoneDisplay from './PhoneDisplay.svelte';
 ---
 
-<section class="relative overflow-hidden min-h-[85vh] flex items-center pt-20 md:pt-24 lg:pt-28 pb-16 md:pb-20">
+<section class="relative overflow-hidden min-h-[80vh] flex items-center pt-20 md:pt-24 lg:pt-28 pb-24 lg:pb-32">
   <!-- Ambient glow orbs -->
   <div class="pointer-events-none absolute -top-40 -left-40 w-[500px] h-[500px] rounded-full bg-primary/20 blur-[120px] dark:bg-primary/10" aria-hidden="true"></div>
   <div class="pointer-events-none absolute -bottom-20 -right-32 w-[400px] h-[400px] rounded-full bg-secondary/15 blur-[100px] dark:bg-secondary/[0.08]" aria-hidden="true"></div>
@@ -14,7 +14,7 @@ import PhoneDisplay from './PhoneDisplay.svelte';
     <!-- 2-column grid, vertically centred -->
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
 
-      <!-- LEFT: The Control Centre -->
+      <!-- LEFT: Text Content -->
       <div class="text-center lg:text-left order-2 lg:order-1">
         <!-- Badge -->
         <a href="#platforms" class="hero-entrance inline-flex items-center gap-2 bg-primary/10 text-primary dark:text-indigo-300 text-sm font-medium px-4 py-1.5 rounded-full mb-6 hover:bg-primary/15 transition-colors">
@@ -35,7 +35,7 @@ import PhoneDisplay from './PhoneDisplay.svelte';
         </p>
 
         <!-- CTAs -->
-        <div class="hero-entrance hero-entrance-delay-3 flex flex-col sm:flex-row items-center lg:items-start justify-center lg:justify-start gap-3 mb-10">
+        <div class="hero-entrance hero-entrance-delay-3 flex flex-col sm:flex-row items-center lg:items-start justify-center lg:justify-start gap-3">
           <button type="button" data-open-signup class="inline-flex items-center justify-center gap-2 font-heading font-medium rounded-xl transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 hover:scale-[1.02] active:scale-[0.98] px-7 py-3.5 text-base bg-primary text-white hover:bg-primary-hover focus:ring-primary shadow-md hover:shadow-lg plausible-event-name=CTA+Get+Early+Access">
             Get Early Access
             <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -45,11 +45,6 @@ import PhoneDisplay from './PhoneDisplay.svelte';
           <Button href="#how-it-works" variant="ghost" size="md">
             Watch Demo
           </Button>
-        </div>
-
-        <!-- Vertical Command Centre (desktop only) -->
-        <div class="hero-entrance hero-entrance-delay-4 hidden lg:block">
-          <PersonaDock client:visible layout="sidebar" />
         </div>
       </div>
 
@@ -108,10 +103,15 @@ import PhoneDisplay from './PhoneDisplay.svelte';
       </div>
 
     </div>
+  </div>
 
-    <!-- Mobile carousel (below phone, only on mobile) -->
-    <div class="lg:hidden mt-8">
-      <PersonaDock client:visible layout="mobile" />
-    </div>
+  <!-- Floating Bridge Dock (desktop) — straddles hero/features boundary -->
+  <div class="hidden lg:block absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 z-30 w-full max-w-5xl px-4">
+    <PersonaDock client:visible layout="bridge" />
+  </div>
+
+  <!-- Mobile dock — normal flow below content -->
+  <div class="lg:hidden mt-8 px-6">
+    <PersonaDock client:visible layout="mobile" />
   </div>
 </section>

@@ -8,12 +8,13 @@
     icon: string;
     hook: string;
     description: string;
-    borderColour: string;
+    accentColour: string;
     glowBg: string;
     iconColour: string;
+    borderTop: string;
   }
 
-  let { layout = 'sidebar' }: { layout?: 'sidebar' | 'mobile' } = $props();
+  let { layout = 'bridge' }: { layout?: 'bridge' | 'mobile' } = $props();
 
   const cards: PersonaCard[] = [
     {
@@ -22,9 +23,10 @@
       icon: 'terminal',
       hook: 'Preview Deploys Instantly',
       description: 'Push code, get a notification on your phone. Preview at any resolution before CI finishes.',
-      borderColour: 'border-l-cyan-400',
+      accentColour: 'bg-cyan-400',
       glowBg: 'bg-cyan-400',
       iconColour: 'text-cyan-400',
+      borderTop: 'border-t-cyan-400',
     },
     {
       id: 'managers',
@@ -32,9 +34,10 @@
       icon: 'shield',
       hook: 'Unblock Your Team',
       description: 'Share a preview link in Slack. Your team views and approves — no staging server needed.',
-      borderColour: 'border-l-emerald-400',
+      accentColour: 'bg-emerald-400',
       glowBg: 'bg-emerald-400',
       iconColour: 'text-emerald-400',
+      borderTop: 'border-t-emerald-400',
     },
     {
       id: 'founders',
@@ -42,9 +45,10 @@
       icon: 'rocket',
       hook: 'Build in Public',
       description: 'Screenshot your progress from your phone and share it to X — while walking the dog.',
-      borderColour: 'border-l-violet-400',
+      accentColour: 'bg-violet-400',
       glowBg: 'bg-violet-400',
       iconColour: 'text-violet-400',
+      borderTop: 'border-t-violet-400',
     },
     {
       id: 'agencies',
@@ -52,9 +56,10 @@
       icon: 'briefcase',
       hook: 'Get Client Sign-off',
       description: 'Send a link. Your client views the desktop layout on their phone. They reply "Approved."',
-      borderColour: 'border-l-orange-400',
+      accentColour: 'bg-orange-400',
       glowBg: 'bg-orange-400',
       iconColour: 'text-orange-400',
+      borderTop: 'border-t-orange-400',
     },
   ];
 
@@ -127,70 +132,71 @@
   };
 </script>
 
-{#if layout === 'sidebar'}
-  <!-- SIDEBAR: Vertical command centre -->
+{#if layout === 'bridge'}
+  <!-- BRIDGE: Unified floating bar straddling hero/features boundary -->
   <div
-    class="flex flex-col gap-1"
+    class="backdrop-blur-xl bg-neutral-900/90 border border-neutral-700/50 shadow-2xl rounded-2xl overflow-hidden"
     role="tablist"
     aria-label="Choose your role"
     onmouseenter={handleMouseEnter}
     onmouseleave={handleMouseLeave}
   >
-    {#each cards as card, i}
-      <button
-        class="sidebar-card group relative text-left rounded-lg cursor-pointer transition-all duration-300 overflow-hidden border-l-2
-          {i === activeIndex
-            ? `bg-foreground/[0.05] dark:bg-white/5 ${card.borderColour}`
-            : 'border-l-transparent opacity-50 hover:opacity-100 hover:bg-foreground/[0.02] dark:hover:bg-white/[0.02]'}"
-        role="tab"
-        tabindex="0"
-        aria-selected={i === activeIndex}
-        onclick={() => selectCard(i)}
-        onkeydown={(e) => handleKeydown(e, i)}
-      >
-        <div class="flex items-start gap-3 px-4 py-3">
-          <!-- Icon -->
-          <div class="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5 transition-colors duration-300
-            {i === activeIndex ? card.iconColour : 'text-foreground/40 dark:text-white/40'}">
-            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-              <path stroke-linecap="round" stroke-linejoin="round" d={icons[card.icon]} />
-            </svg>
+    <div class="grid grid-cols-4">
+      {#each cards as card, i}
+        <button
+          class="bridge-card group relative text-left cursor-pointer transition-all duration-300 px-5 py-4
+            {i === activeIndex ? 'bg-white/10' : 'hover:bg-white/5'}
+            {i < cards.length - 1 ? 'border-r border-white/10' : ''}"
+          role="tab"
+          tabindex="0"
+          aria-selected={i === activeIndex}
+          onclick={() => selectCard(i)}
+          onkeydown={(e) => handleKeydown(e, i)}
+        >
+          <div class="flex items-start gap-3">
+            <!-- Icon -->
+            <div class="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5 transition-colors duration-300
+              {i === activeIndex ? card.iconColour : 'text-white/40'}">
+              <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d={icons[card.icon]} />
+              </svg>
+            </div>
+
+            <!-- Text -->
+            <div class="flex-1 min-w-0">
+              <span class="block text-[10px] font-heading font-bold uppercase tracking-[0.12em] mb-0.5 transition-colors duration-300
+                {i === activeIndex ? 'text-white/60' : 'text-white/30'}">
+                {card.label}
+              </span>
+              <span class="block font-heading font-bold text-sm leading-snug transition-colors duration-300
+                {i === activeIndex ? 'text-white' : 'text-white/50'}">
+                {card.hook}
+              </span>
+              <!-- Description — visible on active only -->
+              <span class="block text-xs leading-relaxed mt-1 transition-all duration-300
+                {i === activeIndex ? 'text-white/40 max-h-12 opacity-100' : 'max-h-0 opacity-0 overflow-hidden'}">
+                {card.description}
+              </span>
+            </div>
           </div>
 
-          <!-- Text -->
-          <div class="flex-1 min-w-0">
-            <span class="block text-[10px] font-heading font-bold uppercase tracking-[0.12em] mb-0.5 transition-colors duration-300
-              {i === activeIndex ? 'text-foreground/50 dark:text-white/50' : 'text-foreground/25 dark:text-white/25'}">
-              {card.label}
-            </span>
-            <span class="block font-heading font-bold text-sm leading-snug transition-colors duration-300
-              {i === activeIndex ? 'text-foreground dark:text-white' : 'text-foreground/60 dark:text-white/50'}">
-              {card.hook}
-            </span>
-            <!-- Description — visible on active only -->
-            <span class="block text-xs leading-relaxed mt-1 transition-all duration-300
-              {i === activeIndex ? 'text-foreground/40 dark:text-white/40 max-h-12 opacity-100' : 'max-h-0 opacity-0 overflow-hidden'}">
-              {card.description}
-            </span>
-          </div>
-        </div>
-
-        <!-- Progress bar at bottom of active card -->
-        {#if i === activeIndex}
-          <div class="absolute bottom-0 left-0 right-0 h-[2px] bg-foreground/5 dark:bg-white/5">
-            {#key progressKey}
-              <div class="h-full rounded-full {card.glowBg} progress-animate"></div>
-            {/key}
-          </div>
-        {/if}
-      </button>
-    {/each}
+          <!-- Progress bar at bottom of active segment -->
+          {#if i === activeIndex}
+            <div class="absolute bottom-0 left-0 right-0 h-[2px] bg-white/5">
+              {#key progressKey}
+                <div class="h-full rounded-full {card.glowBg} progress-animate"></div>
+              {/key}
+            </div>
+          {/if}
+        </button>
+      {/each}
+    </div>
   </div>
 
 {:else}
   <!-- MOBILE: Horizontal scroll carousel -->
   <div
-    class="flex gap-2.5 overflow-x-auto pb-2 -mx-4 px-4 snap-x snap-mandatory scrollbar-hide"
+    class="flex gap-2.5 overflow-x-auto pb-2 snap-x snap-mandatory scrollbar-hide"
     role="tablist"
     aria-label="Choose your role"
   >
@@ -198,7 +204,7 @@
       <button
         class="mobile-card flex-shrink-0 w-[180px] snap-start relative text-left rounded-xl overflow-hidden cursor-pointer transition-all duration-300 border-t-2 p-3
           {i === activeIndex
-            ? `bg-foreground/[0.06] dark:bg-white/[0.07] ${card.borderColour.replace('border-l-', 'border-t-')}`
+            ? `bg-foreground/[0.06] dark:bg-white/[0.07] ${card.borderTop}`
             : 'border-t-transparent opacity-50 hover:opacity-100'}"
         role="tab"
         tabindex="0"
