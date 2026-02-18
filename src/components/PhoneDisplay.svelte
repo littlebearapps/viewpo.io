@@ -10,48 +10,40 @@
 
   import { onDestroy } from 'svelte';
   onDestroy(() => unsubscribe());
-
-  // Screen content definitions for each persona
-  const screens = [
-    { id: 'developers', accent: 'indigo' },
-    { id: 'managers', accent: 'emerald' },
-    { id: 'founders', accent: 'orange' },
-    { id: 'agencies', accent: 'sky' },
-  ];
 </script>
 
 <div class="phone-display relative mx-auto" aria-hidden="true">
   <!-- Phone frame -->
-  <div class="relative w-[260px] sm:w-[280px] lg:w-[300px] xl:w-[320px] mx-auto">
-    <!-- Outer bezel — dark in dark mode, silvery in light mode -->
+  <div class="relative w-[240px] sm:w-[260px] lg:w-[280px] xl:w-[300px] mx-auto">
+    <!-- Outer bezel -->
     <div class="rounded-[2.5rem] border-[3px] border-neutral-300 dark:border-slate-600/50 bg-neutral-100 dark:bg-slate-900 shadow-2xl shadow-black/15 dark:shadow-black/50 overflow-hidden">
 
-      <!-- Screen area — extends edge to edge inside bezel -->
-      <div class="relative bg-white dark:bg-slate-800 overflow-hidden" style="aspect-ratio: 9/19.5;">
+      <!-- Screen area -->
+      <div class="relative bg-white dark:bg-slate-800 overflow-hidden" style="aspect-ratio: 9/16;">
 
-        <!-- Dynamic Island — sits on top of screen content -->
-        <div class="relative z-20 flex justify-center pt-3">
-          <div class="w-[90px] h-[28px] bg-black rounded-full flex items-center justify-center gap-2.5 shadow-sm">
-            <!-- Camera lens -->
-            <div class="w-3 h-3 rounded-full bg-slate-900 ring-1 ring-slate-700">
-              <div class="w-1.5 h-1.5 rounded-full bg-slate-600/50 mt-[3px] ml-[3px]"></div>
+        <!-- Status bar row with Dynamic Island centred -->
+        <div class="relative z-20 flex items-center justify-between px-5 pt-2.5 pb-1.5">
+          <!-- Left: Time -->
+          <span class="text-[9px] font-semibold text-neutral-900 dark:text-white/80 w-10">9:41</span>
+
+          <!-- Centre: Dynamic Island pill -->
+          <div class="w-[80px] h-[24px] bg-black rounded-full flex items-center justify-center shadow-sm">
+            <div class="w-2.5 h-2.5 rounded-full bg-slate-900 ring-1 ring-slate-700">
+              <div class="w-1 h-1 rounded-full bg-slate-600/50 mt-[3px] ml-[3px]"></div>
             </div>
           </div>
-        </div>
 
-        <!-- Status bar — sits below Dynamic Island -->
-        <div class="relative z-20 flex items-center justify-between text-[9px] px-6 pt-1.5 pb-2">
-          <span class="font-semibold text-neutral-900 dark:text-white/80">9:41</span>
-          <div class="flex items-center gap-1.5">
+          <!-- Right: Signal + Wi-Fi + Battery -->
+          <div class="flex items-center gap-1 w-10 justify-end">
             <!-- Signal bars -->
-            <svg class="w-3.5 h-2.5 text-neutral-900 dark:text-white/80" viewBox="0 0 17 10" fill="currentColor">
+            <svg class="w-3 h-2 text-neutral-900 dark:text-white/80" viewBox="0 0 17 10" fill="currentColor">
               <rect x="0" y="7" width="3" height="3" rx="0.5"/>
               <rect x="4.5" y="4.5" width="3" height="5.5" rx="0.5"/>
               <rect x="9" y="2" width="3" height="8" rx="0.5"/>
               <rect x="13.5" y="0" width="3" height="10" rx="0.5"/>
             </svg>
-            <!-- Wi-Fi icon -->
-            <svg class="w-3.5 h-3 text-neutral-900 dark:text-white/80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <!-- Wi-Fi -->
+            <svg class="w-3 h-2.5 text-neutral-900 dark:text-white/80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
               <path d="M1.5 8.5c5.8-5.3 15.2-5.3 21 0" stroke-linecap="round"/>
               <path d="M5.5 12.5c3.6-3.3 9.4-3.3 13 0" stroke-linecap="round"/>
               <path d="M9.5 16.5c1.4-1.3 3.6-1.3 5 0" stroke-linecap="round"/>
@@ -59,17 +51,16 @@
             </svg>
             <!-- Battery -->
             <div class="flex items-center gap-0.5">
-              <div class="w-5 h-2.5 border border-neutral-900/50 dark:border-white/50 rounded-sm p-[1px]">
+              <div class="w-4 h-2 border border-neutral-900/50 dark:border-white/50 rounded-sm p-[1px]">
                 <div class="w-full h-full bg-neutral-900 dark:bg-emerald-400 rounded-[1px]"></div>
               </div>
-              <div class="w-0.5 h-1 bg-neutral-900/50 dark:bg-white/50 rounded-full"></div>
             </div>
           </div>
         </div>
 
         <!-- Cross-fading screen content -->
         <!-- Screen 0: Developers — Terminal + Push Notification -->
-        <div class="screen-content absolute inset-0 transition-opacity duration-500 pt-16 px-3 pb-3"
+        <div class="screen-content absolute inset-0 transition-opacity duration-500 pt-10 px-3 pb-3"
           class:opacity-100={currentIndex === 0}
           class:opacity-0={currentIndex !== 0}>
           <!-- Terminal window -->
@@ -100,7 +91,7 @@
         </div>
 
         <!-- Screen 1: Managers — Slack Message + Approval -->
-        <div class="screen-content absolute inset-0 transition-opacity duration-500 pt-16 px-3 pb-3"
+        <div class="screen-content absolute inset-0 transition-opacity duration-500 pt-10 px-3 pb-3"
           class:opacity-100={currentIndex === 1}
           class:opacity-0={currentIndex !== 1}>
           <!-- Slack-style message -->
@@ -128,7 +119,7 @@
         </div>
 
         <!-- Screen 2: Founders — Twitter compose with screenshot -->
-        <div class="screen-content absolute inset-0 transition-opacity duration-500 pt-16 px-3 pb-3"
+        <div class="screen-content absolute inset-0 transition-opacity duration-500 pt-10 px-3 pb-3"
           class:opacity-100={currentIndex === 2}
           class:opacity-0={currentIndex !== 2}>
           <!-- Twitter/X compose -->
@@ -145,10 +136,10 @@
             <p class="text-[10px] text-neutral-700 dark:text-white/80 leading-relaxed mb-2.5">Just shipped the new landing page &#128640; Here's what it looks like on mobile vs desktop — built in public, day 47.</p>
             <!-- Viewpo screenshot attachment -->
             <div class="rounded-lg overflow-hidden border border-neutral-200 dark:border-white/10 bg-neutral-50 dark:bg-white/[0.04]">
-              <div class="h-20 bg-gradient-to-br from-indigo-100 to-violet-100 dark:from-indigo-500/20 dark:to-violet-500/20 flex items-center justify-center">
+              <div class="h-16 bg-gradient-to-br from-indigo-100 to-violet-100 dark:from-indigo-500/20 dark:to-violet-500/20 flex items-center justify-center">
                 <div class="text-center">
-                  <div class="w-12 h-16 mx-auto bg-white dark:bg-slate-700 rounded-lg border border-neutral-200 dark:border-white/10 flex items-center justify-center mb-1">
-                    <div class="w-8 h-1.5 bg-neutral-200 dark:bg-white/10 rounded"></div>
+                  <div class="w-10 h-14 mx-auto bg-white dark:bg-slate-700 rounded-lg border border-neutral-200 dark:border-white/10 flex items-center justify-center mb-0.5">
+                    <div class="w-6 h-1 bg-neutral-200 dark:bg-white/10 rounded"></div>
                   </div>
                   <p class="text-[7px] text-neutral-400 dark:text-white/30">viewpo preview</p>
                 </div>
@@ -158,12 +149,12 @@
         </div>
 
         <!-- Screen 3: Agencies — iMessage with client -->
-        <div class="screen-content absolute inset-0 transition-opacity duration-500 pt-16 px-3 pb-3"
+        <div class="screen-content absolute inset-0 transition-opacity duration-500 pt-10 px-3 pb-3"
           class:opacity-100={currentIndex === 3}
           class:opacity-0={currentIndex !== 3}>
           <!-- iMessage header -->
           <div class="flex items-center justify-center gap-2 mb-3">
-            <div class="w-8 h-8 rounded-full bg-orange-100 dark:bg-orange-400/30 flex items-center justify-center text-[10px] font-bold text-orange-600 dark:text-orange-300">JK</div>
+            <div class="w-7 h-7 rounded-full bg-orange-100 dark:bg-orange-400/30 flex items-center justify-center text-[9px] font-bold text-orange-600 dark:text-orange-300">JK</div>
             <div>
               <p class="text-[10px] font-bold text-neutral-900 dark:text-white">Jane Kim</p>
               <p class="text-[8px] text-neutral-400 dark:text-white/40">Client — Acme Corp</p>
@@ -172,22 +163,22 @@
           <!-- Message bubbles -->
           <div class="space-y-2">
             <div class="flex justify-end">
-              <div class="bg-indigo-500 rounded-2xl rounded-br-sm px-3 py-2 max-w-[80%]">
+              <div class="bg-indigo-500 rounded-2xl rounded-br-sm px-3 py-1.5 max-w-[80%]">
                 <p class="text-[9px] text-white leading-relaxed">Hey Jane — here's the latest homepage. Tap to preview on your phone:</p>
               </div>
             </div>
             <div class="flex justify-end">
-              <div class="bg-indigo-500/80 rounded-2xl rounded-br-sm px-3 py-2 max-w-[80%]">
+              <div class="bg-indigo-500/80 rounded-2xl rounded-br-sm px-3 py-1.5 max-w-[80%]">
                 <p class="text-[9px] text-indigo-100">&#128279; viewpo.link/acme-redesign</p>
               </div>
             </div>
             <div class="flex justify-start">
-              <div class="bg-neutral-100 dark:bg-white/10 rounded-2xl rounded-bl-sm px-3 py-2 max-w-[80%]">
+              <div class="bg-neutral-100 dark:bg-white/10 rounded-2xl rounded-bl-sm px-3 py-1.5 max-w-[80%]">
                 <p class="text-[9px] text-neutral-700 dark:text-white/80 leading-relaxed">Looks great on my iPhone! Approved &#9989;</p>
               </div>
             </div>
             <div class="flex justify-start">
-              <div class="bg-neutral-100 dark:bg-white/10 rounded-2xl rounded-bl-sm px-3 py-2 max-w-[80%]">
+              <div class="bg-neutral-100 dark:bg-white/10 rounded-2xl rounded-bl-sm px-3 py-1.5 max-w-[80%]">
                 <p class="text-[9px] text-neutral-700 dark:text-white/80">Can we make the CTA bigger?</p>
               </div>
             </div>
@@ -197,8 +188,8 @@
       </div>
 
       <!-- Home indicator -->
-      <div class="flex justify-center py-2 bg-white dark:bg-slate-800">
-        <div class="w-28 h-1 bg-neutral-300 dark:bg-white/15 rounded-full"></div>
+      <div class="flex justify-center py-1.5 bg-white dark:bg-slate-800">
+        <div class="w-24 h-1 bg-neutral-300 dark:bg-white/15 rounded-full"></div>
       </div>
     </div>
   </div>
