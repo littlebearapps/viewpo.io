@@ -24,18 +24,34 @@ import FAQ from '@components/FAQ.astro';
   <div class="relative overflow-x-clip">
     <!-- Ambient glow orbs distributed down the page -->
     <div class="pointer-events-none absolute inset-0" aria-hidden="true">
-      <!-- Near features (top-left primary) -->
-      <div class="absolute top-[5%] -left-40 w-[500px] h-[500px] rounded-full bg-primary/15 blur-[140px] dark:bg-primary/[0.08]"></div>
-      <!-- Near features (right secondary) -->
-      <div class="absolute top-[10%] -right-32 w-[400px] h-[400px] rounded-full bg-secondary/10 blur-[120px] dark:bg-secondary/[0.06]"></div>
-      <!-- Mid-page (left indigo) -->
-      <div class="absolute top-[30%] -left-20 w-[450px] h-[450px] rounded-full bg-indigo-400/10 blur-[130px] dark:bg-indigo-400/[0.06]"></div>
-      <!-- Mid-page (right primary) -->
-      <div class="absolute top-[45%] -right-40 w-[500px] h-[500px] rounded-full bg-primary/12 blur-[150px] dark:bg-primary/[0.07]"></div>
-      <!-- Lower (left secondary) -->
-      <div class="absolute top-[65%] -left-32 w-[400px] h-[400px] rounded-full bg-secondary/10 blur-[120px] dark:bg-secondary/[0.06]"></div>
-      <!-- Near FAQ/CTA (right indigo) -->
-      <div class="absolute top-[80%] -right-20 w-[450px] h-[450px] rounded-full bg-indigo-300/12 blur-[130px] dark:bg-indigo-400/[0.06]"></div>
+      <!-- Features zone -->
+      <div class="absolute top-[2%] -left-40 w-[600px] h-[600px] rounded-full bg-primary/18 blur-[160px] dark:bg-primary/[0.08]"></div>
+      <div class="absolute top-[5%] right-[5%] w-[450px] h-[450px] rounded-full bg-indigo-300/14 blur-[130px] dark:bg-indigo-400/[0.07]"></div>
+      <div class="absolute top-[12%] left-[30%] w-[350px] h-[350px] rounded-full bg-secondary/10 blur-[110px] dark:bg-secondary/[0.05]"></div>
+
+      <!-- Platforms zone -->
+      <div class="absolute top-[20%] -right-32 w-[550px] h-[550px] rounded-full bg-primary/14 blur-[150px] dark:bg-primary/[0.07]"></div>
+      <div class="absolute top-[25%] -left-20 w-[400px] h-[400px] rounded-full bg-indigo-400/12 blur-[120px] dark:bg-indigo-400/[0.06]"></div>
+
+      <!-- How It Works zone -->
+      <div class="absolute top-[35%] left-[15%] w-[500px] h-[500px] rounded-full bg-secondary/12 blur-[140px] dark:bg-secondary/[0.06]"></div>
+      <div class="absolute top-[38%] -right-40 w-[450px] h-[450px] rounded-full bg-indigo-300/10 blur-[130px] dark:bg-indigo-400/[0.05]"></div>
+      <div class="absolute top-[42%] left-[50%] w-[300px] h-[300px] rounded-full bg-primary/10 blur-[100px] dark:bg-primary/[0.05]"></div>
+
+      <!-- Pricing zone -->
+      <div class="absolute top-[52%] -left-32 w-[550px] h-[550px] rounded-full bg-primary/16 blur-[150px] dark:bg-primary/[0.08]"></div>
+      <div class="absolute top-[55%] right-[10%] w-[400px] h-[400px] rounded-full bg-secondary/12 blur-[120px] dark:bg-secondary/[0.06]"></div>
+      <div class="absolute top-[60%] left-[40%] w-[350px] h-[350px] rounded-full bg-indigo-400/10 blur-[110px] dark:bg-indigo-400/[0.05]"></div>
+
+      <!-- FAQ zone -->
+      <div class="absolute top-[70%] -right-20 w-[500px] h-[500px] rounded-full bg-primary/14 blur-[140px] dark:bg-primary/[0.07]"></div>
+      <div class="absolute top-[72%] -left-40 w-[450px] h-[450px] rounded-full bg-indigo-300/12 blur-[130px] dark:bg-indigo-400/[0.06]"></div>
+      <div class="absolute top-[78%] left-[25%] w-[300px] h-[300px] rounded-full bg-secondary/10 blur-[100px] dark:bg-secondary/[0.05]"></div>
+
+      <!-- CTA zone -->
+      <div class="absolute top-[85%] right-[5%] w-[550px] h-[550px] rounded-full bg-primary/18 blur-[160px] dark:bg-primary/[0.08]"></div>
+      <div class="absolute top-[88%] -left-20 w-[400px] h-[400px] rounded-full bg-secondary/14 blur-[130px] dark:bg-secondary/[0.07]"></div>
+      <div class="absolute top-[92%] left-[45%] w-[500px] h-[500px] rounded-full bg-indigo-400/12 blur-[140px] dark:bg-indigo-400/[0.06]"></div>
     </div>
 
     <!-- Supporting Features -->

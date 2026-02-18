@@ -7,8 +7,13 @@ import PhoneDisplay from './PhoneDisplay.svelte';
 
 <section class="relative overflow-x-clip min-h-[80vh] flex items-center pt-20 md:pt-24 lg:pt-28 pb-20 lg:pb-40">
   <!-- Ambient glow orbs -->
-  <div class="pointer-events-none absolute -top-40 -left-40 w-[500px] h-[500px] rounded-full bg-primary/20 blur-[120px] dark:bg-primary/10" aria-hidden="true"></div>
-  <div class="pointer-events-none absolute -bottom-20 -right-32 w-[400px] h-[400px] rounded-full bg-secondary/15 blur-[100px] dark:bg-secondary/[0.08]" aria-hidden="true"></div>
+  <div class="pointer-events-none absolute inset-0" aria-hidden="true">
+    <div class="absolute -top-40 -left-40 w-[600px] h-[600px] rounded-full bg-primary/20 blur-[140px] dark:bg-primary/10"></div>
+    <div class="absolute -top-20 right-[10%] w-[400px] h-[400px] rounded-full bg-indigo-300/15 blur-[120px] dark:bg-indigo-400/[0.07]"></div>
+    <div class="absolute top-[40%] left-[20%] w-[350px] h-[350px] rounded-full bg-secondary/12 blur-[100px] dark:bg-secondary/[0.06]"></div>
+    <div class="absolute -bottom-20 -right-32 w-[500px] h-[500px] rounded-full bg-secondary/15 blur-[120px] dark:bg-secondary/[0.08]"></div>
+    <div class="absolute bottom-[10%] left-[5%] w-[300px] h-[300px] rounded-full bg-indigo-400/10 blur-[100px] dark:bg-indigo-400/[0.05]"></div>
+  </div>
 
   <div class="max-w-7xl mx-auto px-6 w-full">
     <!-- 2-column grid, vertically centred -->
