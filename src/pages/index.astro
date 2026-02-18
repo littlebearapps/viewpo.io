@@ -4,7 +4,7 @@ import Header from '@components/Header.astro';
 import Footer from '@components/Footer.astro';
 import Hero from '@components/Hero.astro';
 import Section from '@components/Section.astro';
-import FeatureCard from '@components/FeatureCard.astro';
+import BentoFeatures from '@components/BentoFeatures.astro';
 import PlatformAvailability from '@components/PlatformAvailability.astro';
 import HowItWorks from '@components/HowItWorks.astro';
 import PricingTable from '@components/PricingTable.astro';
@@ -54,52 +54,8 @@ import FAQ from '@components/FAQ.astro';
       <div class="absolute top-[92%] left-[45%] w-[500px] h-[500px] rounded-full bg-indigo-400/12 blur-[140px] dark:bg-indigo-400/[0.06]"></div>
     </div>
 
-    <!-- Supporting Features -->
-    <Section id="features" class="lg:pt-64">
-      <div class="text-center mb-16">
-        <h2 class="font-heading font-bold text-3xl md:text-4xl mb-4 reveal">
-          Everything you need to review deploys
-        </h2>
-        <p class="text-foreground/60 text-lg max-w-2xl mx-auto reveal reveal-delay-1">
-          Responsive previews, instant updates, one-tap account linking, and team feedback — all in one app.
-        </p>
-      </div>
-
-      <div class="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
-        <div class="reveal reveal-delay-1 h-full">
-          <FeatureCard
-            icon="viewport"
-            accent="indigo"
-            title="Preview at Any Resolution"
-            description="Check a 27-inch desktop layout on your iPhone. Switch to the iPad view on your MacBook. Viewpo renders the actual site at whatever resolution you choose — on whatever device you're holding."
-          />
-        </div>
-        <div class="reveal reveal-delay-2 h-full">
-          <FeatureCard
-            icon="notification"
-            accent="orange"
-            title="Preview Your Website Updates Instantly"
-            description="No more hunting for preview links. Viewpo automatically pulls your latest website updates and displays them the moment they deploy — so you can review, refine, and share across all your providers."
-          />
-        </div>
-        <div class="reveal reveal-delay-3 h-full">
-          <FeatureCard
-            icon="team"
-            accent="emerald"
-            title="Get Feedback from Your Team"
-            description="Share a preview link or QR code with designers, PMs, clients, or anyone on your team. They can view the latest version and give feedback on the look and feel — no dashboard access needed."
-          />
-        </div>
-        <div class="reveal reveal-delay-4 h-full">
-          <FeatureCard
-            icon="oauth"
-            accent="sky"
-            title="Link Your Accounts in Seconds"
-            description="Connect your Cloudflare Pages and GitHub accounts with a single tap — no API keys, no config files. Viewpo uses secure sign-in under the hood so setup is effortless. More providers coming soon."
-          />
-        </div>
-      </div>
-    </Section>
+    <!-- Bento Features Grid -->
+    <BentoFeatures />
 
     <!-- Platform Availability -->
     <PlatformAvailability />
