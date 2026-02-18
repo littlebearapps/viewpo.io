@@ -229,13 +229,13 @@
               {i === activeIndex ? 'text-foreground dark:text-white' : 'text-foreground/40 dark:text-white/35'}">
               {card.hook}
             </span>
-            <!-- Description — visible on active card -->
-            <span class="block text-xs leading-relaxed mt-1.5 transition-all duration-300
-              {i === activeIndex ? 'text-foreground/50 dark:text-white/40 max-h-20 opacity-100' : 'max-h-0 opacity-0 overflow-hidden'}">
-              {card.description}
-            </span>
           </div>
         </div>
+        <!-- Description — full width below icon+heading row -->
+        <span class="block text-xs leading-relaxed mt-2 transition-all duration-300
+          {i === activeIndex ? 'text-foreground/50 dark:text-white/40 max-h-20 opacity-100' : 'max-h-0 opacity-0 overflow-hidden'}">
+          {card.description}
+        </span>
 
         {#if i === activeIndex}
           <div class="absolute bottom-0 left-0 right-0 h-[2px] bg-foreground/5 dark:bg-white/5">
