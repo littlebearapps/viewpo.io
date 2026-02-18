@@ -29,9 +29,10 @@ const longestWord = words.reduce((a, b) => (a.length > b.length ? a : b), '');
 >
   {/* Invisible sizer — reserves width of longest word to prevent CLS */}
   <span class="typewriter-sizer" aria-hidden="true">{longestWord}</span>
-  {/* Visible typed text */}
-  <span class="typewriter-text" aria-label={words.join(', ')}>{words[0]}</span>
-  <span class="typewriter-cursor" aria-hidden="true">|</span>
+  {/* Visible typed text + cursor in a single inline flow */}
+  <span class="typewriter-visible" aria-label={words.join(', ')}>
+    <span class="typewriter-text">{words[0]}</span><span class="typewriter-cursor" aria-hidden="true">|</span>
+  </span>
 </span>
 
 <style>
@@ -41,20 +42,25 @@ const longestWord = words.reduce((a, b) => (a.length > b.length ? a : b), '');
   }
 
   .typewriter-sizer,
-  .typewriter-text {
+  .typewriter-visible {
     grid-area: 1 / 1;
   }
 
   .typewriter-sizer {
     visibility: hidden;
     white-space: nowrap;
-    /* Match text rendering of .typewriter-text for accurate sizing */
+    /* Match text rendering for accurate sizing */
     -webkit-text-fill-color: transparent;
+    /* Account for cursor width in sizer */
+    padding-right: 0.1em;
+  }
+
+  .typewriter-visible {
+    white-space: nowrap;
+    overflow: hidden;
   }
 
   .typewriter-text {
-    white-space: nowrap;
-    overflow: hidden;
     background: linear-gradient(135deg, #6366F1 0%, #818CF8 50%, #6366F1 100%);
     background-size: 200% 200%;
     -webkit-background-clip: text;
@@ -71,8 +77,6 @@ const longestWord = words.reduce((a, b) => (a.length > b.length ? a : b), '');
   .typewriter-cursor {
     animation: blink 0.7s step-end infinite;
     font-weight: 300;
-    opacity: 0.7;
-    margin-left: 1px;
     color: #6366F1;
     -webkit-text-fill-color: #6366F1;
   }
