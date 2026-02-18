@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { fly } from 'svelte/transition';
+
   interface DeviceCard {
     name: string;
     icon: string;
@@ -28,7 +30,7 @@
 
 <div class="grid grid-cols-3 md:grid-cols-6 gap-3 sm:gap-4 md:gap-5 max-w-5xl mx-auto">
   {#each items as card, i}
-    <div class="reveal reveal-delay-{i + 1} flex flex-col items-center text-center border border-neutral-200 dark:border-neutral-800 bg-white/50 dark:bg-neutral-900/30 backdrop-blur-sm rounded-lg p-4 sm:p-5 md:p-6 transition-all duration-200 hover:border-neutral-300 dark:hover:border-neutral-700 hover:shadow-sm">
+    <div in:fly={{ y: 20, duration: 400, delay: i * 100 }} class="flex flex-col items-center text-center border border-neutral-200 dark:border-neutral-800 bg-white/50 dark:bg-neutral-900/30 backdrop-blur-sm rounded-lg p-4 sm:p-5 md:p-6 transition-all duration-200 hover:border-neutral-300 dark:hover:border-neutral-700 hover:shadow-sm">
       <!-- Platform icon -->
       <div class="w-8 h-8 sm:w-10 sm:h-10 text-foreground/50 dark:text-neutral-500 mb-3 sm:mb-4">
         <svg class="w-full h-full" viewBox="0 0 24 24" fill="currentColor">
