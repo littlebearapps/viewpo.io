@@ -26,7 +26,7 @@
   };
 </script>
 
-<div class="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 md:gap-5 max-w-4xl mx-auto">
+<div class="grid grid-cols-3 md:grid-cols-6 gap-3 sm:gap-4 md:gap-5 max-w-5xl mx-auto">
   {#each items as card, i}
     <div class="reveal reveal-delay-{i + 1} flex flex-col items-center text-center border border-neutral-200 dark:border-neutral-800 bg-white/50 dark:bg-neutral-900/30 backdrop-blur-sm rounded-lg p-4 sm:p-5 md:p-6 transition-all duration-200 hover:border-neutral-300 dark:hover:border-neutral-700 hover:shadow-sm">
       <!-- Platform icon -->
