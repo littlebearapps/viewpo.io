@@ -75,9 +75,7 @@
 
   function selectCard(index: number): void {
     activeIndex = index;
-    // Toggle mobile accordion
     expandedMobile = expandedMobile === index ? null : index;
-    // Reset autoplay timer on manual selection
     startAutoplay();
   }
 
@@ -125,7 +123,7 @@
   <div class="hidden lg:flex gap-2 mb-4 px-1">
     {#each cards as card, i}
       <button
-        class="h-1 flex-1 rounded-full overflow-hidden bg-white/10 transition-colors"
+        class="h-1 flex-1 rounded-full overflow-hidden bg-foreground/10 dark:bg-white/10 transition-colors"
         onclick={() => selectCard(i)}
         aria-label="Go to {card.label}"
         tabindex="-1"
@@ -134,7 +132,7 @@
           class="h-full rounded-full transition-all duration-300 {i === activeIndex
             ? `bg-gradient-to-r ${card.accentFrom} ${card.accentTo}`
             : i < activeIndex
-              ? 'bg-white/30'
+              ? 'bg-foreground/20 dark:bg-white/30'
               : 'bg-transparent'}"
           style={i === activeIndex && !isPaused
             ? `animation: progress ${AUTOPLAY_INTERVAL}ms linear forwards`
@@ -154,8 +152,8 @@
       <div
         class="persona-card group relative rounded-2xl transition-all duration-300 cursor-pointer
           {i === activeIndex
-            ? 'bg-white/10 border border-white/20 shadow-lg shadow-black/10'
-            : 'bg-white/[0.04] border border-white/[0.06] hover:bg-white/[0.07] hover:border-white/10'}"
+            ? 'bg-foreground/[0.06] dark:bg-white/10 border border-foreground/15 dark:border-white/20 shadow-lg shadow-black/5 dark:shadow-black/10'
+            : 'bg-foreground/[0.03] dark:bg-white/[0.04] border border-foreground/[0.06] dark:border-white/[0.06] hover:bg-foreground/[0.05] dark:hover:bg-white/[0.07] hover:border-foreground/10 dark:hover:border-white/10'}"
         role="tab"
         tabindex="0"
         aria-selected={i === activeIndex}
@@ -174,7 +172,7 @@
             <div class="w-9 h-9 lg:w-10 lg:h-10 rounded-xl flex items-center justify-center flex-shrink-0 transition-colors duration-300
               {i === activeIndex
                 ? `bg-gradient-to-br ${card.accentFrom} ${card.accentTo} text-white shadow-md`
-                : 'bg-white/[0.06] text-white/50 group-hover:text-white/70'}">
+                : 'bg-foreground/[0.06] dark:bg-white/[0.06] text-foreground/40 dark:text-white/50 group-hover:text-foreground/60 dark:group-hover:text-white/70'}">
               <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
                 <path stroke-linecap="round" stroke-linejoin="round" d={icons[card.icon]} />
               </svg>
@@ -182,11 +180,11 @@
 
             <div class="flex-1 lg:flex-none">
               <span class="text-xs font-heading font-semibold uppercase tracking-wider transition-colors duration-300
-                {i === activeIndex ? 'text-white/90' : 'text-white/40 group-hover:text-white/60'}">
+                {i === activeIndex ? 'text-foreground/70 dark:text-white/90' : 'text-foreground/30 dark:text-white/40 group-hover:text-foreground/50 dark:group-hover:text-white/60'}">
                 {card.label}
               </span>
               <h3 class="font-heading font-bold text-base lg:text-lg leading-snug transition-colors duration-300
-                {i === activeIndex ? 'text-white' : 'text-white/60 group-hover:text-white/80'}">
+                {i === activeIndex ? 'text-foreground dark:text-white' : 'text-foreground/50 dark:text-white/60 group-hover:text-foreground/70 dark:group-hover:text-white/80'}">
                 {card.hook}
               </h3>
             </div>
@@ -195,7 +193,7 @@
             <svg
               class="w-5 h-5 lg:hidden transition-transform duration-300 flex-shrink-0
                 {expandedMobile === i ? 'rotate-180' : ''}
-                {i === activeIndex ? 'text-white/70' : 'text-white/30'}"
+                {i === activeIndex ? 'text-foreground/50 dark:text-white/70' : 'text-foreground/20 dark:text-white/30'}"
               fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"
             >
               <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
@@ -207,7 +205,7 @@
             {i === activeIndex ? 'lg:max-h-24 lg:opacity-100 lg:mt-3' : 'lg:max-h-0 lg:opacity-0 lg:mt-0'}
             {expandedMobile === i ? 'max-h-24 opacity-100 mt-3' : 'max-h-0 opacity-0 mt-0'}
             lg:{i === activeIndex ? '' : ''}">
-            <p class="text-sm leading-relaxed text-white/50">
+            <p class="text-sm leading-relaxed text-foreground/50 dark:text-white/50">
               {card.description}
             </p>
           </div>

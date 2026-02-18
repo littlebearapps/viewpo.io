@@ -3,21 +3,24 @@
  * DeviceMockup — placeholder phone frame for the hero section.
  * The screen content will be driven by PersonaDock's active card in a future iteration.
  * For now, shows a generic "preview in progress" skeleton.
+ *
+ * The phone bezel is always dark (realistic device appearance).
+ * Internal skeleton elements adapt to light/dark mode.
  */
 ---
 
 <div class="device-mockup relative mx-auto" aria-hidden="true">
   <!-- Phone frame -->
   <div class="relative w-[220px] sm:w-[260px] lg:w-[280px] mx-auto">
-    <!-- Outer bezel -->
-    <div class="rounded-[2.5rem] border-2 border-white/15 bg-slate-900/80 backdrop-blur-sm shadow-2xl shadow-black/30 overflow-hidden">
+    <!-- Outer bezel — always dark like a real device -->
+    <div class="rounded-[2.5rem] border-2 border-slate-300 dark:border-white/15 bg-slate-800 dark:bg-slate-900/80 backdrop-blur-sm shadow-2xl shadow-black/20 dark:shadow-black/30 overflow-hidden">
       <!-- Notch / Dynamic Island -->
       <div class="flex justify-center pt-3 pb-2">
         <div class="w-20 h-5 bg-black rounded-full"></div>
       </div>
 
       <!-- Screen area -->
-      <div class="mx-3 mb-3 rounded-2xl bg-slate-800/60 border border-white/[0.06] overflow-hidden" id="device-screen">
+      <div class="mx-3 mb-3 rounded-2xl bg-slate-700 dark:bg-slate-800/60 border border-slate-600/30 dark:border-white/[0.06] overflow-hidden" id="device-screen">
         <!-- Skeleton UI representing a website preview -->
         <div class="p-4 space-y-3">
           <!-- Nav bar skeleton -->
