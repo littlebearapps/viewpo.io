@@ -10,14 +10,14 @@
 </script>
 
 <div
-  class="group relative rounded-2xl border border-neutral-200 dark:border-neutral-800 bg-white/60 dark:bg-neutral-900/50 backdrop-blur-sm overflow-hidden transition-colors duration-300 hover:border-neutral-400 dark:hover:border-neutral-600 h-full flex flex-col"
+  class="group relative rounded-2xl border border-neutral-200 dark:border-neutral-800 bg-white/60 dark:bg-neutral-900/50 backdrop-blur-sm overflow-hidden transition-colors duration-300 hover:border-neutral-400 dark:hover:border-neutral-600 h-full flex flex-row md:flex-col"
   class:md:col-span-2={span === '2'}
   role="listitem"
   onmouseenter={() => hovered = true}
   onmouseleave={() => hovered = false}
 >
   <!-- Visual area -->
-  <div class="relative flex-1 min-h-[200px] p-6 pb-0 flex items-center justify-center overflow-hidden">
+  <div class="relative w-28 shrink-0 md:w-auto md:flex-1 min-h-[120px] md:min-h-[200px] p-4 md:p-6 md:pb-0 flex items-center justify-center overflow-hidden order-2 md:order-none">
     {#if visual === 'dashboard'}
       <!-- Universal Dashboard mock UI -->
       <div class="w-full max-w-md rounded-xl border border-neutral-200 dark:border-neutral-700/50 bg-neutral-50 dark:bg-neutral-800/80 overflow-hidden shadow-sm transition-transform duration-500" class:scale-[1.02]={hovered}>
@@ -53,9 +53,9 @@
 
     {:else if visual === 'performance'}
       <!-- Native Performance — 60fps badge -->
-      <div class="flex flex-col items-center gap-3 transition-transform duration-500" class:scale-[1.05]={hovered}>
+      <div class="flex flex-col items-center gap-2 md:gap-3 transition-transform duration-500" class:scale-[1.05]={hovered}>
         <div class="relative">
-          <svg class="w-28 h-28" viewBox="0 0 120 120">
+          <svg class="w-16 h-16 md:w-28 md:h-28" viewBox="0 0 120 120">
             <!-- Background ring -->
             <circle cx="60" cy="60" r="50" fill="none" stroke="currentColor" stroke-width="6" class="text-neutral-200 dark:text-neutral-700" />
             <!-- Progress ring -->
@@ -68,11 +68,11 @@
             </defs>
           </svg>
           <div class="absolute inset-0 flex flex-col items-center justify-center">
-            <span class="text-3xl font-heading font-bold text-neutral-800 dark:text-white">60</span>
+            <span class="text-xl md:text-3xl font-heading font-bold text-neutral-800 dark:text-white">60</span>
             <span class="text-[10px] font-heading font-semibold text-neutral-400 dark:text-neutral-500 uppercase tracking-wider">fps</span>
           </div>
         </div>
-        <div class="flex gap-2">
+        <div class="hidden md:flex gap-2">
           {#each ['SwiftUI', 'Metal', '120Hz'] as tag}
             <span class="text-[10px] font-mono px-2 py-0.5 rounded-full bg-neutral-100 dark:bg-neutral-800 text-neutral-500 dark:text-neutral-400 border border-neutral-200 dark:border-neutral-700">{tag}</span>
           {/each}
@@ -82,7 +82,7 @@
     {:else if visual === 'qr'}
       <!-- QR Code that scales on hover -->
       <div class="transition-transform duration-500 ease-out" class:scale-110={hovered}>
-        <div class="w-32 h-32 rounded-xl bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 p-3 shadow-sm">
+        <div class="w-16 h-16 md:w-32 md:h-32 rounded-lg md:rounded-xl bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 p-1.5 md:p-3 shadow-sm">
           <svg viewBox="0 0 100 100" class="w-full h-full text-neutral-800 dark:text-neutral-200">
             <!-- Simplified QR pattern -->
             <rect x="5" y="5" width="25" height="25" rx="3" fill="currentColor"/>
@@ -125,7 +125,7 @@
     {:else if visual === 'github'}
       <!-- GitHub PR merge icon -->
       <div class="transition-transform duration-500" class:scale-[1.05]={hovered}>
-        <div class="relative w-36 h-36">
+        <div class="relative w-16 h-16 md:w-36 md:h-36">
           <svg viewBox="0 0 100 100" class="w-full h-full">
             <!-- Main branch line -->
             <line x1="35" y1="15" x2="35" y2="85" stroke="currentColor" stroke-width="3" class="text-neutral-300 dark:text-neutral-600" />
@@ -142,7 +142,7 @@
             <circle cx="35" cy="85" r="5" fill="currentColor" class="text-neutral-400 dark:text-neutral-500" />
           </svg>
         </div>
-        <div class="absolute bottom-6 left-6 right-6 flex items-center gap-2">
+        <div class="hidden md:flex absolute bottom-6 left-6 right-6 items-center gap-2">
           <span class="text-[10px] font-mono px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-500 border border-emerald-500/20">Merged</span>
           <span class="text-[10px] font-mono text-neutral-400 dark:text-neutral-500">#142 → main</span>
         </div>
@@ -193,8 +193,8 @@
   </div>
 
   <!-- Text content -->
-  <div class="p-6 pt-4">
-    <h3 class="font-heading font-semibold text-lg text-neutral-900 dark:text-white mb-1.5">{title}</h3>
-    <p class="text-sm text-neutral-500 dark:text-neutral-400 leading-relaxed">{description}</p>
+  <div class="p-4 md:p-6 md:pt-4 flex-1 flex flex-col justify-center order-1 md:order-none">
+    <h3 class="font-heading font-semibold text-base md:text-lg text-neutral-900 dark:text-white mb-1 md:mb-1.5">{title}</h3>
+    <p class="text-xs md:text-sm text-neutral-500 dark:text-neutral-400 leading-relaxed">{description}</p>
   </div>
 </div>
