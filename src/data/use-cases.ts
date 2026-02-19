@@ -76,7 +76,7 @@ const remoteMonitoring: UseCase = {
   slug: 'remote-monitoring',
   type: 'persona',
   title: 'Remote Developers',
-  subtitle: 'Full-Stack Engineers & Remote Workers',
+  subtitle: 'Full-Stack Engineers, Remote Workers & VPS Developers',
   accentColour: 'cyan',
   icon: '<path stroke-linecap="round" stroke-linejoin="round" d="M6.75 7.5l3 2.25-3 2.25m4.5 0h3m-9 8.25h13.5A2.25 2.25 0 0021 18V6a2.25 2.25 0 00-2.25-2.25H5.25A2.25 2.25 0 003 6v12a2.25 2.25 0 002.25 2.25z" />',
 
@@ -88,6 +88,7 @@ const remoteMonitoring: UseCase = {
     'You pushed to main at 5:25 PM and left the house. Now you\'re on a walk, phone in pocket, wondering: did the CSS grid break on mobile? Is the hero section clipped on desktop?',
     'The Runway 2025 report calls this the "thousand-tabs problem" — engineers jump between Slack, Jira, CI/CD dashboards, and App Store Connect just to understand the status of a single release. Slack is your notification layer, but after the "deploy succeeded" ping, there\'s no mobile-native way to actually see the deployment at the correct resolution.',
     'The standard workaround: open the preview URL in mobile Safari. But you see a mobile layout — not the desktop view you need to verify. "Request Desktop Site" changes the User Agent string, not the CSS viewport. Responsive sites still trigger phone breakpoints.',
+    'Or maybe you never leave a terminal. Your development environment lives on a VPS — Hetzner, DigitalOcean, a Linode box — and you code in Neovim inside a tmux session over Mosh. There is no localhost. The only way to see what you built is after it deploys to a preview branch. Same problem, different reason: you need to verify the visual result, and all you have is a phone.',
   ],
 
   solutionTitle: 'How Viewpo Solves It',
@@ -148,6 +149,10 @@ const remoteMonitoring: UseCase = {
       question: 'Do I need to be at my desk to verify a deployment?',
       answer: 'No — that\'s the whole point. Viewpo sends push notifications when builds land, then lets you preview the deployment at any viewport size directly from your phone. You can verify a deploy in under 60 seconds from anywhere.',
     },
+    {
+      question: 'I develop on a VPS via SSH — is Viewpo still useful?',
+      answer: 'Especially useful. If your development environment is a VPS (Hetzner, DigitalOcean, etc.) and you code in tmux/Neovim over SSH, there\'s no localhost browser to check your work. Every visual verification requires deploying to a preview branch. Viewpo sends a push notification when the deploy lands and lets you see it at any viewport width — it\'s the fastest path from terminal to visual verification.',
+    },
   ],
 };
 
@@ -165,6 +170,7 @@ const indieHackers: UseCase = {
   painTitle: 'The Pain',
   painContent: [
     'Momentum is everything in #BuildInPublic. You need to tweet progress daily, but you can\'t be at your laptop 24/7. The Indie Hackers community\'s top tip for engagement: "Add screenshots or animated gifs." Visual posts showing real product UI perform dramatically better than code snippets or text updates.',
+    'But there\'s a deeper problem: credibility. Your target customers are B2B SaaS buyers on 1440px laptops and 1920px monitors. A phone screenshot of a phone layout doesn\'t signal "enterprise-ready." A prospect once replied to a mobile screenshot: "this doesn\'t look like it\'s ready for enterprise." It wasn\'t a bug — it was a viewport problem. Every desktop screenshot you share is a brand impression.',
     'Current workflow: push code, wait for deploy, open provider dashboard on laptop, find preview URL, open in browser, manually resize window, take screenshot, crop, export, post. That\'s 8 steps requiring a laptop. Miss a day and the algorithm punishes you.',
   ],
 
@@ -228,6 +234,99 @@ const indieHackers: UseCase = {
     {
       question: 'Can I view feature branches, not just production?',
       answer: 'Yes. Viewpo shows all branches with active deployments. Pin your development branch so it\'s always one tap away. You can also view specific commits to compare before-and-after states.',
+    },
+    {
+      question: 'Can I capture professional desktop screenshots for investor or prospect conversations?',
+      answer: 'Yes. Open any deployment at Desktop (1920px), pan to the section you want, and screenshot. The image is saved to Photos — drop it into a pitch deck, share to Slack, or post to Twitter. Professional-quality desktop screenshots captured from your phone in under 30 seconds.',
+    },
+  ],
+};
+
+const creators: UseCase = {
+  slug: 'creators',
+  type: 'persona',
+  title: 'Creators & AI Builders',
+  subtitle: 'Vibe Coders, AI Builders & No-Code Developers',
+  accentColour: 'rose',
+  icon: '<path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.455 2.456L21.75 6l-1.036.259a3.375 3.375 0 00-2.455 2.456zM16.894 20.567L16.5 21.75l-.394-1.183a2.25 2.25 0 00-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 001.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 001.423 1.423l1.183.394-1.183.394a2.25 2.25 0 00-1.423 1.423z" />',
+
+  metaTitle: 'Creators & AI Builders — Viewpo Use Case',
+  metaDescription: 'Built a website with Cursor, Bolt, or v0? See what it looks like at 1920px desktop — on your phone. Verify AI-generated responsive breakpoints with real CSS viewport simulation.',
+
+  painTitle: 'The Pain',
+  painContent: [
+    'You built a landing page with Cursor in 20 minutes. Or scaffolded a full marketing site with Bolt. Or generated a component library with v0. The AI wrote the Tailwind classes, set the breakpoints, and wired up the responsive grid. Vercel deployed it automatically. It looks great on your phone.',
+    'But what does it look like at 1920px desktop? You have no idea. The AI generated the CSS — you didn\'t write the media queries yourself. Did it get the responsive breakpoints right? Is the navigation collapsing at the wrong width? Is the hero image clipping at 1440px? You can\'t reason about it from the code because you didn\'t write the code.',
+    'Mobile Safari shows you the phone layout. "Request Desktop Site" changes the User Agent, not the CSS viewport. The only way to know for certain is to see it rendered at real desktop width — and there\'s no mobile app that does this. Until now.',
+  ],
+
+  solutionTitle: 'How Viewpo Solves It',
+  solutionSteps: [
+    { text: 'Connect your Vercel, Netlify, or Cloudflare Pages account — one-tap OAuth' },
+    { text: 'Viewpo notification: "Deploy ready on main (Vercel)" — tap it' },
+    { text: 'See your AI-generated site at 1920px desktop resolution on your phone' },
+    { text: 'Cycle through presets: Phone, Tablet, Laptop, Desktop — verify every breakpoint in 10 seconds' },
+    { text: 'Spot the issue: the nav menu overlaps the hero at 1440px. Tell Cursor to fix it. Push. Verify again.' },
+  ],
+
+  featuresTitle: 'Key Features Used',
+  features: [
+    { feature: 'Desktop viewport on phone', description: 'See 1920px desktop layouts on your phone — real CSS viewport injection, not a User Agent trick' },
+    { feature: 'Rapid preset switching', description: 'Cycle Phone S through Desktop in 10 seconds to verify every breakpoint the AI set' },
+    { feature: 'Push notifications', description: 'Get notified when auto-deploys land — no polling Vercel/Netlify dashboards' },
+    { feature: 'Screenshot capture', description: 'Capture desktop screenshots for #BuildInPublic posts or client previews' },
+    { feature: 'Pin & watch', description: 'Pin your main branch — every deploy is one tap away' },
+    { feature: 'Real WebKit rendering', description: 'Catches Safari-specific bugs in AI-generated CSS that Chrome DevTools would miss' },
+  ],
+
+  workflowTitle: 'Typical Workflow',
+  workflow: [
+    { time: '', action: 'Prompt Cursor/Bolt/v0: "Build a pricing page with 3 tiers"' },
+    { time: '', action: 'AI generates the component with Tailwind responsive classes' },
+    { time: '', action: 'Push to GitHub → Vercel auto-deploys' },
+    { time: '', action: 'Viewpo notification: "Deploy ready on main"' },
+    { time: '', action: 'Tap → Viewer at Desktop (1920px) → pricing grid looks good' },
+    { time: '', action: 'Switch to Tablet (820px) → cards stack correctly' },
+    { time: '', action: 'Switch to Phone M (390px) → single column, CTA visible' },
+    { time: '', action: 'Ship it. Or prompt the AI to fix what you found.' },
+  ],
+
+  comparison: {
+    title: 'AI Builder Tool Compatibility',
+    headers: ['Tool', 'Deploys To', 'Viewpo Integration'],
+    rows: [
+      { label: 'Cursor', cells: ['GitHub → Any provider', 'Full support via connected provider'] },
+      { label: 'Bolt', cells: ['Netlify (built-in)', 'Connect Netlify account'] },
+      { label: 'v0 by Vercel', cells: ['Vercel', 'Connect Vercel account'] },
+      { label: 'Lovable', cells: ['Custom hosting', 'Via GitHub + provider'] },
+      { label: 'Replit', cells: ['Replit Deployments', 'Via custom domain + provider'] },
+      { label: 'Claude Code', cells: ['GitHub → Any provider', 'Full support via connected provider'] },
+    ],
+  },
+
+  crossRefTitle: 'Related Situations',
+  crossRefs: [
+    { label: 'Visual QA Audit', slug: 'responsive-testing', hook: 'Systematic breakpoint testing for AI-generated layouts.', accentColour: 'pink' },
+    { label: 'Indie Founders', slug: 'indie-hackers', hook: 'Screenshot your AI-built product for #BuildInPublic posts.', accentColour: 'violet' },
+    { label: 'Emergency Hotfix', slug: 'production-monitoring', hook: 'Verify AI-generated fixes without opening your laptop.', accentColour: 'amber' },
+  ],
+
+  faqs: [
+    {
+      question: 'Do I need to understand CSS to use Viewpo?',
+      answer: 'No. Viewpo shows you what your site looks like at real viewport widths. You don\'t need to read media queries or understand breakpoints — just cycle through the presets and see the result. If something looks wrong, prompt your AI tool to fix it and check again.',
+    },
+    {
+      question: 'Which AI coding tools work with Viewpo?',
+      answer: 'Any tool that deploys to a supported provider. Cursor, Bolt, v0, Lovable, Replit, and Claude Code all push to GitHub, which deploys to Vercel, Netlify, or Cloudflare Pages. Connect the provider account to Viewpo and every deploy appears in your dashboard.',
+    },
+    {
+      question: 'Can Viewpo catch bugs in AI-generated responsive CSS?',
+      answer: 'Yes. Viewpo uses WKWebView (the real Safari rendering engine) with CSS viewport injection. Media queries fire at the target width, so you see exactly how the AI-generated breakpoints behave at Desktop (1920px), Laptop (1440px), Tablet (820px), and Phone sizes. This catches bugs that Chrome DevTools responsive mode would miss.',
+    },
+    {
+      question: 'What if the AI-generated layout looks wrong at a specific width?',
+      answer: 'Screenshot the viewport in Viewpo (it saves to Photos with the exact width visible), then paste it into your AI tool\'s context: "The layout breaks at 1440px — here\'s what it looks like." The AI can see the screenshot and fix the responsive issue. Push, re-deploy, re-verify in Viewpo.',
     },
   ],
 };
@@ -902,6 +1001,7 @@ export const USE_CASES: UseCase[] = [
   // Personas
   remoteMonitoring,
   indieHackers,
+  creators,
   freelancers,
   digitalNomads,
   teams,

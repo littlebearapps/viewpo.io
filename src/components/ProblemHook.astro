@@ -39,14 +39,14 @@ const pairs: PainSolutionPair[] = [
   },
   {
     pain: {
-      heading: '"It doesn\'t look right on my phone"',
-      body: "You opened the preview on your iPhone. It shows the mobile layout — not the desktop design you need to check. Safari's \"Request Desktop Site\" changes the user agent, not the CSS viewport. Every responsive testing tool is desktop-only.",
+      heading: '"I deployed it — does it actually look right?"',
+      body: "You merged a PR on the train and can't check the desktop layout. Or you generated a landing page with Cursor and aren't sure the responsive breakpoints are right. Or you're coding on a VPS in tmux — there's no localhost, and the only way to see your work is after it deploys. The build succeeded. But you need to see it.",
     },
     solution: {
       title: 'Visual QA Audit',
       slug: '/use-cases/responsive-testing/',
-      hook: 'Real CSS viewport simulation — media queries fire at the target width, not your device width. Cycle through 6 presets in 10 seconds. Catch the overflow bug at 390px before users do.',
-      personas: ['QA & Design', 'Remote Dev', 'iPad Dev'],
+      hook: 'Real CSS viewport simulation — see a 1920px desktop layout on your phone. Whether you wrote the CSS or an AI did, media queries fire at the target width. Cycle through 6 presets in 10 seconds and verify every breakpoint.',
+      personas: ['Remote Dev', 'Creator', 'iPad Dev'],
       icon: '<path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />',
       accentColour: 'text-pink-400',
       iconBg: 'bg-pink-500/20 dark:bg-pink-400/15',
