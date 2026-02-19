@@ -162,39 +162,6 @@
         </div>
       </div>
 
-    {:else if visual === 'dashboard'}
-      <!-- Universal Dashboard mock UI -->
-      <div class="w-full max-w-md rounded-xl border border-neutral-200 dark:border-neutral-700/50 bg-neutral-50 dark:bg-neutral-800/80 overflow-hidden shadow-sm transition-transform duration-500" class:scale-[1.02]={hovered}>
-        <!-- Header bar -->
-        <div class="flex items-center gap-2 px-4 py-2.5 border-b border-neutral-200 dark:border-neutral-700/50">
-          <div class="w-2.5 h-2.5 rounded-full bg-red-400/70"></div>
-          <div class="w-2.5 h-2.5 rounded-full bg-yellow-400/70"></div>
-          <div class="w-2.5 h-2.5 rounded-full bg-green-400/70"></div>
-          <span class="ml-2 text-[10px] font-mono text-neutral-400 dark:text-neutral-500">All Deploys</span>
-        </div>
-        <!-- Deploy rows -->
-        <div class="divide-y divide-neutral-100 dark:divide-neutral-700/30">
-          {#each [
-            { provider: 'Vercel', branch: 'main', status: 'Ready', color: 'bg-emerald-400', time: '2m ago' },
-            { provider: 'Cloudflare', branch: 'feature/auth', status: 'Building', color: 'bg-amber-400', time: '45s ago' },
-            { provider: 'Netlify', branch: 'fix/nav', status: 'Ready', color: 'bg-emerald-400', time: '8m ago' },
-            { provider: 'GitHub', branch: 'staging', status: 'Failed', color: 'bg-red-400', time: '12m ago' },
-          ] as row}
-            <div class="flex items-center justify-between px-4 py-2.5 text-[11px]">
-              <div class="flex items-center gap-2.5">
-                <div class="w-1.5 h-1.5 rounded-full {row.color}"></div>
-                <span class="font-medium text-neutral-700 dark:text-neutral-300 w-16">{row.provider}</span>
-                <span class="font-mono text-neutral-400 dark:text-neutral-500">{row.branch}</span>
-              </div>
-              <div class="flex items-center gap-3">
-                <span class="text-neutral-400 dark:text-neutral-500">{row.time}</span>
-                <span class="font-medium" class:text-emerald-500={row.status === 'Ready'} class:text-amber-500={row.status === 'Building'} class:text-red-500={row.status === 'Failed'}>{row.status}</span>
-              </div>
-            </div>
-          {/each}
-        </div>
-      </div>
-
     {:else if visual === 'notifications'}
       <!-- Push Notifications — iPhone top half, cut off at bottom -->
       <div class="w-full max-w-[200px] transition-transform duration-500 relative" class:scale-[1.05]={hovered}>
@@ -351,28 +318,6 @@
             <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
           </svg>
           <span class="text-[10px] font-heading font-semibold text-emerald-600 dark:text-emerald-400">No account needed to view</span>
-        </div>
-      </div>
-
-    {:else if visual === 'connection'}
-      <!-- One-Tap Connection — provider icons flowing into a central hub -->
-      <div class="w-full max-w-md transition-transform duration-500" class:scale-[1.02]={hovered}>
-        <div class="flex items-center justify-center gap-4 sm:gap-6">
-          {#each [
-            { name: 'GitHub', icon: 'M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12', color: 'text-neutral-700 dark:text-white', badge: 'OAuth' },
-            { name: 'Vercel', icon: 'm12 1.608 12 20.784H0Z', color: 'text-neutral-700 dark:text-white', badge: 'OAuth' },
-            { name: 'Netlify', icon: 'M6.49 19.04h-.23L5.13 17.9v-.23l1.73-1.71h1.2l.15.15v1.2L6.5 19.04ZM5.13 6.31V6.1l1.13-1.13h.23L8.2 6.68v1.2l-.15.15h-1.2L5.13 6.31Zm9.96 9.09h-1.65l-.14-.13v-3.83c0-.68-.27-1.2-1.1-1.23-.42 0-.9 0-1.43.02l-.07.08v4.96l-.14.14H8.9l-.13-.14V8.73l.13-.14h3.7a2.6 2.6 0 0 1 2.61 2.6v4.08l-.13.14Zm-8.37-2.44H.14L0 12.82v-1.64l.14-.14h6.58l.14.14v1.64l-.14.14Zm17.14 0h-6.58l-.14-.14v-1.64l.14-.14h6.58l.14.14v1.64l-.14.14ZM11.05 6.55V1.64l.14-.14h1.65l.14.14v4.9l-.14.14h-1.65l-.14-.13Zm0 15.81v-4.9l.14-.14h1.65l.14.13v4.91l-.14.14h-1.65l-.14-.14Z', color: 'text-teal-400', badge: 'OAuth' },
-            { name: 'Cloudflare', icon: 'M16.5088 16.8447c.1475-.5068.0908-.9707-.1553-1.3154-.2246-.3164-.6045-.499-1.0615-.5205l-8.6592-.1123a.1559.1559 0 0 1-.1333-.0713c-.0283-.042-.0351-.0986-.021-.1553.0278-.084.1123-.1484.2036-.1562l8.7359-.1123c1.0351-.0489 2.1601-.8868 2.5537-1.9136l.499-1.3013c.0215-.0561.0293-.1128.0147-.168-.5625-2.5463-2.835-4.4453-5.5499-4.4453-2.5039 0-4.6284 1.6177-5.3876 3.8614-.4927-.3658-1.1187-.5625-1.794-.499-1.2026.119-2.1665 1.083-2.2861 2.2856-.0283.31-.0069.6128.0635.894C1.5683 13.171 0 14.7754 0 16.752c0 .1748.0142.3515.0352.5273.0141.083.0844.1475.1689.1475h15.9814c.0909 0 .1758-.0645.2032-.1553l.12-.4268zm2.7568-5.5634c-.0771 0-.1611 0-.2383.0112-.0566 0-.1054.0415-.127.0976l-.3378 1.1744c-.1475.5068-.0918.9707.1543 1.3164.2256.3164.6055.498 1.0625.5195l1.8437.1133c.0557 0 .1055.0263.1329.0703.0283.043.0351.1074.0214.1562-.0283.084-.1132.1485-.204.1553l-1.921.1123c-1.041.0488-2.1582.8867-2.5527 1.914l-.1406.3585c-.0283.0713.0215.1416.0986.1416h6.5977c.0771 0 .1474-.0489.169-.126.1122-.4082.1757-.837.1757-1.2803 0-2.6025-2.125-4.727-4.7344-4.727', color: 'text-orange-400', badge: 'API Token' },
-          ] as provider}
-            <div class="flex flex-col items-center gap-2">
-              <div class="w-14 h-14 rounded-xl bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 flex items-center justify-center shadow-sm">
-                <svg class="w-7 h-7 {provider.color}" viewBox="0 0 24 24" fill="currentColor">
-                  <path d={provider.icon} />
-                </svg>
-              </div>
-              <span class="text-[9px] font-mono text-neutral-400 dark:text-neutral-500 px-1.5 py-0.5 rounded-full bg-neutral-100 dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700">{provider.badge}</span>
-            </div>
-          {/each}
         </div>
       </div>
 
