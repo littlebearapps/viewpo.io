@@ -333,7 +333,7 @@
       </div>
 
     {:else if visual === 'team'}
-      <!-- Review & Approval — feedback comments + approve/change -->
+      <!-- Review & Approval — feedback comments stacked, then approve/change at bottom -->
       <div class="flex flex-col gap-2.5 w-full max-w-[220px] transition-transform duration-500" class:scale-[1.03]={hovered}>
         <!-- Comment bubble 1 -->
         <div class="rounded-xl border border-neutral-200 dark:border-neutral-700/50 bg-white dark:bg-neutral-800/80 px-3 py-2.5 shadow-sm">
@@ -348,7 +348,20 @@
           </div>
         </div>
 
-        <!-- Approval row -->
+        <!-- Comment bubble 2 -->
+        <div class="rounded-xl border border-neutral-200 dark:border-neutral-700/50 bg-white dark:bg-neutral-800/80 px-3 py-2.5 shadow-sm">
+          <div class="flex items-start gap-2">
+            <svg class="w-3.5 h-3.5 text-sky-400 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M8.625 12a.375.375 0 11-.75 0 .375.375 0 01.75 0zm4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm-11.25 6L3 20.25V5.25A2.25 2.25 0 015.25 3h13.5A2.25 2.25 0 0121 5.25v10.5A2.25 2.25 0 0118.75 18H8.625z" />
+            </svg>
+            <div class="min-w-0">
+              <span class="text-[10px] font-semibold text-neutral-600 dark:text-neutral-400 block">Client</span>
+              <span class="text-[10px] text-neutral-400 dark:text-neutral-500 leading-tight block">Can we bump the heading size?</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Approval buttons at bottom -->
         <div class="flex gap-2">
           <div class="flex-1 flex items-center gap-1.5 px-3 py-2 rounded-xl border border-emerald-200 dark:border-emerald-800/50 bg-emerald-50 dark:bg-emerald-900/20">
             <svg class="w-4 h-4 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -361,19 +374,6 @@
               <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
             </svg>
             <span class="text-[10px] font-heading font-semibold text-neutral-500 dark:text-neutral-400">Changes</span>
-          </div>
-        </div>
-
-        <!-- Comment bubble 2 -->
-        <div class="rounded-xl border border-neutral-200 dark:border-neutral-700/50 bg-white dark:bg-neutral-800/80 px-3 py-2.5 shadow-sm">
-          <div class="flex items-start gap-2">
-            <svg class="w-3.5 h-3.5 text-sky-400 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M8.625 12a.375.375 0 11-.75 0 .375.375 0 01.75 0zm4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm-11.25 6L3 20.25V5.25A2.25 2.25 0 015.25 3h13.5A2.25 2.25 0 0121 5.25v10.5A2.25 2.25 0 0118.75 18H8.625z" />
-            </svg>
-            <div class="min-w-0">
-              <span class="text-[10px] font-semibold text-neutral-600 dark:text-neutral-400 block">Client</span>
-              <span class="text-[10px] text-neutral-400 dark:text-neutral-500 leading-tight block">Can we bump the heading size?</span>
-            </div>
           </div>
         </div>
       </div>
@@ -439,7 +439,7 @@
       <div class="flex items-center gap-2 mb-1">
         <p class="text-[11px] font-heading font-semibold uppercase tracking-wider text-primary/70 dark:text-primary/60">{title}</p>
         {#if badge}
-          <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-heading font-semibold bg-amber-500/10 text-amber-600 dark:bg-amber-500/15 dark:text-amber-400 border border-amber-500/20">{badge}</span>
+          <span class="inline-flex items-center px-1.5 py-0.5 rounded-full text-[8px] font-mono font-semibold uppercase tracking-wider text-neutral-400 dark:text-neutral-500 bg-neutral-100 dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700">{badge}</span>
         {/if}
       </div>
       <h3 class="font-heading font-semibold text-lg text-neutral-900 dark:text-white mb-1.5">{subtitle}</h3>
