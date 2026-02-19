@@ -6,12 +6,28 @@ const simpleLinks = [
   { label: 'Pricing', href: '/#pricing' },
 ];
 
+const useCasePersonas = [
+  { label: 'Remote Developers', href: '/use-cases/remote-monitoring/' },
+  { label: 'Indie Founders', href: '/use-cases/indie-hackers/' },
+  { label: 'Freelancers & Agencies', href: '/use-cases/freelancers/' },
+  { label: 'iPad Developers', href: '/use-cases/digital-nomads/' },
+  { label: 'Team Leads', href: '/use-cases/teams/' },
+  { label: 'QA & Design', href: '/use-cases/qa-design/' },
+];
+
+const useCaseSituations = [
+  { label: 'Stakeholder Approval', href: '/use-cases/stakeholder-feedback/' },
+  { label: 'Visual QA Audit', href: '/use-cases/responsive-testing/' },
+  { label: 'Emergency Hotfix', href: '/use-cases/production-monitoring/' },
+  { label: 'Live Demo', href: '/use-cases/live-demos/' },
+];
+
 const dropdowns = [
   {
     label: 'Use Cases',
     items: [
-      { label: 'Teams', href: '/teams/' },
-      { label: 'Creators', href: '/creators/' },
+      ...useCasePersonas,
+      ...useCaseSituations,
     ],
   },
   {
@@ -24,12 +40,12 @@ const dropdowns = [
   },
 ];
 
-// Flat list for mobile menu
+// Flat list for mobile menu (used by mobile nav rendering above)
 const mobileLinks = [
   { label: 'Features', href: '/#features' },
-  { label: 'Teams', href: '/teams/' },
-  { label: 'Creators', href: '/creators/' },
   { label: 'Pricing', href: '/#pricing' },
+  ...useCasePersonas,
+  ...useCaseSituations,
   { label: 'Getting Started', href: '/help/getting-started/' },
   { label: 'FAQ', href: '/help/faq/' },
   { label: 'Contact Us', href: '/help/contact/' },
@@ -51,7 +67,7 @@ const mobileLinks = [
         Features
       </a>
 
-      <!-- Use Cases dropdown -->
+      <!-- Use Cases dropdown (categorised) -->
       <div class="relative" data-dropdown>
         <button
           type="button"
@@ -65,12 +81,27 @@ const mobileLinks = [
           </svg>
         </button>
         <div class="absolute top-full left-1/2 -translate-x-1/2 pt-2 hidden" data-dropdown-menu>
-          <div class="bg-background dark:bg-dark-bg border border-neutral-200 dark:border-neutral-800 rounded-lg shadow-lg py-1.5 min-w-[160px]">
-            {dropdowns[0].items.map(({ label, href }) => (
-              <a href={href} class={`block px-4 py-2 text-sm text-foreground/70 hover:text-foreground hover:bg-foreground/5 transition-colors plausible-event-name=Nav+${label}`}>
-                {label}
-              </a>
-            ))}
+          <div class="bg-background dark:bg-dark-bg border border-neutral-200 dark:border-neutral-800 rounded-xl shadow-lg p-4 min-w-[320px]">
+            <div class="grid grid-cols-2 gap-4">
+              <!-- Who It's For -->
+              <div>
+                <p class="text-[11px] font-medium text-foreground/40 uppercase tracking-wider mb-2 px-1">Who It's For</p>
+                {useCasePersonas.map(({ label, href }) => (
+                  <a href={href} class={`block px-2 py-1.5 text-sm text-foreground/70 hover:text-foreground hover:bg-foreground/5 rounded-md transition-colors plausible-event-name=Nav+${label.replace(/\s+/g, '+')}`}>
+                    {label}
+                  </a>
+                ))}
+              </div>
+              <!-- When You Need It -->
+              <div>
+                <p class="text-[11px] font-medium text-foreground/40 uppercase tracking-wider mb-2 px-1">When You Need It</p>
+                {useCaseSituations.map(({ label, href }) => (
+                  <a href={href} class={`block px-2 py-1.5 text-sm text-foreground/70 hover:text-foreground hover:bg-foreground/5 rounded-md transition-colors plausible-event-name=Nav+${label.replace(/\s+/g, '+')}`}>
+                    {label}
+                  </a>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -158,13 +189,19 @@ const mobileLinks = [
         Roadmap
       </a>
 
-      <p class="text-xs font-medium text-foreground/40 uppercase tracking-wider pt-4 pb-1 px-2">Use Cases</p>
-      <a href="/teams/" class="text-base font-medium text-foreground/70 hover:text-foreground py-2 px-2 rounded-lg hover:bg-foreground/5 transition-colors plausible-event-name=Nav+Teams">
-        Teams
-      </a>
-      <a href="/creators/" class="text-base font-medium text-foreground/70 hover:text-foreground py-2 px-2 rounded-lg hover:bg-foreground/5 transition-colors plausible-event-name=Nav+Creators">
-        Creators
-      </a>
+      <p class="text-xs font-medium text-foreground/40 uppercase tracking-wider pt-4 pb-1 px-2">Who It's For</p>
+      {useCasePersonas.map(({ label, href }) => (
+        <a href={href} class={`text-base font-medium text-foreground/70 hover:text-foreground py-2 px-2 rounded-lg hover:bg-foreground/5 transition-colors plausible-event-name=Nav+${label.replace(/\s+/g, '+')}`}>
+          {label}
+        </a>
+      ))}
+
+      <p class="text-xs font-medium text-foreground/40 uppercase tracking-wider pt-4 pb-1 px-2">When You Need It</p>
+      {useCaseSituations.map(({ label, href }) => (
+        <a href={href} class={`text-base font-medium text-foreground/70 hover:text-foreground py-2 px-2 rounded-lg hover:bg-foreground/5 transition-colors plausible-event-name=Nav+${label.replace(/\s+/g, '+')}`}>
+          {label}
+        </a>
+      ))}
 
       <p class="text-xs font-medium text-foreground/40 uppercase tracking-wider pt-4 pb-1 px-2">Help</p>
       <a href="/help/" class="text-base font-medium text-foreground/70 hover:text-foreground py-2 px-2 rounded-lg hover:bg-foreground/5 transition-colors plausible-event-name=Nav+Help+Centre">

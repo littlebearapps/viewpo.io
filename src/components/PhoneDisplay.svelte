@@ -1,15 +1,28 @@
 <script lang="ts">
-  import { activePersona } from '../lib/heroStore';
+  import { onMount, onDestroy } from 'svelte';
+
+  const SCREEN_COUNT = 4;
+  const CYCLE_INTERVAL = 5000;
 
   let currentIndex = $state(0);
+  let timer: ReturnType<typeof setInterval> | null = null;
 
-  // Subscribe to the shared store
-  const unsubscribe = activePersona.subscribe((value) => {
-    currentIndex = value;
-  });
+  function startCycle(): void {
+    stopCycle();
+    timer = setInterval(() => {
+      currentIndex = (currentIndex + 1) % SCREEN_COUNT;
+    }, CYCLE_INTERVAL);
+  }
 
-  import { onDestroy } from 'svelte';
-  onDestroy(() => unsubscribe());
+  function stopCycle(): void {
+    if (timer) {
+      clearInterval(timer);
+      timer = null;
+    }
+  }
+
+  onMount(() => startCycle());
+  onDestroy(() => stopCycle());
 </script>
 
 <div class="phone-display relative mx-auto" aria-hidden="true">

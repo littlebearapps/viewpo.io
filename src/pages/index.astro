@@ -6,7 +6,7 @@ import Hero from '@components/Hero.astro';
 import Section from '@components/Section.astro';
 import ProblemHook from '@components/ProblemHook.astro';
 import BentoFeatures from '@components/BentoFeatures.astro';
-import HowItWorks from '@components/HowItWorks.astro';
+import UseCases from '@components/UseCases.astro';
 import Integrations from '@components/Integrations.astro';
 import PlatformAvailability from '@components/PlatformAvailability.astro';
 import PricingTable from '@components/PricingTable.astro';
@@ -21,7 +21,7 @@ import FAQ from '@components/FAQ.astro';
 
   <!-- Full page body — single container for seamless background -->
   <div class="relative overflow-x-clip">
-    <!-- Hero (includes PersonaDock sidebar + floating logos) -->
+    <!-- Hero (includes floating logos + PhoneDisplay) -->
     <Hero />
 
     <!-- Ambient glow orbs distributed down the page -->
@@ -35,7 +35,7 @@ import FAQ from '@components/FAQ.astro';
       <div class="absolute top-[20%] -right-32 w-[550px] h-[550px] rounded-full bg-primary/14 blur-[150px] dark:bg-primary/[0.07]"></div>
       <div class="absolute top-[25%] -left-20 w-[400px] h-[400px] rounded-full bg-indigo-400/12 blur-[120px] dark:bg-indigo-400/[0.06]"></div>
 
-      <!-- How It Works zone -->
+      <!-- Use Cases zone -->
       <div class="absolute top-[35%] left-[15%] w-[500px] h-[500px] rounded-full bg-secondary/12 blur-[140px] dark:bg-secondary/[0.06]"></div>
       <div class="absolute top-[38%] -right-40 w-[450px] h-[450px] rounded-full bg-indigo-300/10 blur-[130px] dark:bg-indigo-400/[0.05]"></div>
       <div class="absolute top-[42%] left-[50%] w-[300px] h-[300px] rounded-full bg-primary/10 blur-[100px] dark:bg-primary/[0.05]"></div>
@@ -62,8 +62,8 @@ import FAQ from '@components/FAQ.astro';
     <!-- Bento Features Grid -->
     <BentoFeatures />
 
-    <!-- How It Works -->
-    <HowItWorks />
+    <!-- Use Cases — persona switcher + situation cards -->
+    <UseCases />
 
     <!-- Integrations Ecosystem -->
     <Integrations />

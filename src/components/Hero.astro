@@ -1,11 +1,10 @@
 ---
 import Button from './Button.astro';
 import Typewriter from './Typewriter.astro';
-import PersonaDock from './PersonaDock.svelte';
 import PhoneDisplay from './PhoneDisplay.svelte';
 ---
 
-<section class="relative pt-20 md:pt-24 lg:pt-28 pb-12 md:pb-16 lg:pb-48">
+<section class="relative pt-20 md:pt-24 lg:pt-28 pb-12 md:pb-16 lg:pb-20">
   <!-- Ambient glow orbs -->
   <div class="pointer-events-none absolute inset-0" aria-hidden="true">
     <div class="absolute -top-40 -left-40 w-[600px] h-[600px] rounded-full bg-primary/20 blur-[140px] dark:bg-primary/10"></div>
@@ -47,8 +46,8 @@ import PhoneDisplay from './PhoneDisplay.svelte';
               <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
             </svg>
           </button>
-          <Button href="#how-it-works" variant="ghost" size="md" class="px-5 sm:px-7 py-3 sm:py-3.5 text-sm sm:text-base">
-            Watch Demo
+          <Button href="#use-cases" variant="ghost" size="md" class="px-5 sm:px-7 py-3 sm:py-3.5 text-sm sm:text-base">
+            See Use Cases
           </Button>
         </div>
       </div>
@@ -110,13 +109,4 @@ import PhoneDisplay from './PhoneDisplay.svelte';
     </div>
   </div>
 
-  <!-- Floating Bridge Dock (desktop) — straddles hero/features boundary -->
-  <div class="hidden lg:block absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 z-30 w-full max-w-5xl px-4">
-    <PersonaDock client:visible layout="bridge" />
-  </div>
-
-  <!-- Mobile dock — normal flow below content -->
-  <div class="lg:hidden mt-6 sm:mt-8 px-4 sm:px-6 pb-2">
-    <PersonaDock client:visible layout="mobile" />
-  </div>
 </section>

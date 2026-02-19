@@ -1,0 +1,106 @@
+---
+interface Situation {
+  title: string;
+  slug: string;
+  hook: string;
+  icon: string;
+  personas: string[];
+  accentColour: string;
+  borderColour: string;
+  iconBg: string;
+}
+
+const situations: Situation[] = [
+  {
+    title: 'Stakeholder Approval',
+    slug: '/use-cases/stakeholder-feedback/',
+    hook: 'Stop explaining responsive design over email. Send a share link — they see the desktop design on their phone.',
+    icon: '<path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 01-1.043 3.296 3.745 3.745 0 01-3.296 1.043A3.745 3.745 0 0112 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 01-3.296-1.043 3.745 3.745 0 01-1.043-3.296A3.745 3.745 0 013 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 011.043-3.296 3.746 3.746 0 013.296-1.043A3.746 3.746 0 0112 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 013.296 1.043 3.746 3.746 0 011.043 3.296A3.745 3.745 0 0121 12z" />',
+    personas: ['Agency', 'Team Lead', 'QA & Design'],
+    accentColour: 'text-emerald-400',
+    borderColour: 'group-hover:border-emerald-400/30 dark:group-hover:border-emerald-400/20',
+    iconBg: 'bg-emerald-400/10 dark:bg-emerald-400/[0.08]',
+  },
+  {
+    title: 'Visual QA Audit',
+    slug: '/use-cases/responsive-testing/',
+    hook: 'Catch the overflow bug at 390px before users do. Cycle through 6 presets in 10 seconds with real WebKit rendering.',
+    icon: '<path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />',
+    personas: ['QA & Design', 'Remote Dev', 'iPad Dev'],
+    accentColour: 'text-pink-400',
+    borderColour: 'group-hover:border-pink-400/30 dark:group-hover:border-pink-400/20',
+    iconBg: 'bg-pink-400/10 dark:bg-pink-400/[0.08]',
+  },
+  {
+    title: 'Emergency Hotfix',
+    slug: '/use-cases/production-monitoring/',
+    hook: "Verify the Friday night fix without opening your laptop. Push notification, tap, see the deploy at 1920px. Under 60 seconds.",
+    icon: '<path stroke-linecap="round" stroke-linejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" />',
+    personas: ['Remote Dev', 'Team Lead'],
+    accentColour: 'text-amber-400',
+    borderColour: 'group-hover:border-amber-400/30 dark:group-hover:border-amber-400/20',
+    iconBg: 'bg-amber-400/10 dark:bg-amber-400/[0.08]',
+  },
+  {
+    title: 'Live Demo',
+    slug: '/use-cases/live-demos/',
+    hook: 'Pull out your phone. Show a 1920px desktop layout. Switch presets live. Generate a QR code so everyone in the room can see it.',
+    icon: '<path stroke-linecap="round" stroke-linejoin="round" d="M3.75 3v11.25A2.25 2.25 0 006 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0118 16.5h-2.25m-7.5 0h7.5m-7.5 0l-1 3m8.5-3l1 3m0 0l.5 1.5m-.5-1.5h-9.5m0 0l-.5 1.5M9 11.25v1.5M12 9v3.75m3-6v6" />',
+    personas: ['Indie Founder', 'Team Lead', 'Agency'],
+    accentColour: 'text-violet-400',
+    borderColour: 'group-hover:border-violet-400/30 dark:group-hover:border-violet-400/20',
+    iconBg: 'bg-violet-400/10 dark:bg-violet-400/[0.08]',
+  },
+];
+---
+
+<div class="mt-16">
+  <!-- Sub-header -->
+  <div class="text-center mb-8">
+    <p class="text-primary font-heading font-semibold text-sm uppercase tracking-wider mb-2">When You Need It</p>
+    <h3 class="font-heading font-bold text-xl md:text-2xl text-foreground dark:text-white">
+      Real situations. Real workflows.
+    </h3>
+  </div>
+
+  <!-- 2x2 card grid -->
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5 max-w-4xl mx-auto">
+    {situations.map((situation) => (
+      <a
+        href={situation.slug}
+        class="group relative block rounded-2xl border border-neutral-200 dark:border-neutral-700/50 bg-white/50 dark:bg-neutral-900/40 backdrop-blur-sm p-6 transition-all duration-300 hover:shadow-lg hover:bg-white/70 dark:hover:bg-neutral-900/60 hover:scale-[1.01] {situation.borderColour}"
+      >
+        <!-- Icon -->
+        <div class={`w-10 h-10 rounded-xl ${situation.iconBg} flex items-center justify-center mb-4`}>
+          <svg class={`w-5 h-5 ${situation.accentColour}`} fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+            <Fragment set:html={situation.icon} />
+          </svg>
+        </div>
+
+        <!-- Title -->
+        <h4 class="font-heading font-bold text-base text-foreground dark:text-white mb-2">
+          {situation.title}
+        </h4>
+
+        <!-- Hook -->
+        <p class="text-sm text-foreground/60 dark:text-white/50 leading-relaxed mb-4">
+          {situation.hook}
+        </p>
+
+        <!-- Persona badges -->
+        <div class="flex flex-wrap gap-1.5">
+          {situation.personas.map((persona) => (
+            <span class="inline-flex items-center rounded-full px-2.5 py-0.5 text-[11px] font-medium bg-foreground/[0.04] dark:bg-white/[0.05] text-foreground/50 dark:text-white/40 border border-foreground/[0.04] dark:border-white/[0.04]">
+              {persona}
+            </span>
+          ))}
+        </div>
+
+        <!-- Arrow indicator -->
+        <svg class="absolute top-6 right-6 w-4 h-4 text-foreground/20 dark:text-white/20 transition-all duration-300 group-hover:text-foreground/40 dark:group-hover:text-white/40 group-hover:translate-x-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+        </svg>
+      </a>
+    ))}
+  </div>
+</div>

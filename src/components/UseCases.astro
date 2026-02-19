@@ -1,0 +1,19 @@
+---
+import Section from './Section.astro';
+import SectionHeader from './SectionHeader.astro';
+import UseCasePersonas from './UseCasePersonas.svelte';
+import UseCaseSituations from './UseCaseSituations.astro';
+---
+
+<Section id="use-cases" padding="lg">
+  <SectionHeader
+    title="Who Uses Viewpo"
+    subtitle="From indie hackers to agency teams — see how Viewpo fits your workflow."
+  />
+
+  <!-- Interactive persona switcher -->
+  <UseCasePersonas client:visible />
+
+  <!-- Situation cards grid -->
+  <UseCaseSituations />
+</Section>
