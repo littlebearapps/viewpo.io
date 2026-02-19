@@ -89,6 +89,7 @@ const remoteMonitoring: UseCase = {
     'The Runway 2025 report calls this the "thousand-tabs problem" — engineers jump between Slack, Jira, CI/CD dashboards, and App Store Connect just to understand the status of a single release. Slack is your notification layer, but after the "deploy succeeded" ping, there\'s no mobile-native way to actually see the deployment at the correct resolution.',
     'The standard workaround: open the preview URL in mobile Safari. But you see a mobile layout — not the desktop view you need to verify. "Request Desktop Site" changes the User Agent string, not the CSS viewport. Responsive sites still trigger phone breakpoints.',
     'Or maybe you never leave a terminal. Your development environment lives on a VPS — Hetzner, DigitalOcean, a Linode box — and you code in Neovim inside a tmux session over Mosh. There is no localhost. The only way to see what you built is after it deploys to a preview branch. Same problem, different reason: you need to verify the visual result, and all you have is a phone.',
+    'And verification isn\'t just personal. You need your PM to sign off on the dashboard layout. Your designer needs to check the spacing on the settings page. Your team lead needs to see the reporting view before the sprint demo. Before Viewpo, "can you check this?" meant Slacking a raw deploy URL that showed a phone layout on their phone. Now you send a share link — they see the dashboard at 1920px desktop and leave feedback without opening a laptop.',
   ],
 
   solutionTitle: 'How Viewpo Solves It',
@@ -170,7 +171,8 @@ const indieHackers: UseCase = {
   painTitle: 'The Pain',
   painContent: [
     'Momentum is everything in #BuildInPublic. You need to tweet progress daily, but you can\'t be at your laptop 24/7. The Indie Hackers community\'s top tip for engagement: "Add screenshots or animated gifs." Visual posts showing real product UI perform dramatically better than code snippets or text updates.',
-    'But there\'s a deeper problem: credibility. Your target customers are B2B SaaS buyers on 1440px laptops and 1920px monitors. A phone screenshot of a phone layout doesn\'t signal "enterprise-ready." A prospect once replied to a mobile screenshot: "this doesn\'t look like it\'s ready for enterprise." It wasn\'t a bug — it was a viewport problem. Every desktop screenshot you share is a brand impression.',
+    'But there\'s a deeper problem: credibility. Your target customers are B2B SaaS buyers on 1440px laptops and 1920px monitors. A phone screenshot of a phone layout doesn\'t signal "enterprise-ready." A prospect once replied to a mobile screenshot: "this doesn\'t look like it\'s ready for enterprise." It wasn\'t a bug — it was a viewport problem. Every desktop screenshot you share is a brand impression — and it\'s not just the landing page. Your user dashboard, admin settings, onboarding flow, and reporting views all need to look polished at desktop.',
+    'And #BuildInPublic is only one channel. You\'re also sharing previews with potential investors, B2B prospects, reseller partners, and beta users. When a VC asks to see the product, you don\'t want to send a raw Netlify URL that shows a phone layout. You need controlled previews: stakeholders see the dashboard at 1920px, the pricing page at 1440px, the onboarding flow at desktop — exactly as you intend.',
     'Current workflow: push code, wait for deploy, open provider dashboard on laptop, find preview URL, open in browser, manually resize window, take screenshot, crop, export, post. That\'s 8 steps requiring a laptop. Miss a day and the algorithm punishes you.',
   ],
 
@@ -251,12 +253,13 @@ const creators: UseCase = {
   icon: '<path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.455 2.456L21.75 6l-1.036.259a3.375 3.375 0 00-2.455 2.456zM16.894 20.567L16.5 21.75l-.394-1.183a2.25 2.25 0 00-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 001.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 001.423 1.423l1.183.394-1.183.394a2.25 2.25 0 00-1.423 1.423z" />',
 
   metaTitle: 'Creators & AI Builders — Viewpo Use Case',
-  metaDescription: 'Built a website with Cursor, Bolt, or v0? See what it looks like at 1920px desktop — on your phone. Verify AI-generated responsive breakpoints with real CSS viewport simulation.',
+  metaDescription: 'Built a SaaS with Cursor, Bolt, or v0? See what it looks like at 1920px desktop — on your phone. Verify AI-generated responsive breakpoints with real CSS viewport simulation.',
 
   painTitle: 'The Pain',
   painContent: [
-    'You built a landing page with Cursor in 20 minutes. Or scaffolded a full marketing site with Bolt. Or generated a component library with v0. The AI wrote the Tailwind classes, set the breakpoints, and wired up the responsive grid. Vercel deployed it automatically. It looks great on your phone.',
-    'But what does it look like at 1920px desktop? You have no idea. The AI generated the CSS — you didn\'t write the media queries yourself. Did it get the responsive breakpoints right? Is the navigation collapsing at the wrong width? Is the hero image clipping at 1440px? You can\'t reason about it from the code because you didn\'t write the code.',
+    'You built a landing page with Cursor in 20 minutes. Or scaffolded a full SaaS admin dashboard with Bolt. Or generated a component library with v0. The AI wrote the Tailwind classes, set the breakpoints, and wired up the responsive grid. Vercel deployed it automatically. It looks great on your phone.',
+    'But what does it look like at 1920px desktop? You have no idea. The AI generated the CSS — you didn\'t write the media queries yourself. Did it get the responsive breakpoints right? Is the navigation collapsing at the wrong width? Is the admin dashboard overflowing at 1440px? You can\'t reason about it from the code because you didn\'t write the code.',
+    'And it\'s not just websites. You\'re building a micro-SaaS, a Shopify plugin, a browser extension with a dashboard, an admin portal — anything with a web frontend that your customers will see on a desktop monitor. You need a visual sanity check: does this AI-generated UI actually work at the resolution your users sit at?',
     'Mobile Safari shows you the phone layout. "Request Desktop Site" changes the User Agent, not the CSS viewport. The only way to know for certain is to see it rendered at real desktop width — and there\'s no mobile app that does this. Until now.',
   ],
 
@@ -593,6 +596,7 @@ const qaDesign: UseCase = {
     'The developer says "It works on my machine." QA needs to verify across resolutions. The industry options: BrowserStack Live ($39/month per user) is automation-first and desktop-only. Polypane ($9-17/month) is excellent but desktop-only. Responsively is free but desktop-only. Chrome DevTools responsive mode is simulated, not real.',
     'A Reddit r/Frontend user: "I had a Polypane subscription but forgot to cancel it and it was charging me out the ass." Another: "Unless you\'re an agency, you can make do with the resizable mobile view in Chrome\'s developer tools." Developers settle for inferior free tools because the paid ones are expensive or limited to desktop.',
     'No mobile app exists in this category. A QA tester reviewing deployments on their commute has zero options for viewport testing.',
+    'And QA doesn\'t stop at 6pm. When something breaks in production — the product grid collapses on mobile, the checkout flow clips at desktop — you\'re the person the team tags. It\'s 9pm, you\'re on the couch, and a developer messages: "Hotfix deployed, can you verify?" Before Viewpo, this meant opening your laptop. Now the developer tags you directly on the deploy, at the page and viewport where the issue was. Tap the notification, verify the fix, approve — all from your couch in under two minutes.',
   ],
 
   solutionTitle: 'How Viewpo Solves It',
@@ -660,6 +664,10 @@ const qaDesign: UseCase = {
     {
       question: 'How do I share bug evidence with developers?',
       answer: 'Screenshot the viewport (saved to Photos with viewport size visible), then share via the system share sheet to Slack, Jira, email, or Messages. Alternatively, send a Viewpo share link — the developer sees the exact same deployment at the exact same viewport size.',
+    },
+    {
+      question: 'Can team members tag me on specific deploys for verification?',
+      answer: 'Yes. Team members can tag you on a specific deploy, page, and viewport where an issue was found or a fix was deployed. You get a notification that takes you directly to the tagged context — no hunting through dashboards. Verify the fix, approve, and the team can ship to production. The whole loop — tag, verify, approve — takes under two minutes.',
     },
   ],
 };
