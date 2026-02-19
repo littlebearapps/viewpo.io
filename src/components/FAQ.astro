@@ -1,5 +1,6 @@
 ---
 import Section from './Section.astro';
+import SectionHeader from './SectionHeader.astro';
 import FAQAccordion from './FAQAccordion.svelte';
 
 const homeFAQs = [
@@ -31,12 +32,10 @@ const homeFAQs = [
 ---
 
 <Section id="faq">
-  <div class="text-center mb-16">
-    <h2 class="font-heading font-bold text-3xl md:text-4xl mb-4 reveal">Frequently Asked Questions</h2>
-    <p class="text-foreground/60 dark:text-neutral-400 text-lg max-w-2xl mx-auto reveal reveal-delay-1">
-      Quick answers to help you decide.
-    </p>
-  </div>
+  <SectionHeader
+    title="Frequently Asked Questions"
+    subtitle="Quick answers to help you decide."
+  />
 
   <div class="max-w-3xl mx-auto reveal reveal-delay-2">
     <FAQAccordion items={homeFAQs} client:visible />

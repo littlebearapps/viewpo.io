@@ -1,5 +1,6 @@
 ---
 import Section from './Section.astro';
+import SectionHeader from './SectionHeader.astro';
 
 const steps = [
   {
@@ -24,12 +25,10 @@ const steps = [
 ---
 
 <Section id="how-it-works">
-  <div class="text-center mb-16">
-    <h2 class="font-heading font-bold text-3xl md:text-4xl mb-4 reveal">How It Works</h2>
-    <p class="text-foreground/60 dark:text-neutral-400 text-lg max-w-2xl mx-auto reveal reveal-delay-1">
-      Three steps from push to preview. No dashboards, no context switching.
-    </p>
-  </div>
+  <SectionHeader
+    title="How It Works"
+    subtitle="Three steps from push to preview. No dashboards, no context switching."
+  />
 
   <div class="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-8 max-w-4xl mx-auto relative">
     <!-- Horizontal connector line (desktop only) -->

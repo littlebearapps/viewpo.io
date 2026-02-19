@@ -1,5 +1,6 @@
 ---
 import Section from './Section.astro';
+import SectionHeader from './SectionHeader.astro';
 
 const providers = [
   {
@@ -58,14 +59,11 @@ const providers = [
 ---
 
 <Section id="integrations" padding="md">
-  <div class="text-center mb-12 md:mb-16">
-    <h2 class="font-heading font-bold text-3xl md:text-4xl mb-4 reveal">
-      Zero Config Connection.
-    </h2>
-    <p class="text-foreground/60 dark:text-neutral-400 text-lg max-w-2xl mx-auto reveal reveal-delay-1">
-      Link your provider once. We listen for webhooks automatically.
-    </p>
-  </div>
+  <SectionHeader
+    title="Zero Config Connection."
+    subtitle="Link your provider once. We listen for webhooks automatically."
+    class="mb-12 md:mb-16"
+  />
 
   <!-- Active integrations -->
   <div class="relative max-w-3xl mx-auto">

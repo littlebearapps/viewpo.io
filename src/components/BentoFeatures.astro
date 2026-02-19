@@ -1,5 +1,7 @@
 ---
 import BentoFeatureCard from './BentoFeatureCard.svelte';
+import SectionHeader from './SectionHeader.astro';
+import Badge from './Badge.astro';
 
 const features = [
   {
@@ -38,14 +40,10 @@ const features = [
 <section id="features" class="py-20 md:py-28 lg:pt-64">
   <div class="max-w-7xl mx-auto px-6">
     <!-- Header -->
-    <div class="text-center mb-16">
-      <h2 class="font-heading font-bold text-3xl md:text-4xl mb-4 reveal text-foreground">
-        Everything you need to review deploys
-      </h2>
-      <p class="text-foreground/60 text-lg max-w-2xl mx-auto reveal reveal-delay-1">
-        Responsive previews, instant updates, one-tap account linking, and team feedback — all in one app.
-      </p>
-    </div>
+    <SectionHeader
+      title="Everything you need to review deploys"
+      subtitle="Responsive previews, instant updates, one-tap account linking, and team feedback — all in one app."
+    />
 
     <!-- Bento Grid -->
     <div class="grid grid-cols-1 md:grid-cols-3 gap-5" role="list">
@@ -64,9 +62,7 @@ const features = [
 
     <!-- Coming soon badge for visual regression -->
     <div class="flex justify-center mt-6 reveal reveal-delay-4">
-      <span class="text-xs font-heading font-medium text-foreground/40 dark:text-neutral-500 bg-foreground/5 dark:bg-neutral-800 px-3 py-1 rounded-full border border-foreground/10 dark:border-neutral-700">
-        Visual regression coming in v2
-      </span>
+      <Badge variant="muted">Visual regression coming in v2</Badge>
     </div>
   </div>
 </section>
