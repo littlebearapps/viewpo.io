@@ -402,7 +402,7 @@
         <div class="w-px bg-neutral-200 dark:bg-neutral-700/50 self-stretch my-1" aria-hidden="true"></div>
 
         <!-- Right: Notification integrations -->
-        <div class="flex flex-col gap-2 flex-1 max-w-[130px] pl-3">
+        <div class="flex flex-col gap-2 flex-1 max-w-[150px] pl-3">
           <span class="text-[9px] font-heading font-semibold uppercase tracking-wider text-neutral-400 dark:text-neutral-500 px-1">Notify via</span>
           <!-- Slack -->
           <div class="flex items-center gap-2.5 px-3 py-2 rounded-xl border border-neutral-200 dark:border-neutral-700/50 bg-white dark:bg-neutral-800/80">
