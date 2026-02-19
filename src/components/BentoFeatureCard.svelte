@@ -8,6 +8,9 @@
   } = $props();
 
   let hovered = $state(false);
+  let activeDevice = $state(0);
+
+  const devices = ['Phone', 'Tablet', 'MacBook', 'Desktop'];
 </script>
 
 <div
@@ -20,145 +23,144 @@
   <!-- Visual area -->
   <div class="relative flex-1 min-h-[200px] p-6 pb-0 flex items-center justify-center overflow-hidden">
     {#if visual === 'viewport'}
-      <!-- Viewport Viewer — multi-device lineup: phone, tablet, laptop, desktop -->
-      <div class="w-full flex items-end justify-center gap-3 sm:gap-4 lg:gap-5 transition-transform duration-500 px-3 sm:px-6" class:scale-[1.01]={hovered}>
-        <!-- Phone -->
-        <div class="flex flex-col items-center gap-1.5">
-          <div class="w-[48px] sm:w-[52px] rounded-xl border-2 border-neutral-300 dark:border-neutral-600 bg-white dark:bg-neutral-800 shadow-lg overflow-hidden">
-            <!-- Notch -->
-            <div class="h-2.5 flex items-center justify-center bg-neutral-50 dark:bg-neutral-700/50">
-              <div class="w-6 h-1.5 bg-neutral-900 dark:bg-neutral-600 rounded-full"></div>
-            </div>
-            <!-- Screen content -->
-            <div class="px-1 py-1 space-y-0.5">
-              <div class="h-1.5 w-full bg-neutral-200 dark:bg-neutral-600 rounded-sm"></div>
-              <div class="h-0.5 w-3/4 bg-neutral-100 dark:bg-neutral-700 rounded-sm"></div>
-              <div class="h-6 w-full bg-neutral-100 dark:bg-neutral-700 rounded-sm mt-0.5"></div>
-              <div class="h-0.5 w-full bg-neutral-100 dark:bg-neutral-700 rounded-sm"></div>
-              <div class="h-0.5 w-2/3 bg-neutral-100 dark:bg-neutral-700 rounded-sm"></div>
-              <div class="h-3 w-3/4 bg-neutral-100 dark:bg-neutral-700 rounded-sm mt-0.5"></div>
-            </div>
-            <!-- Home indicator -->
-            <div class="flex justify-center py-1">
-              <div class="w-5 h-[2px] bg-neutral-300 dark:bg-neutral-500 rounded-full"></div>
-            </div>
-          </div>
-          <span class="text-[8px] sm:text-[9px] font-heading font-medium text-neutral-400 dark:text-neutral-500">Phone</span>
+      <!-- Viewport Viewer — interactive device switcher -->
+      <div class="w-full flex flex-col items-center gap-3 transition-transform duration-500" class:scale-[1.02]={hovered}>
+        <!-- Device preset buttons -->
+        <div class="flex gap-1.5">
+          {#each devices as device, i}
+            <button
+              type="button"
+              class="px-2.5 py-1 rounded-lg text-[10px] font-heading font-semibold transition-all duration-200 cursor-pointer {activeDevice === i
+                ? 'bg-primary/15 text-primary dark:bg-primary/20 ring-1 ring-primary/30'
+                : 'text-neutral-400 dark:text-neutral-500 hover:text-neutral-600 dark:hover:text-neutral-400 hover:bg-neutral-100 dark:hover:bg-neutral-800'}"
+              onclick={() => activeDevice = i}
+            >
+              {device}
+            </button>
+          {/each}
         </div>
 
-        <!-- Tablet -->
-        <div class="flex flex-col items-center gap-1.5">
-          <div class="w-[72px] sm:w-[84px] rounded-xl border-2 border-neutral-300 dark:border-neutral-600 bg-white dark:bg-neutral-800 shadow-lg overflow-hidden">
-            <!-- Camera dot -->
-            <div class="h-2 flex items-center justify-center bg-neutral-50 dark:bg-neutral-700/50">
-              <div class="w-1 h-1 rounded-full bg-neutral-300 dark:bg-neutral-500"></div>
-            </div>
-            <!-- Screen content -->
-            <div class="px-1.5 py-1 space-y-0.5">
-              <div class="h-2 w-2/3 bg-neutral-200 dark:bg-neutral-600 rounded-sm"></div>
-              <div class="h-0.5 w-full bg-neutral-100 dark:bg-neutral-700 rounded-sm"></div>
-              <div class="h-0.5 w-3/4 bg-neutral-100 dark:bg-neutral-700 rounded-sm"></div>
-              <div class="grid grid-cols-2 gap-1 mt-1">
-                <div class="h-7 bg-neutral-100 dark:bg-neutral-700 rounded-sm"></div>
-                <div class="h-7 bg-neutral-100 dark:bg-neutral-700 rounded-sm"></div>
+        <!-- Device display area — crossfade between mockups -->
+        <div class="relative w-full flex items-end justify-center" style="height: 140px;">
+          <!-- Phone -->
+          <div class="absolute bottom-0 left-1/2 -translate-x-1/2 transition-all duration-400 {activeDevice === 0 ? 'opacity-100 scale-100' : 'opacity-0 scale-90 pointer-events-none'}">
+            <div class="w-[72px] rounded-xl border-2 border-neutral-300 dark:border-neutral-600 bg-white dark:bg-neutral-800 shadow-lg overflow-hidden">
+              <div class="h-3 flex items-center justify-center bg-neutral-50 dark:bg-neutral-700/50">
+                <div class="w-8 h-2 bg-neutral-900 dark:bg-neutral-600 rounded-full"></div>
               </div>
-              <div class="h-0.5 w-full bg-neutral-100 dark:bg-neutral-700 rounded-sm mt-1"></div>
-              <div class="h-0.5 w-1/2 bg-neutral-100 dark:bg-neutral-700 rounded-sm"></div>
-            </div>
-            <!-- Home indicator -->
-            <div class="flex justify-center py-1">
-              <div class="w-5 h-[2px] bg-neutral-300 dark:bg-neutral-500 rounded-full"></div>
+              <div class="px-1.5 py-1 space-y-0.5">
+                <div class="h-2 w-full bg-neutral-200 dark:bg-neutral-600 rounded-sm"></div>
+                <div class="h-1 w-3/4 bg-neutral-100 dark:bg-neutral-700 rounded-sm"></div>
+                <div class="h-10 w-full bg-neutral-100 dark:bg-neutral-700 rounded-sm mt-0.5"></div>
+                <div class="h-1 w-full bg-neutral-100 dark:bg-neutral-700 rounded-sm"></div>
+                <div class="h-1 w-2/3 bg-neutral-100 dark:bg-neutral-700 rounded-sm"></div>
+                <div class="h-5 w-3/4 bg-neutral-100 dark:bg-neutral-700 rounded-sm mt-0.5"></div>
+                <div class="h-1 w-full bg-neutral-100 dark:bg-neutral-700 rounded-sm"></div>
+                <div class="h-1 w-1/2 bg-neutral-100 dark:bg-neutral-700 rounded-sm"></div>
+              </div>
+              <div class="flex justify-center py-1.5">
+                <div class="w-6 h-[2px] bg-neutral-300 dark:bg-neutral-500 rounded-full"></div>
+              </div>
             </div>
           </div>
-          <span class="text-[8px] sm:text-[9px] font-heading font-medium text-neutral-400 dark:text-neutral-500">Tablet</span>
-        </div>
 
-        <!-- MacBook -->
-        <div class="hidden sm:flex flex-col items-center gap-1.5">
-          <div class="w-[120px] lg:w-[150px]">
-            <!-- Screen -->
-            <div class="rounded-t-lg border-2 border-b-0 border-neutral-300 dark:border-neutral-600 bg-white dark:bg-neutral-800 shadow-lg overflow-hidden">
-              <!-- Camera notch -->
-              <div class="h-2.5 flex items-center justify-center bg-neutral-100 dark:bg-neutral-700/50 border-b border-neutral-200 dark:border-neutral-600">
+          <!-- Tablet -->
+          <div class="absolute bottom-0 left-1/2 -translate-x-1/2 transition-all duration-400 {activeDevice === 1 ? 'opacity-100 scale-100' : 'opacity-0 scale-90 pointer-events-none'}">
+            <div class="w-[120px] rounded-xl border-2 border-neutral-300 dark:border-neutral-600 bg-white dark:bg-neutral-800 shadow-lg overflow-hidden">
+              <div class="h-2.5 flex items-center justify-center bg-neutral-50 dark:bg-neutral-700/50">
                 <div class="w-1.5 h-1.5 rounded-full bg-neutral-300 dark:bg-neutral-500"></div>
               </div>
-              <!-- Screen content — sidebar + main -->
-              <div class="p-2 space-y-1">
-                <div class="flex gap-1.5">
-                  <div class="w-1/4 space-y-1">
-                    <div class="h-1 w-full bg-neutral-200 dark:bg-neutral-600 rounded-sm"></div>
-                    <div class="h-0.5 w-3/4 bg-neutral-100 dark:bg-neutral-700 rounded-sm"></div>
-                    <div class="h-0.5 w-full bg-neutral-100 dark:bg-neutral-700 rounded-sm"></div>
-                    <div class="h-0.5 w-2/3 bg-neutral-100 dark:bg-neutral-700 rounded-sm"></div>
-                  </div>
-                  <div class="flex-1 space-y-1">
-                    <div class="h-2 w-1/2 bg-neutral-200 dark:bg-neutral-600 rounded-sm"></div>
-                    <div class="h-0.5 w-full bg-neutral-100 dark:bg-neutral-700 rounded-sm"></div>
-                    <div class="h-0.5 w-4/5 bg-neutral-100 dark:bg-neutral-700 rounded-sm"></div>
-                    <div class="grid grid-cols-3 gap-1 mt-1">
-                      <div class="h-6 bg-neutral-100 dark:bg-neutral-700 rounded-sm"></div>
-                      <div class="h-6 bg-neutral-100 dark:bg-neutral-700 rounded-sm"></div>
-                      <div class="h-6 bg-neutral-100 dark:bg-neutral-700 rounded-sm"></div>
-                    </div>
-                  </div>
+              <div class="px-2 py-1.5 space-y-1">
+                <div class="h-2.5 w-2/3 bg-neutral-200 dark:bg-neutral-600 rounded-sm"></div>
+                <div class="h-1 w-full bg-neutral-100 dark:bg-neutral-700 rounded-sm"></div>
+                <div class="h-1 w-3/4 bg-neutral-100 dark:bg-neutral-700 rounded-sm"></div>
+                <div class="grid grid-cols-2 gap-1 mt-1">
+                  <div class="h-10 bg-neutral-100 dark:bg-neutral-700 rounded-sm"></div>
+                  <div class="h-10 bg-neutral-100 dark:bg-neutral-700 rounded-sm"></div>
                 </div>
+                <div class="h-1 w-full bg-neutral-100 dark:bg-neutral-700 rounded-sm mt-1"></div>
+                <div class="h-1 w-1/2 bg-neutral-100 dark:bg-neutral-700 rounded-sm"></div>
+              </div>
+              <div class="flex justify-center py-1.5">
+                <div class="w-6 h-[2px] bg-neutral-300 dark:bg-neutral-500 rounded-full"></div>
               </div>
             </div>
-            <!-- Laptop hinge + base -->
-            <div class="h-[3px] bg-neutral-300 dark:bg-neutral-500 rounded-b-sm"></div>
-            <div class="h-1.5 bg-neutral-200 dark:bg-neutral-600 rounded-b-lg mx-[-4px] border-t border-neutral-300 dark:border-neutral-500"></div>
           </div>
-          <span class="text-[8px] sm:text-[9px] font-heading font-medium text-neutral-400 dark:text-neutral-500">MacBook</span>
-        </div>
 
-        <!-- Desktop monitor -->
-        <div class="hidden sm:flex flex-col items-center gap-1.5">
-          <div class="w-[140px] lg:w-[170px]">
-            <!-- Screen -->
-            <div class="rounded-t-lg border-2 border-b-0 border-neutral-300 dark:border-neutral-600 bg-white dark:bg-neutral-800 shadow-lg overflow-hidden">
-              <!-- Thin bezel top -->
-              <div class="h-1.5 bg-neutral-200 dark:bg-neutral-700/50"></div>
-              <!-- Screen content — full layout -->
-              <div class="p-2 space-y-1">
-                <!-- Nav bar -->
-                <div class="flex items-center gap-1 pb-0.5">
-                  <div class="w-8 h-1.5 bg-neutral-200 dark:bg-neutral-600 rounded-sm"></div>
-                  <div class="flex-1"></div>
-                  <div class="w-4 h-1.5 bg-neutral-100 dark:bg-neutral-700 rounded-sm"></div>
-                  <div class="w-4 h-1.5 bg-neutral-100 dark:bg-neutral-700 rounded-sm"></div>
-                  <div class="w-6 h-1.5 bg-primary/30 rounded-sm"></div>
+          <!-- MacBook -->
+          <div class="absolute bottom-0 left-1/2 -translate-x-1/2 transition-all duration-400 {activeDevice === 2 ? 'opacity-100 scale-100' : 'opacity-0 scale-90 pointer-events-none'}">
+            <div class="w-[180px]">
+              <div class="rounded-t-lg border-2 border-b-0 border-neutral-300 dark:border-neutral-600 bg-white dark:bg-neutral-800 shadow-lg overflow-hidden">
+                <div class="h-3 flex items-center justify-center bg-neutral-100 dark:bg-neutral-700/50 border-b border-neutral-200 dark:border-neutral-600">
+                  <div class="w-2 h-2 rounded-full bg-neutral-300 dark:bg-neutral-500"></div>
                 </div>
-                <div class="flex gap-2">
-                  <div class="w-1/4 space-y-1">
-                    <div class="h-1 w-full bg-neutral-200 dark:bg-neutral-600 rounded-sm"></div>
-                    <div class="h-0.5 w-3/4 bg-neutral-100 dark:bg-neutral-700 rounded-sm"></div>
-                    <div class="h-0.5 w-full bg-neutral-100 dark:bg-neutral-700 rounded-sm"></div>
-                    <div class="h-0.5 w-1/2 bg-neutral-100 dark:bg-neutral-700 rounded-sm"></div>
-                    <div class="h-0.5 w-2/3 bg-neutral-100 dark:bg-neutral-700 rounded-sm"></div>
-                  </div>
-                  <div class="flex-1 space-y-1">
-                    <div class="h-2.5 w-2/3 bg-neutral-200 dark:bg-neutral-600 rounded-sm"></div>
-                    <div class="h-0.5 w-full bg-neutral-100 dark:bg-neutral-700 rounded-sm"></div>
-                    <div class="h-0.5 w-5/6 bg-neutral-100 dark:bg-neutral-700 rounded-sm"></div>
-                    <div class="grid grid-cols-4 gap-1 mt-1">
-                      <div class="h-6 bg-neutral-100 dark:bg-neutral-700 rounded-sm"></div>
-                      <div class="h-6 bg-neutral-100 dark:bg-neutral-700 rounded-sm"></div>
-                      <div class="h-6 bg-neutral-100 dark:bg-neutral-700 rounded-sm"></div>
-                      <div class="h-6 bg-neutral-100 dark:bg-neutral-700 rounded-sm"></div>
+                <div class="p-2.5 space-y-1">
+                  <div class="flex gap-2">
+                    <div class="w-1/4 space-y-1">
+                      <div class="h-1.5 w-full bg-neutral-200 dark:bg-neutral-600 rounded-sm"></div>
+                      <div class="h-0.5 w-3/4 bg-neutral-100 dark:bg-neutral-700 rounded-sm"></div>
+                      <div class="h-0.5 w-full bg-neutral-100 dark:bg-neutral-700 rounded-sm"></div>
+                      <div class="h-0.5 w-2/3 bg-neutral-100 dark:bg-neutral-700 rounded-sm"></div>
+                    </div>
+                    <div class="flex-1 space-y-1">
+                      <div class="h-2.5 w-1/2 bg-neutral-200 dark:bg-neutral-600 rounded-sm"></div>
+                      <div class="h-0.5 w-full bg-neutral-100 dark:bg-neutral-700 rounded-sm"></div>
+                      <div class="h-0.5 w-4/5 bg-neutral-100 dark:bg-neutral-700 rounded-sm"></div>
+                      <div class="grid grid-cols-3 gap-1 mt-1">
+                        <div class="h-8 bg-neutral-100 dark:bg-neutral-700 rounded-sm"></div>
+                        <div class="h-8 bg-neutral-100 dark:bg-neutral-700 rounded-sm"></div>
+                        <div class="h-8 bg-neutral-100 dark:bg-neutral-700 rounded-sm"></div>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
+              <div class="h-[3px] bg-neutral-300 dark:bg-neutral-500 rounded-b-sm"></div>
+              <div class="h-1.5 bg-neutral-200 dark:bg-neutral-600 rounded-b-lg mx-[-4px] border-t border-neutral-300 dark:border-neutral-500"></div>
             </div>
-            <!-- Monitor chin -->
-            <div class="h-2 bg-neutral-200 dark:bg-neutral-600 rounded-b-sm border-t-2 border-neutral-300 dark:border-neutral-500 flex items-center justify-center">
-              <div class="w-3 h-0.5 bg-neutral-300 dark:bg-neutral-500 rounded-full"></div>
-            </div>
-            <!-- Stand -->
-            <div class="h-4 w-4 bg-neutral-300 dark:bg-neutral-500 mx-auto rounded-b-sm"></div>
-            <div class="h-1 w-10 bg-neutral-300 dark:bg-neutral-500 rounded-full mx-auto"></div>
           </div>
-          <span class="text-[8px] sm:text-[9px] font-heading font-medium text-neutral-400 dark:text-neutral-500">Desktop</span>
+
+          <!-- Desktop -->
+          <div class="absolute bottom-0 left-1/2 -translate-x-1/2 transition-all duration-400 {activeDevice === 3 ? 'opacity-100 scale-100' : 'opacity-0 scale-90 pointer-events-none'}">
+            <div class="w-[200px]">
+              <div class="rounded-t-lg border-2 border-b-0 border-neutral-300 dark:border-neutral-600 bg-white dark:bg-neutral-800 shadow-lg overflow-hidden">
+                <div class="h-2 bg-neutral-200 dark:bg-neutral-700/50"></div>
+                <div class="p-2.5 space-y-1">
+                  <div class="flex items-center gap-1 pb-0.5">
+                    <div class="w-10 h-2 bg-neutral-200 dark:bg-neutral-600 rounded-sm"></div>
+                    <div class="flex-1"></div>
+                    <div class="w-5 h-2 bg-neutral-100 dark:bg-neutral-700 rounded-sm"></div>
+                    <div class="w-5 h-2 bg-neutral-100 dark:bg-neutral-700 rounded-sm"></div>
+                    <div class="w-7 h-2 bg-primary/30 rounded-sm"></div>
+                  </div>
+                  <div class="flex gap-2">
+                    <div class="w-1/4 space-y-1">
+                      <div class="h-1.5 w-full bg-neutral-200 dark:bg-neutral-600 rounded-sm"></div>
+                      <div class="h-0.5 w-3/4 bg-neutral-100 dark:bg-neutral-700 rounded-sm"></div>
+                      <div class="h-0.5 w-full bg-neutral-100 dark:bg-neutral-700 rounded-sm"></div>
+                      <div class="h-0.5 w-1/2 bg-neutral-100 dark:bg-neutral-700 rounded-sm"></div>
+                    </div>
+                    <div class="flex-1 space-y-1">
+                      <div class="h-3 w-2/3 bg-neutral-200 dark:bg-neutral-600 rounded-sm"></div>
+                      <div class="h-0.5 w-full bg-neutral-100 dark:bg-neutral-700 rounded-sm"></div>
+                      <div class="h-0.5 w-5/6 bg-neutral-100 dark:bg-neutral-700 rounded-sm"></div>
+                      <div class="grid grid-cols-4 gap-1 mt-1">
+                        <div class="h-6 bg-neutral-100 dark:bg-neutral-700 rounded-sm"></div>
+                        <div class="h-6 bg-neutral-100 dark:bg-neutral-700 rounded-sm"></div>
+                        <div class="h-6 bg-neutral-100 dark:bg-neutral-700 rounded-sm"></div>
+                        <div class="h-6 bg-neutral-100 dark:bg-neutral-700 rounded-sm"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="h-2 bg-neutral-200 dark:bg-neutral-600 rounded-b-sm border-t-2 border-neutral-300 dark:border-neutral-500 flex items-center justify-center">
+                <div class="w-4 h-0.5 bg-neutral-300 dark:bg-neutral-500 rounded-full"></div>
+              </div>
+              <div class="h-4 w-4 bg-neutral-300 dark:bg-neutral-500 mx-auto rounded-b-sm"></div>
+              <div class="h-1 w-12 bg-neutral-300 dark:bg-neutral-500 rounded-full mx-auto"></div>
+            </div>
+          </div>
         </div>
       </div>
 
