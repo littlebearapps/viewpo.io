@@ -26,16 +26,16 @@ import FAQ from '@components/FAQ.astro';
 
     <!-- Ambient glow orbs distributed down the page -->
     <div class="pointer-events-none absolute inset-0" aria-hidden="true">
-      <!-- Features zone -->
+      <!-- Problem Hook zone -->
       <div class="absolute top-[2%] -left-40 w-[600px] h-[600px] rounded-full bg-primary/18 blur-[160px] dark:bg-primary/[0.08]"></div>
       <div class="absolute top-[5%] right-[5%] w-[450px] h-[450px] rounded-full bg-indigo-300/14 blur-[130px] dark:bg-indigo-400/[0.07]"></div>
       <div class="absolute top-[12%] left-[30%] w-[350px] h-[350px] rounded-full bg-secondary/10 blur-[110px] dark:bg-secondary/[0.05]"></div>
 
-      <!-- Platforms zone -->
+      <!-- Use Cases zone -->
       <div class="absolute top-[20%] -right-32 w-[550px] h-[550px] rounded-full bg-primary/14 blur-[150px] dark:bg-primary/[0.07]"></div>
       <div class="absolute top-[25%] -left-20 w-[400px] h-[400px] rounded-full bg-indigo-400/12 blur-[120px] dark:bg-indigo-400/[0.06]"></div>
 
-      <!-- Use Cases zone -->
+      <!-- Features zone -->
       <div class="absolute top-[35%] left-[15%] w-[500px] h-[500px] rounded-full bg-secondary/12 blur-[140px] dark:bg-secondary/[0.06]"></div>
       <div class="absolute top-[38%] -right-40 w-[450px] h-[450px] rounded-full bg-indigo-300/10 blur-[130px] dark:bg-indigo-400/[0.05]"></div>
       <div class="absolute top-[42%] left-[50%] w-[300px] h-[300px] rounded-full bg-primary/10 blur-[100px] dark:bg-primary/[0.05]"></div>
@@ -59,11 +59,11 @@ import FAQ from '@components/FAQ.astro';
     <!-- Problem Hook — pain-first, then viewport viewer solution -->
     <ProblemHook />
 
-    <!-- Bento Features Grid -->
-    <BentoFeatures />
-
     <!-- Use Cases — persona switcher + situation cards -->
     <UseCases />
+
+    <!-- Bento Features Grid -->
+    <BentoFeatures />
 
     <!-- Integrations Ecosystem -->
     <Integrations />
