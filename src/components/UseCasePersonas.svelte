@@ -175,13 +175,13 @@
 <!-- Persona pill bar -->
 <div class="mb-8">
   <div
-    class="flex gap-2 overflow-x-auto scrollbar-hide pb-2 -mx-1 px-1 snap-x snap-mandatory md:snap-none md:flex-wrap md:justify-center"
+    class="flex gap-2 flex-wrap justify-center"
     role="tablist"
     aria-label="Choose your role"
   >
     {#each personas as persona, i}
       <button
-        class="persona-pill group flex items-center gap-2 whitespace-nowrap rounded-full px-4 py-2.5 text-sm font-heading font-medium transition-all duration-300 snap-start flex-shrink-0 cursor-pointer
+        class="persona-pill group flex items-center gap-2 whitespace-nowrap rounded-full px-4 py-2.5 text-sm font-heading font-medium transition-all duration-300 cursor-pointer
           {i === activeIndex
             ? `bg-white/90 dark:bg-white/[0.12] shadow-md border border-neutral-200 dark:border-neutral-600/50 text-foreground dark:text-white`
             : 'bg-white/40 dark:bg-white/[0.04] border border-transparent text-foreground/50 dark:text-white/40 hover:bg-white/60 dark:hover:bg-white/[0.07] hover:text-foreground/70 dark:hover:text-white/60'}"
@@ -299,6 +299,4 @@
     animation: fade-in 0.3s ease-out;
   }
 
-  .scrollbar-hide::-webkit-scrollbar { display: none; }
-  .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
 </style>
