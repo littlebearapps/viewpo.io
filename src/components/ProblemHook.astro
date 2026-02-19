@@ -63,7 +63,7 @@ import Section from './Section.astro';
 
             <!-- === 27" Monitor (very back, biggest) === -->
             <div class="col-start-1 row-start-1 relative z-0 opacity-75 w-[260px] sm:w-[340px] lg:w-[400px] device-card group/monitor cursor-pointer transition-all duration-300 hover:opacity-100">
-              <div class="rounded-xl border border-foreground/[0.08] dark:border-white/[0.08] bg-white dark:bg-neutral-800 shadow overflow-hidden transition-all duration-300 group-hover/monitor:border-primary/30 group-hover/monitor:shadow-lg">
+              <div class="rounded-xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-800 shadow overflow-hidden transition-all duration-300 group-hover/monitor:border-primary/30 group-hover/monitor:shadow-lg">
                 <div class="h-5 flex items-center px-2.5 gap-1 bg-neutral-50 dark:bg-neutral-700 border-b border-neutral-200/60 dark:border-neutral-600/60">
                   <div class="w-1.5 h-1.5 rounded-full bg-red-400/40"></div>
                   <div class="w-1.5 h-1.5 rounded-full bg-amber-400/40"></div>
@@ -116,14 +116,14 @@ import Section from './Section.astro';
                 <div class="w-12 h-1 bg-neutral-200 dark:bg-neutral-600 rounded-full"></div>
               </div>
               <!-- Badge -->
-              <div class="absolute -top-2 -right-2 px-2 py-0.5 rounded-full bg-white dark:bg-neutral-700 text-[8px] font-heading font-semibold text-foreground/60 dark:text-white/60 shadow-sm border border-foreground/10 dark:border-white/10 transition-all duration-300 group-hover/monitor:bg-primary group-hover/monitor:text-white group-hover/monitor:border-primary group-hover/monitor:shadow-md">
+              <div class="absolute -top-2 -right-2 px-2 py-0.5 rounded-full bg-white dark:bg-neutral-700 text-[8px] font-heading font-semibold text-foreground/60 dark:text-white/60 shadow-sm border border-neutral-200 dark:border-neutral-800 transition-all duration-300 group-hover/monitor:bg-primary group-hover/monitor:text-white group-hover/monitor:border-primary group-hover/monitor:shadow-md">
                 27" — 2560 × 1440
               </div>
             </div>
 
             <!-- === Laptop (second from back) === -->
             <div class="col-start-1 row-start-1 relative z-10 opacity-85 w-[180px] sm:w-[250px] lg:w-[300px] device-card group/laptop cursor-pointer transition-all duration-300 hover:opacity-100">
-              <div class="rounded-xl border border-foreground/10 dark:border-white/10 bg-white dark:bg-neutral-800 shadow-md overflow-hidden transition-all duration-300 group-hover/laptop:border-primary/30 group-hover/laptop:shadow-lg">
+              <div class="rounded-xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-800 shadow-md overflow-hidden transition-all duration-300 group-hover/laptop:border-primary/30 group-hover/laptop:shadow-lg">
                 <div class="h-5 flex items-center px-2.5 gap-1 bg-neutral-50 dark:bg-neutral-700 border-b border-neutral-200 dark:border-neutral-600">
                   <div class="w-1.5 h-1.5 rounded-full bg-red-400/60"></div>
                   <div class="w-1.5 h-1.5 rounded-full bg-amber-400/60"></div>
@@ -168,14 +168,14 @@ import Section from './Section.astro';
                 </div>
               </div>
               <!-- Badge — positioned left so it's visible -->
-              <div class="absolute -top-2 -left-2 px-2 py-0.5 rounded-full bg-white dark:bg-neutral-700 text-[8px] font-heading font-semibold text-foreground/60 dark:text-white/60 shadow-sm border border-foreground/10 dark:border-white/10 transition-all duration-300 group-hover/laptop:bg-primary group-hover/laptop:text-white group-hover/laptop:border-primary group-hover/laptop:shadow-md">
+              <div class="absolute -top-2 -left-2 px-2 py-0.5 rounded-full bg-white dark:bg-neutral-700 text-[8px] font-heading font-semibold text-foreground/60 dark:text-white/60 shadow-sm border border-neutral-200 dark:border-neutral-800 transition-all duration-300 group-hover/laptop:bg-primary group-hover/laptop:text-white group-hover/laptop:border-primary group-hover/laptop:shadow-md">
                 MacBook Pro
               </div>
             </div>
 
             <!-- === iPad (third from back) — PORTRAIT orientation === -->
             <div class="col-start-1 row-start-1 relative z-20 w-[100px] sm:w-[130px] lg:w-[155px] device-card group/ipad cursor-pointer transition-all duration-300 hover:opacity-100">
-              <div class="rounded-xl border border-foreground/10 dark:border-white/10 bg-white dark:bg-neutral-800 shadow-lg overflow-hidden transition-all duration-300 group-hover/ipad:border-primary/30 group-hover/ipad:shadow-xl">
+              <div class="rounded-xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-800 shadow-lg overflow-hidden transition-all duration-300 group-hover/ipad:border-primary/30 group-hover/ipad:shadow-xl">
                 <!-- Front camera (portrait top) -->
                 <div class="h-3 flex items-center justify-center bg-neutral-50 dark:bg-neutral-700 border-b border-neutral-200 dark:border-neutral-600">
                   <div class="w-1.5 h-1.5 bg-foreground/10 dark:bg-white/10 rounded-full"></div>
@@ -224,14 +224,14 @@ import Section from './Section.astro';
                 </div>
               </div>
               <!-- Badge — positioned left so it's not hidden behind the phone -->
-              <div class="absolute -top-2 -left-2 px-2 py-0.5 rounded-full bg-white dark:bg-neutral-700 text-[8px] font-heading font-semibold text-foreground/60 dark:text-white/60 shadow-sm border border-foreground/10 dark:border-white/10 transition-all duration-300 group-hover/ipad:bg-primary group-hover/ipad:text-white group-hover/ipad:border-primary group-hover/ipad:shadow-md">
+              <div class="absolute -top-2 -left-2 px-2 py-0.5 rounded-full bg-white dark:bg-neutral-700 text-[8px] font-heading font-semibold text-foreground/60 dark:text-white/60 shadow-sm border border-neutral-200 dark:border-neutral-800 transition-all duration-300 group-hover/ipad:bg-primary group-hover/ipad:text-white group-hover/ipad:border-primary group-hover/ipad:shadow-md">
                 iPad Pro
               </div>
             </div>
 
             <!-- === Phone (front, smallest) — shows DESKTOP wireframe inside === -->
             <div class="col-start-1 row-start-1 relative z-30 w-[70px] sm:w-[80px] lg:w-[80px] device-card group/phone cursor-pointer transition-all duration-300 hover:opacity-100">
-              <div class="rounded-2xl border border-foreground/10 dark:border-white/10 bg-white dark:bg-neutral-800 shadow-xl overflow-hidden transition-all duration-300 group-hover/phone:border-primary/40 group-hover/phone:shadow-primary/10">
+              <div class="rounded-2xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-800 shadow-xl overflow-hidden transition-all duration-300 group-hover/phone:border-primary/40 group-hover/phone:shadow-primary/10">
                 <!-- Phone notch -->
                 <div class="h-4 flex items-center justify-center bg-neutral-50 dark:bg-neutral-700 border-b border-neutral-200 dark:border-neutral-600">
                   <div class="w-10 h-2 bg-foreground/10 dark:bg-white/10 rounded-full"></div>
@@ -282,7 +282,7 @@ import Section from './Section.astro';
                 </div>
               </div>
               <!-- Badge -->
-              <div class="absolute -top-2 -right-2 px-2 py-0.5 rounded-full bg-white dark:bg-neutral-700 text-[8px] font-heading font-semibold text-foreground/60 dark:text-white/60 shadow-sm border border-foreground/10 dark:border-white/10 transition-all duration-300 group-hover/phone:bg-primary group-hover/phone:text-white group-hover/phone:border-primary group-hover/phone:shadow-md">
+              <div class="absolute -top-2 -right-2 px-2 py-0.5 rounded-full bg-white dark:bg-neutral-700 text-[8px] font-heading font-semibold text-foreground/60 dark:text-white/60 shadow-sm border border-neutral-200 dark:border-neutral-800 transition-all duration-300 group-hover/phone:bg-primary group-hover/phone:text-white group-hover/phone:border-primary group-hover/phone:shadow-md">
                 2560 × 1440
               </div>
               <!-- "on iPhone" label -->

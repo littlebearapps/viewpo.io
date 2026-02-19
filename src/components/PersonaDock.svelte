@@ -146,7 +146,7 @@
         <button
           class="bridge-card group relative text-left cursor-pointer transition-all duration-300 px-5 py-4
             {i === activeIndex ? 'bg-black/[0.04] dark:bg-white/10' : 'hover:bg-black/[0.02] dark:hover:bg-white/5'}
-            {i < cards.length - 1 ? 'border-r border-neutral-200 dark:border-white/10' : ''}"
+            {i < cards.length - 1 ? 'border-r border-neutral-200 dark:border-neutral-800' : ''}"
           role="tab"
           tabindex="0"
           aria-selected={i === activeIndex}
