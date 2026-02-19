@@ -20,62 +20,125 @@
   <!-- Visual area -->
   <div class="relative flex-1 min-h-[200px] p-6 pb-0 flex items-center justify-center overflow-hidden">
     {#if visual === 'viewport'}
-      <!-- Viewport Viewer — phone showing desktop wireframe with preset pills -->
-      <div class="w-full max-w-md flex items-center justify-center gap-6 transition-transform duration-500" class:scale-[1.02]={hovered}>
-        <!-- Preset pills on the left -->
-        <div class="hidden sm:flex flex-col gap-2">
-          {#each [
-            { label: 'Phone S', width: '375px', active: false },
-            { label: 'Tablet', width: '820px', active: false },
-            { label: 'Laptop', width: '1440px', active: false },
-            { label: 'Desktop', width: '1920px', active: true },
-          ] as preset}
-            <div class="flex items-center gap-2 px-3 py-1.5 rounded-lg text-[10px] font-mono transition-colors
-              {preset.active ? 'bg-primary/10 text-primary border border-primary/20' : 'text-neutral-400 dark:text-neutral-500'}">
-              <span class="font-semibold">{preset.label}</span>
-              <span class="text-neutral-300 dark:text-neutral-600">{preset.width}</span>
+      <!-- Viewport Viewer — multi-device lineup: phone, tablet, laptop, desktop -->
+      <div class="w-full flex items-end justify-center gap-2 sm:gap-3 lg:gap-4 transition-transform duration-500 px-2 sm:px-4" class:scale-[1.02]={hovered}>
+        <!-- Phone -->
+        <div class="flex flex-col items-center gap-1">
+          <div class="w-[38px] sm:w-[44px] rounded-lg border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-800 shadow-md overflow-hidden">
+            <div class="h-2 flex items-center justify-center bg-neutral-50 dark:bg-neutral-700/50 border-b border-neutral-100 dark:border-neutral-600">
+              <div class="w-4 h-0.5 bg-foreground/10 dark:bg-white/10 rounded-full"></div>
             </div>
-          {/each}
+            <div class="p-1 space-y-0.5">
+              <div class="h-1 w-full bg-neutral-200 dark:bg-neutral-600 rounded-sm"></div>
+              <div class="h-0.5 w-3/4 bg-neutral-100 dark:bg-neutral-700 rounded-sm"></div>
+              <div class="h-4 w-full bg-neutral-100 dark:bg-neutral-700 rounded-sm mt-0.5"></div>
+              <div class="h-0.5 w-full bg-neutral-100 dark:bg-neutral-700 rounded-sm"></div>
+              <div class="h-0.5 w-2/3 bg-neutral-100 dark:bg-neutral-700 rounded-sm"></div>
+            </div>
+            <div class="flex justify-center py-0.5">
+              <div class="w-3 h-[1px] bg-foreground/10 dark:bg-white/10 rounded-full"></div>
+            </div>
+          </div>
+          <span class="text-[7px] sm:text-[8px] font-mono text-neutral-400 dark:text-neutral-500">375px</span>
         </div>
-        <!-- Mini phone showing desktop content -->
-        <div class="w-[90px] sm:w-[100px]">
-          <div class="rounded-2xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-800 shadow-xl overflow-hidden">
-            <div class="h-3.5 flex items-center justify-center bg-neutral-50 dark:bg-neutral-700 border-b border-neutral-200 dark:border-neutral-600">
-              <div class="w-8 h-1.5 bg-foreground/10 dark:bg-white/10 rounded-full"></div>
+
+        <!-- Tablet -->
+        <div class="flex flex-col items-center gap-1">
+          <div class="w-[56px] sm:w-[68px] rounded-lg border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-800 shadow-md overflow-hidden">
+            <div class="h-1.5 bg-neutral-50 dark:bg-neutral-700/50 border-b border-neutral-100 dark:border-neutral-600"></div>
+            <div class="p-1.5 space-y-0.5">
+              <div class="h-1.5 w-3/4 bg-neutral-200 dark:bg-neutral-600 rounded-sm"></div>
+              <div class="h-0.5 w-full bg-neutral-100 dark:bg-neutral-700 rounded-sm"></div>
+              <div class="h-0.5 w-2/3 bg-neutral-100 dark:bg-neutral-700 rounded-sm"></div>
+              <div class="grid grid-cols-2 gap-0.5 mt-1">
+                <div class="h-5 bg-neutral-100 dark:bg-neutral-700 rounded-sm"></div>
+                <div class="h-5 bg-neutral-100 dark:bg-neutral-700 rounded-sm"></div>
+              </div>
+              <div class="h-0.5 w-full bg-neutral-100 dark:bg-neutral-700 rounded-sm mt-0.5"></div>
+              <div class="h-0.5 w-1/2 bg-neutral-100 dark:bg-neutral-700 rounded-sm"></div>
             </div>
-            <div class="relative overflow-hidden h-32">
-              <div class="origin-top-left" style="transform: scale(0.2); width: 400px;">
-                <div class="h-8 bg-neutral-100 dark:bg-neutral-800 border-b border-neutral-200 dark:border-neutral-700 flex items-center px-4">
-                  <div class="w-14 h-2.5 bg-neutral-300 dark:bg-neutral-500 rounded"></div>
-                  <div class="flex-1"></div>
-                  <div class="w-10 h-4 bg-indigo-400 rounded"></div>
+          </div>
+          <span class="text-[7px] sm:text-[8px] font-mono text-neutral-400 dark:text-neutral-500">820px</span>
+        </div>
+
+        <!-- Laptop -->
+        <div class="hidden sm:flex flex-col items-center gap-1">
+          <div class="w-[100px] lg:w-[120px]">
+            <div class="rounded-t-lg border border-b-0 border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-800 shadow-md overflow-hidden">
+              <div class="h-2 flex items-center gap-1 px-1.5 bg-neutral-50 dark:bg-neutral-700/50 border-b border-neutral-100 dark:border-neutral-600">
+                <div class="flex gap-0.5">
+                  <div class="w-1 h-1 rounded-full bg-red-300/70"></div>
+                  <div class="w-1 h-1 rounded-full bg-yellow-300/70"></div>
+                  <div class="w-1 h-1 rounded-full bg-green-300/70"></div>
                 </div>
-                <div class="px-6 py-5 text-center">
-                  <div class="w-40 h-4 bg-neutral-300 dark:bg-neutral-500 rounded mx-auto mb-2"></div>
-                  <div class="w-56 h-1.5 bg-neutral-200 dark:bg-neutral-600 rounded mx-auto mb-1"></div>
-                  <div class="w-36 h-1.5 bg-neutral-200 dark:bg-neutral-600 rounded mx-auto mb-3"></div>
-                  <div class="flex justify-center gap-2">
-                    <div class="w-16 h-5 bg-indigo-400 rounded"></div>
-                    <div class="w-16 h-5 border border-indigo-300 rounded"></div>
+              </div>
+              <div class="p-1.5 space-y-0.5">
+                <div class="flex gap-1">
+                  <div class="w-1/4 space-y-0.5">
+                    <div class="h-0.5 w-full bg-neutral-200 dark:bg-neutral-600 rounded-sm"></div>
+                    <div class="h-0.5 w-3/4 bg-neutral-100 dark:bg-neutral-700 rounded-sm"></div>
+                    <div class="h-0.5 w-full bg-neutral-100 dark:bg-neutral-700 rounded-sm"></div>
                   </div>
-                </div>
-                <div class="px-5 py-3">
-                  <div class="grid grid-cols-4 gap-2">
-                    <div class="h-16 bg-neutral-100 dark:bg-neutral-700 rounded border border-neutral-200 dark:border-neutral-600"></div>
-                    <div class="h-16 bg-neutral-100 dark:bg-neutral-700 rounded border border-neutral-200 dark:border-neutral-600"></div>
-                    <div class="h-16 bg-neutral-100 dark:bg-neutral-700 rounded border border-neutral-200 dark:border-neutral-600"></div>
-                    <div class="h-16 bg-neutral-100 dark:bg-neutral-700 rounded border border-neutral-200 dark:border-neutral-600"></div>
+                  <div class="flex-1 space-y-0.5">
+                    <div class="h-1.5 w-1/2 bg-neutral-200 dark:bg-neutral-600 rounded-sm"></div>
+                    <div class="h-0.5 w-full bg-neutral-100 dark:bg-neutral-700 rounded-sm"></div>
+                    <div class="h-0.5 w-3/4 bg-neutral-100 dark:bg-neutral-700 rounded-sm"></div>
+                    <div class="grid grid-cols-3 gap-0.5 mt-0.5">
+                      <div class="h-4 bg-neutral-100 dark:bg-neutral-700 rounded-sm"></div>
+                      <div class="h-4 bg-neutral-100 dark:bg-neutral-700 rounded-sm"></div>
+                      <div class="h-4 bg-neutral-100 dark:bg-neutral-700 rounded-sm"></div>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-            <div class="flex justify-center py-1">
-              <div class="w-6 h-0.5 bg-foreground/10 dark:bg-white/10 rounded-full"></div>
+            <!-- Laptop base -->
+            <div class="h-1 bg-neutral-200 dark:bg-neutral-600 rounded-b-lg mx-[-2px]"></div>
+          </div>
+          <span class="text-[7px] sm:text-[8px] font-mono text-neutral-400 dark:text-neutral-500">1440px</span>
+        </div>
+
+        <!-- Desktop monitor -->
+        <div class="hidden sm:flex flex-col items-center gap-1">
+          <div class="w-[110px] lg:w-[140px]">
+            <div class="rounded-t-lg border border-b-0 border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-800 shadow-md overflow-hidden">
+              <div class="h-2 flex items-center gap-1 px-1.5 bg-neutral-50 dark:bg-neutral-700/50 border-b border-neutral-100 dark:border-neutral-600">
+                <div class="flex gap-0.5">
+                  <div class="w-1 h-1 rounded-full bg-red-300/70"></div>
+                  <div class="w-1 h-1 rounded-full bg-yellow-300/70"></div>
+                  <div class="w-1 h-1 rounded-full bg-green-300/70"></div>
+                </div>
+                <div class="flex-1"></div>
+                <div class="w-6 h-1 bg-neutral-200 dark:bg-neutral-600 rounded-sm"></div>
+              </div>
+              <div class="p-2 space-y-1">
+                <div class="flex gap-1.5">
+                  <div class="w-1/4 space-y-0.5">
+                    <div class="h-0.5 w-full bg-neutral-200 dark:bg-neutral-600 rounded-sm"></div>
+                    <div class="h-0.5 w-3/4 bg-neutral-100 dark:bg-neutral-700 rounded-sm"></div>
+                    <div class="h-0.5 w-full bg-neutral-100 dark:bg-neutral-700 rounded-sm"></div>
+                    <div class="h-0.5 w-1/2 bg-neutral-100 dark:bg-neutral-700 rounded-sm"></div>
+                  </div>
+                  <div class="flex-1 space-y-0.5">
+                    <div class="h-2 w-2/3 bg-neutral-200 dark:bg-neutral-600 rounded-sm"></div>
+                    <div class="h-0.5 w-full bg-neutral-100 dark:bg-neutral-700 rounded-sm"></div>
+                    <div class="h-0.5 w-5/6 bg-neutral-100 dark:bg-neutral-700 rounded-sm"></div>
+                    <div class="grid grid-cols-4 gap-0.5 mt-1">
+                      <div class="h-5 bg-neutral-100 dark:bg-neutral-700 rounded-sm"></div>
+                      <div class="h-5 bg-neutral-100 dark:bg-neutral-700 rounded-sm"></div>
+                      <div class="h-5 bg-neutral-100 dark:bg-neutral-700 rounded-sm"></div>
+                      <div class="h-5 bg-neutral-100 dark:bg-neutral-700 rounded-sm"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
+            <!-- Monitor stand -->
+            <div class="h-1 bg-neutral-300 dark:bg-neutral-600 rounded-b-sm mx-1"></div>
+            <div class="h-3 w-3 bg-neutral-300 dark:bg-neutral-600 rounded-b-sm mx-auto"></div>
+            <div class="h-0.5 w-8 bg-neutral-300 dark:bg-neutral-600 rounded-full mx-auto"></div>
           </div>
-          <div class="text-center mt-1.5">
-            <span class="text-[8px] font-heading font-medium text-primary/60 dark:text-primary/40">1920px on iPhone</span>
-          </div>
+          <span class="text-[7px] sm:text-[8px] font-mono text-primary dark:text-primary/80 font-semibold">1920px</span>
         </div>
       </div>
 
@@ -113,33 +176,60 @@
       </div>
 
     {:else if visual === 'notifications'}
-      <!-- Push Notifications — phone notification cards -->
-      <div class="flex flex-col gap-2.5 w-full max-w-[220px] transition-transform duration-500" class:scale-[1.05]={hovered}>
-        {#each [
-          { title: 'Deploy succeeded', branch: 'main', provider: 'Cloudflare', color: 'bg-emerald-400', time: '2m ago' },
-          { title: 'Deploy building', branch: 'feature/auth', provider: 'Vercel', color: 'bg-amber-400', time: '30s ago' },
-          { title: 'Deploy failed', branch: 'fix/nav', provider: 'Netlify', color: 'bg-red-400', time: '5m ago' },
-        ] as notif}
-          <div class="rounded-xl border border-neutral-200 dark:border-neutral-700/50 bg-white dark:bg-neutral-800/80 px-3.5 py-2.5 shadow-sm">
-            <div class="flex items-center gap-2 mb-1">
-              <div class="w-2 h-2 rounded-full {notif.color}"></div>
-              <span class="text-[11px] font-semibold text-neutral-700 dark:text-neutral-300">{notif.title}</span>
-            </div>
-            <div class="flex items-center justify-between">
-              <span class="text-[10px] font-mono text-neutral-400 dark:text-neutral-500">{notif.branch} · {notif.provider}</span>
-              <span class="text-[9px] text-neutral-300 dark:text-neutral-600">{notif.time}</span>
+      <!-- Push Notifications — iPhone lock screen with notification banners -->
+      <div class="w-full max-w-[200px] transition-transform duration-500" class:scale-[1.05]={hovered}>
+        <!-- iPhone frame -->
+        <div class="rounded-[20px] border border-neutral-200 dark:border-neutral-700 bg-gradient-to-b from-neutral-100 to-neutral-50 dark:from-neutral-800 dark:to-neutral-900 shadow-lg overflow-hidden">
+          <!-- Status bar -->
+          <div class="flex items-center justify-between px-5 pt-2.5 pb-1">
+            <span class="text-[9px] font-semibold text-neutral-700 dark:text-neutral-300">9:41</span>
+            <div class="w-16 h-4 bg-neutral-900 dark:bg-neutral-700 rounded-full mx-auto"></div>
+            <div class="flex items-center gap-1">
+              <svg class="w-2.5 h-2.5 text-neutral-600 dark:text-neutral-400" fill="currentColor" viewBox="0 0 24 24"><path d="M1 9l2 2c4.97-4.97 13.03-4.97 18 0l2-2C16.93 2.93 7.08 2.93 1 9zm8 8l3 3 3-3a4.237 4.237 0 00-6 0zm-4-4l2 2a7.074 7.074 0 0110 0l2-2C15.14 9.14 8.87 9.14 5 13z"/></svg>
+              <svg class="w-2.5 h-2.5 text-neutral-600 dark:text-neutral-400" fill="currentColor" viewBox="0 0 24 24"><path d="M15.67 4H14V2h-4v2H8.33C7.6 4 7 4.6 7 5.33v15.33C7 21.4 7.6 22 8.33 22h7.33c.74 0 1.34-.6 1.34-1.33V5.33C17 4.6 16.4 4 15.67 4z"/></svg>
             </div>
           </div>
-        {/each}
+
+          <!-- Lock screen time -->
+          <div class="text-center pt-2 pb-3">
+            <div class="text-[28px] font-light text-neutral-800 dark:text-neutral-200 leading-none">9:41</div>
+            <div class="text-[8px] text-neutral-400 dark:text-neutral-500 mt-0.5">Wednesday, 19 February</div>
+          </div>
+
+          <!-- Notification banners -->
+          <div class="px-2.5 pb-4 space-y-1.5">
+            {#each [
+              { title: 'Build succeeded', subtitle: 'main · Cloudflare', time: '2m ago' },
+              { title: 'Build started', subtitle: 'feature/auth · Vercel', time: '30s ago' },
+            ] as notif}
+              <div class="rounded-2xl bg-white/80 dark:bg-white/10 backdrop-blur-sm px-3 py-2 shadow-sm border border-white/50 dark:border-white/5">
+                <div class="flex items-start gap-2">
+                  <!-- Viewpo app icon -->
+                  <div class="w-5 h-5 rounded-md bg-primary/15 flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <span class="text-[8px] font-bold text-primary">V</span>
+                  </div>
+                  <div class="flex-1 min-w-0">
+                    <div class="flex items-center justify-between">
+                      <span class="text-[10px] font-semibold text-neutral-800 dark:text-neutral-200">Viewpo</span>
+                      <span class="text-[8px] text-neutral-400 dark:text-neutral-500">{notif.time}</span>
+                    </div>
+                    <p class="text-[9px] font-medium text-neutral-700 dark:text-neutral-300 leading-tight">{notif.title}</p>
+                    <p class="text-[8px] text-neutral-400 dark:text-neutral-500 leading-tight">{notif.subtitle}</p>
+                  </div>
+                </div>
+              </div>
+            {/each}
+          </div>
+        </div>
       </div>
 
     {:else if visual === 'pinwatch'}
-      <!-- Pin & Watch — pinned branch cards with bell toggles -->
+      <!-- Pin & Watch — pinned branch cards with provider logos and bell toggles -->
       <div class="flex flex-col gap-2.5 w-full max-w-[240px] transition-transform duration-500" class:scale-[1.05]={hovered}>
         {#each [
-          { branch: 'main', provider: 'Cloudflare', status: 'Ready', statusColor: 'bg-emerald-400', watched: true },
-          { branch: 'feature/checkout', provider: 'Vercel', status: 'Building', statusColor: 'bg-amber-400', watched: true },
-          { branch: 'staging', provider: 'Netlify', status: 'Ready', statusColor: 'bg-emerald-400', watched: false },
+          { branch: 'main', provider: 'Cloudflare', status: 'Ready', providerIcon: 'M16.5088 16.8447c.1475-.5068.0908-.9707-.1553-1.3154-.2246-.3164-.6045-.499-1.0615-.5205l-8.6592-.1123a.1559.1559 0 0 1-.1333-.0713c-.0283-.042-.0351-.0986-.021-.1553.0278-.084.1123-.1484.2036-.1562l8.7359-.1123c1.0351-.0489 2.1601-.8868 2.5537-1.9136l.499-1.3013c.0215-.0561.0293-.1128.0147-.168-.5625-2.5463-2.835-4.4453-5.5499-4.4453-2.5039 0-4.6284 1.6177-5.3876 3.8614-.4927-.3658-1.1187-.5625-1.794-.499-1.2026.119-2.1665 1.083-2.2861 2.2856-.0283.31-.0069.6128.0635.894C1.5683 13.171 0 14.7754 0 16.752c0 .1748.0142.3515.0352.5273.0141.083.0844.1475.1689.1475h15.9814c.0909 0 .1758-.0645.2032-.1553l.12-.4268zm2.7568-5.5634c-.0771 0-.1611 0-.2383.0112-.0566 0-.1054.0415-.127.0976l-.3378 1.1744c-.1475.5068-.0918.9707.1543 1.3164.2256.3164.6055.498 1.0625.5195l1.8437.1133c.0557 0 .1055.0263.1329.0703.0283.043.0351.1074.0214.1562-.0283.084-.1132.1485-.204.1553l-1.921.1123c-1.041.0488-2.1582.8867-2.5527 1.914l-.1406.3585c-.0283.0713.0215.1416.0986.1416h6.5977c.0771 0 .1474-.0489.169-.126.1122-.4082.1757-.837.1757-1.2803 0-2.6025-2.125-4.727-4.7344-4.727', providerColor: 'text-orange-400', watched: true },
+          { branch: 'feature/checkout', provider: 'Vercel', status: 'Building', providerIcon: 'm12 1.608 12 20.784H0Z', providerColor: 'text-neutral-700 dark:text-white', watched: true },
+          { branch: 'staging', provider: 'Netlify', status: 'Ready', providerIcon: 'M6.49 19.04h-.23L5.13 17.9v-.23l1.73-1.71h1.2l.15.15v1.2L6.5 19.04ZM5.13 6.31V6.1l1.13-1.13h.23L8.2 6.68v1.2l-.15.15h-1.2L5.13 6.31Zm9.96 9.09h-1.65l-.14-.13v-3.83c0-.68-.27-1.2-1.1-1.23-.42 0-.9 0-1.43.02l-.07.08v4.96l-.14.14H8.9l-.13-.14V8.73l.13-.14h3.7a2.6 2.6 0 0 1 2.61 2.6v4.08l-.13.14Zm-8.37-2.44H.14L0 12.82v-1.64l.14-.14h6.58l.14.14v1.64l-.14.14Zm17.14 0h-6.58l-.14-.14v-1.64l.14-.14h6.58l.14.14v1.64l-.14.14ZM11.05 6.55V1.64l.14-.14h1.65l.14.14v4.9l-.14.14h-1.65l-.14-.13Zm0 15.81v-4.9l.14-.14h1.65l.14.13v4.91l-.14.14h-1.65l-.14-.14Z', providerColor: 'text-teal-400', watched: false },
         ] as pin}
           <div class="rounded-xl border border-neutral-200 dark:border-neutral-700/50 bg-white dark:bg-neutral-800/80 px-3.5 py-2.5 shadow-sm flex items-center gap-3">
             <div class="flex-1 min-w-0">
@@ -149,8 +239,10 @@
                 </svg>
                 <span class="text-[11px] font-semibold text-neutral-700 dark:text-neutral-300 truncate">{pin.branch}</span>
               </div>
-              <div class="flex items-center gap-2">
-                <div class="w-1.5 h-1.5 rounded-full {pin.statusColor}"></div>
+              <div class="flex items-center gap-1.5">
+                <svg class="w-3 h-3 {pin.providerColor} flex-shrink-0" viewBox="0 0 24 24" fill="currentColor">
+                  <path d={pin.providerIcon} />
+                </svg>
                 <span class="text-[10px] font-mono text-neutral-400 dark:text-neutral-500">{pin.provider} · {pin.status}</span>
               </div>
             </div>
