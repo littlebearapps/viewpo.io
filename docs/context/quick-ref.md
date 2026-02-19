@@ -62,7 +62,7 @@ npm run build            # Build to dist/
 | `src/lib/roadmap/` | Roadmap library — `types.ts`, `adapter.ts` (Trello), `cache.ts` (CF Cache SWR), `mock.ts` |
 | `src/components/` | 20 components (Hero, FAQ, PricingTable, ViewportDemo, SignupModal, ContactModal, RoadmapGrid, RoadmapCard, FeedbackForm, Footer, Header, ThemeToggle, etc.) |
 | `src/styles/global.css` | Brand tokens, animations, `@variant dark` for Tailwind v4 |
-| `src/utils/constants.ts` | API base URL (email.viewpo.io), Turnstile site key, feedback categories, device presets, pricing tiers, FAQ data (13 items incl. support expectations) |
+| `src/utils/constants.ts` | API base URL (email.viewpo.io), Turnstile site key, feedback categories, 6 device presets, 17-device library, pricing tiers (Free/Starter/Pro), FAQ data (13 items), homepage FAQ selection |
 | `wrangler.toml` | D1 binding (`DB` → `viewpo-roadmap`) for roadmap voting |
 | `migrations/0001_create_votes.sql` | D1 schema — `votes` + `voter_fingerprints` tables |
 | `src/scripts/scroll-reveal.ts` | IntersectionObserver scroll animation |
@@ -76,7 +76,8 @@ npm run build            # Build to dist/
 | `.github/workflows/ci.yml` | CI — build check on PRs and main |
 | `.github/workflows/deploy-production.yml` | Deploy to CF Pages on push to main |
 | `docs/viewpo-purpose.md` | Product purpose document |
-| `docs/content/features-and-benefits.md` | Feature copy reference |
+| `docs/features-and-benefits.md` | Feature details and benefits reference |
+| `docs/use-cases.md` | Persona and situational use cases |
 | `docs/context/plausible-analytics.md` | Full Plausible setup — 32 goals, proxy config, funnels, properties |
 
 ---
@@ -141,17 +142,19 @@ Class-based (`.dark` on `<html>`) with localStorage persistence.
 
 ## Product Context
 
-Viewpo is a native iOS/macOS app that aggregates preview deployments from multiple providers (Cloudflare Pages, Vercel, Netlify, GitHub Pages) into one dashboard with a viewport viewer. See `docs/viewpo-purpose.md` for full product context.
+Viewpo is a native iOS/macOS app that aggregates preview deployments from multiple providers (Cloudflare Pages, Vercel, Netlify, GitHub) into one dashboard with a viewport viewer. 6 presets, 17-device library, and custom sizes. See `docs/viewpo-purpose.md` for full product context and `docs/features-and-benefits.md` for feature details.
 
 ### Target Audiences
-1. **Seasoned Developer** — juggling multiple projects across providers, wants unified dashboard
+1. **Seasoned Developer** — juggling multiple projects across providers, wants unified dashboard + push notifications
 2. **Vibe Coder / AI Builder** — uses Cursor, v0, Bolt, Lovable, Replit; deploys via provider but lacks device preview tools
 3. **Non-Technical Reviewer** — designer, PM, client, stakeholder who receives preview links and needs to check how things look
+4. **Agency Juggler** — manages multiple client projects across different providers, needs share links for client sign-off
+5. **Team Lead** — needs team workspaces with role-based access (Owner/Member/Viewer)
 
 ### Pricing
-- **Free**: 3 projects, 1 provider, viewport viewer
-- **Starter** ($9/mo): Unlimited projects, all providers, sharing
-- **Pro** ($29/mo): Team workspaces, deploy comparison, API access
+- **Free** ($0): Up to 3 projects, 1 provider connection, viewport viewer (6 presets), build status notifications, pin 1 branch
+- **Starter** ($9/mo): Unlimited projects, all provider connections, branch pinning & notifications, share links & QR codes, custom viewport sizes, 17-device library
+- **Pro** ($29/mo): Everything in Starter + team workspaces (up to 10 members), role-based access, deploy comparison view, priority support, API access
 - **Payment**: Lemon Squeezy (Merchant of Record) — handles tax/VAT/GST, refunds, chargebacks
 - **Currency**: USD base. "Prices exclude tax" disclosure on pricing page. Lemon Squeezy handles currency conversion
 

@@ -68,7 +68,7 @@ npm run build            # Build to dist/
 | `src/layouts/BaseLayout.astro` | Shared layout — meta tags, JSON-LD schemas, fonts, Plausible proxy + `plausible.init()`, theme persistence, View Transitions, gclid capture (dormant) |
 | `src/components/` | 17 components (Hero, FAQ, PricingTable, ViewportDemo, SignupModal, ContactModal, etc.) |
 | `src/styles/global.css` | Brand tokens, animations, dark mode variant |
-| `src/utils/constants.ts` | API base URL (email.viewpo.io), device presets, pricing tiers, FAQ data |
+| `src/utils/constants.ts` | API base URL (email.viewpo.io), 6 device presets, 17-device library, pricing tiers (Free/Starter/Pro), FAQ data (13 items), homepage FAQ selection |
 | `public/robots.txt` | AI crawlers explicitly allowed (GPTBot, ClaudeBot, etc.) |
 | `public/llms.txt` | AI-readable site index following llmstxt.org standard |
 | `public/_headers` | Security headers + `/_astro/*` immutable cache |
@@ -78,7 +78,8 @@ npm run build            # Build to dist/
 | `.github/workflows/ci.yml` | CI — build check on PRs |
 | `.github/workflows/deploy-production.yml` | Deploy to CF Pages on push to main |
 | `docs/viewpo-purpose.md` | Product purpose document |
-| `docs/content/features-and-benefits.md` | Feature copy reference |
+| `docs/features-and-benefits.md` | Feature details and benefits reference |
+| `docs/use-cases.md` | Persona and situational use cases |
 
 ---
 

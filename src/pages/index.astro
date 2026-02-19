@@ -4,17 +4,18 @@ import Header from '@components/Header.astro';
 import Footer from '@components/Footer.astro';
 import Hero from '@components/Hero.astro';
 import Section from '@components/Section.astro';
+import ProblemHook from '@components/ProblemHook.astro';
 import BentoFeatures from '@components/BentoFeatures.astro';
-import PlatformAvailability from '@components/PlatformAvailability.astro';
 import HowItWorks from '@components/HowItWorks.astro';
 import Integrations from '@components/Integrations.astro';
+import PlatformAvailability from '@components/PlatformAvailability.astro';
 import PricingTable from '@components/PricingTable.astro';
 import FAQ from '@components/FAQ.astro';
 ---
 
 <BaseLayout
-  title="Viewpo — Instantly Preview Any Website at Any Resolution"
-  description="Push a change, check it instantly. Viewpo shows your website at any screen size on any device, and aggregates deploy previews from Cloudflare Pages, Vercel, Netlify, and GitHub Pages."
+  title="Viewpo — Preview Any Deploy at Any Resolution, From Any Device"
+  description="All your preview deployments from Cloudflare Pages, Vercel, Netlify, and GitHub in one dashboard. View any deploy at any screen size — from your iPhone, iPad, or Mac."
 >
   <Header slot="header" />
 
@@ -55,17 +56,20 @@ import FAQ from '@components/FAQ.astro';
       <div class="absolute top-[92%] left-[45%] w-[500px] h-[500px] rounded-full bg-indigo-400/12 blur-[140px] dark:bg-indigo-400/[0.06]"></div>
     </div>
 
+    <!-- Problem Hook — pain-first, then viewport viewer solution -->
+    <ProblemHook />
+
     <!-- Bento Features Grid -->
     <BentoFeatures />
 
-    <!-- Platform Availability -->
-    <PlatformAvailability />
+    <!-- How It Works -->
+    <HowItWorks />
 
     <!-- Integrations Ecosystem -->
     <Integrations />
 
-    <!-- How It Works -->
-    <HowItWorks />
+    <!-- Platform Availability -->
+    <PlatformAvailability />
 
     <!-- Pricing -->
     <PricingTable />
@@ -77,10 +81,10 @@ import FAQ from '@components/FAQ.astro';
     <Section id="cta" padding="lg" class="relative">
       <div class="max-w-2xl mx-auto text-center reveal relative z-10">
         <h2 class="font-heading font-bold text-3xl md:text-4xl mb-4">
-          Ready to preview with confidence?
+          Stop refreshing dashboards. Start previewing.
         </h2>
         <p class="text-foreground/60 text-lg mb-8 leading-relaxed">
-          Viewpo is coming soon. Join the beta to help shape it, or sign up to be notified when it launches.
+          Viewpo is in beta. Join now and help shape the tool that puts every deploy at your fingertips.
         </p>
         <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
           <button type="button" data-open-signup class="inline-flex items-center justify-center gap-2 font-heading font-medium rounded-xl transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 hover:scale-[1.02] active:scale-[0.98] px-8 py-4 text-lg bg-primary text-white hover:bg-primary-hover focus:ring-primary shadow-md hover:shadow-lg plausible-event-name=CTA+Join+Beta">

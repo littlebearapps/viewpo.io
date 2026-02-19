@@ -1,6 +1,7 @@
 <script lang="ts">
-  let { title, description, span = '1', visual }: {
+  let { title, subtitle = '', description, span = '1', visual }: {
     title: string;
+    subtitle?: string;
     description: string;
     span?: '1' | '2';
     visual: string;
@@ -18,7 +19,67 @@
 >
   <!-- Visual area -->
   <div class="relative flex-1 min-h-[200px] p-6 pb-0 flex items-center justify-center overflow-hidden">
-    {#if visual === 'dashboard'}
+    {#if visual === 'viewport'}
+      <!-- Viewport Viewer — phone showing desktop wireframe with preset pills -->
+      <div class="w-full max-w-md flex items-center justify-center gap-6 transition-transform duration-500" class:scale-[1.02]={hovered}>
+        <!-- Preset pills on the left -->
+        <div class="hidden sm:flex flex-col gap-2">
+          {#each [
+            { label: 'Phone S', width: '375px', active: false },
+            { label: 'Tablet', width: '820px', active: false },
+            { label: 'Laptop', width: '1440px', active: false },
+            { label: 'Desktop', width: '1920px', active: true },
+          ] as preset}
+            <div class="flex items-center gap-2 px-3 py-1.5 rounded-lg text-[10px] font-mono transition-colors
+              {preset.active ? 'bg-primary/10 text-primary border border-primary/20' : 'text-neutral-400 dark:text-neutral-500'}">
+              <span class="font-semibold">{preset.label}</span>
+              <span class="text-neutral-300 dark:text-neutral-600">{preset.width}</span>
+            </div>
+          {/each}
+        </div>
+        <!-- Mini phone showing desktop content -->
+        <div class="w-[90px] sm:w-[100px]">
+          <div class="rounded-2xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-800 shadow-xl overflow-hidden">
+            <div class="h-3.5 flex items-center justify-center bg-neutral-50 dark:bg-neutral-700 border-b border-neutral-200 dark:border-neutral-600">
+              <div class="w-8 h-1.5 bg-foreground/10 dark:bg-white/10 rounded-full"></div>
+            </div>
+            <div class="relative overflow-hidden h-32">
+              <div class="origin-top-left" style="transform: scale(0.2); width: 400px;">
+                <div class="h-8 bg-neutral-100 dark:bg-neutral-800 border-b border-neutral-200 dark:border-neutral-700 flex items-center px-4">
+                  <div class="w-14 h-2.5 bg-neutral-300 dark:bg-neutral-500 rounded"></div>
+                  <div class="flex-1"></div>
+                  <div class="w-10 h-4 bg-indigo-400 rounded"></div>
+                </div>
+                <div class="px-6 py-5 text-center">
+                  <div class="w-40 h-4 bg-neutral-300 dark:bg-neutral-500 rounded mx-auto mb-2"></div>
+                  <div class="w-56 h-1.5 bg-neutral-200 dark:bg-neutral-600 rounded mx-auto mb-1"></div>
+                  <div class="w-36 h-1.5 bg-neutral-200 dark:bg-neutral-600 rounded mx-auto mb-3"></div>
+                  <div class="flex justify-center gap-2">
+                    <div class="w-16 h-5 bg-indigo-400 rounded"></div>
+                    <div class="w-16 h-5 border border-indigo-300 rounded"></div>
+                  </div>
+                </div>
+                <div class="px-5 py-3">
+                  <div class="grid grid-cols-4 gap-2">
+                    <div class="h-16 bg-neutral-100 dark:bg-neutral-700 rounded border border-neutral-200 dark:border-neutral-600"></div>
+                    <div class="h-16 bg-neutral-100 dark:bg-neutral-700 rounded border border-neutral-200 dark:border-neutral-600"></div>
+                    <div class="h-16 bg-neutral-100 dark:bg-neutral-700 rounded border border-neutral-200 dark:border-neutral-600"></div>
+                    <div class="h-16 bg-neutral-100 dark:bg-neutral-700 rounded border border-neutral-200 dark:border-neutral-600"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="flex justify-center py-1">
+              <div class="w-6 h-0.5 bg-foreground/10 dark:bg-white/10 rounded-full"></div>
+            </div>
+          </div>
+          <div class="text-center mt-1.5">
+            <span class="text-[8px] font-heading font-medium text-primary/60 dark:text-primary/40">1920px on iPhone</span>
+          </div>
+        </div>
+      </div>
+
+    {:else if visual === 'dashboard'}
       <!-- Universal Dashboard mock UI -->
       <div class="w-full max-w-md rounded-xl border border-neutral-200 dark:border-neutral-700/50 bg-neutral-50 dark:bg-neutral-800/80 overflow-hidden shadow-sm transition-transform duration-500" class:scale-[1.02]={hovered}>
         <!-- Header bar -->
@@ -34,7 +95,7 @@
             { provider: 'Vercel', branch: 'main', status: 'Ready', color: 'bg-emerald-400', time: '2m ago' },
             { provider: 'Cloudflare', branch: 'feature/auth', status: 'Building', color: 'bg-amber-400', time: '45s ago' },
             { provider: 'Netlify', branch: 'fix/nav', status: 'Ready', color: 'bg-emerald-400', time: '8m ago' },
-            { provider: 'Vercel', branch: 'staging', status: 'Failed', color: 'bg-red-400', time: '12m ago' },
+            { provider: 'GitHub', branch: 'staging', status: 'Failed', color: 'bg-red-400', time: '12m ago' },
           ] as row}
             <div class="flex items-center justify-between px-4 py-2.5 text-[11px]">
               <div class="flex items-center gap-2.5">
@@ -51,32 +112,25 @@
         </div>
       </div>
 
-    {:else if visual === 'performance'}
-      <!-- Native Performance — 60fps badge -->
-      <div class="flex flex-col items-center gap-3 transition-transform duration-500" class:scale-[1.05]={hovered}>
-        <div class="relative">
-          <svg class="w-28 h-28" viewBox="0 0 120 120">
-            <!-- Background ring -->
-            <circle cx="60" cy="60" r="50" fill="none" stroke="currentColor" stroke-width="6" class="text-neutral-200 dark:text-neutral-700" />
-            <!-- Progress ring -->
-            <circle cx="60" cy="60" r="50" fill="none" stroke="url(#perf-gradient)" stroke-width="6" stroke-linecap="round" stroke-dasharray="283" stroke-dashoffset="28" transform="rotate(-90 60 60)" class="transition-all duration-700" />
-            <defs>
-              <linearGradient id="perf-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" stop-color="#6366F1" />
-                <stop offset="100%" stop-color="#10B981" />
-              </linearGradient>
-            </defs>
-          </svg>
-          <div class="absolute inset-0 flex flex-col items-center justify-center">
-            <span class="text-3xl font-heading font-bold text-neutral-800 dark:text-white">60</span>
-            <span class="text-[10px] font-heading font-semibold text-neutral-400 dark:text-neutral-500 uppercase tracking-wider">fps</span>
+    {:else if visual === 'notifications'}
+      <!-- Push Notifications — phone notification cards -->
+      <div class="flex flex-col gap-2.5 w-full max-w-[220px] transition-transform duration-500" class:scale-[1.05]={hovered}>
+        {#each [
+          { title: 'Deploy succeeded', branch: 'main', provider: 'Cloudflare', color: 'bg-emerald-400', time: '2m ago' },
+          { title: 'Deploy building', branch: 'feature/auth', provider: 'Vercel', color: 'bg-amber-400', time: '30s ago' },
+          { title: 'Deploy failed', branch: 'fix/nav', provider: 'Netlify', color: 'bg-red-400', time: '5m ago' },
+        ] as notif}
+          <div class="rounded-xl border border-neutral-200 dark:border-neutral-700/50 bg-white dark:bg-neutral-800/80 px-3.5 py-2.5 shadow-sm">
+            <div class="flex items-center gap-2 mb-1">
+              <div class="w-2 h-2 rounded-full {notif.color}"></div>
+              <span class="text-[11px] font-semibold text-neutral-700 dark:text-neutral-300">{notif.title}</span>
+            </div>
+            <div class="flex items-center justify-between">
+              <span class="text-[10px] font-mono text-neutral-400 dark:text-neutral-500">{notif.branch} · {notif.provider}</span>
+              <span class="text-[9px] text-neutral-300 dark:text-neutral-600">{notif.time}</span>
+            </div>
           </div>
-        </div>
-        <div class="flex gap-2">
-          {#each ['SwiftUI', 'Metal', '120Hz'] as tag}
-            <span class="text-[10px] font-mono px-2 py-0.5 rounded-full bg-neutral-100 dark:bg-neutral-800 text-neutral-500 dark:text-neutral-400 border border-neutral-200 dark:border-neutral-700">{tag}</span>
-          {/each}
-        </div>
+        {/each}
       </div>
 
     {:else if visual === 'qr'}
@@ -122,79 +176,55 @@
         </div>
       </div>
 
-    {:else if visual === 'github'}
-      <!-- GitHub PR merge icon -->
-      <div class="transition-transform duration-500" class:scale-[1.05]={hovered}>
-        <div class="relative w-36 h-36">
-          <svg viewBox="0 0 100 100" class="w-full h-full">
-            <!-- Main branch line -->
-            <line x1="35" y1="15" x2="35" y2="85" stroke="currentColor" stroke-width="3" class="text-neutral-300 dark:text-neutral-600" />
-            <!-- Feature branch -->
-            <path d="M65 25 C65 45, 50 55, 35 65" stroke="currentColor" stroke-width="3" fill="none" stroke-linecap="round" class="text-primary" />
-            <!-- Commit dots -->
-            <circle cx="35" cy="15" r="5" fill="currentColor" class="text-neutral-400 dark:text-neutral-500" />
-            <circle cx="35" cy="45" r="5" fill="currentColor" class="text-neutral-400 dark:text-neutral-500" />
-            <circle cx="65" cy="25" r="5" fill="currentColor" class="text-primary" />
-            <!-- Merge point -->
-            <circle cx="35" cy="65" r="7" fill="currentColor" class="text-emerald-500" />
-            <path d="M30 65 L33 68 L40 61" stroke="white" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" />
-            <!-- Bottom commit -->
-            <circle cx="35" cy="85" r="5" fill="currentColor" class="text-neutral-400 dark:text-neutral-500" />
-          </svg>
-        </div>
-        <div class="absolute bottom-6 left-6 right-6 flex items-center gap-2">
-          <span class="text-[10px] font-mono px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-500 border border-emerald-500/20">Merged</span>
-          <span class="text-[10px] font-mono text-neutral-400 dark:text-neutral-500">#142 → main</span>
+    {:else if visual === 'connection'}
+      <!-- One-Tap Connection — provider icons flowing into a central hub -->
+      <div class="w-full max-w-md transition-transform duration-500" class:scale-[1.02]={hovered}>
+        <div class="flex items-center justify-center gap-4 sm:gap-6">
+          {#each [
+            { name: 'GitHub', icon: 'M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12', color: 'text-neutral-700 dark:text-white', badge: 'OAuth' },
+            { name: 'Vercel', icon: 'm12 1.608 12 20.784H0Z', color: 'text-neutral-700 dark:text-white', badge: 'OAuth' },
+            { name: 'Netlify', icon: 'M6.49 19.04h-.23L5.13 17.9v-.23l1.73-1.71h1.2l.15.15v1.2L6.5 19.04ZM5.13 6.31V6.1l1.13-1.13h.23L8.2 6.68v1.2l-.15.15h-1.2L5.13 6.31Zm9.96 9.09h-1.65l-.14-.13v-3.83c0-.68-.27-1.2-1.1-1.23-.42 0-.9 0-1.43.02l-.07.08v4.96l-.14.14H8.9l-.13-.14V8.73l.13-.14h3.7a2.6 2.6 0 0 1 2.61 2.6v4.08l-.13.14Zm-8.37-2.44H.14L0 12.82v-1.64l.14-.14h6.58l.14.14v1.64l-.14.14Zm17.14 0h-6.58l-.14-.14v-1.64l.14-.14h6.58l.14.14v1.64l-.14.14ZM11.05 6.55V1.64l.14-.14h1.65l.14.14v4.9l-.14.14h-1.65l-.14-.13Zm0 15.81v-4.9l.14-.14h1.65l.14.13v4.91l-.14.14h-1.65l-.14-.14Z', color: 'text-teal-400', badge: 'OAuth' },
+            { name: 'Cloudflare', icon: 'M16.5088 16.8447c.1475-.5068.0908-.9707-.1553-1.3154-.2246-.3164-.6045-.499-1.0615-.5205l-8.6592-.1123a.1559.1559 0 0 1-.1333-.0713c-.0283-.042-.0351-.0986-.021-.1553.0278-.084.1123-.1484.2036-.1562l8.7359-.1123c1.0351-.0489 2.1601-.8868 2.5537-1.9136l.499-1.3013c.0215-.0561.0293-.1128.0147-.168-.5625-2.5463-2.835-4.4453-5.5499-4.4453-2.5039 0-4.6284 1.6177-5.3876 3.8614-.4927-.3658-1.1187-.5625-1.794-.499-1.2026.119-2.1665 1.083-2.2861 2.2856-.0283.31-.0069.6128.0635.894C1.5683 13.171 0 14.7754 0 16.752c0 .1748.0142.3515.0352.5273.0141.083.0844.1475.1689.1475h15.9814c.0909 0 .1758-.0645.2032-.1553l.12-.4268zm2.7568-5.5634c-.0771 0-.1611 0-.2383.0112-.0566 0-.1054.0415-.127.0976l-.3378 1.1744c-.1475.5068-.0918.9707.1543 1.3164.2256.3164.6055.498 1.0625.5195l1.8437.1133c.0557 0 .1055.0263.1329.0703.0283.043.0351.1074.0214.1562-.0283.084-.1132.1485-.204.1553l-1.921.1123c-1.041.0488-2.1582.8867-2.5527 1.914l-.1406.3585c-.0283.0713.0215.1416.0986.1416h6.5977c.0771 0 .1474-.0489.169-.126.1122-.4082.1757-.837.1757-1.2803 0-2.6025-2.125-4.727-4.7344-4.727', color: 'text-orange-400', badge: 'API Token' },
+          ] as provider}
+            <div class="flex flex-col items-center gap-2">
+              <div class="w-14 h-14 rounded-xl bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 flex items-center justify-center shadow-sm">
+                <svg class="w-7 h-7 {provider.color}" viewBox="0 0 24 24" fill="currentColor">
+                  <path d={provider.icon} />
+                </svg>
+              </div>
+              <span class="text-[9px] font-mono text-neutral-400 dark:text-neutral-500 px-1.5 py-0.5 rounded-full bg-neutral-100 dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700">{provider.badge}</span>
+            </div>
+          {/each}
         </div>
       </div>
 
-    {:else if visual === 'regression'}
-      <!-- Visual Regression side-by-side -->
-      <div class="w-full max-w-md transition-transform duration-500" class:scale-[1.02]={hovered}>
-        <div class="flex gap-3">
-          <!-- Before -->
-          <div class="flex-1 rounded-lg border border-neutral-200 dark:border-neutral-700/50 overflow-hidden bg-neutral-50 dark:bg-neutral-800/80">
-            <div class="px-3 py-1.5 border-b border-neutral-200 dark:border-neutral-700/50 text-[10px] font-mono text-neutral-400 dark:text-neutral-500">Before</div>
-            <div class="p-3 space-y-2">
-              <div class="h-2.5 w-3/4 rounded bg-neutral-300 dark:bg-neutral-600"></div>
-              <div class="h-2 w-full rounded bg-neutral-200 dark:bg-neutral-700"></div>
-              <div class="h-2 w-5/6 rounded bg-neutral-200 dark:bg-neutral-700"></div>
-              <div class="h-8 w-full rounded bg-neutral-200 dark:bg-neutral-700 mt-3"></div>
-              <div class="flex gap-2 mt-2">
-                <div class="h-6 w-16 rounded bg-neutral-300 dark:bg-neutral-600"></div>
-                <div class="h-6 w-12 rounded bg-neutral-200 dark:bg-neutral-700"></div>
-              </div>
-            </div>
-          </div>
-          <!-- Diff indicator -->
-          <div class="flex flex-col items-center justify-center gap-1">
-            <svg class="w-5 h-5 text-amber-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M7.5 21L3 16.5m0 0L7.5 12M3 16.5h13.5m0-13.5L21 7.5m0 0L16.5 12M21 7.5H7.5" />
+    {:else if visual === 'team'}
+      <!-- Team Workspaces — role badges -->
+      <div class="flex flex-col items-center gap-3 transition-transform duration-500" class:scale-[1.05]={hovered}>
+        {#each [
+          { role: 'Owner', color: 'bg-primary/10 text-primary border-primary/20', icon: 'M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z' },
+          { role: 'Member', color: 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/20', icon: 'M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z' },
+          { role: 'Viewer', color: 'bg-neutral-100 dark:bg-neutral-800 text-neutral-500 border-neutral-200 dark:border-neutral-700', icon: 'M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z M15 12a3 3 0 11-6 0 3 3 0 016 0z' },
+        ] as member}
+          <div class="flex items-center gap-3 px-4 py-2.5 rounded-xl border {member.color} w-full max-w-[200px]">
+            <svg class="w-5 h-5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d={member.icon} />
             </svg>
-            <span class="text-[9px] font-mono text-amber-400">3 diffs</span>
+            <span class="text-sm font-heading font-semibold">{member.role}</span>
           </div>
-          <!-- After -->
-          <div class="flex-1 rounded-lg border border-neutral-200 dark:border-neutral-700/50 overflow-hidden bg-neutral-50 dark:bg-neutral-800/80">
-            <div class="px-3 py-1.5 border-b border-neutral-200 dark:border-neutral-700/50 text-[10px] font-mono text-neutral-400 dark:text-neutral-500">After</div>
-            <div class="p-3 space-y-2">
-              <div class="h-2.5 w-3/4 rounded bg-neutral-300 dark:bg-neutral-600"></div>
-              <div class="h-2 w-full rounded bg-neutral-200 dark:bg-neutral-700"></div>
-              <div class="h-2 w-5/6 rounded bg-neutral-200 dark:bg-neutral-700"></div>
-              <div class="h-10 w-full rounded bg-red-200/50 dark:bg-red-500/20 border border-red-300 dark:border-red-500/30 mt-3"></div>
-              <div class="flex gap-2 mt-2">
-                <div class="h-6 w-20 rounded bg-red-200/50 dark:bg-red-500/20 border border-red-300 dark:border-red-500/30"></div>
-                <div class="h-6 w-12 rounded bg-neutral-200 dark:bg-neutral-700"></div>
-              </div>
-            </div>
-          </div>
-        </div>
+        {/each}
       </div>
     {/if}
   </div>
 
   <!-- Text content -->
   <div class="p-6 pt-4">
-    <h3 class="font-heading font-semibold text-lg text-neutral-900 dark:text-white mb-1.5">{title}</h3>
+    {#if subtitle}
+      <p class="text-[11px] font-heading font-semibold uppercase tracking-wider text-primary/70 dark:text-primary/60 mb-1">{title}</p>
+      <h3 class="font-heading font-semibold text-lg text-neutral-900 dark:text-white mb-1.5">{subtitle}</h3>
+    {:else}
+      <h3 class="font-heading font-semibold text-lg text-neutral-900 dark:text-white mb-1.5">{title}</h3>
+    {/if}
     <p class="text-sm text-neutral-500 dark:text-neutral-400 leading-relaxed">{description}</p>
   </div>
 </div>

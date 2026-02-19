@@ -2,17 +2,21 @@
 import Section from './Section.astro';
 ---
 
-<Section id="features" background="muted">
+<Section id="problem" background="muted">
   <div class="max-w-5xl mx-auto">
     <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
       <!-- Text -->
       <div class="reveal">
+        <p class="text-primary font-heading font-semibold text-sm uppercase tracking-wider mb-3">The problem</p>
         <h2 class="font-heading font-bold text-2xl md:text-3xl mb-6">
-          View any resolution, from any device — instantly
+          Four dashboards. Zero viewport control.
         </h2>
 
+        <p class="text-foreground/60 text-lg leading-relaxed mb-4">
+          Your deploys are scattered across Cloudflare, Vercel, Netlify, and GitHub. To check one, you log into the right dashboard, find the right branch, copy the preview URL — and see it at whatever screen size you happen to be holding.
+        </p>
         <p class="text-foreground/60 text-lg leading-relaxed mb-8">
-          Check the desktop layout on your iPhone during your morning walk. Switch to the iPad view before your standup. Viewpo's viewport viewer renders the actual site — not a screenshot — at any resolution you choose.
+          Viewpo puts every deploy in one feed and lets you view any of them at any resolution — from your phone, iPad, or Mac.
         </p>
 
         <ul class="space-y-4">
@@ -24,7 +28,7 @@ import Section from './Section.astro';
             </div>
             <div>
               <span class="font-heading font-semibold text-sm">Any resolution</span>
-              <p class="text-foreground/50 text-sm">iPhone, iPad, laptop, 27-inch desktop, custom sizes — all from whatever device you're holding</p>
+              <p class="text-foreground/50 text-sm">6 presets, 17 specific devices, or custom sizes — see a 27-inch desktop on your iPhone</p>
             </div>
           </li>
           <li class="flex items-start gap-3">
@@ -35,7 +39,7 @@ import Section from './Section.astro';
             </div>
             <div>
               <span class="font-heading font-semibold text-sm">Real browser engine</span>
-              <p class="text-foreground/50 text-sm">Loads the actual website in a real browser engine — works with every site, even those that block iframes</p>
+              <p class="text-foreground/50 text-sm">Native WebView bypasses X-Frame-Options — loads every site, even those that block iframes</p>
             </div>
           </li>
           <li class="flex items-start gap-3">
@@ -117,7 +121,7 @@ import Section from './Section.astro';
               </div>
               <!-- Badge -->
               <div class="absolute -top-2 -right-2 px-2 py-0.5 rounded-full bg-white dark:bg-neutral-700 text-[8px] font-heading font-semibold text-foreground/60 dark:text-white/60 shadow-sm border border-neutral-200 dark:border-neutral-800 transition-all duration-300 group-hover/monitor:bg-primary group-hover/monitor:text-white group-hover/monitor:border-primary group-hover/monitor:shadow-md">
-                27" — 2560 × 1440
+                  Desktop — 1920 × 1080
               </div>
             </div>
 
@@ -169,7 +173,7 @@ import Section from './Section.astro';
               </div>
               <!-- Badge — positioned left so it's visible -->
               <div class="absolute -top-2 -left-2 px-2 py-0.5 rounded-full bg-white dark:bg-neutral-700 text-[8px] font-heading font-semibold text-foreground/60 dark:text-white/60 shadow-sm border border-neutral-200 dark:border-neutral-800 transition-all duration-300 group-hover/laptop:bg-primary group-hover/laptop:text-white group-hover/laptop:border-primary group-hover/laptop:shadow-md">
-                MacBook Pro
+                  Laptop — 1440px
               </div>
             </div>
 
@@ -225,7 +229,7 @@ import Section from './Section.astro';
               </div>
               <!-- Badge — positioned left so it's not hidden behind the phone -->
               <div class="absolute -top-2 -left-2 px-2 py-0.5 rounded-full bg-white dark:bg-neutral-700 text-[8px] font-heading font-semibold text-foreground/60 dark:text-white/60 shadow-sm border border-neutral-200 dark:border-neutral-800 transition-all duration-300 group-hover/ipad:bg-primary group-hover/ipad:text-white group-hover/ipad:border-primary group-hover/ipad:shadow-md">
-                iPad Pro
+                  Tablet — 820px
               </div>
             </div>
 
@@ -283,7 +287,7 @@ import Section from './Section.astro';
               </div>
               <!-- Badge -->
               <div class="absolute -top-2 -right-2 px-2 py-0.5 rounded-full bg-white dark:bg-neutral-700 text-[8px] font-heading font-semibold text-foreground/60 dark:text-white/60 shadow-sm border border-neutral-200 dark:border-neutral-800 transition-all duration-300 group-hover/phone:bg-primary group-hover/phone:text-white group-hover/phone:border-primary group-hover/phone:shadow-md">
-                2560 × 1440
+                  1920 × 1080
               </div>
               <!-- "on iPhone" label -->
               <div class="absolute top-full left-0 right-0 text-center mt-1">
