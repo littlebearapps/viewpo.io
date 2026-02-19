@@ -1,24 +1,50 @@
 ---
 import Section from './Section.astro';
-import ProblemHookDemo from './ProblemHookDemo.svelte';
+
+const painPoints = [
+  {
+    heading: '"Which dashboard was it again?"',
+    body: "You're on Cloudflare for one project, Vercel for another, Netlify for a third. Four tabs, three logins, zero overview. Finding the right preview link takes longer than the code change.",
+  },
+  {
+    heading: '"Is the build done yet?"',
+    body: "You pushed a fix twenty minutes ago. Now you're refreshing the dashboard, scanning Slack for a bot message, or just... wondering. There's no notification — just silence and hope.",
+  },
+  {
+    heading: '"It doesn\'t look right on my phone"',
+    body: "You opened the preview on your iPhone. It shows the mobile layout — not the desktop design you need to approve. Safari's \"Request Desktop Site\" changes the user agent, not the CSS viewport.",
+  },
+  {
+    heading: '"Can you send me the new link?"',
+    body: "The preview URL changed after the last push. The link you shared yesterday shows yesterday's version. Your client is reviewing the wrong build, and nobody knows until they send confused feedback.",
+  },
+];
 ---
 
 <Section id="problem">
-  <div class="max-w-5xl mx-auto">
-    <!-- Static header -->
-    <div class="reveal mb-10">
-      <p class="text-primary font-heading font-semibold text-sm uppercase tracking-wider mb-3">Why Viewpo</p>
-      <h2 class="font-heading font-bold text-2xl md:text-3xl mb-6">
-        Ship changes. Get notified. Preview instantly.
+  <div class="max-w-4xl mx-auto">
+    <!-- Section header -->
+    <div class="reveal mb-10 text-center">
+      <h2 class="font-heading font-bold text-2xl md:text-3xl mb-3">
+        Sound familiar?
       </h2>
-      <p class="text-foreground/60 text-lg leading-relaxed max-w-xl">
-        Connect your providers once. Get notified when deploys land. Preview, share, and get sign-off — all from one app.
+      <p class="text-foreground/50 text-base md:text-lg max-w-xl mx-auto leading-relaxed">
+        Preview deployments are scattered across providers, dashboards, and browser tabs. The tools exist — they just don't talk to each other.
       </p>
     </div>
 
-    <!-- Interactive benefit list + demo panel -->
-    <div class="reveal reveal-delay-1">
-      <ProblemHookDemo client:visible />
+    <!-- Pain point cards — 2x2 grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5">
+      {painPoints.map((point, i) => (
+        <div class={`reveal reveal-delay-${Math.min(i + 1, 4)} rounded-xl border border-neutral-200/80 dark:border-neutral-700/50 bg-white/50 dark:bg-white/[0.02] backdrop-blur-sm p-5 md:p-6 border-l-[3px] border-l-amber-400/60 dark:border-l-amber-500/40`}>
+          <h3 class="font-heading font-semibold text-base md:text-lg text-neutral-800 dark:text-neutral-200 mb-2 italic">
+            {point.heading}
+          </h3>
+          <p class="text-sm text-foreground/50 leading-relaxed">
+            {point.body}
+          </p>
+        </div>
+      ))}
     </div>
   </div>
 </Section>
