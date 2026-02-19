@@ -162,6 +162,11 @@
             </div>
           </div>
         </div>
+
+        <!-- Preset count badge -->
+        <div class="flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-primary/8 dark:bg-primary/10">
+          <span class="text-[9px] font-heading font-semibold text-primary/70 dark:text-primary/60">23 presets + custom sizes</span>
+        </div>
       </div>
 
     {:else if visual === 'notifications'}
@@ -324,20 +329,70 @@
       </div>
 
     {:else if visual === 'team'}
-      <!-- Team Workspaces — role badges -->
-      <div class="flex flex-col items-center gap-3 transition-transform duration-500" class:scale-[1.05]={hovered}>
-        {#each [
-          { role: 'Owner', color: 'bg-primary/10 text-primary border-primary/20', icon: 'M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z' },
-          { role: 'Member', color: 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/20', icon: 'M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z' },
-          { role: 'Viewer', color: 'bg-neutral-100 dark:bg-neutral-800 text-neutral-500 border-neutral-200 dark:border-neutral-700', icon: 'M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z M15 12a3 3 0 11-6 0 3 3 0 016 0z' },
-        ] as member}
-          <div class="flex items-center gap-3 px-4 py-2.5 rounded-xl border {member.color} w-full max-w-[200px]">
-            <svg class="w-5 h-5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-              <path stroke-linecap="round" stroke-linejoin="round" d={member.icon} />
-            </svg>
-            <span class="text-sm font-heading font-semibold">{member.role}</span>
+      <!-- Team Workspaces — roles + feedback/approval -->
+      <div class="w-full flex gap-3 items-stretch justify-center px-3 transition-transform duration-500" class:scale-[1.02]={hovered}>
+        <!-- Left: Role badges -->
+        <div class="flex flex-col gap-2 flex-1 max-w-[130px]">
+          {#each [
+            { role: 'Owner', color: 'bg-primary/10 text-primary border-primary/20', icon: 'M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z' },
+            { role: 'Member', color: 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/20', icon: 'M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z' },
+            { role: 'Viewer', color: 'bg-neutral-100 dark:bg-neutral-800 text-neutral-500 border-neutral-200 dark:border-neutral-700', icon: 'M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z M15 12a3 3 0 11-6 0 3 3 0 016 0z' },
+          ] as member}
+            <div class="flex items-center gap-2 px-3 py-2 rounded-xl border {member.color}">
+              <svg class="w-4 h-4 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d={member.icon} />
+              </svg>
+              <span class="text-xs font-heading font-semibold">{member.role}</span>
+            </div>
+          {/each}
+        </div>
+
+        <!-- Right: Feedback & approval -->
+        <div class="flex flex-col gap-2 flex-1 max-w-[140px]">
+          <!-- Comment bubble -->
+          <div class="rounded-xl border border-neutral-200 dark:border-neutral-700/50 bg-white dark:bg-neutral-800/80 px-3 py-2 shadow-sm">
+            <div class="flex items-start gap-2">
+              <svg class="w-3.5 h-3.5 text-sky-400 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M8.625 12a.375.375 0 11-.75 0 .375.375 0 01.75 0zm4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm-11.25 6L3 20.25V5.25A2.25 2.25 0 015.25 3h13.5A2.25 2.25 0 0121 5.25v10.5A2.25 2.25 0 0118.75 18H8.625z" />
+              </svg>
+              <div class="min-w-0">
+                <span class="text-[9px] font-semibold text-neutral-600 dark:text-neutral-400 block">Sarah</span>
+                <span class="text-[9px] text-neutral-400 dark:text-neutral-500 leading-tight block">Hero looks great on mobile</span>
+              </div>
+            </div>
           </div>
-        {/each}
+
+          <!-- Approval row -->
+          <div class="flex gap-1.5">
+            <!-- Approved -->
+            <div class="flex-1 flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg border border-emerald-200 dark:border-emerald-800/50 bg-emerald-50 dark:bg-emerald-900/20">
+              <svg class="w-3.5 h-3.5 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+              </svg>
+              <span class="text-[9px] font-heading font-semibold text-emerald-600 dark:text-emerald-400">Approve</span>
+            </div>
+            <!-- Request changes -->
+            <div class="flex-1 flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg border border-neutral-200 dark:border-neutral-700/50 bg-white dark:bg-neutral-800/80">
+              <svg class="w-3.5 h-3.5 text-neutral-400 dark:text-neutral-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+              <span class="text-[9px] font-heading font-semibold text-neutral-500 dark:text-neutral-400">Change</span>
+            </div>
+          </div>
+
+          <!-- Second comment -->
+          <div class="rounded-xl border border-neutral-200 dark:border-neutral-700/50 bg-white dark:bg-neutral-800/80 px-3 py-2 shadow-sm">
+            <div class="flex items-start gap-2">
+              <svg class="w-3.5 h-3.5 text-sky-400 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M8.625 12a.375.375 0 11-.75 0 .375.375 0 01.75 0zm4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm-11.25 6L3 20.25V5.25A2.25 2.25 0 015.25 3h13.5A2.25 2.25 0 0121 5.25v10.5A2.25 2.25 0 0118.75 18H8.625z" />
+              </svg>
+              <div class="min-w-0">
+                <span class="text-[9px] font-semibold text-neutral-600 dark:text-neutral-400 block">Client</span>
+                <span class="text-[9px] text-neutral-400 dark:text-neutral-500 leading-tight block">Can we bump the font?</span>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     {/if}
   </div>
