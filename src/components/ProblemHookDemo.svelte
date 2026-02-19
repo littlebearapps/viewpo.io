@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { onMount } from 'svelte';
+
   interface BenefitItem {
     id: string;
     heading: string;
@@ -10,6 +12,9 @@
     badge?: { label: string; href: string };
     placeholder: string;
   }
+
+  const CYCLE_DURATION = 4000; // ms per item
+  const PAUSE_AFTER_INTERACT = 6000; // ms before resuming auto-cycle after user interaction
 
   const items: BenefitItem[] = [
     {
@@ -64,17 +69,102 @@
   ];
 
   let activeIndex = $state(0);
+  let isAutoCycling = $state(true);
+  let progressKey = $state(0); // Incremented to restart CSS animation
 
-  function handleHover(index: number) {
-    activeIndex = index;
+  let cycleTimer: ReturnType<typeof setTimeout> | null = null;
+  let resumeTimer: ReturnType<typeof setTimeout> | null = null;
+  let containerEl: HTMLDivElement | undefined = $state();
+  let isVisible = $state(false);
+  let prefersReducedMotion = $state(false);
+
+  function advanceToNext() {
+    activeIndex = (activeIndex + 1) % items.length;
+    progressKey++;
+    scheduleCycle();
   }
 
-  // Accent colour per item for the placeholder frame border
+  function scheduleCycle() {
+    clearCycleTimer();
+    if (!isAutoCycling || !isVisible || prefersReducedMotion) return;
+    cycleTimer = setTimeout(advanceToNext, CYCLE_DURATION);
+  }
+
+  function clearCycleTimer() {
+    if (cycleTimer) {
+      clearTimeout(cycleTimer);
+      cycleTimer = null;
+    }
+  }
+
+  function clearResumeTimer() {
+    if (resumeTimer) {
+      clearTimeout(resumeTimer);
+      resumeTimer = null;
+    }
+  }
+
+  function handleInteraction(index: number) {
+    activeIndex = index;
+    isAutoCycling = false;
+    progressKey++;
+    clearCycleTimer();
+    clearResumeTimer();
+    // Resume auto-cycling after a pause
+    resumeTimer = setTimeout(() => {
+      isAutoCycling = true;
+      progressKey++;
+      scheduleCycle();
+    }, PAUSE_AFTER_INTERACT);
+  }
+
+  onMount(() => {
+    // Respect reduced motion
+    const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
+    prefersReducedMotion = mq.matches;
+    const motionHandler = (e: MediaQueryListEvent) => {
+      prefersReducedMotion = e.matches;
+      if (e.matches) clearCycleTimer();
+      else scheduleCycle();
+    };
+    mq.addEventListener('change', motionHandler);
+
+    // IntersectionObserver — only cycle when visible
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        isVisible = entry.isIntersecting;
+        if (entry.isIntersecting) {
+          scheduleCycle();
+        } else {
+          clearCycleTimer();
+        }
+      },
+      { threshold: 0.2 },
+    );
+
+    if (containerEl) observer.observe(containerEl);
+
+    return () => {
+      clearCycleTimer();
+      clearResumeTimer();
+      mq.removeEventListener('change', motionHandler);
+      observer.disconnect();
+    };
+  });
+
+  // Accent colours per item for the placeholder frame border
   const accentColors = [
     'border-indigo-300 dark:border-indigo-700',
     'border-amber-300 dark:border-amber-700',
     'border-sky-300 dark:border-sky-700',
     'border-emerald-300 dark:border-emerald-700',
+  ];
+
+  const progressBarColors = [
+    'bg-indigo-400',
+    'bg-amber-400',
+    'bg-sky-400',
+    'bg-emerald-400',
   ];
 
   const placeholderIconColors = [
@@ -85,20 +175,19 @@
   ];
 </script>
 
-<div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+<div bind:this={containerEl} class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
   <!-- Benefit list -->
   <div>
     <ul class="space-y-3">
       {#each items as item, i}
         <li>
-          <!-- svelte-ignore a11y_no_static_element_interactions -->
           <button
             type="button"
-            class="w-full text-left flex items-start gap-4 p-3 rounded-xl transition-all duration-300 cursor-pointer {activeIndex === i
+            class="w-full text-left flex items-start gap-4 p-3 rounded-xl transition-all duration-300 cursor-pointer relative overflow-hidden {activeIndex === i
               ? 'bg-white/60 dark:bg-white/[0.04] shadow-sm ring-1 ring-neutral-200/60 dark:ring-neutral-700/60'
               : 'hover:bg-white/40 dark:hover:bg-white/[0.02]'}"
-            onmouseenter={() => handleHover(i)}
-            onclick={() => handleHover(i)}
+            onmouseenter={() => handleInteraction(i)}
+            onclick={() => handleInteraction(i)}
           >
             <div
               class="w-10 h-10 rounded-full {item.bgColor} {item.darkBgColor} flex items-center justify-center flex-shrink-0 mt-0.5"
@@ -132,6 +221,18 @@
               </span>
               <p class="text-foreground/50 text-sm mt-0.5">{item.description}</p>
             </div>
+
+            <!-- Progress bar — thin line at bottom of active item -->
+            {#if activeIndex === i && isAutoCycling && isVisible && !prefersReducedMotion}
+              {#key progressKey}
+                <div class="absolute bottom-0 left-0 right-0 h-[2px] overflow-hidden">
+                  <div
+                    class="h-full {progressBarColors[i]} opacity-40 progress-fill"
+                    style="animation-duration: {CYCLE_DURATION}ms"
+                  ></div>
+                </div>
+              {/key}
+            {/if}
           </button>
         </li>
       {/each}
@@ -184,3 +285,25 @@
     {/each}
   </div>
 </div>
+
+<style>
+  @keyframes progress-fill-anim {
+    from {
+      width: 0%;
+    }
+    to {
+      width: 100%;
+    }
+  }
+
+  .progress-fill {
+    animation: progress-fill-anim linear forwards;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .progress-fill {
+      animation: none;
+      width: 100%;
+    }
+  }
+</style>
