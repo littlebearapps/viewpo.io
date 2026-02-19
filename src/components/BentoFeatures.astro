@@ -12,22 +12,29 @@ const features = [
   },
   {
     title: 'Unified Dashboard',
-    subtitle: 'All Deploys, One Screen',
-    description: 'Cloudflare, GitHub, Vercel, and Netlify. Every deploy, build status, and branch in a single feed.',
+    subtitle: 'Every Provider, One Screen',
+    description: 'Cloudflare, GitHub, Vercel, and Netlify. Every update, build status, and branch in a single feed.',
     span: '1' as const,
     visual: 'dashboard',
   },
   {
     title: 'Push Notifications',
-    subtitle: 'Know the Moment It\'s Ready',
-    description: 'Pin branches you care about. Get notified when deploys succeed or fail. Stop refreshing dashboards.',
+    subtitle: 'Know the Moment It\u2019s Ready',
+    description: 'Get notified when builds succeed or fail. Tap the notification to open the preview — no dashboards, no hunting for URLs.',
     span: '1' as const,
     visual: 'notifications',
   },
   {
+    title: 'Pin & Watch Branches',
+    subtitle: 'Focus on What Matters',
+    description: 'Pin your active branches to the top of the dashboard. Toggle watch to get notified — everything else stays quiet.',
+    span: '1' as const,
+    visual: 'pinwatch',
+  },
+  {
     title: 'Share Links & QR Codes',
     subtitle: 'Share a Preview in Seconds',
-    description: 'Generate a link or QR code for any deploy. Recipients see it at the right viewport — no account needed.',
+    description: 'Generate a link or QR code for any update. Recipients see it at the right viewport — no account needed.',
     span: '1' as const,
     visual: 'qr',
   },
@@ -52,8 +59,8 @@ const features = [
   <div class="max-w-7xl mx-auto px-6">
     <!-- Header -->
     <SectionHeader
-      title="Everything you need to review deploys"
-      subtitle="Responsive previews, push notifications, one-tap account linking, and team collaboration — all in one app."
+      title="Everything you need to preview and ship"
+      subtitle="See how your site looks at every screen size. Get notified when updates land. Share with your team."
     />
 
     <!-- Bento Grid -->

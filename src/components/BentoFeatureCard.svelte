@@ -133,6 +133,36 @@
         {/each}
       </div>
 
+    {:else if visual === 'pinwatch'}
+      <!-- Pin & Watch — pinned branch cards with bell toggles -->
+      <div class="flex flex-col gap-2.5 w-full max-w-[240px] transition-transform duration-500" class:scale-[1.05]={hovered}>
+        {#each [
+          { branch: 'main', provider: 'Cloudflare', status: 'Ready', statusColor: 'bg-emerald-400', watched: true },
+          { branch: 'feature/checkout', provider: 'Vercel', status: 'Building', statusColor: 'bg-amber-400', watched: true },
+          { branch: 'staging', provider: 'Netlify', status: 'Ready', statusColor: 'bg-emerald-400', watched: false },
+        ] as pin}
+          <div class="rounded-xl border border-neutral-200 dark:border-neutral-700/50 bg-white dark:bg-neutral-800/80 px-3.5 py-2.5 shadow-sm flex items-center gap-3">
+            <div class="flex-1 min-w-0">
+              <div class="flex items-center gap-2 mb-0.5">
+                <svg class="w-3 h-3 text-primary flex-shrink-0" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M16 12V4H17V2H7V4H8V12L6 14V16H11.2V22H12.8V16H18V14L16 12Z" />
+                </svg>
+                <span class="text-[11px] font-semibold text-neutral-700 dark:text-neutral-300 truncate">{pin.branch}</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <div class="w-1.5 h-1.5 rounded-full {pin.statusColor}"></div>
+                <span class="text-[10px] font-mono text-neutral-400 dark:text-neutral-500">{pin.provider} · {pin.status}</span>
+              </div>
+            </div>
+            <div class="flex-shrink-0">
+              <svg class="w-4 h-4 {pin.watched ? 'text-primary' : 'text-neutral-300 dark:text-neutral-600'}" fill={pin.watched ? 'currentColor' : 'none'} viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0" />
+              </svg>
+            </div>
+          </div>
+        {/each}
+      </div>
+
     {:else if visual === 'qr'}
       <!-- QR Code that scales on hover -->
       <div class="transition-transform duration-500 ease-out" class:scale-110={hovered}>
