@@ -32,11 +32,19 @@ const features = [
     visual: 'qr',
   },
   {
-    title: 'Team Workspaces',
-    subtitle: 'Review, Feedback, and Approval',
-    description: 'Clients sign off via a share link. Internal teams — designers, PMs, leads — review together in a workspace. Owner, Member, and Viewer roles keep everyone in the loop.',
+    title: 'Review & Approval',
+    subtitle: 'Feedback From Anyone, Sign-Off in One Tap',
+    description: 'Clients sign off via a share link. Internal teams — designers, PMs, leads — leave comments and approve directly on the preview.',
     span: '1' as const,
     visual: 'team',
+  },
+  {
+    title: 'Team Workspaces',
+    subtitle: 'Everyone on the Same Page',
+    description: 'Invite teammates and clients with Owner, Member, or Viewer roles. Notify your team on Slack, Google Chat, or Microsoft Teams when updates land.',
+    span: '1' as const,
+    visual: 'roles',
+    badge: 'Planning',
   },
 ];
 ---
@@ -60,6 +68,7 @@ const features = [
             description={feature.description}
             span={feature.span}
             visual={feature.visual}
+            badge={feature.badge ?? ''}
           />
         </div>
       ))}

@@ -1,10 +1,11 @@
 <script lang="ts">
-  let { title, subtitle = '', description, span = '1', visual }: {
+  let { title, subtitle = '', description, span = '1', visual, badge = '' }: {
     title: string;
     subtitle?: string;
     description: string;
     span?: '1' | '2';
     visual: string;
+    badge?: string;
   } = $props();
 
   let hovered = $state(false);
@@ -329,68 +330,86 @@
       </div>
 
     {:else if visual === 'team'}
-      <!-- Team Workspaces — roles + feedback/approval -->
-      <div class="w-full flex gap-3 items-stretch justify-center px-3 transition-transform duration-500" class:scale-[1.02]={hovered}>
-        <!-- Left: Role badges -->
-        <div class="flex flex-col gap-2 flex-1 max-w-[130px]">
+      <!-- Review & Approval — feedback comments + approve/change -->
+      <div class="flex flex-col gap-2.5 w-full max-w-[220px] transition-transform duration-500" class:scale-[1.03]={hovered}>
+        <!-- Comment bubble 1 -->
+        <div class="rounded-xl border border-neutral-200 dark:border-neutral-700/50 bg-white dark:bg-neutral-800/80 px-3 py-2.5 shadow-sm">
+          <div class="flex items-start gap-2">
+            <svg class="w-3.5 h-3.5 text-sky-400 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M8.625 12a.375.375 0 11-.75 0 .375.375 0 01.75 0zm4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm-11.25 6L3 20.25V5.25A2.25 2.25 0 015.25 3h13.5A2.25 2.25 0 0121 5.25v10.5A2.25 2.25 0 0118.75 18H8.625z" />
+            </svg>
+            <div class="min-w-0">
+              <span class="text-[10px] font-semibold text-neutral-600 dark:text-neutral-400 block">Sarah · Designer</span>
+              <span class="text-[10px] text-neutral-400 dark:text-neutral-500 leading-tight block">Hero looks great on mobile</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Approval row -->
+        <div class="flex gap-2">
+          <div class="flex-1 flex items-center gap-1.5 px-3 py-2 rounded-xl border border-emerald-200 dark:border-emerald-800/50 bg-emerald-50 dark:bg-emerald-900/20">
+            <svg class="w-4 h-4 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+            </svg>
+            <span class="text-[10px] font-heading font-semibold text-emerald-600 dark:text-emerald-400">Approve</span>
+          </div>
+          <div class="flex-1 flex items-center gap-1.5 px-3 py-2 rounded-xl border border-neutral-200 dark:border-neutral-700/50 bg-white dark:bg-neutral-800/80">
+            <svg class="w-4 h-4 text-neutral-400 dark:text-neutral-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+            <span class="text-[10px] font-heading font-semibold text-neutral-500 dark:text-neutral-400">Changes</span>
+          </div>
+        </div>
+
+        <!-- Comment bubble 2 -->
+        <div class="rounded-xl border border-neutral-200 dark:border-neutral-700/50 bg-white dark:bg-neutral-800/80 px-3 py-2.5 shadow-sm">
+          <div class="flex items-start gap-2">
+            <svg class="w-3.5 h-3.5 text-sky-400 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M8.625 12a.375.375 0 11-.75 0 .375.375 0 01.75 0zm4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm-11.25 6L3 20.25V5.25A2.25 2.25 0 015.25 3h13.5A2.25 2.25 0 0121 5.25v10.5A2.25 2.25 0 0118.75 18H8.625z" />
+            </svg>
+            <div class="min-w-0">
+              <span class="text-[10px] font-semibold text-neutral-600 dark:text-neutral-400 block">Client</span>
+              <span class="text-[10px] text-neutral-400 dark:text-neutral-500 leading-tight block">Can we bump the heading size?</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    {:else if visual === 'roles'}
+      <!-- Team Workspaces — role badges + notification integrations -->
+      <div class="flex flex-col items-center gap-3 transition-transform duration-500" class:scale-[1.03]={hovered}>
+        <!-- Role badges -->
+        <div class="flex flex-col gap-2 w-full max-w-[200px]">
           {#each [
             { role: 'Owner', color: 'bg-primary/10 text-primary border-primary/20', icon: 'M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z' },
             { role: 'Member', color: 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/20', icon: 'M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z' },
             { role: 'Viewer', color: 'bg-neutral-100 dark:bg-neutral-800 text-neutral-500 border-neutral-200 dark:border-neutral-700', icon: 'M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z M15 12a3 3 0 11-6 0 3 3 0 016 0z' },
           ] as member}
-            <div class="flex items-center gap-2 px-3 py-2 rounded-xl border {member.color}">
-              <svg class="w-4 h-4 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+            <div class="flex items-center gap-3 px-4 py-2.5 rounded-xl border {member.color}">
+              <svg class="w-5 h-5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
                 <path stroke-linecap="round" stroke-linejoin="round" d={member.icon} />
               </svg>
-              <span class="text-xs font-heading font-semibold">{member.role}</span>
+              <span class="text-sm font-heading font-semibold">{member.role}</span>
             </div>
           {/each}
         </div>
 
-        <!-- Right: Feedback & approval -->
-        <div class="flex flex-col gap-2 flex-1 max-w-[140px]">
-          <!-- Comment bubble -->
-          <div class="rounded-xl border border-neutral-200 dark:border-neutral-700/50 bg-white dark:bg-neutral-800/80 px-3 py-2 shadow-sm">
-            <div class="flex items-start gap-2">
-              <svg class="w-3.5 h-3.5 text-sky-400 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M8.625 12a.375.375 0 11-.75 0 .375.375 0 01.75 0zm4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm-11.25 6L3 20.25V5.25A2.25 2.25 0 015.25 3h13.5A2.25 2.25 0 0121 5.25v10.5A2.25 2.25 0 0118.75 18H8.625z" />
-              </svg>
-              <div class="min-w-0">
-                <span class="text-[9px] font-semibold text-neutral-600 dark:text-neutral-400 block">Sarah</span>
-                <span class="text-[9px] text-neutral-400 dark:text-neutral-500 leading-tight block">Hero looks great on mobile</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- Approval row -->
-          <div class="flex gap-1.5">
-            <!-- Approved -->
-            <div class="flex-1 flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg border border-emerald-200 dark:border-emerald-800/50 bg-emerald-50 dark:bg-emerald-900/20">
-              <svg class="w-3.5 h-3.5 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
-              </svg>
-              <span class="text-[9px] font-heading font-semibold text-emerald-600 dark:text-emerald-400">Approve</span>
-            </div>
-            <!-- Request changes -->
-            <div class="flex-1 flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg border border-neutral-200 dark:border-neutral-700/50 bg-white dark:bg-neutral-800/80">
-              <svg class="w-3.5 h-3.5 text-neutral-400 dark:text-neutral-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-              </svg>
-              <span class="text-[9px] font-heading font-semibold text-neutral-500 dark:text-neutral-400">Change</span>
-            </div>
-          </div>
-
-          <!-- Second comment -->
-          <div class="rounded-xl border border-neutral-200 dark:border-neutral-700/50 bg-white dark:bg-neutral-800/80 px-3 py-2 shadow-sm">
-            <div class="flex items-start gap-2">
-              <svg class="w-3.5 h-3.5 text-sky-400 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M8.625 12a.375.375 0 11-.75 0 .375.375 0 01.75 0zm4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm-11.25 6L3 20.25V5.25A2.25 2.25 0 015.25 3h13.5A2.25 2.25 0 0121 5.25v10.5A2.25 2.25 0 0118.75 18H8.625z" />
-              </svg>
-              <div class="min-w-0">
-                <span class="text-[9px] font-semibold text-neutral-600 dark:text-neutral-400 block">Client</span>
-                <span class="text-[9px] text-neutral-400 dark:text-neutral-500 leading-tight block">Can we bump the font?</span>
-              </div>
-            </div>
+        <!-- Notification integrations -->
+        <div class="flex items-center gap-2">
+          <span class="text-[9px] text-neutral-400 dark:text-neutral-500">Notify via</span>
+          <div class="flex items-center gap-2">
+            <!-- Slack -->
+            <svg class="w-4 h-4 text-neutral-400 dark:text-neutral-500" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M5.042 15.165a2.528 2.528 0 0 1-2.52 2.523A2.528 2.528 0 0 1 0 15.165a2.527 2.527 0 0 1 2.522-2.52h2.52v2.52zm1.271 0a2.527 2.527 0 0 1 2.521-2.52 2.527 2.527 0 0 1 2.521 2.52v6.313A2.528 2.528 0 0 1 8.834 24a2.528 2.528 0 0 1-2.521-2.522v-6.313zM8.834 5.042a2.528 2.528 0 0 1-2.521-2.52A2.528 2.528 0 0 1 8.834 0a2.528 2.528 0 0 1 2.521 2.522v2.52H8.834zm0 1.271a2.528 2.528 0 0 1 2.521 2.521 2.528 2.528 0 0 1-2.521 2.521H2.522A2.528 2.528 0 0 1 0 8.834a2.528 2.528 0 0 1 2.522-2.521h6.312zM18.956 8.834a2.528 2.528 0 0 1 2.522-2.521A2.528 2.528 0 0 1 24 8.834a2.528 2.528 0 0 1-2.522 2.521h-2.522V8.834zm-1.27 0a2.528 2.528 0 0 1-2.523 2.521 2.527 2.527 0 0 1-2.52-2.521V2.522A2.527 2.527 0 0 1 15.163 0a2.528 2.528 0 0 1 2.523 2.522v6.312zM15.163 18.956a2.528 2.528 0 0 1 2.523 2.522A2.528 2.528 0 0 1 15.163 24a2.527 2.527 0 0 1-2.52-2.522v-2.522h2.52zm0-1.27a2.527 2.527 0 0 1-2.52-2.523 2.526 2.526 0 0 1 2.52-2.52h6.315A2.528 2.528 0 0 1 24 15.163a2.528 2.528 0 0 1-2.522 2.523h-6.315z"/>
+            </svg>
+            <!-- Google Chat -->
+            <svg class="w-4 h-4 text-neutral-400 dark:text-neutral-500" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M22.05 1.577c-.393-.568-.988-.823-1.586-.748V.81h-.01l-9.397 1.34-.009.003L1.67 3.576c-.589.09-1.088.451-1.371.984-.28.532-.282 1.163-.007 1.698l4.27 8.3c.207.403.559.71.984.86l7.7 2.718c.276.1.578.096.852-.012l7.144-2.87c.462-.186.81-.573.917-1.052l2.482-11.378c.113-.536-.018-1.098-.411-1.666zm-2.42 1.724l-2.202 10.093L11.66 16.3l-6.836-2.414-3.812-7.41 7.885-1.124 10.732-1.53.001-.021zM9.724 13.31L7.056 6.03l10.583-1.508-7.915 8.788z"/>
+            </svg>
+            <!-- Microsoft Teams -->
+            <svg class="w-4 h-4 text-neutral-400 dark:text-neutral-500" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M20.625 8.5h-3.75c.052.49.08.987.08 1.49 0 3.15-1.212 6.016-3.194 8.16h4.489A2.375 2.375 0 0 0 20.625 15.775V8.5zm-.75-1.5a2.25 2.25 0 1 0 0-4.5 2.25 2.25 0 0 0 0 4.5zM16.5 7h-2.325A5.986 5.986 0 0 0 16.5 2c0-.344-.029-.681-.085-1.01A3 3 0 0 1 19.5 4a3 3 0 0 1-3 3zm-3-5a4.5 4.5 0 1 0 0 9 4.5 4.5 0 0 0 0-9zM.75 8h12.5a.75.75 0 0 1 .75.75v9.5a.75.75 0 0 1-.75.75H.75a.75.75 0 0 1-.75-.75v-9.5A.75.75 0 0 1 .75 8zm3.464 7.214h1.857V11.5H7.93v3.714h1.857V10H4.214v5.214z"/>
+            </svg>
           </div>
         </div>
       </div>
@@ -400,7 +419,12 @@
   <!-- Text content -->
   <div class="p-6 pt-4">
     {#if subtitle}
-      <p class="text-[11px] font-heading font-semibold uppercase tracking-wider text-primary/70 dark:text-primary/60 mb-1">{title}</p>
+      <div class="flex items-center gap-2 mb-1">
+        <p class="text-[11px] font-heading font-semibold uppercase tracking-wider text-primary/70 dark:text-primary/60">{title}</p>
+        {#if badge}
+          <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-heading font-semibold bg-amber-500/10 text-amber-600 dark:bg-amber-500/15 dark:text-amber-400 border border-amber-500/20">{badge}</span>
+        {/if}
+      </div>
       <h3 class="font-heading font-semibold text-lg text-neutral-900 dark:text-white mb-1.5">{subtitle}</h3>
     {:else}
       <h3 class="font-heading font-semibold text-lg text-neutral-900 dark:text-white mb-1.5">{title}</h3>
