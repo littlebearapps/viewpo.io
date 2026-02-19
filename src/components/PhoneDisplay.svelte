@@ -16,10 +16,10 @@
   <!-- Phone frame -->
   <div class="relative w-[240px] sm:w-[260px] lg:w-[280px] xl:w-[300px] mx-auto">
     <!-- Outer bezel -->
-    <div class="rounded-[2.5rem] border-[3px] border-neutral-300 dark:border-slate-600/50 bg-neutral-100 dark:bg-slate-900 shadow-2xl shadow-black/15 dark:shadow-black/50 overflow-hidden">
+    <div class="rounded-[2.5rem] border-[3px] border-neutral-300 dark:border-neutral-600/50 bg-neutral-100 dark:bg-neutral-900 shadow-2xl shadow-black/15 dark:shadow-black/50 overflow-hidden">
 
       <!-- Screen area -->
-      <div class="relative bg-white dark:bg-slate-800 overflow-hidden" style="aspect-ratio: 9/16;">
+      <div class="relative bg-white dark:bg-neutral-800 overflow-hidden" style="aspect-ratio: 9/16;">
 
         <!-- Status bar row with Dynamic Island centred -->
         <div class="relative z-20 flex items-center justify-between px-5 pt-2.5 pb-1.5">
@@ -28,8 +28,8 @@
 
           <!-- Centre: Dynamic Island pill -->
           <div class="w-[80px] h-[24px] bg-black rounded-full flex items-center justify-center shadow-sm">
-            <div class="w-2.5 h-2.5 rounded-full bg-slate-900 ring-1 ring-slate-700">
-              <div class="w-1 h-1 rounded-full bg-slate-600/50 mt-[3px] ml-[3px]"></div>
+            <div class="w-2.5 h-2.5 rounded-full bg-neutral-900 ring-1 ring-neutral-700">
+              <div class="w-1 h-1 rounded-full bg-neutral-600/50 mt-[3px] ml-[3px]"></div>
             </div>
           </div>
 
@@ -138,7 +138,7 @@
             <div class="rounded-lg overflow-hidden border border-neutral-200 dark:border-white/10 bg-neutral-50 dark:bg-white/[0.04]">
               <div class="h-16 bg-gradient-to-br from-indigo-100 to-violet-100 dark:from-indigo-500/20 dark:to-violet-500/20 flex items-center justify-center">
                 <div class="text-center">
-                  <div class="w-10 h-14 mx-auto bg-white dark:bg-slate-700 rounded-lg border border-neutral-200 dark:border-white/10 flex items-center justify-center mb-0.5">
+                  <div class="w-10 h-14 mx-auto bg-white dark:bg-neutral-700 rounded-lg border border-neutral-200 dark:border-white/10 flex items-center justify-center mb-0.5">
                     <div class="w-6 h-1 bg-neutral-200 dark:bg-white/10 rounded"></div>
                   </div>
                   <p class="text-[7px] text-neutral-400 dark:text-white/30">viewpo preview</p>
@@ -188,7 +188,7 @@
       </div>
 
       <!-- Home indicator -->
-      <div class="flex justify-center py-1.5 bg-white dark:bg-slate-800">
+      <div class="flex justify-center py-1.5 bg-white dark:bg-neutral-800">
         <div class="w-24 h-1 bg-neutral-300 dark:bg-white/15 rounded-full"></div>
       </div>
     </div>
