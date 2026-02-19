@@ -9,7 +9,7 @@ const statusStyles = {
   planned: {
     border: 'from-primary/20 via-transparent to-primary/10',
     dot: 'bg-primary',
-    badge: 'bg-primary/10 text-primary dark:text-indigo-300',
+    badge: 'bg-primary/10 text-primary dark:text-links',
     label: 'Planned',
   },
   'in-progress': {
@@ -19,9 +19,9 @@ const statusStyles = {
     label: 'In Progress',
   },
   testing: {
-    border: 'from-slate-400/20 via-transparent to-slate-400/10',
-    dot: 'bg-slate-400',
-    badge: 'bg-slate-400/10 text-slate-500 dark:text-slate-400',
+    border: 'from-neutral-400/20 via-transparent to-neutral-400/10',
+    dot: 'bg-neutral-400',
+    badge: 'bg-neutral-400/10 text-neutral-500 dark:text-neutral-400',
     label: 'Testing',
   },
   shipped: {
@@ -33,11 +33,11 @@ const statusStyles = {
 };
 
 const labelColorMap: Record<string, string> = {
-  blue: 'bg-indigo-100 text-indigo-700 dark:bg-indigo-900/30 dark:text-indigo-300',
+  blue: 'bg-indigo-100 text-indigo-700 dark:bg-indigo-900/30 dark:text-links',
   green: 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-300',
   orange: 'bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-300',
   sky: 'bg-sky-100 text-sky-700 dark:bg-sky-900/30 dark:text-sky-300',
-  black: 'bg-slate-100 text-slate-700 dark:bg-slate-700/30 dark:text-slate-300',
+  black: 'bg-neutral-100 text-neutral-700 dark:bg-neutral-700/30 dark:text-neutral-300',
 };
 
 const s = statusStyles[status];
@@ -52,7 +52,7 @@ const progressPercent = checklistProgress
   data-labels={labelNames}
   data-item-id={id}
 >
-  <div class="bg-white dark:bg-slate-800/80 rounded-[11px] p-5 h-full flex flex-col">
+  <div class="bg-white dark:bg-neutral-900/60 rounded-[11px] p-5 h-full flex flex-col">
     <!-- Status badge -->
     <div class="flex items-center justify-between mb-3">
       <span class={`inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-xs font-medium ${s.badge}`}>
@@ -87,7 +87,7 @@ const progressPercent = checklistProgress
           <span>Progress</span>
           <span>{checklistProgress.completed}/{checklistProgress.total}</span>
         </div>
-        <div class="h-1.5 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
+        <div class="h-1.5 bg-neutral-200 dark:bg-neutral-700 rounded-full overflow-hidden">
           <div
             class={`h-full rounded-full transition-all ${progressPercent === 100 ? 'bg-success' : 'bg-primary'}`}
             style={`width: ${progressPercent}%`}
@@ -97,10 +97,10 @@ const progressPercent = checklistProgress
     )}
 
     <!-- Vote button -->
-    <div class="mt-auto pt-2 border-t border-slate-100 dark:border-slate-700/50">
+    <div class="mt-auto pt-2 border-t border-neutral-100 dark:border-neutral-700/50">
       <button
         type="button"
-        class="vote-btn inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium border border-slate-200 dark:border-slate-600 text-foreground/60 hover:border-primary hover:text-primary transition-all"
+        class="vote-btn inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium border border-neutral-200 dark:border-neutral-600 text-foreground/60 hover:border-primary hover:text-primary transition-all"
         data-vote-btn
         data-item-id={id}
         data-vote-count={votes}

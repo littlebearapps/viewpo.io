@@ -94,6 +94,19 @@ h1, h2, h3, h4, h5, h6 {
   }
 }
 
+/* Accordion surface — shared by all FAQ/accordion sections */
+.accordion-item {
+  border-radius: var(--radius-lg);
+  border: 1px solid rgb(229 229 229); /* neutral-200 */
+  background: white;
+  overflow: hidden;
+}
+
+.dark .accordion-item {
+  border-color: rgb(38 38 38); /* neutral-800 */
+  background: rgb(23 23 23 / 0.6); /* neutral-900/60 */
+}
+
 .accordion-item[open] .accordion-content {
   animation: accordion-down 0.3s var(--ease-smooth) forwards;
 }
@@ -131,7 +144,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .dark .bg-dot-pattern {
-  background-image: radial-gradient(circle, #94A3B8 0.5px, transparent 0.5px);
+  background-image: radial-gradient(circle, #a3a3a3 0.5px, transparent 0.5px); /* neutral-400 */
   opacity: 0.04;
 }
 
@@ -171,7 +184,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .dark .modal-dialog {
   background: var(--color-dark-bg);
-  border: 1px solid rgb(255 255 255 / 0.1);
+  border: 1px solid rgb(38 38 38); /* neutral-800 */
 }
 
 .modal-content {
@@ -205,7 +218,7 @@ h1, h2, h3, h4, h5, h6 {
 .modal-input {
   width: 100%;
   padding: 0.625rem 0.875rem;
-  border: 1px solid rgb(0 0 0 / 0.1);
+  border: 1px solid rgb(229 229 229); /* neutral-200 */
   border-radius: 0.75rem;
   background: var(--color-background);
   color: var(--color-foreground);
@@ -222,7 +235,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .dark .modal-input {
   background: rgb(255 255 255 / 0.05);
-  border-color: rgb(255 255 255 / 0.15);
+  border-color: rgb(38 38 38); /* neutral-800 */
 }
 
 .dark .modal-input:focus {
@@ -237,7 +250,7 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Platform selector buttons */
 .platform-option {
-  border-color: rgb(0 0 0 / 0.1);
+  border-color: rgb(229 229 229); /* neutral-200 */
   color: rgb(0 0 0 / 0.4);
   background: transparent;
   cursor: pointer;
@@ -255,7 +268,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .dark .platform-option {
-  border-color: rgb(255 255 255 / 0.1);
+  border-color: rgb(38 38 38); /* neutral-800 */
   color: rgb(255 255 255 / 0.4);
 }
 

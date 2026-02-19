@@ -1,0 +1,22 @@
+---
+interface Props {
+  variant?: 'default' | 'highlighted';
+  class?: string;
+}
+
+const {
+  variant = 'default',
+  class: className = '',
+} = Astro.props;
+
+const variantStyles = {
+  default: 'border-neutral-200 dark:border-neutral-800 bg-white/70 dark:bg-neutral-900/60',
+  highlighted: 'border-sky-500/50 dark:border-sky-400/40 bg-white/70 dark:bg-neutral-900/70 shadow-[0_0_30px_-8px_rgba(56,189,248,0.2)] dark:shadow-[0_0_30px_-8px_rgba(56,189,248,0.15)]',
+};
+
+const classes = `relative rounded-2xl border backdrop-blur-sm ${variantStyles[variant]} ${className}`;
+---
+
+<div class={classes}>
+  <slot />
+</div>

@@ -1,0 +1,68 @@
+---
+import BentoFeatureCard from './BentoFeatureCard.svelte';
+import SectionHeader from './SectionHeader.astro';
+import Badge from './Badge.astro';
+
+const features = [
+  {
+    title: 'The Universal Dashboard',
+    description: 'See deploys from Vercel, Cloudflare Pages, Netlify, and GitHub Pages in one unified list. No more switching between dashboards.',
+    span: '2' as const,
+    visual: 'dashboard',
+  },
+  {
+    title: 'Native Performance',
+    description: 'Built with SwiftUI for buttery-smooth 60fps scrolling and instant interactions. No web wrapper — a real native app.',
+    span: '1' as const,
+    visual: 'performance',
+  },
+  {
+    title: 'QR Code Sharing',
+    description: 'Generate a QR code for any preview. Designers, PMs, and clients can scan and review on their own device instantly.',
+    span: '1' as const,
+    visual: 'qr',
+  },
+  {
+    title: 'GitHub Integrated',
+    description: 'See PR status, branch names, and commit messages alongside every deploy. Merge context without leaving the app.',
+    span: '1' as const,
+    visual: 'github',
+  },
+  {
+    title: 'Visual Regression',
+    description: 'Compare deploys side by side to catch unintended layout changes. Pixel-level diffs highlight exactly what shifted.',
+    span: '2' as const,
+    visual: 'regression',
+  },
+];
+---
+
+<section id="features" class="py-20 md:py-28 lg:pt-64">
+  <div class="max-w-7xl mx-auto px-6">
+    <!-- Header -->
+    <SectionHeader
+      title="Everything you need to review deploys"
+      subtitle="Responsive previews, instant updates, one-tap account linking, and team feedback — all in one app."
+    />
+
+    <!-- Bento Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-5" role="list">
+      {features.map((feature, i) => (
+        <div class={`reveal reveal-delay-${Math.min(i + 1, 4)} ${feature.span === '2' ? 'md:col-span-2' : ''}`}>
+          <BentoFeatureCard
+            client:visible
+            title={feature.title}
+            description={feature.description}
+            span={feature.span}
+            visual={feature.visual}
+          />
+        </div>
+      ))}
+    </div>
+
+    <!-- Coming soon badge for visual regression -->
+    <div class="flex justify-center mt-6 reveal reveal-delay-4">
+      <Badge variant="muted">Visual regression coming in v2</Badge>
+    </div>
+  </div>
+</section>

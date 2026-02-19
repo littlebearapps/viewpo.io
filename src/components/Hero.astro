@@ -1,53 +1,122 @@
 ---
 import Button from './Button.astro';
+import Typewriter from './Typewriter.astro';
+import PersonaDock from './PersonaDock.svelte';
+import PhoneDisplay from './PhoneDisplay.svelte';
 ---
 
-<section class="relative overflow-hidden pt-20 md:pt-28 pb-12 md:pb-16">
+<section class="relative pt-20 md:pt-24 lg:pt-28 pb-12 md:pb-16 lg:pb-48">
   <!-- Ambient glow orbs -->
-  <div class="pointer-events-none absolute -top-40 -left-40 w-[500px] h-[500px] rounded-full bg-primary/20 blur-[120px] dark:bg-primary/10" aria-hidden="true"></div>
-  <div class="pointer-events-none absolute -bottom-20 -right-32 w-[400px] h-[400px] rounded-full bg-secondary/15 blur-[100px] dark:bg-secondary/[0.08]" aria-hidden="true"></div>
+  <div class="pointer-events-none absolute inset-0" aria-hidden="true">
+    <div class="absolute -top-40 -left-40 w-[600px] h-[600px] rounded-full bg-primary/20 blur-[140px] dark:bg-primary/10"></div>
+    <div class="absolute -top-20 right-[10%] w-[400px] h-[400px] rounded-full bg-indigo-300/15 blur-[120px] dark:bg-indigo-400/[0.07]"></div>
+    <div class="absolute top-[40%] left-[20%] w-[350px] h-[350px] rounded-full bg-secondary/12 blur-[100px] dark:bg-secondary/[0.06]"></div>
+    <div class="absolute -bottom-40 -right-32 w-[600px] h-[600px] rounded-full bg-secondary/15 blur-[140px] dark:bg-secondary/[0.08]"></div>
+    <div class="absolute -bottom-32 left-[5%] w-[400px] h-[400px] rounded-full bg-indigo-400/12 blur-[120px] dark:bg-indigo-400/[0.06]"></div>
+  </div>
 
-  <!-- Floating decorative shapes -->
-  <div class="pointer-events-none absolute top-20 right-[15%] w-4 h-4 rounded-full border-2 border-primary/20 float-slow hidden md:block" aria-hidden="true"></div>
-  <div class="pointer-events-none absolute bottom-32 left-[10%] w-3 h-3 bg-secondary/20 rounded float-slow-reverse hidden md:block" aria-hidden="true"></div>
-  <div class="pointer-events-none absolute top-1/2 right-[8%] w-2 h-2 bg-primary/15 rounded-full float-slow hidden lg:block" aria-hidden="true"></div>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 w-full">
+    <!-- 2-column grid, vertically centred -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-12 items-center">
 
-  <div class="container-wide">
-    <!-- Text content -->
-    <div class="text-center max-w-3xl mx-auto mb-12 lg:mb-16">
-      <!-- Badge -->
-      <a href="#platforms" class="hero-entrance inline-flex items-center gap-2 bg-primary/10 text-primary dark:text-indigo-300 text-sm font-medium px-4 py-1.5 rounded-full mb-8 hover:bg-primary/15 transition-colors">
-        <svg class="w-4 h-4 text-foreground/70 dark:text-white/70" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-          <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z" />
-        </svg>
-        Join the beta — iOS, iPadOS &amp; macOS
-      </a>
-
-      <!-- Headline -->
-      <h1 class="hero-entrance hero-entrance-delay-1 font-heading font-bold text-4xl md:text-5xl lg:text-6xl leading-tight tracking-tight mb-6">
-        Instantly preview your website at
-        <span class="gradient-text-primary">any resolution.</span>
-        From any device. Even your phone.
-      </h1>
-
-      <!-- Subheading -->
-      <p class="hero-entrance hero-entrance-delay-2 text-lg md:text-xl text-foreground/60 max-w-xl lg:max-w-2xl mx-auto mb-10 leading-relaxed">
-        Push a change, check it instantly. Viewpo shows your website at any screen size — on whatever device you're holding — and pulls together deploy previews from Cloudflare Pages, GitHub Pages, Vercel, and Netlify the moment they go live.
-      </p>
-
-      <!-- CTAs -->
-      <div class="hero-entrance hero-entrance-delay-3 flex flex-col sm:flex-row items-center justify-center gap-4">
-        <button type="button" data-open-signup class="inline-flex items-center justify-center gap-2 font-heading font-medium rounded-xl transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 hover:scale-[1.02] active:scale-[0.98] px-8 py-4 text-lg bg-primary text-white hover:bg-primary-hover focus:ring-primary shadow-md hover:shadow-lg plausible-event-name=CTA+Join+Beta">
-          Join the Beta
-          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+      <!-- LEFT: Text Content -->
+      <div class="text-center lg:text-left order-1">
+        <!-- Badge -->
+        <a href="#platforms" class="hero-entrance inline-flex items-center gap-2 bg-primary/10 text-primary dark:text-links text-xs sm:text-sm font-medium px-3 sm:px-4 py-1.5 rounded-full mb-4 sm:mb-6 hover:bg-primary/15 transition-colors">
+          <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4 text-foreground/70 dark:text-white/70" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z" />
           </svg>
-        </button>
-        <Button href="#features" variant="outline" size="lg">
-          See How It Works
-        </Button>
-      </div>
-    </div>
+          Join the beta — iOS, iPadOS &amp; macOS
+        </a>
 
+        <!-- H1 -->
+        <h1 class="hero-entrance hero-entrance-delay-1 font-heading font-bold text-3xl sm:text-4xl md:text-5xl leading-tight tracking-tight mb-3 sm:mb-4 text-foreground dark:text-white">
+          Instantly preview your website at any resolution on <Typewriter words={["your iPhone.", "your iPad.", "your Mac.", "any screen."]} />
+        </h1>
+
+        <!-- Subhead -->
+        <p class="hero-entrance hero-entrance-delay-2 text-base sm:text-lg text-foreground/60 dark:text-neutral-400 mt-2 mb-6 sm:mb-8 max-w-lg mx-auto lg:mx-0 leading-relaxed">
+          Verify responsive layouts, validate designs, share updates, and get approval from stakeholders — without opening your laptop.
+        </p>
+
+        <!-- CTAs -->
+        <div class="hero-entrance hero-entrance-delay-3 flex flex-col sm:flex-row items-center lg:items-start justify-center lg:justify-start gap-3">
+          <button type="button" data-open-signup class="inline-flex items-center justify-center gap-2 font-heading font-medium rounded-xl transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 hover:scale-[1.02] active:scale-[0.98] px-5 sm:px-7 py-3 sm:py-3.5 text-sm sm:text-base bg-primary text-white hover:bg-primary-hover focus:ring-primary shadow-md hover:shadow-lg plausible-event-name=CTA+Get+Early+Access">
+            Get Early Access
+            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+            </svg>
+          </button>
+          <Button href="#how-it-works" variant="ghost" size="md" class="px-5 sm:px-7 py-3 sm:py-3.5 text-sm sm:text-base">
+            Watch Demo
+          </Button>
+        </div>
+      </div>
+
+      <!-- RIGHT: The Visual Engine -->
+      <div class="order-2 relative flex items-center justify-center">
+        <!-- Phone + Floating Logos container -->
+        <div class="hero-entrance hero-entrance-delay-4 relative">
+
+          <!-- Floating Integration Logos -->
+          <div class="hidden md:block" aria-hidden="true">
+            <!-- GitHub — top left -->
+            <div class="absolute -top-10 -left-12 lg:-left-16 z-0 float-slow">
+              <div class="w-12 h-12 lg:w-14 lg:h-14 rounded-2xl bg-white/80 dark:bg-white/[0.07] backdrop-blur-sm border border-neutral-200 dark:border-neutral-800 shadow-lg flex items-center justify-center">
+                <svg class="w-7 h-7 lg:w-8 lg:h-8 text-foreground dark:text-white" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/>
+                </svg>
+              </div>
+            </div>
+
+            <!-- Vercel — top right -->
+            <div class="absolute -top-12 -right-10 lg:-right-14 z-0 float-slow-reverse">
+              <div class="w-12 h-12 lg:w-14 lg:h-14 rounded-2xl bg-white/80 dark:bg-white/[0.07] backdrop-blur-sm border border-neutral-200 dark:border-neutral-800 shadow-lg flex items-center justify-center">
+                <svg class="w-6 h-6 lg:w-7 lg:h-7 text-foreground dark:text-white" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="m12 1.608 12 20.784H0Z"/>
+                </svg>
+              </div>
+            </div>
+
+            <!-- Cloudflare — bottom left -->
+            <div class="absolute -bottom-8 -left-10 lg:-left-14 z-0 float-slow-reverse" style="animation-delay: -2s;">
+              <div class="w-12 h-12 lg:w-14 lg:h-14 rounded-2xl bg-white/80 dark:bg-white/[0.07] backdrop-blur-sm border border-neutral-200 dark:border-neutral-800 shadow-lg flex items-center justify-center">
+                <svg class="w-7 h-7 lg:w-8 lg:h-8 text-orange-400" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M16.5088 16.8447c.1475-.5068.0908-.9707-.1553-1.3154-.2246-.3164-.6045-.499-1.0615-.5205l-8.6592-.1123a.1559.1559 0 0 1-.1333-.0713c-.0283-.042-.0351-.0986-.021-.1553.0278-.084.1123-.1484.2036-.1562l8.7359-.1123c1.0351-.0489 2.1601-.8868 2.5537-1.9136l.499-1.3013c.0215-.0561.0293-.1128.0147-.168-.5625-2.5463-2.835-4.4453-5.5499-4.4453-2.5039 0-4.6284 1.6177-5.3876 3.8614-.4927-.3658-1.1187-.5625-1.794-.499-1.2026.119-2.1665 1.083-2.2861 2.2856-.0283.31-.0069.6128.0635.894C1.5683 13.171 0 14.7754 0 16.752c0 .1748.0142.3515.0352.5273.0141.083.0844.1475.1689.1475h15.9814c.0909 0 .1758-.0645.2032-.1553l.12-.4268zm2.7568-5.5634c-.0771 0-.1611 0-.2383.0112-.0566 0-.1054.0415-.127.0976l-.3378 1.1744c-.1475.5068-.0918.9707.1543 1.3164.2256.3164.6055.498 1.0625.5195l1.8437.1133c.0557 0 .1055.0263.1329.0703.0283.043.0351.1074.0214.1562-.0283.084-.1132.1485-.204.1553l-1.921.1123c-1.041.0488-2.1582.8867-2.5527 1.914l-.1406.3585c-.0283.0713.0215.1416.0986.1416h6.5977c.0771 0 .1474-.0489.169-.126.1122-.4082.1757-.837.1757-1.2803 0-2.6025-2.125-4.727-4.7344-4.727"/>
+                </svg>
+              </div>
+            </div>
+
+            <!-- Netlify — bottom right -->
+            <div class="absolute -bottom-6 -right-12 lg:-right-16 z-0 float-slow" style="animation-delay: -3s;">
+              <div class="w-12 h-12 lg:w-14 lg:h-14 rounded-2xl bg-white/80 dark:bg-white/[0.07] backdrop-blur-sm border border-neutral-200 dark:border-neutral-800 shadow-lg flex items-center justify-center">
+                <svg class="w-6 h-6 lg:w-7 lg:h-7 text-teal-400" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M6.49 19.04h-.23L5.13 17.9v-.23l1.73-1.71h1.2l.15.15v1.2L6.5 19.04ZM5.13 6.31V6.1l1.13-1.13h.23L8.2 6.68v1.2l-.15.15h-1.2L5.13 6.31Zm9.96 9.09h-1.65l-.14-.13v-3.83c0-.68-.27-1.2-1.1-1.23-.42 0-.9 0-1.43.02l-.07.08v4.96l-.14.14H8.9l-.13-.14V8.73l.13-.14h3.7a2.6 2.6 0 0 1 2.61 2.6v4.08l-.13.14Zm-8.37-2.44H.14L0 12.82v-1.64l.14-.14h6.58l.14.14v1.64l-.14.14Zm17.14 0h-6.58l-.14-.14v-1.64l.14-.14h6.58l.14.14v1.64l-.14.14ZM11.05 6.55V1.64l.14-.14h1.65l.14.14v4.9l-.14.14h-1.65l-.14-.13Zm0 15.81v-4.9l.14-.14h1.65l.14.13v4.91l-.14.14h-1.65l-.14-.14Z"/>
+                </svg>
+              </div>
+            </div>
+          </div>
+
+          <!-- The Phone Display (Svelte — cross-fading screens) -->
+          <div class="relative z-10">
+            <PhoneDisplay client:visible />
+          </div>
+
+          <!-- Ambient glow behind device -->
+          <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] rounded-full bg-primary/15 blur-[120px] -z-10 pointer-events-none" aria-hidden="true"></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Floating Bridge Dock (desktop) — straddles hero/features boundary -->
+  <div class="hidden lg:block absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 z-30 w-full max-w-5xl px-4">
+    <PersonaDock client:visible layout="bridge" />
+  </div>
+
+  <!-- Mobile dock — normal flow below content -->
+  <div class="lg:hidden mt-6 sm:mt-8 px-4 sm:px-6 pb-2">
+    <PersonaDock client:visible layout="mobile" />
   </div>
 </section>
