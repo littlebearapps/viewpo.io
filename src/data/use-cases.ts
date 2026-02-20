@@ -32,6 +32,40 @@ export interface UseCaseFAQ {
   answer: string;
 }
 
+export interface UseCaseCharacter {
+  name: string;
+  location: string;
+  age: string;
+  role: string;
+  tools: string[];
+  devices: string[];
+  quote: string;
+  quirk: string;
+}
+
+export interface PullQuote {
+  text: string;
+  source?: string;
+  afterParagraph?: number;
+}
+
+export interface StatBlock {
+  value: string;
+  label: string;
+  source?: string;
+}
+
+export interface DemoPlaceholder {
+  device: 'iphone' | 'ipad' | 'macbook';
+  caption: string;
+  placement: 'after-pain' | 'after-solution' | 'after-features' | 'after-workflow';
+}
+
+export interface UseCaseLimitations {
+  title: string;
+  items: string[];
+}
+
 export type UseCaseType = 'persona' | 'situation';
 
 export interface UseCase {
@@ -68,6 +102,14 @@ export interface UseCase {
   crossRefs: CrossRef[];
 
   faqs: UseCaseFAQ[];
+
+  // Enhanced content fields
+  character?: UseCaseCharacter;
+  pullQuotes?: PullQuote[];
+  stats?: StatBlock[];
+  limitations?: UseCaseLimitations;
+  demoPlaceholders?: DemoPlaceholder[];
+  compositeDisclaimer?: boolean;
 }
 
 // ─── Persona Use Cases ───────────────────────────────────────────────
@@ -155,6 +197,34 @@ const remoteMonitoring: UseCase = {
       answer: 'Especially useful. If your development environment is a VPS (Hetzner, DigitalOcean, etc.) and you code in tmux/Neovim over SSH, there\'s no localhost browser to check your work. Every visual verification requires deploying to a preview branch. Viewpo sends a push notification when the deploy lands and lets you see it at any viewport width — it\'s the fastest path from terminal to visual verification.',
     },
   ],
+
+  character: {
+    name: 'Sam',
+    location: 'Fitzroy, Melbourne',
+    age: 'Early 30s',
+    role: 'Full-stack developer, Series A fintech startup',
+    tools: ['Claude Code', 'Neovim', 'tmux', 'Mosh', 'Hetzner VPS'],
+    devices: ['iPhone 15', 'MacBook Pro'],
+    quote: 'I pushed from tmux and the build passed. Great. But "build passed" doesn\'t mean "the settings page doesn\'t overflow at 1440px." I need eyes on the deploy, not another green tick.',
+    quirk: 'Sometimes ignores notifications during focus time and batch-checks deploys later',
+  },
+  pullQuotes: [
+    { text: 'The Runway 2025 report calls this the "thousand-tabs problem" — engineers jump between Slack, Jira, CI/CD dashboards, and App Store Connect just to understand the status of a single release.', source: 'Runway 2025 Mobile Release Management', afterParagraph: 1 },
+  ],
+  stats: [
+    { value: '60.5%', label: 'of internet traffic is mobile', source: 'Sensor Tower 2025' },
+    { value: '<60s', label: 'to verify a deploy with Viewpo' },
+    { value: '2,000+', label: 'alerts/week — only 3% actionable', source: 'incident.io 2025' },
+  ],
+  limitations: {
+    title: 'What Viewpo Doesn\'t Solve for Remote Developers',
+    items: [
+      'Deep code review and debugging still happen on your laptop — SSH sessions, complex diffs, and breakpoint debugging need a full development environment',
+      'Viewpo tests with WebKit (Safari) — for Chrome or Firefox-specific rendering, your team still runs cross-browser tests in CI',
+      'It\'s an async verification tool at its best — treat it as a post-deploy sanity check, not a real-time development companion',
+    ],
+  },
+  compositeDisclaimer: true,
 };
 
 const indieHackers: UseCase = {
@@ -242,6 +312,34 @@ const indieHackers: UseCase = {
       answer: 'Yes. Open any deployment at Desktop (1920px), pan to the section you want, and screenshot. The image is saved to Photos — drop it into a pitch deck, share to Slack, or post to Twitter. Professional-quality desktop screenshots captured from your phone in under 30 seconds.',
     },
   ],
+
+  character: {
+    name: 'Jake',
+    location: 'Hoboken, New Jersey',
+    age: 'Early 30s',
+    role: 'Senior backend engineer (day job), side-project SaaS builder (evenings/weekends)',
+    tools: ['Cursor', 'Next.js', 'Tailwind', 'Netlify'],
+    devices: ['iPhone 14 Pro', 'MacBook Pro'],
+    quote: 'I\'m competing against startups with 5-person design teams. My pricing page needs to look just as polished at desktop. I can\'t tweet a phone screenshot of a B2B SaaS — it kills credibility.',
+    quirk: 'Lost a potential beta signup because he shared a phone screenshot that showed a phone layout — a prospect replied "this doesn\'t look ready for enterprise"',
+  },
+  pullQuotes: [
+    { text: 'The Indie Hackers community\'s top tip for engagement: "Add screenshots or animated gifs." Visual posts showing real product UI perform dramatically better than code snippets or text updates.', source: 'Indie Hackers Community', afterParagraph: 0 },
+  ],
+  stats: [
+    { value: '8 steps', label: 'to screenshot a staging build without Viewpo' },
+    { value: '3,000+', label: 'followers seeing every desktop screenshot Jake shares' },
+    { value: '<30s', label: 'to capture a professional desktop screenshot with Viewpo' },
+  ],
+  limitations: {
+    title: 'What Viewpo Doesn\'t Solve for Indie Founders',
+    items: [
+      'Deep Cursor sessions and complex prompt engineering still need a laptop — Viewpo handles verification, not the build environment',
+      'B2B buyers aren\'t all on Safari — for Chrome-specific rendering, BrowserStack or a real desktop browser is still needed',
+      'Screenshot capture is fast, but crafting the tweet or pitch deck around it is still on you',
+    ],
+  },
+  compositeDisclaimer: true,
 };
 
 const creators: UseCase = {
@@ -332,17 +430,45 @@ const creators: UseCase = {
       answer: 'Screenshot the viewport in Viewpo (it saves to Photos with the exact width visible), then paste it into your AI tool\'s context: "The layout breaks at 1440px — here\'s what it looks like." The AI can see the screenshot and fix the responsive issue. Push, re-deploy, re-verify in Viewpo.',
     },
   ],
+
+  character: {
+    name: 'Maya',
+    location: 'Sydney, Australia',
+    age: 'Late 20s',
+    role: 'UX designer at a mid-size agency (day job), building her first micro-SaaS on evenings and weekends',
+    tools: ['Bolt', 'Lovable', 'Figma', 'Vercel', 'Tailwind'],
+    devices: ['iPhone 15 Pro', 'iPad Pro', 'MacBook (locked to day job)'],
+    quote: 'I get maybe two hours a night to build this thing. I can\'t spend 15 minutes of that trying to figure out if my dashboard looks right at desktop. The AI wrote the code — I just need to see it.',
+    quirk: 'Refuses to open her work MacBook for side-project building — associates it with day-job dread',
+  },
+  pullQuotes: [
+    { text: 'The AI wrote the Tailwind classes, set the breakpoints, and wired up the responsive grid. It looks great on your phone. But what does it look like at 1920px desktop? You have no idea.', afterParagraph: 1 },
+  ],
+  stats: [
+    { value: '2-3 hrs', label: 'of evening building time Maya protects' },
+    { value: '1920px', label: 'desktop view her Shopify customers actually use' },
+    { value: '<30s', label: 'to verify a Bolt-generated layout with Viewpo' },
+  ],
+  limitations: {
+    title: 'What Viewpo Doesn\'t Solve for Creators',
+    items: [
+      'Viewpo doesn\'t replace Figma or the design process — Maya still sketches everything before generating with Bolt',
+      'It doesn\'t solve the iPad\'s limitation for running local dev servers — cloud builds via Bolt are still needed',
+      'It\'s not a design review tool — no annotations, no Figma-to-live comparisons',
+    ],
+  },
+  compositeDisclaimer: true,
 };
 
 const freelancers: UseCase = {
   slug: 'freelancers',
   type: 'persona',
-  title: 'Freelancers & Agencies',
-  subtitle: 'Freelance Web Developers & Agency Owners',
+  title: 'Freelancers',
+  subtitle: 'Solo Web Developers & Freelancers',
   accentColour: 'orange',
   icon: '<path stroke-linecap="round" stroke-linejoin="round" d="M20.25 14.15v4.25c0 1.094-.787 2.036-1.872 2.18-2.087.277-4.216.42-6.378.42s-4.291-.143-6.378-.42c-1.085-.144-1.872-1.086-1.872-2.18v-4.25m16.5 0a2.18 2.18 0 00.75-1.661V8.706c0-1.081-.768-2.015-1.837-2.175a48.114 48.114 0 00-3.413-.387m4.5 8.006c-.194.165-.42.295-.673.38A23.978 23.978 0 0112 15.75c-2.648 0-5.195-.429-7.577-1.22a2.016 2.016 0 01-.673-.38m0 0A2.18 2.18 0 013 12.489V8.706c0-1.081.768-2.015 1.837-2.175a48.111 48.111 0 013.413-.387m7.5 0V5.25A2.25 2.25 0 0013.5 3h-3a2.25 2.25 0 00-2.25 2.25v.894m7.5 0a48.667 48.667 0 00-7.5 0M12 12.75h.008v.008H12v-.008z" />',
 
-  metaTitle: 'Freelancers & Agencies — Viewpo Use Case',
+  metaTitle: 'Freelancers — Viewpo Use Case',
   metaDescription: 'Manage all client deployments from Cloudflare, Vercel, and Netlify in one dashboard. Check any client\'s deploy from your phone and share viewport-specific preview links.',
 
   painTitle: 'The Pain',
@@ -397,7 +523,7 @@ const freelancers: UseCase = {
 
   crossRefTitle: 'Related Situations',
   crossRefs: [
-    { label: 'Stakeholder Approval', slug: 'stakeholder-feedback', hook: 'Stop explaining responsive design over email.', accentColour: 'emerald' },
+    { label: 'Client Feedback', slug: 'client-feedback', hook: 'Stop explaining responsive design over email.', accentColour: 'emerald' },
     { label: 'Live Demo', slug: 'live-demos', hook: 'Show clients a 1920px desktop layout from your phone in meetings.', accentColour: 'violet' },
   ],
 
@@ -415,88 +541,34 @@ const freelancers: UseCase = {
       answer: 'There\'s no limit on connected projects. Agencies managing 60+ client sites use the unified dashboard to see all deployments in one feed. Filter by project name to find any client instantly.',
     },
   ],
-};
 
-const digitalNomads: UseCase = {
-  slug: 'digital-nomads',
-  type: 'persona',
-  title: 'iPad Developers',
-  subtitle: 'Digital Nomads & iPad-First Developers',
-  accentColour: 'teal',
-  icon: '<path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5h3m-6.75 2.25h10.5a2.25 2.25 0 002.25-2.25v-15a2.25 2.25 0 00-2.25-2.25H6.75A2.25 2.25 0 004.5 4.5v15a2.25 2.25 0 002.25 2.25z" />',
-
-  metaTitle: 'iPad Developers — Viewpo Use Case',
-  metaDescription: 'See real 1920px desktop layouts on your iPad. Viewpo uses CSS viewport injection — not User Agent tricks — to render true desktop breakpoints on iPadOS.',
-
-  painTitle: 'The Pain',
-  painContent: [
-    'Mobile Safari lies. Apple\'s own documentation confirms: "Not every website will have an apparent difference between mobile and desktop sites. This is especially true of websites that utilise responsive layouts." An iPad Pro\'s CSS viewport tops out at approximately 1024px — firmly in the tablet breakpoint range. You literally cannot see a 1440px laptop layout or a 1920px desktop layout on an iPad through any standard means.',
-    'iGeeksBlog confirms: "Most responsive websites still show you a mobile layout" even when "Request Desktop Site" is enabled. Reddit users resort to paid workarounds like iCab Mobile ($2) just to change User Agent strings — which still doesn\'t solve the CSS viewport width problem.',
-    'For developers working from cafes in Bali, airport lounges, or co-working spaces with only an iPad, this is a fundamental capability gap.',
+  character: {
+    name: 'Erin',
+    location: 'Fortitude Valley, Brisbane',
+    age: 'Early 30s',
+    role: 'Solo web freelancer, 15 active client sites',
+    tools: ['Astro', 'WordPress', 'Tailwind', 'Cloudflare Pages', 'Vercel', 'Netlify'],
+    devices: ['iPhone 15', 'MacBook Air'],
+    quote: 'I don\'t need project management software. I need to send a link that shows my client\'s marketing manager the desktop design on her phone. That\'s it. One link, everyone sees the right thing.',
+    quirk: 'Texts clients from her personal phone — no separate work number, no CRM, just iMessage and the work',
+  },
+  pullQuotes: [
+    { text: '"You know how much of a pain in the ass managing dozens of GitHub and Netlify logins would be when making edits and additions to sites? Huge."', source: 'Reddit r/webdev', afterParagraph: 0 },
   ],
-
-  solutionTitle: 'How Viewpo Solves It',
-  solutionIntro: 'Viewpo injects the actual CSS viewport width via the viewport meta tag, not a User Agent string change. WebKit lays out the page at 1920px and shrink-to-fits it to the iPad screen. CSS media queries, breakpoints, and responsive layouts respond to the injected width.',
-  solutionSteps: [
-    { text: 'Native SwiftUI with adaptive sidebar layout — designed for iPad' },
-    { text: 'Pointer and trackpad support for precise inspection' },
-    { text: 'Split View / Slide Over multitasking — Viewpo alongside your code editor' },
-    { text: 'External keyboard shortcuts for rapid viewport switching' },
+  stats: [
+    { value: '15', label: 'active client sites across 3 providers' },
+    { value: '2-4', label: 'contacts per client who need to see changes' },
+    { value: '1 link', label: 'for everyone — auto-updates on each push' },
   ],
-
-  featuresTitle: 'Key Features Used',
-  features: [
-    { feature: 'True viewport simulation', description: 'See 1440px laptop or 1920px desktop layouts on an iPad\'s 1024px screen' },
-    { feature: 'Custom viewport sizes', description: 'Test exact breakpoints (768px, 1024px, 1366px, 1440px, 1920px, 3840px)' },
-    { feature: 'Orientation toggle', description: 'Test portrait vs landscape at each viewport size' },
-    { feature: 'Pinch-to-zoom', description: 'Zoom into specific UI elements for inspection' },
-    { feature: 'Dark/light override', description: 'Test both themes without changing system settings' },
-    { feature: 'iPad multitasking', description: 'Run Viewpo in Split View alongside code editors, terminal apps, or Safari' },
-  ],
-
-  workflowTitle: 'iPad Development Workflow',
-  workflow: [
-    { time: '', action: 'Code in your editor (Split View left)' },
-    { time: '', action: 'Push to GitHub from terminal app' },
-    { time: '', action: 'Viewpo notification: "Deploy ready"' },
-    { time: '', action: 'Open Viewpo in Split View (right)' },
-    { time: '', action: 'Switch to Desktop (1920px) — see full desktop layout on iPad' },
-    { time: '', action: 'Switch to Laptop (1440px) — verify breakpoint transition' },
-    { time: '', action: 'Pinch-to-zoom on specific elements to inspect spacing' },
-  ],
-
-  comparison: {
-    title: 'iPad vs Other Approaches',
-    headers: ['Approach', 'Desktop Layout?', 'CSS Breakpoints Fire?', 'Works on iPad?'],
-    rows: [
-      { label: 'Safari "Request Desktop Site"', cells: ['Sometimes', 'No (viewport stays ~1024px)', 'Yes but unreliable'] },
-      { label: 'iCab Mobile (User Agent change)', cells: ['Sometimes', 'No (same viewport issue)', 'Yes but $2 and limited'] },
-      { label: 'Chrome for iPad', cells: ['No', 'No', 'Yes but same limitations'] },
-      { label: 'Remote desktop to a Mac', cells: ['Yes', 'Yes', 'Laggy, requires Mac running'] },
-      { label: 'Viewpo', cells: ['Yes', 'Yes (real viewport injection)', 'Native iPadOS app'] },
+  limitations: {
+    title: 'What Viewpo Doesn\'t Solve for Freelancers',
+    items: [
+      'Client communication still happens over iMessage, email, and phone calls — Viewpo handles the "see what it looks like" part only',
+      'DNS changes, environment variables, and domain setup still require provider dashboards',
+      'Two WordPress clients on shared hosting (not a supported provider) still need manual screenshots',
     ],
   },
-
-  crossRefTitle: 'Related Situations',
-  crossRefs: [
-    { label: 'Visual QA Audit', slug: 'responsive-testing', hook: 'Test responsive designs at every breakpoint — from your iPad.', accentColour: 'pink' },
-    { label: 'Live Demo', slug: 'live-demos', hook: 'Present your product from an iPad at full desktop resolution.', accentColour: 'violet' },
-  ],
-
-  faqs: [
-    {
-      question: 'Can I really see a 1920px desktop layout on my iPad?',
-      answer: 'Yes. Viewpo injects the CSS viewport width (e.g. 1920px) via the viewport meta tag. WebKit renders the page at that width and shrink-to-fits it to your iPad screen. CSS media queries and breakpoints fire at the injected width — this is fundamentally different from "Request Desktop Site".',
-    },
-    {
-      question: 'Does Viewpo support iPad multitasking?',
-      answer: 'Yes. Viewpo is a native SwiftUI app built for iPadOS. It supports Split View (run alongside your code editor), Slide Over, pointer/trackpad input, and external keyboard shortcuts.',
-    },
-    {
-      question: 'Why doesn\'t "Request Desktop Site" work for viewport testing?',
-      answer: '"Request Desktop Site" changes the User Agent string, not the CSS viewport width. Responsive websites use CSS media queries that respond to viewport width, not User Agent. An iPad Pro\'s viewport is ~1024px — so responsive sites still show tablet layouts regardless of the User Agent.',
-    },
-  ],
+  compositeDisclaimer: true,
 };
 
 const teams: UseCase = {
@@ -559,7 +631,7 @@ const teams: UseCase = {
 
   crossRefTitle: 'Related Situations',
   crossRefs: [
-    { label: 'Stakeholder Approval', slug: 'stakeholder-feedback', hook: 'Get client and stakeholder sign-off without the back-and-forth.', accentColour: 'emerald' },
+    { label: 'Team & Executive Review', slug: 'team-review', hook: 'Get visual sign-off from leadership without the back-and-forth.', accentColour: 'violet' },
     { label: 'Emergency Hotfix', slug: 'production-monitoring', hook: 'Verify the Friday night fix without dragging out your laptop.', accentColour: 'amber' },
     { label: 'Live Demo', slug: 'live-demos', hook: 'Run sprint reviews and demos from your phone or iPad.', accentColour: 'violet' },
   ],
@@ -578,6 +650,34 @@ const teams: UseCase = {
       answer: 'No. Viewpo complements code review with visual review. Use GitHub Mobile for code diffs and Viewpo for visual verification. Together, they let you fully review and unblock PRs from your phone.',
     },
   ],
+
+  character: {
+    name: 'Priya',
+    location: 'Shoreditch, London',
+    age: 'Mid 30s',
+    role: 'Engineering manager, mid-size SaaS company (Series B, 40 engineers)',
+    tools: ['GitHub', 'Vercel', 'Slack', 'Linear'],
+    devices: ['iPhone 16 Pro', 'MacBook Pro'],
+    quote: 'I can review code on the train. I cannot review what the code looks like. Those are two very different things.',
+    quirk: 'Reviews PRs on the Overground commute — her team calls the morning merge window "the Shoreditch express"',
+  },
+  pullQuotes: [
+    { text: 'LinearB\'s analysis of 1 million PRs across 25,000 developers found the average time from PR open to merge is 5 days. The most significant velocity driver: "pickup time."', source: 'LinearB PR Analysis', afterParagraph: 0 },
+  ],
+  stats: [
+    { value: '5 days', label: 'average PR open-to-merge time', source: 'LinearB (1M PRs)' },
+    { value: '15-20', label: 'PRs per week across Priya\'s 3 squads' },
+    { value: '<60s', label: 'to visually review and unblock a PR with Viewpo' },
+  ],
+  limitations: {
+    title: 'What Viewpo Doesn\'t Solve for Team Leads',
+    items: [
+      'Deep code reviews still happen on the laptop — reading diffs, checking logic, running through edge cases',
+      'Design fidelity checks against Figma mocks need a desktop screen for pixel-level comparison',
+      'Complex interactions (hover states, form validation flows, animations) are verified at the desk',
+    ],
+  },
+  compositeDisclaimer: true,
 };
 
 const qaDesign: UseCase = {
@@ -648,7 +748,7 @@ const qaDesign: UseCase = {
 
   crossRefTitle: 'Related Situations',
   crossRefs: [
-    { label: 'Stakeholder Approval', slug: 'stakeholder-feedback', hook: 'Share viewport-specific previews for design sign-off.', accentColour: 'emerald' },
+    { label: 'Client Feedback', slug: 'client-feedback', hook: 'Share viewport-specific previews for design sign-off.', accentColour: 'emerald' },
     { label: 'Visual QA Audit', slug: 'responsive-testing', hook: 'Systematic responsive testing across all breakpoints.', accentColour: 'pink' },
   ],
 
@@ -670,88 +770,37 @@ const qaDesign: UseCase = {
       answer: 'Yes. Team members can tag you on a specific deploy, page, and viewport where an issue was found or a fix was deployed. You get a notification that takes you directly to the tagged context — no hunting through dashboards. Verify the fix, approve, and the team can ship to production. The whole loop — tag, verify, approve — takes under two minutes.',
     },
   ],
+
+  character: {
+    name: 'Tomoko',
+    location: 'Shibuya, Tokyo',
+    age: 'Early 30s',
+    role: 'Senior QA engineer, e-commerce company',
+    tools: ['BrowserStack', 'Figma', 'Vercel', 'Linear'],
+    devices: ['iPhone 15', 'iPad Air', 'MacBook Pro'],
+    quote: 'I need to file bugs with exact viewport widths and screenshots. "It looks weird on mobile" doesn\'t help anyone. "390px portrait, overflow on third grid column" — that\'s a bug a developer can fix in 5 minutes.',
+    quirk: 'Her developers respect her bug tickets because they\'re always actionable — exact viewport, exact reproduction steps, screenshot evidence',
+  },
+  pullQuotes: [
+    { text: '"I had a Polypane subscription but forgot to cancel it and it was charging me out the ass." "Unless you\'re an agency, you can make do with the resizable mobile view in Chrome\'s developer tools."', source: 'Reddit r/Frontend', afterParagraph: 1 },
+  ],
+  stats: [
+    { value: '$39/mo', label: 'per user for BrowserStack Live', source: 'BrowserStack pricing' },
+    { value: '80 min', label: 'daily commute Tomoko uses for QA testing' },
+    { value: '0', label: 'mobile viewport testing apps before Viewpo' },
+  ],
+  limitations: {
+    title: 'What Viewpo Doesn\'t Solve for QA & Design',
+    items: [
+      'Cross-browser testing (Chrome on Android, Firefox on Windows) still requires BrowserStack from a desk',
+      'Interactive flows depending on hover states or precise pointer interactions need a desktop browser',
+      'Detailed bug tracking and team communication still live in Linear and Slack — Viewpo is the visual verification layer',
+    ],
+  },
+  compositeDisclaimer: true,
 };
 
 // ─── Situation Use Cases ─────────────────────────────────────────────
-
-const stakeholderFeedback: UseCase = {
-  slug: 'stakeholder-feedback',
-  type: 'situation',
-  title: 'Stakeholder Approval',
-  subtitle: 'Get sign-off without the responsive design confusion',
-  accentColour: 'emerald',
-  icon: '<path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 01-1.043 3.296 3.745 3.745 0 01-3.296 1.043A3.745 3.745 0 0112 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 01-3.296-1.043 3.745 3.745 0 01-1.043-3.296A3.745 3.745 0 013 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 011.043-3.296 3.746 3.746 0 013.296-1.043A3.746 3.746 0 0112 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 013.296 1.043 3.746 3.746 0 011.043 3.296A3.745 3.745 0 0121 12z" />',
-
-  metaTitle: 'Stakeholder Approval — Viewpo Use Case',
-  metaDescription: 'Stop explaining responsive design over email. Send a Viewpo share link — stakeholders see the desktop design on their phone. No account needed, no confusion.',
-
-  painTitle: 'The Situation',
-  painContent: [
-    'You\'re ready to launch. But you need the "OK" from a non-technical boss, a client, or a salesperson who is currently on the road. You send them the preview link. They open it on their phone. They see a mobile layout. They panic: "The desktop design is completely different from the mockup!"',
-    'You spend the next hour explaining responsive design over email.',
-    'This is "staging limbo" — the gap between "code is ready" and "stakeholder has approved" — and it kills momentum. Vercel\'s own team acknowledged this problem: "Previously, our staging environments created bottlenecks, and collaboration between developers and non-technical stakeholders was inefficient."',
-  ],
-
-  solutionTitle: 'The Viewpo Fix',
-  solutionIntro: 'Send a Viewpo share link instead of a raw preview URL. The stakeholder opens it on their phone and sees exactly what you see — the Desktop version at 1920px, rendered in high fidelity.',
-  solutionSteps: [
-    { text: 'No account, no login, no onboarding — the deep link opens the full viewer with all controls available' },
-    { text: 'They tap through presets to verify responsiveness: Desktop, Tablet, Phone' },
-    { text: 'They reply "Looks good." You deploy to production' },
-    { text: 'No responsive design explanation required. No "open this on your laptop instead" follow-up' },
-  ],
-
-  featuresTitle: 'Key Features',
-  features: [
-    { feature: 'Share links (latest for branch)', description: 'Auto-updates — no re-sharing after each commit' },
-    { feature: 'No-account viewing', description: 'Recipient needs the Viewpo app installed but no account or login — deep link opens directly to the deployment' },
-    { feature: 'Desktop viewport on phone', description: 'Client sees the desktop design, not a mobile layout' },
-    { feature: 'QR codes', description: 'For in-person reviews — scan to see the staging build' },
-    { feature: 'Expiry options', description: 'Set 1-week expiry for client review periods' },
-  ],
-
-  workflowTitle: 'Approval Workflow',
-  workflow: [
-    { time: 'Developer', action: 'Sends Viewpo share link (latest for feature/redesign, Desktop preset)' },
-    { time: 'Client', action: 'Opens on iPhone → sees 1920px desktop layout' },
-    { time: 'Client', action: 'Taps Tablet preset → sees iPad layout' },
-    { time: 'Client', action: 'Replies "Approved"' },
-    { time: 'Developer', action: 'Merges to main → production deploy' },
-  ],
-
-  comparison: {
-    title: 'Who Benefits',
-    headers: ['Role', 'Pain Removed'],
-    rows: [
-      { label: 'Developer', cells: ['No more "it looks different on my phone" back-and-forth'] },
-      { label: 'Designer', cells: ['Clients see the actual design at intended resolution'] },
-      { label: 'PM/Account Manager', cells: ['Faster approval cycles — hours instead of days'] },
-      { label: 'Client/Stakeholder', cells: ['Clear visual of what\'s being shipped, on any device'] },
-    ],
-  },
-
-  crossRefTitle: 'Best For These Roles',
-  crossRefs: [
-    { label: 'Freelancers & Agencies', slug: 'freelancers', hook: 'Manage all client deployments in one dashboard.', accentColour: 'orange' },
-    { label: 'Team Leads', slug: 'teams', hook: 'Unblock PRs and approve frontend changes from your phone.', accentColour: 'emerald' },
-    { label: 'QA & Design', slug: 'qa-design', hook: 'Share viewport-specific previews for design sign-off.', accentColour: 'pink' },
-  ],
-
-  faqs: [
-    {
-      question: 'Does the stakeholder need a Viewpo account to view the preview?',
-      answer: 'No. Share links open directly in the Viewpo app without requiring an account or login. The recipient does need the Viewpo app installed on their device. Universal Links (web fallback) are planned for a future release.',
-    },
-    {
-      question: 'Will the share link always show the latest deployment?',
-      answer: 'Yes. "Latest for branch" links auto-update with each new deploy. You share once, and the client always sees the most recent build — no re-sharing needed after subsequent commits.',
-    },
-    {
-      question: 'Can I control what viewport the stakeholder sees first?',
-      answer: 'Yes. When generating a share link, you can set the default viewport preset (e.g. Desktop 1920px). The recipient opens to that view but can freely switch between all presets.',
-    },
-  ],
-};
 
 const responsiveTesting: UseCase = {
   slug: 'responsive-testing',
@@ -821,7 +870,7 @@ const responsiveTesting: UseCase = {
   crossRefs: [
     { label: 'QA & Design', slug: 'qa-design', hook: 'Systematic responsive testing across all breakpoints.', accentColour: 'pink' },
     { label: 'Remote Developers', slug: 'remote-monitoring', hook: 'Verify responsive design from anywhere, on any device.', accentColour: 'cyan' },
-    { label: 'iPad Developers', slug: 'digital-nomads', hook: 'Test desktop layouts you can\'t see natively on iPad.', accentColour: 'teal' },
+    { label: 'iPad Testing', slug: 'ipad-testing', hook: 'Test desktop layouts you can\'t see natively on iPad.', accentColour: 'teal' },
   ],
 
   faqs: [
@@ -1003,6 +1052,396 @@ const liveDemos: UseCase = {
   ],
 };
 
+// ─── New Persona: Agencies ───────────────────────────────────────────
+
+const agencies: UseCase = {
+  slug: 'agencies',
+  type: 'persona',
+  title: 'Agencies',
+  subtitle: 'Agency Owners & Account Directors',
+  accentColour: 'teal',
+  icon: '<path stroke-linecap="round" stroke-linejoin="round" d="M3.75 21h16.5M4.5 3h15M5.25 3v18m13.5-18v18M9 6.75h1.5m-1.5 3h1.5m-1.5 3h1.5m3-6H15m-1.5 3H15m-1.5 3H15M9 21v-3.375c0-.621.504-1.125 1.125-1.125h3.75c.621 0 1.125.504 1.125 1.125V21" />',
+
+  metaTitle: 'Agencies — Viewpo Use Case',
+  metaDescription: 'Orchestrate client previews across your team. Account managers send controlled share links, designers verify breakpoints, and clients see the desktop layout — all from one dashboard.',
+
+  painTitle: 'The Pain',
+  painContent: [
+    'You run a small agency — 4-6 people. You\'re the conductor: a designer, a frontend dev, an account manager, maybe a social media specialist. Each client account has an internal team working on it AND a client-side team that needs to see, review, and approve work.',
+    'On any given day: your account manager needs to show Client A\'s marketing director the new landing page at desktop resolution. Your designer needs to verify that the dev\'s implementation matches her Figma mocks at three breakpoints. Client B\'s CEO wants to see the dashboard redesign before their board meeting. Client C\'s marketing team (3 people) need to review and individually approve the campaign page.',
+    'The freelancer version of this is manageable — one person sends a link and gets a thumbs up. But at agency scale, it breaks down. Who sees what? The client CEO sees the final polished version, not the work-in-progress your designer is still iterating on. Your account manager shows the client a controlled preview at the right resolution; she doesn\'t give them access to every experimental branch. When the CEO says "I approved this last Thursday," you need to know what version they saw and when.',
+    'You don\'t write every line of code anymore — you orchestrate who works on what, who sees what, and who approves what. The deploy itself is fast. The coordination around it is where the time goes.',
+  ],
+
+  solutionTitle: 'How Viewpo Solves It',
+  solutionSteps: [
+    { text: 'Team workspace per client: Internal team and client stakeholders share a workspace with role-based access (Owner/Member/Viewer)' },
+    { text: 'Account manager routes previews: Controlled share links sent to the right client stakeholders at the right time' },
+    { text: 'Designer verifies implementation: Same deploy, different viewport — designer checks Tablet/Desktop while dev checks Phone' },
+    { text: 'Client reviews at the right resolution: Share link opens at Desktop 1920px — no "it looks different on my phone" confusion' },
+    { text: 'Audit trail: What was shown, when, what feedback came back — the share link is the record' },
+  ],
+
+  featuresTitle: 'Key Features Used',
+  features: [
+    { feature: 'Team workspaces', description: 'Workspace per client with Owner/Member/Viewer roles — internal team + client stakeholders' },
+    { feature: 'Share links (latest for branch)', description: 'Account manager sends controlled preview links — auto-update on each push' },
+    { feature: 'Multi-provider dashboard', description: '8 client accounts across Vercel, Netlify, Cloudflare in one feed' },
+    { feature: 'Role-based access', description: 'Client CEO gets Viewer access; internal designer gets Member access' },
+    { feature: 'Rapid viewport switching', description: 'Designer checks Tablet, dev checks Phone, client sees Desktop — same deploy' },
+    { feature: 'Integration health', description: 'Monitor token status across all client accounts without logging into each provider' },
+  ],
+
+  workflowTitle: 'Typical Workflow',
+  workflow: [
+    { time: 'Morning', action: 'Team standup via Slack huddle' },
+    { time: '', action: 'Account manager: "Client A needs to review the landing page today"' },
+    { time: '', action: 'Check Viewpo → latest deploy on feature/landing-v3 (Vercel, 45 min ago)' },
+    { time: '', action: 'Desktop 1920px → looks good → send share link to account manager' },
+    { time: '', action: 'Account manager forwards to Client A\'s marketing director → controlled Desktop view' },
+    { time: 'Midday', action: 'Client B\'s CEO: "Where are we on the dashboard?"' },
+    { time: '', action: 'Send share link (Desktop preset) → CEO sees 1920px dashboard on phone' },
+    { time: '', action: 'CEO: "The reporting tab needs a filter" → create task for dev' },
+    { time: 'Afternoon', action: 'Client C\'s campaign page needs approval from 3 marketing team members' },
+    { time: '', action: 'Generate one share link → account manager sends to all 3: "Please review by Friday"' },
+    { time: '', action: 'Three reviewers, three devices, all seeing the same Desktop layout' },
+  ],
+
+  comparison: {
+    title: 'Freelancer vs Agency',
+    headers: ['Aspect', 'Freelancer', 'Agency'],
+    rows: [
+      { label: 'Internal team', cells: ['Just me (solo)', 'Conductor + specialists (5 people)'] },
+      { label: 'Client side', cells: ['1 main contact + 2-3 associates', 'Multiple stakeholders with defined roles'] },
+      { label: 'Preview access', cells: ['"Add my client\'s marketing manager too"', '"Account manager controls who sees what"'] },
+      { label: 'Feedback', cells: ['Client comments, I respond', 'Multi-party feedback with routing'] },
+      { label: 'Approval', cells: ['Client says "ship it"', 'Workflow: internal review → client feedback → approval'] },
+    ],
+  },
+
+  crossRefTitle: 'Related Use Cases',
+  crossRefs: [
+    { label: 'Freelancers', slug: 'freelancers', hook: 'The solo version of client management — simpler, more direct.', accentColour: 'orange' },
+    { label: 'Client Feedback', slug: 'client-feedback', hook: 'The approval workflow for external client stakeholders.', accentColour: 'emerald' },
+    { label: 'Team & Executive Review', slug: 'team-review', hook: 'Internal review workflow for your own team.', accentColour: 'violet' },
+  ],
+
+  faqs: [
+    {
+      question: 'How does Viewpo handle multiple client accounts for agencies?',
+      answer: 'Each client gets a separate team workspace with its own deployment feed, share links, and role-based access. Your account manager, designer, and developers see all client workspaces. Client stakeholders only see their own workspace with Viewer access.',
+    },
+    {
+      question: 'Can my account manager send controlled previews to clients?',
+      answer: 'Yes. Generate a share link from any deployment with a default viewport preset (e.g. Desktop 1920px). The account manager sends it to the right client contacts at the right time. The link auto-updates with each new deploy — no re-sharing needed.',
+    },
+    {
+      question: 'How is Viewpo different for agencies vs freelancers?',
+      answer: 'Freelancers need multi-person client access and notifications — send one link to 3 client contacts. Agencies need workflow controls: role-based access, team workspaces per client, and an audit trail of what was shown and when. Both start from the same unified dashboard.',
+    },
+    {
+      question: 'Can the designer and developer verify different viewports on the same deploy?',
+      answer: 'Yes. The same deployment opens at any viewport size independently. Your designer checks Tablet (820px) and Desktop (1920px) for layout fidelity while your developer checks Phone sizes for responsive bugs — simultaneously, same build.',
+    },
+  ],
+
+  character: {
+    name: 'Carlos',
+    location: 'Palermo, Buenos Aires',
+    age: 'Early 30s',
+    role: 'Agency owner, 5-person digital agency, 8 active client accounts',
+    tools: ['Next.js', 'Astro', 'Tailwind', 'Vercel', 'Netlify', 'Cloudflare Pages'],
+    devices: ['iPhone 14 Pro', 'MacBook Pro'],
+    quote: 'When a client\'s CEO says "I approved this," I need to know exactly what version they saw and when. Three people on the client side, three on ours — that\'s six opinions about a single landing page. Without controlled previews, it\'s chaos.',
+    quirk: 'Also building a Buenos Aires restaurant directory SaaS on the side — tweets #BuildInPublic screenshots between client calls',
+  },
+  pullQuotes: [
+    { text: 'You don\'t write every line of code anymore — you orchestrate who works on what, who sees what, and who approves what. The deploy itself is fast. The coordination around it is where the time goes.', afterParagraph: 3 },
+  ],
+  stats: [
+    { value: '8', label: 'active client accounts across multiple providers' },
+    { value: '6', label: 'opinions per landing page (3 internal + 3 client)' },
+    { value: '1 link', label: 'per client review — auto-updates, shared audit trail' },
+  ],
+  limitations: {
+    title: 'What Viewpo Doesn\'t Solve for Agencies',
+    items: [
+      'Project management, design handoff, and daily communication still live in Linear, Figma, and Slack',
+      'Pixel-perfect design review still requires overlaying screenshots against Figma mocks manually',
+      'Formal client sign-off still happens via email — share links provide the audit trail but not the contract',
+    ],
+  },
+  compositeDisclaimer: true,
+};
+
+// ─── New Situation: Client Feedback ──────────────────────────────────
+
+const clientFeedback: UseCase = {
+  slug: 'client-feedback',
+  type: 'situation',
+  title: 'Client Feedback',
+  subtitle: 'Get client approval without the responsive design confusion',
+  accentColour: 'emerald',
+  icon: '<path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 01-1.043 3.296 3.745 3.745 0 01-3.296 1.043A3.745 3.745 0 0112 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 01-3.296-1.043 3.745 3.745 0 01-1.043-3.296A3.745 3.745 0 013 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 011.043-3.296 3.746 3.746 0 013.296-1.043A3.746 3.746 0 0112 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 013.296 1.043 3.746 3.746 0 011.043 3.296A3.745 3.745 0 0121 12z" />',
+
+  metaTitle: 'Client Feedback & Approval — Viewpo Use Case',
+  metaDescription: 'Stop explaining responsive design over email. Send a Viewpo share link — clients see the desktop design on their phone. No account needed, no confusion, one link for everyone.',
+
+  painTitle: 'The Situation',
+  painContent: [
+    'You\'ve built the landing page. Now you need the client\'s OK. But "the client" isn\'t one person — it\'s the business owner, their marketing manager, and the partner who "has great taste." You send the Netlify preview URL. They open it on their phones. They see a mobile layout. The business owner panics: "The desktop design is completely different from the mockup!"',
+    'You spend the next hour explaining responsive design over email. Multiply by 15 clients (if you\'re a freelancer) or 8 client accounts (if you\'re an agency), and approval logistics consume more time than building.',
+    'This is "staging limbo" — the gap between "code is ready" and "client has approved" — and it kills momentum. Vercel\'s own team acknowledged this problem: "Previously, our staging environments created bottlenecks, and collaboration between developers and non-technical stakeholders was inefficient."',
+    'The freelancer version: you send one link to 3 client contacts and wait for a thumbs up. The agency version: your account manager routes a controlled preview to the right client stakeholders at the right time, with the designer checking the build first.',
+  ],
+
+  solutionTitle: 'The Viewpo Fix',
+  solutionIntro: 'Send a Viewpo share link instead of a raw preview URL. Every client contact opens it on their phone and sees exactly what you see — the Desktop version at 1920px, rendered in high fidelity.',
+  solutionSteps: [
+    { text: 'No account, no login, no onboarding — the deep link opens the full viewer with all controls available' },
+    { text: 'Clients tap through presets to verify responsiveness: Desktop, Tablet, Phone' },
+    { text: 'They reply "Looks good." You deploy to production' },
+    { text: 'No responsive design explanation required. No "open this on your laptop instead" follow-up' },
+  ],
+
+  featuresTitle: 'Key Features',
+  features: [
+    { feature: 'Share links (latest for branch)', description: 'Auto-updates — no re-sharing after each commit. One link for all client contacts' },
+    { feature: 'No-account viewing', description: 'Recipient needs the Viewpo app installed but no account or login — deep link opens directly to the deployment' },
+    { feature: 'Desktop viewport on phone', description: 'Client sees the desktop design, not a mobile layout' },
+    { feature: 'QR codes', description: 'For in-person client meetings — scan to see the staging build' },
+    { feature: 'Expiry options', description: 'Set 1-week expiry for client review periods' },
+    { feature: 'Multi-person access', description: 'Send one link to 3+ client contacts — all see the same viewport' },
+  ],
+
+  workflowTitle: 'Approval Workflow',
+  workflow: [
+    { time: 'Freelancer', action: 'Sends share link to client\'s business owner + marketing manager + partner' },
+    { time: '', action: 'All three open on their phones → see 1920px desktop layout' },
+    { time: '', action: 'Marketing manager: "Looks great." Partner: "Can we make the logo bigger?"' },
+    { time: '', action: 'Adjust → push → link auto-updates → Partner: "Ship it."' },
+    { time: 'Agency', action: 'Account manager checks latest deploy → Desktop looks good' },
+    { time: '', action: 'Sends controlled share link to Client A\'s marketing director' },
+    { time: '', action: 'Marketing director: "Headline feels weak" → routes to copywriter → fix pushed' },
+    { time: '', action: 'Re-send to marketing director + CMO → "Ship it after the logo tweak"' },
+  ],
+
+  comparison: {
+    title: 'Who Benefits',
+    headers: ['Role', 'Pain Removed'],
+    rows: [
+      { label: 'Freelancer', cells: ['One link for multiple client contacts, no per-person screenshot emails'] },
+      { label: 'Agency account manager', cells: ['Controlled client previews at the right resolution, faster approval cycles'] },
+      { label: 'Designer', cells: ['Clients see the actual design at intended resolution'] },
+      { label: 'Client contacts', cells: ['Clear visual of what\'s being shipped, on any device — no laptop required'] },
+    ],
+  },
+
+  crossRefTitle: 'Best For These Roles',
+  crossRefs: [
+    { label: 'Freelancers', slug: 'freelancers', hook: 'Manage all client deployments in one dashboard.', accentColour: 'orange' },
+    { label: 'Agencies', slug: 'agencies', hook: 'Orchestrate previews across your team and clients.', accentColour: 'teal' },
+    { label: 'Team & Executive Review', slug: 'team-review', hook: 'For internal stakeholders, not external clients.', accentColour: 'violet' },
+  ],
+
+  faqs: [
+    {
+      question: 'Does the client need a Viewpo account to view the preview?',
+      answer: 'No. Share links open directly in the Viewpo app without requiring an account or login. The recipient does need the Viewpo app installed on their device. Universal Links (web fallback) are planned for a future release.',
+    },
+    {
+      question: 'Will the share link always show the latest deployment?',
+      answer: 'Yes. "Latest for branch" links auto-update with each new deploy. You share once, and the client always sees the most recent build — no re-sharing needed after subsequent commits.',
+    },
+    {
+      question: 'Can I control what viewport the client sees first?',
+      answer: 'Yes. When generating a share link, you can set the default viewport preset (e.g. Desktop 1920px). The recipient opens to that view but can freely switch between all presets.',
+    },
+    {
+      question: 'How does this differ from internal team review?',
+      answer: 'Client feedback is about external stakeholders — people outside your organisation who need a frictionless way to see and approve work. For internal reviews (your boss, your team lead, your board), see Team & Executive Review.',
+    },
+  ],
+};
+
+// ─── New Situation: Team & Executive Review ──────────────────────────
+
+const teamReview: UseCase = {
+  slug: 'team-review',
+  type: 'situation',
+  title: 'Team & Executive Review',
+  subtitle: 'Visual PR review and executive updates from your phone',
+  accentColour: 'violet',
+  icon: '<path stroke-linecap="round" stroke-linejoin="round" d="M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m.94 3.198l.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0112 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 016 18.719m12 0a5.971 5.971 0 00-.941-3.197m0 0A5.995 5.995 0 0012 12.75a5.995 5.995 0 00-5.058 2.772m0 0a3 3 0 00-4.681 2.72 8.986 8.986 0 003.74.477m.94-3.197a5.971 5.971 0 00-.94 3.197M15 6.75a3 3 0 11-6 0 3 3 0 016 0zm6 3a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0zm-13.5 0a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z" />',
+
+  metaTitle: 'Team & Executive Review — Viewpo Use Case',
+  metaDescription: 'Review frontend changes from your phone in 30 seconds. Visual PR review for team leads, executive updates for founders — no laptop needed, no demo call required.',
+
+  painTitle: 'The Situation',
+  painContent: [
+    'Different pain, different relationship. This isn\'t about clients — it\'s about the people inside your own organisation who need to see, review, or approve work before it ships.',
+    'The engineering manager needs to visually verify a PR before approving the merge. The startup CEO needs to show the board the new dashboard before the quarterly meeting. The design lead needs to sign off on the developer\'s implementation before it goes to QA. The VP of Marketing needs to see the campaign page before it goes live.',
+    'LinearB\'s analysis of 1 million PRs found the average time from PR open to merge is 5 days. The biggest velocity killer: "pickup time" — how long before anyone starts reviewing. When the reviewer is a manager in back-to-back meetings, a visual check from their phone can unblock the entire team.',
+    'These are people with authority inside your organisation — they\'re not external clients. They may need to see work-in-progress branches, not just polished staging builds. And their approval often gates deployment.',
+  ],
+
+  solutionTitle: 'The Viewpo Fix',
+  solutionSteps: [
+    { text: 'Push notification: "Deploy ready on feature/checkout-redesign" — the reviewer is watching the branch' },
+    { text: 'Tap to view: See the exact build at Desktop (1920px)' },
+    { text: 'Quick check: Switch to Phone M — does the mobile layout work?' },
+    { text: 'Unblock the team: Message in Slack "Looks good, merge it" — 30 seconds between meetings' },
+    { text: 'Or share upward: Send a share link to the CEO/board with the staging build at Desktop' },
+  ],
+
+  featuresTitle: 'Key Features',
+  features: [
+    { feature: 'Push notifications', description: 'Reviewer knows immediately when the deploy is ready — no waiting, no polling' },
+    { feature: 'Deep linking', description: 'Tap notification → jump straight to the exact build in the viewer' },
+    { feature: 'Desktop viewport on phone', description: 'Manager sees the layout at intended resolution between meetings' },
+    { feature: 'Share links', description: 'Send to executives/board — they see the correct viewport without technical setup' },
+    { feature: 'Team workspaces', description: 'All team members see the same deployment feed — shared context' },
+    { feature: 'Rapid preset switching', description: 'Desktop → Phone check in 10 seconds for quick visual QA' },
+  ],
+
+  workflowTitle: 'Review Workflow',
+  workflow: [
+    { time: 'Team Lead', action: 'Developer pushes feature/checkout-redesign' },
+    { time: '', action: 'Viewpo notification: "Deploy ready on feature/checkout-redesign"' },
+    { time: '', action: 'Tap → Desktop (1920px) → checkout flow looks correct' },
+    { time: '', action: 'Phone M (390px) → mobile layout fine → Slack: "Visual looks good, approving PR"' },
+    { time: '', action: 'Total time: 45 seconds between meetings' },
+    { time: 'Founder', action: 'Board meeting next week, needs to show new pricing page' },
+    { time: '', action: 'Sends share link (Desktop preset) to 3 board members' },
+    { time: '', action: 'Board members open on phones → see 1920px pricing page' },
+    { time: '', action: 'Advisor: "Enterprise tier needs a contact form" → adjust → link auto-updates' },
+  ],
+
+  comparison: {
+    title: 'Who Benefits',
+    headers: ['Role', 'Pain Removed'],
+    rows: [
+      { label: 'Engineering manager', cells: ['Visual PR review from phone — unblock team without laptop'] },
+      { label: 'Team lead', cells: ['Quick viewport check between meetings — 30 seconds to approve'] },
+      { label: 'Startup CEO/Founder', cells: ['Show the board without scheduling a demo call'] },
+      { label: 'Design lead', cells: ['Verify implementation matches Figma at multiple breakpoints'] },
+      { label: 'VP Marketing', cells: ['See the campaign page at desktop resolution before approving launch'] },
+    ],
+  },
+
+  crossRefTitle: 'Best For These Roles',
+  crossRefs: [
+    { label: 'Team Leads', slug: 'teams', hook: 'Full persona page for engineering managers and tech leads.', accentColour: 'emerald' },
+    { label: 'Indie Founders', slug: 'indie-hackers', hook: 'Show investors and board members your product at desktop.', accentColour: 'violet' },
+    { label: 'Client Feedback', slug: 'client-feedback', hook: 'For external client stakeholders, not internal teams.', accentColour: 'emerald' },
+  ],
+
+  faqs: [
+    {
+      question: 'Can I visually review a PR from my phone?',
+      answer: 'Yes. When a PR\'s preview deploy is ready, Viewpo sends a push notification. Tap to see the visual result at any viewport size — Desktop, Tablet, Phone. Approve or provide feedback in under 60 seconds, from anywhere.',
+    },
+    {
+      question: 'How does this help with executive updates?',
+      answer: 'Send a share link to your CEO, VP, or board members. They see the staging build at Desktop (1920px) on their phone — no demo call needed, no screen-sharing, no waiting until everyone is at their desk.',
+    },
+    {
+      question: 'How does this differ from client feedback?',
+      answer: 'Team review is about internal stakeholders — people within your organisation with authority over what ships. Client feedback is about external stakeholders who hired you to build something. Different power dynamics, different workflow needs.',
+    },
+  ],
+};
+
+// ─── New Situation: iPad & Tablet Testing ────────────────────────────
+
+const ipadTesting: UseCase = {
+  slug: 'ipad-testing',
+  type: 'situation',
+  title: 'iPad & Tablet Testing',
+  subtitle: 'See real desktop layouts on your iPad',
+  accentColour: 'teal',
+  icon: '<path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5h3m-6.75 2.25h10.5a2.25 2.25 0 002.25-2.25v-15a2.25 2.25 0 00-2.25-2.25H6.75A2.25 2.25 0 004.5 4.5v15a2.25 2.25 0 002.25 2.25z" />',
+
+  metaTitle: 'iPad & Tablet Testing — Viewpo Use Case',
+  metaDescription: 'See real 1920px desktop layouts on your iPad. Viewpo uses CSS viewport injection — not User Agent tricks — to render true desktop breakpoints on iPadOS.',
+
+  painTitle: 'The Situation',
+  painContent: [
+    'You\'re on the couch with your iPad Pro. Or in a cafe. Or on a plane. You\'ve pushed a commit and the deploy is ready. You open it in Safari on your iPad — and see a tablet layout. Not the desktop layout your users will see. Not the 1440px laptop view. A 1024px tablet view.',
+    'The problem is technical: an iPad Pro\'s CSS viewport tops out at approximately 1024px — firmly in the tablet breakpoint range. Apple\'s own documentation confirms: "Not every website will have an apparent difference between mobile and desktop sites. This is especially true of websites that utilise responsive layouts." You literally cannot see a 1440px laptop layout or a 1920px desktop layout on an iPad through any standard means.',
+    '"Request Desktop Site" in Safari? It changes the User Agent string, not the CSS viewport. Responsive sites still trigger tablet breakpoints. iGeeksBlog confirms: "Most responsive websites still show you a mobile layout" even when "Request Desktop Site" is enabled. Reddit users resort to paid workarounds like iCab Mobile ($2) just to change User Agent strings — which still doesn\'t solve the CSS viewport width problem.',
+    'This isn\'t about being an "iPad developer" — that\'s not a real job title. This is about anyone who picks up their iPad to check a deploy and hits the viewport ceiling. A QA tester cycling through breakpoints on her iPad Air. A designer verifying her Figma implementation on the couch. A founder checking the staging build on a flight with no laptop.',
+  ],
+
+  solutionTitle: 'The Viewpo Fix',
+  solutionIntro: 'Viewpo injects the actual CSS viewport width via the viewport meta tag, not a User Agent string change. WebKit lays out the page at 1920px and shrink-to-fits it to the iPad screen. CSS media queries, breakpoints, and responsive layouts respond to the injected width.',
+  solutionSteps: [
+    { text: 'Native SwiftUI with adaptive sidebar layout — designed for iPad' },
+    { text: 'Pointer and trackpad support for precise inspection' },
+    { text: 'Split View / Slide Over multitasking — Viewpo alongside your code editor' },
+    { text: 'External keyboard shortcuts for rapid viewport switching' },
+  ],
+
+  featuresTitle: 'Key Features',
+  features: [
+    { feature: 'True CSS viewport injection', description: 'See 1440px laptop or 1920px desktop layouts on an iPad\'s ~1024px screen — real breakpoints fire' },
+    { feature: 'Custom viewport sizes', description: 'Test exact breakpoints (768px, 1024px, 1366px, 1440px, 1920px, 3840px)' },
+    { feature: 'Orientation toggle', description: 'Test portrait vs landscape at each viewport size' },
+    { feature: 'Pinch-to-zoom', description: 'Zoom into specific UI elements for inspection' },
+    { feature: 'Dark/light override', description: 'Test both themes without changing system settings' },
+    { feature: 'iPad multitasking', description: 'Run Viewpo in Split View alongside code editors, terminal apps, or Safari' },
+  ],
+
+  workflowTitle: 'iPad Testing Workflow',
+  workflow: [
+    { time: '', action: 'Push from your code editor or terminal app' },
+    { time: '', action: 'Viewpo notification: "Deploy ready"' },
+    { time: '', action: 'Open Viewpo in Split View alongside your editor' },
+    { time: '', action: 'Switch to Desktop (1920px) — see full desktop layout on iPad' },
+    { time: '', action: 'Switch to Laptop (1440px) — verify breakpoint transition' },
+    { time: '', action: 'Pinch-to-zoom on specific elements to inspect spacing' },
+    { time: '', action: 'Screenshot → share or file a bug with viewport context' },
+  ],
+
+  comparison: {
+    title: 'iPad vs Other Approaches',
+    headers: ['Approach', 'Desktop Layout?', 'CSS Breakpoints Fire?', 'Works on iPad?'],
+    rows: [
+      { label: 'Safari "Request Desktop Site"', cells: ['Sometimes', 'No (viewport stays ~1024px)', 'Yes but unreliable'] },
+      { label: 'iCab Mobile (User Agent change)', cells: ['Sometimes', 'No (same viewport issue)', 'Yes but $2 and limited'] },
+      { label: 'Chrome for iPad', cells: ['No', 'No', 'Yes but same limitations'] },
+      { label: 'Remote desktop to a Mac', cells: ['Yes', 'Yes', 'Laggy, requires Mac running'] },
+      { label: 'Viewpo', cells: ['Yes', 'Yes (real viewport injection)', 'Native iPadOS app'] },
+    ],
+  },
+
+  crossRefTitle: 'Who Benefits',
+  crossRefs: [
+    { label: 'QA & Design', slug: 'qa-design', hook: 'Test breakpoints on iPad during your commute or from the couch.', accentColour: 'pink' },
+    { label: 'Creators & AI Builders', slug: 'creators', hook: 'Verify Bolt-generated layouts on your iPad Pro.', accentColour: 'rose' },
+    { label: 'Visual QA Audit', slug: 'responsive-testing', hook: 'Systematic responsive testing at every breakpoint.', accentColour: 'pink' },
+  ],
+
+  faqs: [
+    {
+      question: 'Can I really see a 1920px desktop layout on my iPad?',
+      answer: 'Yes. Viewpo injects the CSS viewport width (e.g. 1920px) via the viewport meta tag. WebKit renders the page at that width and shrink-to-fits it to your iPad screen. CSS media queries and breakpoints fire at the injected width — this is fundamentally different from "Request Desktop Site".',
+    },
+    {
+      question: 'Does Viewpo support iPad multitasking?',
+      answer: 'Yes. Viewpo is a native SwiftUI app built for iPadOS. It supports Split View (run alongside your code editor), Slide Over, pointer/trackpad input, and external keyboard shortcuts.',
+    },
+    {
+      question: 'Why doesn\'t "Request Desktop Site" work for viewport testing?',
+      answer: '"Request Desktop Site" changes the User Agent string, not the CSS viewport width. Responsive websites use CSS media queries that respond to viewport width, not User Agent. An iPad Pro\'s viewport is ~1024px — so responsive sites still show tablet layouts regardless of the User Agent.',
+    },
+    {
+      question: 'Who is iPad testing for?',
+      answer: 'Anyone who picks up their iPad to check a deploy. QA testers verifying breakpoints during commutes. Designers checking implementations on the couch. Founders reviewing staging builds on flights. The iPad is capable — the viewport is the bottleneck. Viewpo removes the bottleneck.',
+    },
+  ],
+};
+
 // ─── Export ──────────────────────────────────────────────────────────
 
 export const USE_CASES: UseCase[] = [
@@ -1011,11 +1450,13 @@ export const USE_CASES: UseCase[] = [
   indieHackers,
   creators,
   freelancers,
-  digitalNomads,
+  agencies,
   teams,
   qaDesign,
   // Situations
-  stakeholderFeedback,
+  clientFeedback,
+  teamReview,
+  ipadTesting,
   responsiveTesting,
   productionMonitoring,
   liveDemos,

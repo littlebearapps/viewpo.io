@@ -1,0 +1,22 @@
+---
+interface Props {
+  text: string;
+  source?: string;
+  accentBorder: string;
+  accentText: string;
+}
+
+const { text, source, accentBorder, accentText } = Astro.props;
+---
+
+<blockquote class={`relative my-8 pl-6 border-l-[3px] ${accentBorder} reveal`}>
+  <div class={`absolute -left-2 -top-2 text-4xl ${accentText} opacity-20 font-heading select-none`} aria-hidden="true">&ldquo;</div>
+  <p class="text-lg font-heading font-medium text-foreground/80 dark:text-neutral-200 italic leading-relaxed">
+    {text}
+  </p>
+  {source && (
+    <footer class="mt-2 text-sm text-foreground/40 dark:text-neutral-500 not-italic">
+      &mdash; {source}
+    </footer>
+  )}
+</blockquote>

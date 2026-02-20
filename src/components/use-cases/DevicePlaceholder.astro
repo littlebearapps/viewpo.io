@@ -1,0 +1,88 @@
+---
+interface Props {
+  device: 'iphone' | 'ipad' | 'macbook';
+  caption: string;
+  accentBorder: string;
+}
+
+const { device, caption, accentBorder } = Astro.props;
+---
+
+<div class="flex flex-col items-center gap-3 reveal">
+  {device === 'iphone' && (
+    <div class="relative">
+      <div class={`w-[120px] rounded-[1.4rem] border-2 ${accentBorder} bg-white dark:bg-neutral-800 shadow-lg overflow-hidden`}>
+        <!-- Dynamic Island -->
+        <div class="flex justify-center pt-2.5 pb-1.5">
+          <div class="w-12 h-3.5 bg-neutral-900 dark:bg-neutral-600 rounded-full"></div>
+        </div>
+        <!-- Screen -->
+        <div class="mx-2 mb-2 rounded-lg bg-neutral-100 dark:bg-neutral-700 overflow-hidden aspect-[9/16] relative">
+          <div class="absolute inset-0 animate-shimmer bg-gradient-to-r from-transparent via-white/30 to-transparent dark:via-white/5"></div>
+          <!-- Skeleton UI lines -->
+          <div class="p-2 space-y-2">
+            <div class="h-2 w-3/4 rounded bg-neutral-200 dark:bg-neutral-600"></div>
+            <div class="h-1.5 w-full rounded bg-neutral-200/60 dark:bg-neutral-600/60"></div>
+            <div class="h-1.5 w-5/6 rounded bg-neutral-200/60 dark:bg-neutral-600/60"></div>
+            <div class="h-6 w-full rounded-md bg-neutral-200/40 dark:bg-neutral-600/40 mt-3"></div>
+          </div>
+        </div>
+        <!-- Home indicator -->
+        <div class="flex justify-center pb-2">
+          <div class="w-10 h-[2px] bg-neutral-300 dark:bg-neutral-500 rounded-full"></div>
+        </div>
+      </div>
+    </div>
+  )}
+
+  {device === 'ipad' && (
+    <div class="relative">
+      <div class={`w-[200px] rounded-[1rem] border-2 ${accentBorder} bg-white dark:bg-neutral-800 shadow-lg overflow-hidden`}>
+        <!-- Camera -->
+        <div class="flex justify-center pt-2 pb-1">
+          <div class="w-2 h-2 bg-neutral-300 dark:bg-neutral-600 rounded-full"></div>
+        </div>
+        <!-- Screen -->
+        <div class="mx-2 mb-2 rounded-md bg-neutral-100 dark:bg-neutral-700 overflow-hidden aspect-[4/3] relative">
+          <div class="absolute inset-0 animate-shimmer bg-gradient-to-r from-transparent via-white/30 to-transparent dark:via-white/5"></div>
+          <div class="p-3 space-y-2">
+            <div class="h-2.5 w-1/2 rounded bg-neutral-200 dark:bg-neutral-600"></div>
+            <div class="grid grid-cols-2 gap-2 mt-2">
+              <div class="h-8 rounded bg-neutral-200/50 dark:bg-neutral-600/40"></div>
+              <div class="h-8 rounded bg-neutral-200/50 dark:bg-neutral-600/40"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  )}
+
+  {device === 'macbook' && (
+    <div class="relative">
+      <!-- Screen -->
+      <div class={`w-[240px] rounded-t-lg border-2 border-b-0 ${accentBorder} bg-neutral-800 dark:bg-neutral-700 overflow-hidden`}>
+        <!-- Camera notch -->
+        <div class="flex justify-center py-1">
+          <div class="w-1.5 h-1.5 bg-neutral-600 dark:bg-neutral-500 rounded-full"></div>
+        </div>
+        <!-- Display -->
+        <div class="mx-1 mb-0 bg-neutral-100 dark:bg-neutral-800 aspect-[16/10] relative overflow-hidden">
+          <div class="absolute inset-0 animate-shimmer bg-gradient-to-r from-transparent via-white/20 to-transparent dark:via-white/5"></div>
+          <div class="p-3 space-y-1.5">
+            <div class="h-2 w-2/3 rounded bg-neutral-200 dark:bg-neutral-600"></div>
+            <div class="h-1.5 w-full rounded bg-neutral-200/50 dark:bg-neutral-600/40"></div>
+            <div class="h-1.5 w-4/5 rounded bg-neutral-200/50 dark:bg-neutral-600/40"></div>
+          </div>
+        </div>
+      </div>
+      <!-- Base -->
+      <div class="w-[260px] -ml-[10px] h-3 bg-neutral-300 dark:bg-neutral-600 rounded-b-lg border-t border-neutral-400/30 dark:border-neutral-500/30">
+        <div class="w-16 h-1 bg-neutral-400/40 dark:bg-neutral-500/40 rounded-full mx-auto mt-0.5"></div>
+      </div>
+    </div>
+  )}
+
+  <p class="text-xs text-foreground/40 dark:text-neutral-500 text-center max-w-[180px] italic">
+    {caption}
+  </p>
+</div>

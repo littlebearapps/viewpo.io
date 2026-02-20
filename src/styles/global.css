@@ -300,6 +300,16 @@ h1, h2, h3, h4, h5, h6 {
   transform-style: preserve-3d;
 }
 
+/* Shimmer placeholder animation */
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+.animate-shimmer {
+  animation: shimmer 2s infinite ease-in-out;
+}
+
 /* Reduced motion */
 @media (prefers-reduced-motion: reduce) {
   .reveal {
@@ -330,6 +340,11 @@ h1, h2, h3, h4, h5, h6 {
   .float-slow,
   .float-slow-reverse {
     animation: none;
+  }
+
+  .animate-shimmer {
+    animation: none;
+    opacity: 0.5;
   }
 
   .modal-dialog {

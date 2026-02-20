@@ -1,0 +1,56 @@
+---
+interface Props {
+  variant: 'notification' | 'viewer' | 'screenshot';
+  accentBg: string;
+  accentText: string;
+}
+
+const { variant, accentBg, accentText } = Astro.props;
+---
+
+<div class="flex-shrink-0 w-[60px]">
+  <div class="w-[60px] rounded-xl border-2 border-neutral-300 dark:border-neutral-600 bg-white dark:bg-neutral-800 shadow-md overflow-hidden">
+    <!-- Notch -->
+    <div class="flex justify-center pt-1.5 pb-1">
+      <div class="w-8 h-2 bg-neutral-900 dark:bg-neutral-600 rounded-full"></div>
+    </div>
+    <!-- Screen content by variant -->
+    <div class="px-1 pb-1 space-y-0.5">
+      {variant === 'notification' && (
+        <div class={`rounded ${accentBg} p-1`}>
+          <div class="flex items-center gap-0.5 mb-0.5">
+            <div class={`w-1 h-1 rounded-full ${accentText} bg-current`}></div>
+            <div class="h-[2px] w-6 rounded bg-foreground/10 dark:bg-white/10"></div>
+          </div>
+          <div class="h-[2px] w-full rounded bg-foreground/8 dark:bg-white/8"></div>
+          <div class="h-[2px] w-3/4 rounded bg-foreground/8 dark:bg-white/8 mt-0.5"></div>
+        </div>
+      )}
+      {variant === 'viewer' && (
+        <>
+          <div class="flex gap-0.5 justify-center mb-0.5">
+            <div class="w-2 h-[2px] rounded-full bg-neutral-300 dark:bg-neutral-500"></div>
+            <div class={`w-2 h-[2px] rounded-full ${accentText} bg-current opacity-60`}></div>
+            <div class="w-2 h-[2px] rounded-full bg-neutral-300 dark:bg-neutral-500"></div>
+          </div>
+          <div class="h-6 rounded bg-neutral-200/50 dark:bg-neutral-600/30"></div>
+        </>
+      )}
+      {variant === 'screenshot' && (
+        <>
+          <div class="h-5 rounded bg-neutral-200/50 dark:bg-neutral-600/30"></div>
+          <div class={`h-[2px] w-full rounded ${accentText} bg-current opacity-30 mt-0.5`}></div>
+          <div class="flex justify-center mt-0.5">
+            <div class={`w-4 h-4 rounded-full ${accentBg} flex items-center justify-center`}>
+              <div class={`w-2 h-2 rounded-full border ${accentText} border-current`}></div>
+            </div>
+          </div>
+        </>
+      )}
+    </div>
+    <!-- Home indicator -->
+    <div class="flex justify-center pb-1">
+      <div class="w-5 h-[2px] bg-neutral-300 dark:bg-neutral-500 rounded-full"></div>
+    </div>
+  </div>
+</div>
