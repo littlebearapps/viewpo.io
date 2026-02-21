@@ -69,7 +69,7 @@ const faqSchema = {
 };
 ---
 
-<BaseLayout title={useCase.metaTitle} description={useCase.metaDescription}>
+<BaseLayout title={useCase.metaTitle} description={useCase.metaDescription} ogImage={useCase.ogImage}>
   <Header slot="header" />
 
   <div class="relative overflow-x-clip">
@@ -125,6 +125,8 @@ const faqSchema = {
               accentGlow={accent.glowBg}
               accentText={accent.text}
               accentBg={accent.bg}
+              heroImage={useCase.heroImage}
+              heroAlt={`Viewpo ${useCase.title} mockup`}
             />
           </div>
         </div>

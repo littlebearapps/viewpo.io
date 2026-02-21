@@ -1,0 +1,983 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=480">
+  <title>Viewpo — Use Case Hero Visual</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --accent: #6366F1;
+      --accent-light: rgba(99, 102, 241, 0.15);
+      --accent-glow: rgba(99, 102, 241, 0.12);
+    }
+
+    body {
+      width: 480px;
+      height: 400px;
+      overflow: hidden;
+      font-family: 'Inter', system-ui, sans-serif;
+      background: #0F172A;
+    }
+
+    .scene {
+      width: 480px;
+      height: 400px;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Background glow */
+    .glow {
+      position: absolute;
+      width: 300px;
+      height: 300px;
+      background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .glow.center { top: 50%; left: 50%; transform: translate(-50%, -50%); }
+    .glow.left { top: 30%; left: 20%; transform: translate(-50%, -50%); }
+    .glow.right { top: 40%; left: 70%; transform: translate(-50%, -50%); }
+
+    /* ===== PHONE DEVICE ===== */
+    .phone {
+      width: 140px;
+      height: 290px;
+      background: #1a1a1a;
+      border-radius: 24px;
+      padding: 6px;
+      position: relative;
+      box-shadow:
+        0 0 0 1px #2a2a2a,
+        0 10px 30px rgba(0, 0, 0, 0.4);
+      flex-shrink: 0;
+      z-index: 2;
+    }
+
+    .phone .screen {
+      width: 100%;
+      height: 100%;
+      background: #0F172A;
+      border-radius: 19px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .phone .island {
+      position: absolute;
+      top: 6px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 48px;
+      height: 14px;
+      background: #000;
+      border-radius: 8px;
+      z-index: 5;
+    }
+
+    /* Phone screen content variants */
+    .phone .content {
+      padding: 24px 8px 8px;
+      height: 100%;
+    }
+
+    /* Deploy feed content */
+    .deploy-mini .top-bar {
+      height: 6px;
+      width: 50%;
+      background: #334155;
+      border-radius: 3px;
+      margin-bottom: 4px;
+    }
+
+    .deploy-mini .tabs {
+      display: flex;
+      gap: 3px;
+      margin-bottom: 6px;
+    }
+
+    .deploy-mini .tab {
+      height: 4px;
+      width: 18px;
+      border-radius: 2px;
+      background: #334155;
+    }
+
+    .deploy-mini .tab.active { background: var(--accent); opacity: 0.5; }
+
+    .deploy-mini .card {
+      background: #1E293B;
+      border: 1px solid #334155;
+      border-radius: 6px;
+      padding: 5px;
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .deploy-mini .card-icon {
+      width: 14px;
+      height: 14px;
+      border-radius: 4px;
+      flex-shrink: 0;
+    }
+
+    .deploy-mini .card-icon.cf { background: #F48120; }
+    .deploy-mini .card-icon.vercel { background: #000; border: 1px solid #334155; }
+    .deploy-mini .card-icon.netlify { background: #00C7B7; }
+
+    .deploy-mini .card-lines {
+      flex: 1;
+    }
+
+    .deploy-mini .card-line {
+      height: 3px;
+      border-radius: 2px;
+      margin-bottom: 2px;
+    }
+
+    .deploy-mini .card-line.w-full { width: 100%; background: #475569; }
+    .deploy-mini .card-line.w-70 { width: 70%; background: #334155; }
+
+    .deploy-mini .card-status {
+      width: 22px;
+      height: 8px;
+      border-radius: 4px;
+      flex-shrink: 0;
+    }
+
+    .deploy-mini .card-status.live { background: rgba(16, 185, 129, 0.3); }
+    .deploy-mini .card-status.building { background: rgba(251, 146, 60, 0.3); }
+    .deploy-mini .card-status.failed { background: rgba(239, 68, 68, 0.3); }
+
+    /* Notification content */
+    .notif-mini .notif {
+      background: #1E293B;
+      border: 1px solid #334155;
+      border-radius: 6px;
+      padding: 5px;
+      margin-bottom: 4px;
+      display: flex;
+      align-items: flex-start;
+      gap: 4px;
+    }
+
+    .notif-mini .notif-icon {
+      width: 14px;
+      height: 14px;
+      border-radius: 4px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .notif-mini .notif-icon.success { background: rgba(16, 185, 129, 0.2); }
+    .notif-mini .notif-icon.warning { background: rgba(251, 146, 60, 0.2); }
+    .notif-mini .notif-icon.error { background: rgba(239, 68, 68, 0.2); }
+    .notif-mini .notif-icon.info { background: var(--accent-light); }
+
+    .notif-mini .notif-icon svg { width: 8px; height: 8px; fill: none; stroke-width: 2.5; stroke-linecap: round; }
+    .notif-mini .notif-icon.success svg { stroke: #34D399; }
+    .notif-mini .notif-icon.warning svg { stroke: #FB923C; }
+    .notif-mini .notif-icon.error svg { stroke: #F87171; }
+    .notif-mini .notif-icon.info svg { stroke: #818CF8; }
+
+    .notif-mini .notif-lines { flex: 1; }
+    .notif-mini .notif-line { height: 3px; border-radius: 2px; margin-bottom: 2px; }
+    .notif-mini .notif-line.title { width: 80%; background: #475569; }
+    .notif-mini .notif-line.body { width: 100%; background: #334155; }
+    .notif-mini .notif-line.meta { width: 50%; background: #1E293B; margin-top: 1px; }
+
+    .notif-mini .dot {
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: var(--accent);
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    /* Viewport viewer content */
+    .viewer-mini .url-bar {
+      background: #1E293B;
+      border: 1px solid #334155;
+      border-radius: 4px;
+      height: 12px;
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      padding: 0 4px;
+    }
+
+    .viewer-mini .url-bar .dot { width: 3px; height: 3px; border-radius: 50%; background: #10B981; margin-right: 3px; }
+    .viewer-mini .url-bar .text { height: 2px; width: 60%; background: #475569; border-radius: 1px; }
+
+    .viewer-mini .res-label {
+      font-size: 5px;
+      color: #818CF8;
+      margin-bottom: 3px;
+      font-family: 'Inter', monospace;
+    }
+
+    .viewer-mini .preview-area {
+      background: #FFFFFF;
+      border-radius: 4px;
+      padding: 6px;
+      flex: 1;
+    }
+
+    .viewer-mini .sim-line {
+      height: 3px;
+      border-radius: 2px;
+      margin-bottom: 2px;
+    }
+
+    .viewer-mini .sim-line.h { width: 80%; background: #1E293B; height: 4px; }
+    .viewer-mini .sim-line.p { width: 90%; background: #CBD5E1; }
+    .viewer-mini .sim-line.p2 { width: 60%; background: #E2E8F0; }
+
+    .viewer-mini .sim-grid {
+      display: flex;
+      gap: 3px;
+      margin-top: 4px;
+    }
+
+    .viewer-mini .sim-box {
+      flex: 1;
+      height: 16px;
+      background: #F1F5F9;
+      border: 1px solid #E2E8F0;
+      border-radius: 2px;
+    }
+
+    /* QR content */
+    .qr-mini .qr-box {
+      width: 60px;
+      height: 60px;
+      background: white;
+      border-radius: 6px;
+      margin: 8px auto;
+      position: relative;
+      padding: 6px;
+    }
+
+    .qr-mini .finder {
+      position: absolute;
+      width: 16px;
+      height: 16px;
+      border: 2px solid #1E293B;
+      border-radius: 2px;
+    }
+
+    .qr-mini .finder::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 6px;
+      height: 6px;
+      background: #1E293B;
+      border-radius: 1px;
+    }
+
+    .qr-mini .finder.tl { top: 6px; left: 6px; }
+    .qr-mini .finder.tr { top: 6px; right: 6px; }
+    .qr-mini .finder.bl { bottom: 6px; left: 6px; }
+
+    .qr-mini .qr-logo {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 12px;
+      height: 12px;
+      background: #6366F1;
+      border-radius: 3px;
+      border: 1.5px solid white;
+    }
+
+    .qr-mini .share-line {
+      height: 3px;
+      border-radius: 2px;
+      margin: 3px auto 0;
+    }
+
+    .qr-mini .share-line.url { width: 70%; background: #818CF8; }
+    .qr-mini .share-line.hint { width: 80%; background: #334155; margin-top: 2px; }
+
+    .qr-mini .share-btn {
+      width: 80%;
+      height: 12px;
+      background: var(--accent);
+      border-radius: 4px;
+      margin: 6px auto 0;
+      opacity: 0.8;
+    }
+
+    /* ===== TABLET DEVICE ===== */
+    .tablet {
+      width: 200px;
+      height: 150px;
+      background: #1a1a1a;
+      border-radius: 12px;
+      padding: 8px;
+      position: relative;
+      box-shadow:
+        0 0 0 1px #2a2a2a,
+        0 10px 30px rgba(0, 0, 0, 0.4);
+      flex-shrink: 0;
+      z-index: 2;
+    }
+
+    .tablet .screen {
+      width: 100%;
+      height: 100%;
+      background: #0F172A;
+      border-radius: 6px;
+      overflow: hidden;
+    }
+
+    .tablet .content {
+      padding: 6px;
+      height: 100%;
+    }
+
+    /* ===== DESKTOP DEVICE ===== */
+    .desktop {
+      width: 260px;
+      height: 170px;
+      position: relative;
+      flex-shrink: 0;
+      z-index: 2;
+    }
+
+    .desktop .monitor {
+      width: 100%;
+      height: 150px;
+      background: #1a1a1a;
+      border-radius: 10px;
+      padding: 8px 8px 20px;
+      box-shadow:
+        0 0 0 1px #2a2a2a,
+        0 10px 30px rgba(0, 0, 0, 0.4);
+    }
+
+    .desktop .monitor .screen {
+      width: 100%;
+      height: 100%;
+      background: #0F172A;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .desktop .stand {
+      width: 30px;
+      height: 10px;
+      background: #2a2a2a;
+      margin: 0 auto;
+    }
+
+    .desktop .base {
+      width: 60px;
+      height: 4px;
+      background: #2a2a2a;
+      border-radius: 2px;
+      margin: 0 auto;
+    }
+
+    .desktop .content {
+      padding: 6px;
+      height: 100%;
+    }
+
+    /* ===== SCENE LAYOUTS ===== */
+
+    /* Single phone centred */
+    .layout-phone-center {
+      justify-content: center;
+    }
+
+    /* Phone + tablet side by side */
+    .layout-phone-tablet {
+      gap: 20px;
+      align-items: flex-end;
+      padding-bottom: 30px;
+    }
+
+    .layout-phone-tablet .tablet {
+      transform: translateY(-10px);
+    }
+
+    /* Triple device */
+    .layout-triple {
+      gap: 12px;
+      align-items: flex-end;
+      padding: 0 20px 20px;
+    }
+
+    .layout-triple .phone {
+      width: 80px;
+      height: 168px;
+      border-radius: 14px;
+      padding: 4px;
+    }
+
+    .layout-triple .phone .screen { border-radius: 11px; }
+    .layout-triple .phone .island { width: 28px; height: 8px; top: 4px; border-radius: 5px; }
+    .layout-triple .phone .content { padding: 16px 4px 4px; }
+
+    .layout-triple .tablet {
+      width: 140px;
+      height: 110px;
+      border-radius: 8px;
+      padding: 5px;
+      transform: translateY(-20px);
+    }
+
+    .layout-triple .desktop {
+      width: 200px;
+      height: 140px;
+    }
+
+    .layout-triple .desktop .monitor {
+      height: 120px;
+      border-radius: 8px;
+      padding: 5px 5px 14px;
+    }
+
+    /* Desktop centred */
+    .layout-desktop-center {
+      justify-content: center;
+    }
+
+    /* Phone + desktop */
+    .layout-phone-desktop {
+      gap: 16px;
+      align-items: flex-end;
+      padding-bottom: 20px;
+    }
+
+    .layout-phone-desktop .desktop {
+      width: 240px;
+      height: 160px;
+    }
+
+    .layout-phone-desktop .desktop .monitor {
+      height: 140px;
+    }
+
+    /* Tablet centred */
+    .layout-tablet-center {
+      justify-content: center;
+    }
+
+    .layout-tablet-center .tablet {
+      width: 260px;
+      height: 200px;
+      border-radius: 16px;
+      padding: 10px;
+    }
+
+    /* ===== DECORATIVE ===== */
+    .float-shape {
+      position: absolute;
+      border-radius: 6px;
+      border: 2px solid;
+      opacity: 0.3;
+      z-index: 1;
+    }
+
+    /* Approval badge overlay */
+    .approval-badge {
+      position: absolute;
+      background: rgba(16, 185, 129, 0.15);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      color: #34D399;
+      font-size: 7px;
+      font-weight: 600;
+      padding: 2px 6px;
+      border-radius: 4px;
+      z-index: 10;
+    }
+
+    /* Comment overlay */
+    .comment-overlay {
+      position: absolute;
+      background: #1E293B;
+      border: 1px solid #334155;
+      border-radius: 6px;
+      padding: 4px 6px;
+      z-index: 10;
+    }
+
+    .comment-overlay .avatar {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: #F97316;
+      display: inline-block;
+      vertical-align: middle;
+      margin-right: 3px;
+    }
+
+    .comment-overlay .text {
+      display: inline-block;
+      height: 3px;
+      width: 40px;
+      background: #94A3B8;
+      border-radius: 2px;
+      vertical-align: middle;
+    }
+
+    /* Status indicator */
+    .status-indicator {
+      position: absolute;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      background: #1E293B;
+      border: 1px solid #334155;
+      border-radius: 6px;
+      padding: 3px 8px;
+      z-index: 10;
+    }
+
+    .status-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+    }
+
+    .status-dot.green { background: #10B981; }
+    .status-dot.orange { background: #FB923C; }
+
+    .status-text {
+      height: 3px;
+      width: 24px;
+      background: #475569;
+      border-radius: 2px;
+    }
+  </style>
+</head>
+<body>
+  <div class="scene" id="scene">
+    <!-- Scene content injected by JS based on variant -->
+  </div>
+
+  <script>
+    const params = new URLSearchParams(window.location.hash.slice(1));
+    const variant = params.get('variant') || 'freelancers';
+    const scene = document.getElementById('scene');
+
+    const variants = {
+      // PERSONA: Remote Developers — phone with deploy feed + status indicator
+      'remote-monitoring': {
+        layout: 'layout-phone-center',
+        accent: '#6366F1',
+        html: `
+          <div class="glow center"></div>
+          <div class="phone">
+            <div class="screen">
+              <div class="island"></div>
+              <div class="content deploy-mini">
+                <div class="top-bar"></div>
+                <div class="tabs"><div class="tab active"></div><div class="tab"></div><div class="tab"></div></div>
+                <div class="card"><div class="card-icon cf"></div><div class="card-lines"><div class="card-line w-full"></div><div class="card-line w-70"></div></div><div class="card-status live"></div></div>
+                <div class="card"><div class="card-icon vercel"></div><div class="card-lines"><div class="card-line w-full"></div><div class="card-line w-70"></div></div><div class="card-status live"></div></div>
+                <div class="card"><div class="card-icon netlify"></div><div class="card-lines"><div class="card-line w-full"></div><div class="card-line w-70"></div></div><div class="card-status building"></div></div>
+              </div>
+            </div>
+          </div>
+          <div class="status-indicator" style="bottom: 70px; right: 60px;"><div class="status-dot green"></div><div class="status-text"></div></div>
+          <div class="status-indicator" style="top: 80px; right: 50px;"><div class="status-dot green"></div><div class="status-text"></div></div>
+          <div class="float-shape" style="width: 24px; height: 24px; border-color: var(--accent); top: 40px; left: 60px;"></div>
+        `
+      },
+
+      // PERSONA: Indie Hackers — solo phone with single project
+      'indie-hackers': {
+        layout: 'layout-phone-center',
+        accent: '#F97316',
+        html: `
+          <div class="glow center" style="--accent-glow: rgba(249, 115, 22, 0.12);"></div>
+          <div class="phone">
+            <div class="screen">
+              <div class="island"></div>
+              <div class="content deploy-mini">
+                <div class="top-bar"></div>
+                <div class="tabs"><div class="tab active"></div><div class="tab"></div></div>
+                <div class="card"><div class="card-icon" style="background: #F97316;"></div><div class="card-lines"><div class="card-line w-full"></div><div class="card-line w-70"></div></div><div class="card-status live"></div></div>
+                <div class="card" style="opacity: 0.5;"><div class="card-icon" style="background: #F97316;"></div><div class="card-lines"><div class="card-line w-full"></div><div class="card-line w-70"></div></div><div class="card-status live"></div></div>
+              </div>
+            </div>
+          </div>
+          <div class="float-shape" style="width: 20px; height: 20px; border-color: #F97316; top: 50px; right: 80px;"></div>
+          <div class="float-shape" style="width: 16px; height: 16px; border-color: #F97316; bottom: 80px; left: 70px;"></div>
+        `
+      },
+
+      // PERSONA: Creators — phone with notifications
+      'creators': {
+        layout: 'layout-phone-center',
+        accent: '#8B5CF6',
+        html: `
+          <div class="glow center" style="--accent-glow: rgba(139, 92, 246, 0.12);"></div>
+          <div class="phone">
+            <div class="screen">
+              <div class="island"></div>
+              <div class="content notif-mini">
+                <div class="top-bar" style="width: 40%; height: 6px; background: #334155; border-radius: 3px; margin-bottom: 6px;"></div>
+                <div class="notif"><div class="notif-icon success"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div><div class="notif-lines"><div class="notif-line title"></div><div class="notif-line body"></div></div><div class="dot"></div></div>
+                <div class="notif"><div class="notif-icon info"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg></div><div class="notif-lines"><div class="notif-line title"></div><div class="notif-line body"></div></div><div class="dot"></div></div>
+                <div class="notif"><div class="notif-icon success"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div><div class="notif-lines"><div class="notif-line title"></div><div class="notif-line body"></div><div class="notif-line meta"></div></div></div>
+              </div>
+            </div>
+          </div>
+          <div class="float-shape" style="width: 20px; height: 20px; border-color: #8B5CF6; top: 60px; left: 80px;"></div>
+        `
+      },
+
+      // PERSONA: Freelancers — solo deploy feed with 1 project
+      'freelancers': {
+        layout: 'layout-phone-center',
+        accent: '#6366F1',
+        html: `
+          <div class="glow center"></div>
+          <div class="phone">
+            <div class="screen">
+              <div class="island"></div>
+              <div class="content deploy-mini">
+                <div class="top-bar"></div>
+                <div class="tabs"><div class="tab active"></div><div class="tab"></div><div class="tab"></div></div>
+                <div class="card"><div class="card-icon cf"></div><div class="card-lines"><div class="card-line w-full"></div><div class="card-line w-70"></div></div><div class="card-status live"></div></div>
+                <div class="card"><div class="card-icon cf"></div><div class="card-lines"><div class="card-line w-full"></div><div class="card-line w-70"></div></div><div class="card-status building"></div></div>
+              </div>
+            </div>
+          </div>
+          <div class="float-shape" style="width: 24px; height: 24px; border-color: var(--accent); top: 40px; right: 70px;"></div>
+          <div class="float-shape" style="width: 16px; height: 16px; border-color: var(--accent); bottom: 60px; left: 80px;"></div>
+        `
+      },
+
+      // PERSONA: Teams — phone with team activity
+      'teams': {
+        layout: 'layout-phone-center',
+        accent: '#0EA5E9',
+        html: `
+          <div class="glow center" style="--accent-glow: rgba(14, 165, 233, 0.12);"></div>
+          <div class="phone">
+            <div class="screen">
+              <div class="island"></div>
+              <div class="content deploy-mini">
+                <div class="top-bar"></div>
+                <div class="tabs"><div class="tab active"></div><div class="tab"></div><div class="tab"></div></div>
+                <div class="card"><div class="card-icon cf"></div><div class="card-lines"><div class="card-line w-full"></div><div class="card-line w-70"></div></div><div class="card-status live"></div></div>
+                <div class="card"><div class="card-icon vercel"></div><div class="card-lines"><div class="card-line w-full"></div><div class="card-line w-70"></div></div><div class="card-status live"></div></div>
+                <div class="card"><div class="card-icon netlify"></div><div class="card-lines"><div class="card-line w-full"></div><div class="card-line w-70"></div></div><div class="card-status building"></div></div>
+                <div class="card"><div class="card-icon cf"></div><div class="card-lines"><div class="card-line w-full"></div><div class="card-line w-70"></div></div><div class="card-status live"></div></div>
+              </div>
+            </div>
+          </div>
+          <div class="float-shape" style="width: 20px; height: 20px; border-color: #0EA5E9; top: 50px; left: 70px;"></div>
+        `
+      },
+
+      // PERSONA: Agencies — phone + tablet multi-project
+      'agencies': {
+        layout: 'layout-phone-tablet',
+        accent: '#10B981',
+        html: `
+          <div class="glow center" style="--accent-glow: rgba(16, 185, 129, 0.12);"></div>
+          <div class="phone">
+            <div class="screen">
+              <div class="island"></div>
+              <div class="content deploy-mini">
+                <div class="top-bar"></div>
+                <div class="card"><div class="card-icon cf"></div><div class="card-lines"><div class="card-line w-full"></div><div class="card-line w-70"></div></div><div class="card-status live"></div></div>
+                <div class="card"><div class="card-icon vercel"></div><div class="card-lines"><div class="card-line w-full"></div><div class="card-line w-70"></div></div><div class="card-status live"></div></div>
+                <div class="card"><div class="card-icon netlify"></div><div class="card-lines"><div class="card-line w-full"></div><div class="card-line w-70"></div></div><div class="card-status building"></div></div>
+              </div>
+            </div>
+          </div>
+          <div class="tablet">
+            <div class="screen">
+              <div class="content viewer-mini">
+                <div class="url-bar"><div class="dot"></div><div class="text"></div></div>
+                <div class="res-label">1024 × 768</div>
+                <div class="preview-area">
+                  <div class="sim-line h"></div>
+                  <div class="sim-line p"></div>
+                  <div class="sim-line p2"></div>
+                  <div class="sim-grid"><div class="sim-box"></div><div class="sim-box"></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        `
+      },
+
+      // PERSONA: QA & Design — desktop side-by-side comparison
+      'qa-design': {
+        layout: 'layout-desktop-center',
+        accent: '#EC4899',
+        html: `
+          <div class="glow center" style="--accent-glow: rgba(236, 72, 153, 0.12);"></div>
+          <div class="desktop" style="width: 340px; height: 220px;">
+            <div class="monitor" style="height: 200px;">
+              <div class="screen">
+                <div class="content" style="padding: 6px; display: flex; gap: 4px;">
+                  <div style="flex: 1; background: #FFFFFF; border-radius: 4px; padding: 5px;">
+                    <div style="height: 3px; width: 50%; background: #1E293B; border-radius: 2px; margin-bottom: 3px;"></div>
+                    <div style="height: 2px; width: 80%; background: #CBD5E1; border-radius: 1px; margin-bottom: 2px;"></div>
+                    <div style="height: 2px; width: 60%; background: #E2E8F0; border-radius: 1px; margin-bottom: 4px;"></div>
+                    <div style="display: flex; gap: 2px;"><div style="flex:1; height: 20px; background: #F1F5F9; border-radius: 2px;"></div><div style="flex:1; height: 20px; background: #F1F5F9; border-radius: 2px;"></div></div>
+                    <div style="font-size: 5px; color: #64748B; text-align: center; margin-top: 3px; font-family: monospace;">1440 × 900</div>
+                  </div>
+                  <div style="width: 1px; background: #334155;"></div>
+                  <div style="flex: 1; background: #FFFFFF; border-radius: 4px; padding: 5px;">
+                    <div style="height: 3px; width: 50%; background: #1E293B; border-radius: 2px; margin-bottom: 3px;"></div>
+                    <div style="height: 2px; width: 80%; background: #CBD5E1; border-radius: 1px; margin-bottom: 2px;"></div>
+                    <div style="height: 2px; width: 60%; background: #E2E8F0; border-radius: 1px; margin-bottom: 4px;"></div>
+                    <div style="display: flex; flex-direction: column; gap: 2px;"><div style="height: 20px; background: #F1F5F9; border-radius: 2px;"></div><div style="height: 20px; background: #F1F5F9; border-radius: 2px;"></div></div>
+                    <div style="font-size: 5px; color: #64748B; text-align: center; margin-top: 3px; font-family: monospace;">375 × 812</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="stand"></div>
+            <div class="base"></div>
+          </div>
+        `
+      },
+
+      // SITUATION: Client Feedback — tablet with comment overlay
+      'client-feedback': {
+        layout: 'layout-tablet-center',
+        accent: '#F97316',
+        html: `
+          <div class="glow center" style="--accent-glow: rgba(249, 115, 22, 0.12);"></div>
+          <div class="tablet" style="width: 260px; height: 200px; border-radius: 16px; padding: 10px;">
+            <div class="screen">
+              <div class="content viewer-mini">
+                <div class="url-bar"><div class="dot"></div><div class="text"></div></div>
+                <div class="preview-area" style="height: calc(100% - 18px);">
+                  <div class="sim-line h"></div>
+                  <div class="sim-line p"></div>
+                  <div class="sim-line p2"></div>
+                  <div style="display: flex; gap: 3px; margin-top: 4px;">
+                    <div style="width: 30px; height: 10px; background: #6366F1; border-radius: 3px;"></div>
+                    <div style="width: 30px; height: 10px; border: 1px solid #6366F1; border-radius: 3px;"></div>
+                  </div>
+                  <div class="sim-grid" style="margin-top: 6px;"><div class="sim-box"></div><div class="sim-box"></div><div class="sim-box"></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="comment-overlay" style="top: 100px; right: 50px;"><span class="avatar"></span><span class="text"></span></div>
+          <div class="comment-overlay" style="bottom: 120px; right: 70px;"><span class="avatar" style="background: #3B82F6;"></span><span class="text" style="width: 30px;"></span></div>
+          <div class="float-shape" style="width: 16px; height: 16px; border-color: #F97316; top: 40px; left: 60px;"></div>
+        `
+      },
+
+      // SITUATION: Team Review — phone with approval badges
+      'team-review': {
+        layout: 'layout-phone-center',
+        accent: '#10B981',
+        html: `
+          <div class="glow center" style="--accent-glow: rgba(16, 185, 129, 0.12);"></div>
+          <div class="phone">
+            <div class="screen">
+              <div class="island"></div>
+              <div class="content deploy-mini">
+                <div class="top-bar"></div>
+                <div class="tabs"><div class="tab active"></div><div class="tab"></div></div>
+                <div class="card"><div class="card-icon cf"></div><div class="card-lines"><div class="card-line w-full"></div><div class="card-line w-70"></div></div><div class="card-status live"></div></div>
+                <div class="card"><div class="card-icon vercel"></div><div class="card-lines"><div class="card-line w-full"></div><div class="card-line w-70"></div></div><div class="card-status live"></div></div>
+                <div class="card"><div class="card-icon netlify"></div><div class="card-lines"><div class="card-line w-full"></div><div class="card-line w-70"></div></div><div class="card-status building"></div></div>
+              </div>
+            </div>
+          </div>
+          <div class="approval-badge" style="top: 110px; right: 70px;">Approved</div>
+          <div class="approval-badge" style="top: 165px; right: 60px;">Approved</div>
+          <div class="float-shape" style="width: 20px; height: 20px; border-color: #10B981; bottom: 70px; left: 70px;"></div>
+        `
+      },
+
+      // SITUATION: iPad Testing — tablet with viewport preview
+      'ipad-testing': {
+        layout: 'layout-tablet-center',
+        accent: '#6366F1',
+        html: `
+          <div class="glow center"></div>
+          <div class="tablet" style="width: 260px; height: 200px; border-radius: 16px; padding: 10px;">
+            <div class="screen">
+              <div class="content viewer-mini">
+                <div class="url-bar"><div class="dot"></div><div class="text"></div></div>
+                <div class="res-label">iPad Pro — 1024 × 768</div>
+                <div class="preview-area" style="height: calc(100% - 30px);">
+                  <div class="sim-line h"></div>
+                  <div class="sim-line p"></div>
+                  <div class="sim-line p2"></div>
+                  <div style="display: flex; gap: 3px; margin-top: 3px;">
+                    <div style="width: 30px; height: 10px; background: #6366F1; border-radius: 3px;"></div>
+                    <div style="width: 30px; height: 10px; border: 1px solid #6366F1; border-radius: 3px;"></div>
+                  </div>
+                  <div class="sim-grid"><div class="sim-box"></div><div class="sim-box"></div></div>
+                  <div class="sim-grid"><div class="sim-box"></div><div class="sim-box"></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="float-shape" style="width: 24px; height: 24px; border-color: var(--accent); top: 30px; right: 60px;"></div>
+        `
+      },
+
+      // SITUATION: Responsive Testing — triple device
+      'responsive-testing': {
+        layout: 'layout-triple',
+        accent: '#6366F1',
+        html: `
+          <div class="glow center"></div>
+          <div class="phone">
+            <div class="screen">
+              <div class="island"></div>
+              <div class="content" style="padding: 16px 4px 4px;">
+                <div style="height: 2px; width: 80%; background: #334155; border-radius: 1px; margin-bottom: 2px;"></div>
+                <div style="height: 2px; width: 60%; background: #1E293B; border-radius: 1px; margin-bottom: 3px;"></div>
+                <div style="display: flex; flex-direction: column; gap: 2px;">
+                  <div style="height: 12px; background: #1E293B; border: 1px solid #334155; border-radius: 2px;"></div>
+                  <div style="height: 12px; background: #1E293B; border: 1px solid #334155; border-radius: 2px;"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="tablet">
+            <div class="screen">
+              <div class="content viewer-mini">
+                <div class="url-bar"><div class="dot"></div><div class="text"></div></div>
+                <div class="preview-area" style="height: calc(100% - 16px);">
+                  <div class="sim-line h"></div>
+                  <div class="sim-line p"></div>
+                  <div class="sim-grid"><div class="sim-box"></div><div class="sim-box"></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="desktop">
+            <div class="monitor">
+              <div class="screen">
+                <div class="content viewer-mini">
+                  <div class="url-bar"><div class="dot"></div><div class="text"></div></div>
+                  <div class="preview-area" style="height: calc(100% - 16px);">
+                    <div class="sim-line h"></div>
+                    <div class="sim-line p"></div>
+                    <div class="sim-grid"><div class="sim-box"></div><div class="sim-box"></div><div class="sim-box"></div></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="stand"></div>
+            <div class="base"></div>
+          </div>
+        `
+      },
+
+      // SITUATION: Emergency Hotfix — desktop with status dashboard
+      'production-monitoring': {
+        layout: 'layout-desktop-center',
+        accent: '#EF4444',
+        html: `
+          <div class="glow center" style="--accent-glow: rgba(239, 68, 68, 0.12);"></div>
+          <div class="desktop" style="width: 340px; height: 220px;">
+            <div class="monitor" style="height: 200px;">
+              <div class="screen">
+                <div class="content deploy-mini" style="padding: 8px;">
+                  <div style="display: flex; gap: 4px; margin-bottom: 4px;">
+                    <div style="flex: 1; height: 28px; background: #1E293B; border: 1px solid #334155; border-radius: 4px; padding: 4px; display: flex; align-items: center; gap: 3px;">
+                      <div style="width: 5px; height: 5px; border-radius: 50%; background: #10B981;"></div>
+                      <div style="flex: 1; height: 3px; background: #475569; border-radius: 2px;"></div>
+                    </div>
+                    <div style="flex: 1; height: 28px; background: #1E293B; border: 1px solid #334155; border-radius: 4px; padding: 4px; display: flex; align-items: center; gap: 3px;">
+                      <div style="width: 5px; height: 5px; border-radius: 50%; background: #10B981;"></div>
+                      <div style="flex: 1; height: 3px; background: #475569; border-radius: 2px;"></div>
+                    </div>
+                    <div style="flex: 1; height: 28px; background: #1E293B; border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 4px; padding: 4px; display: flex; align-items: center; gap: 3px;">
+                      <div style="width: 5px; height: 5px; border-radius: 50%; background: #EF4444;"></div>
+                      <div style="flex: 1; height: 3px; background: #475569; border-radius: 2px;"></div>
+                    </div>
+                  </div>
+                  <div class="card"><div class="card-icon cf"></div><div class="card-lines"><div class="card-line w-full"></div><div class="card-line w-70"></div></div><div class="card-status failed"></div></div>
+                  <div class="card"><div class="card-icon cf"></div><div class="card-lines"><div class="card-line w-full"></div><div class="card-line w-70"></div></div><div class="card-status building"></div></div>
+                  <div class="card"><div class="card-icon cf"></div><div class="card-lines"><div class="card-line w-full"></div><div class="card-line w-70"></div></div><div class="card-status live"></div></div>
+                </div>
+              </div>
+            </div>
+            <div class="stand"></div>
+            <div class="base"></div>
+          </div>
+          <div class="float-shape" style="width: 16px; height: 16px; border-color: #EF4444; top: 40px; right: 50px;"></div>
+        `
+      },
+
+      // SITUATION: Live Demo — phone + desktop with QR
+      'live-demos': {
+        layout: 'layout-phone-desktop',
+        accent: '#6366F1',
+        html: `
+          <div class="glow center"></div>
+          <div class="phone">
+            <div class="screen">
+              <div class="island"></div>
+              <div class="content qr-mini">
+                <div class="qr-box">
+                  <div class="finder tl"></div>
+                  <div class="finder tr"></div>
+                  <div class="finder bl"></div>
+                  <div class="qr-logo"></div>
+                </div>
+                <div class="share-line url"></div>
+                <div class="share-line hint"></div>
+                <div class="share-btn"></div>
+              </div>
+            </div>
+          </div>
+          <div class="desktop">
+            <div class="monitor">
+              <div class="screen">
+                <div class="content viewer-mini">
+                  <div class="url-bar"><div class="dot"></div><div class="text"></div></div>
+                  <div class="preview-area" style="height: calc(100% - 16px);">
+                    <div class="sim-line h"></div>
+                    <div class="sim-line p"></div>
+                    <div class="sim-line p2"></div>
+                    <div class="sim-grid"><div class="sim-box"></div><div class="sim-box"></div><div class="sim-box"></div></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="stand"></div>
+            <div class="base"></div>
+          </div>
+        `
+      }
+    };
+
+    const config = variants[variant] || variants['freelancers'];
+    scene.className = 'scene ' + config.layout;
+    scene.style.setProperty('--accent', config.accent);
+    scene.innerHTML = config.html;
+  </script>
+</body>
+</html>

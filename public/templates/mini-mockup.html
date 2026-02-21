@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=200">
+  <title>Viewpo — Mini Mockup</title>
+  <script src="https://mcp.figma.com/mcp/html-to-design/capture.js" async></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      width: 200px;
+      height: 160px;
+      overflow: hidden;
+      font-family: 'Inter', system-ui, sans-serif;
+      background: transparent;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .variant { display: none; }
+    .variant.active { display: flex; align-items: center; justify-content: center; width: 200px; height: 160px; }
+
+    /* Phone frame used in all variants */
+    .mini-phone {
+      width: 80px;
+      border-radius: 12px;
+      border: 2px solid #334155;
+      background: #1E293B;
+      overflow: hidden;
+    }
+
+    .mini-notch {
+      width: 30px;
+      height: 6px;
+      background: #0F172A;
+      border-radius: 0 0 4px 4px;
+      margin: 0 auto;
+    }
+
+    .mini-home {
+      display: flex;
+      justify-content: center;
+      padding: 4px 0;
+    }
+
+    .mini-home-bar {
+      width: 20px;
+      height: 2px;
+      background: #475569;
+      border-radius: 2px;
+    }
+
+    /* =====================
+       NOTIFICATION VARIANT
+       ===================== */
+    .notif-screen {
+      padding: 4px 6px;
+    }
+
+    .notif-card {
+      background: rgba(99, 102, 241, 0.1);
+      border: 1px solid rgba(99, 102, 241, 0.2);
+      border-radius: 6px;
+      padding: 4px 5px;
+      margin-bottom: 3px;
+    }
+
+    .notif-header {
+      display: flex;
+      align-items: center;
+      gap: 3px;
+      margin-bottom: 2px;
+    }
+
+    .notif-icon {
+      width: 8px;
+      height: 8px;
+      border-radius: 3px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .notif-icon.success { background: rgba(16, 185, 129, 0.3); }
+    .notif-icon.building { background: rgba(251, 146, 60, 0.3); }
+
+    .notif-icon svg {
+      width: 5px;
+      height: 5px;
+      stroke-width: 3;
+      fill: none;
+    }
+
+    .notif-icon.success svg { stroke: #34D399; }
+    .notif-icon.building svg { stroke: #FB923C; }
+
+    .notif-app {
+      font-size: 5px;
+      font-weight: 600;
+      color: #94A3B8;
+    }
+
+    .notif-time {
+      font-size: 4px;
+      color: #475569;
+      margin-left: auto;
+    }
+
+    .notif-title {
+      font-size: 5px;
+      font-weight: 600;
+      color: #F1F5F9;
+    }
+
+    .notif-body {
+      font-size: 4px;
+      color: #64748B;
+    }
+
+    /* =====================
+       VIEWER VARIANT
+       ===================== */
+    .viewer-screen {
+      padding: 4px 5px;
+    }
+
+    .viewer-devices {
+      display: flex;
+      gap: 2px;
+      justify-content: center;
+      margin-bottom: 3px;
+    }
+
+    .viewer-device {
+      width: 12px;
+      height: 3px;
+      border-radius: 2px;
+      background: #334155;
+    }
+
+    .viewer-device.active {
+      background: #6366F1;
+    }
+
+    .viewer-preview {
+      background: #0F172A;
+      border: 1px solid #334155;
+      border-radius: 4px;
+      padding: 3px;
+    }
+
+    .viewer-line {
+      height: 2px;
+      border-radius: 1px;
+      margin-bottom: 2px;
+    }
+
+    .viewer-line.title { width: 70%; background: #334155; }
+    .viewer-line.text { width: 90%; background: #1E293B; }
+    .viewer-line.accent { width: 40%; background: rgba(99, 102, 241, 0.4); }
+
+    .viewer-grid {
+      display: flex;
+      gap: 2px;
+      margin-top: 3px;
+    }
+
+    .viewer-grid-item {
+      flex: 1;
+      height: 10px;
+      background: #1E293B;
+      border: 1px solid #334155;
+      border-radius: 2px;
+    }
+
+    .viewer-res {
+      text-align: center;
+      font-size: 5px;
+      color: #818CF8;
+      margin-top: 2px;
+      font-weight: 600;
+    }
+
+    /* =====================
+       SCREENSHOT VARIANT
+       ===================== */
+    .screenshot-screen {
+      padding: 4px 5px;
+    }
+
+    .screenshot-page {
+      background: #0F172A;
+      border: 1px solid #334155;
+      border-radius: 3px;
+      padding: 3px;
+      margin-bottom: 3px;
+    }
+
+    .screenshot-line {
+      height: 2px;
+      border-radius: 1px;
+      margin-bottom: 1px;
+    }
+
+    .screenshot-line.title { width: 60%; background: #334155; }
+    .screenshot-line.text { width: 85%; background: #1E293B; }
+
+    .screenshot-capture {
+      display: flex;
+      justify-content: center;
+    }
+
+    .screenshot-btn {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: rgba(99, 102, 241, 0.15);
+      border: 2px solid #6366F1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .screenshot-btn-inner {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #6366F1;
+    }
+
+    .screenshot-progress {
+      width: 100%;
+      height: 2px;
+      background: #0F172A;
+      border-radius: 1px;
+      margin-top: 3px;
+      overflow: hidden;
+    }
+
+    .screenshot-progress-bar {
+      width: 60%;
+      height: 100%;
+      background: #6366F1;
+      border-radius: 1px;
+    }
+
+    /* =====================
+       QR VARIANT
+       ===================== */
+    .qr-screen {
+      padding: 5px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+    }
+
+    .qr-code {
+      width: 36px;
+      height: 36px;
+      background: white;
+      border-radius: 4px;
+      padding: 3px;
+      position: relative;
+    }
+
+    .qr-finder {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      border: 2px solid #1E293B;
+      border-radius: 2px;
+    }
+
+    .qr-finder::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 3px;
+      height: 3px;
+      background: #1E293B;
+      border-radius: 1px;
+    }
+
+    .qr-finder.tl { top: 3px; left: 3px; }
+    .qr-finder.tr { top: 3px; right: 3px; }
+    .qr-finder.bl { bottom: 3px; left: 3px; }
+
+    .qr-logo {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 8px;
+      height: 8px;
+      background: #6366F1;
+      border-radius: 2px;
+      border: 1px solid white;
+    }
+
+    .qr-label {
+      font-size: 5px;
+      color: #94A3B8;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <!-- NOTIFICATION -->
+  <div class="variant" id="notification">
+    <div class="mini-phone">
+      <div class="mini-notch"></div>
+      <div class="notif-screen">
+        <div class="notif-card">
+          <div class="notif-header">
+            <div class="notif-icon success">
+              <svg viewBox="0 0 24 24" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            <span class="notif-app">Viewpo</span>
+            <span class="notif-time">2m</span>
+          </div>
+          <div class="notif-title">Deploy live</div>
+          <div class="notif-body">main is now live</div>
+        </div>
+        <div class="notif-card">
+          <div class="notif-header">
+            <div class="notif-icon building">
+              <svg viewBox="0 0 24 24" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            </div>
+            <span class="notif-app">Viewpo</span>
+            <span class="notif-time">30s</span>
+          </div>
+          <div class="notif-title">Build started</div>
+          <div class="notif-body">feature/auth</div>
+        </div>
+      </div>
+      <div class="mini-home"><div class="mini-home-bar"></div></div>
+    </div>
+  </div>
+
+  <!-- VIEWER -->
+  <div class="variant" id="viewer">
+    <div class="mini-phone">
+      <div class="mini-notch"></div>
+      <div class="viewer-screen">
+        <div class="viewer-devices">
+          <div class="viewer-device"></div>
+          <div class="viewer-device active"></div>
+          <div class="viewer-device"></div>
+        </div>
+        <div class="viewer-preview">
+          <div class="viewer-line title"></div>
+          <div class="viewer-line text"></div>
+          <div class="viewer-line accent"></div>
+          <div class="viewer-grid">
+            <div class="viewer-grid-item"></div>
+            <div class="viewer-grid-item"></div>
+          </div>
+        </div>
+        <div class="viewer-res">1440 x 900</div>
+      </div>
+      <div class="mini-home"><div class="mini-home-bar"></div></div>
+    </div>
+  </div>
+
+  <!-- SCREENSHOT -->
+  <div class="variant" id="screenshot">
+    <div class="mini-phone">
+      <div class="mini-notch"></div>
+      <div class="screenshot-screen">
+        <div class="screenshot-page">
+          <div class="screenshot-line title"></div>
+          <div class="screenshot-line text"></div>
+          <div class="screenshot-line text" style="width: 70%"></div>
+        </div>
+        <div class="screenshot-capture">
+          <div class="screenshot-btn">
+            <div class="screenshot-btn-inner"></div>
+          </div>
+        </div>
+        <div class="screenshot-progress">
+          <div class="screenshot-progress-bar"></div>
+        </div>
+      </div>
+      <div class="mini-home"><div class="mini-home-bar"></div></div>
+    </div>
+  </div>
+
+  <!-- QR -->
+  <div class="variant" id="qr">
+    <div class="mini-phone">
+      <div class="mini-notch"></div>
+      <div class="qr-screen">
+        <div class="qr-code">
+          <div class="qr-finder tl"></div>
+          <div class="qr-finder tr"></div>
+          <div class="qr-finder bl"></div>
+          <div class="qr-logo"></div>
+        </div>
+        <div class="qr-label">Scan to preview</div>
+      </div>
+      <div class="mini-home"><div class="mini-home-bar"></div></div>
+    </div>
+  </div>
+
+  <script>
+    const params = new URLSearchParams(window.location.hash.slice(1));
+    const variant = params.get('variant') || 'notification';
+    const el = document.getElementById(variant);
+    if (el) el.classList.add('active');
+  </script>
+</body>
+</html>

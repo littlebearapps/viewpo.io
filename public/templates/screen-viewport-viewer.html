@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=375">
+  <title>Viewpo — Viewport Viewer Screen</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      width: 375px;
+      height: 700px;
+      overflow: hidden;
+      font-family: 'Inter', system-ui, sans-serif;
+      background: #0F172A;
+      color: #E2E8F0;
+    }
+
+    .screen {
+      width: 375px;
+      height: 700px;
+      display: flex;
+      flex-direction: column;
+      background: #0F172A;
+    }
+
+    /* Status bar */
+    .status-bar {
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 20px;
+      font-size: 13px;
+      font-weight: 600;
+      color: #E2E8F0;
+    }
+
+    .status-bar .time { font-weight: 600; }
+    .status-icons { display: flex; gap: 5px; align-items: center; }
+    .status-icons svg { width: 16px; height: 16px; fill: #E2E8F0; }
+
+    /* URL bar */
+    .url-bar {
+      margin: 0 16px 12px;
+      background: #1E293B;
+      border: 1px solid #334155;
+      border-radius: 12px;
+      padding: 10px 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .url-bar svg { width: 14px; height: 14px; stroke: #64748B; fill: none; flex-shrink: 0; }
+
+    .url-text {
+      font-size: 13px;
+      color: #94A3B8;
+      flex: 1;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .url-text .protocol { color: #64748B; }
+    .url-text .domain { color: #E2E8F0; font-weight: 500; }
+
+    .url-action {
+      width: 28px;
+      height: 28px;
+      background: rgba(99, 102, 241, 0.15);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .url-action svg { width: 14px; height: 14px; stroke: #818CF8; fill: none; }
+
+    /* Resolution bar */
+    .resolution-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 16px 10px;
+    }
+
+    .resolution-display {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      color: #818CF8;
+      font-family: 'Inter', monospace;
+    }
+
+    .resolution-display svg { width: 14px; height: 14px; stroke: #818CF8; fill: none; }
+
+    .device-presets {
+      display: flex;
+      gap: 4px;
+    }
+
+    .device-preset {
+      width: 32px;
+      height: 28px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #1E293B;
+      border: 1px solid #334155;
+    }
+
+    .device-preset.active {
+      background: rgba(99, 102, 241, 0.15);
+      border-color: rgba(99, 102, 241, 0.3);
+    }
+
+    .device-preset svg { width: 16px; height: 16px; stroke: #64748B; fill: none; }
+    .device-preset.active svg { stroke: #818CF8; }
+
+    /* Preview viewport */
+    .preview-container {
+      flex: 1;
+      margin: 0 16px;
+      background: #FFFFFF;
+      border-radius: 12px;
+      overflow: hidden;
+      position: relative;
+      border: 1px solid #334155;
+    }
+
+    /* Simulated website content inside the preview */
+    .preview-toolbar {
+      height: 32px;
+      background: #F8FAFC;
+      border-bottom: 1px solid #E2E8F0;
+      display: flex;
+      align-items: center;
+      padding: 0 12px;
+      gap: 6px;
+    }
+
+    .preview-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+    }
+
+    .preview-dot.red { background: #EF4444; }
+    .preview-dot.yellow { background: #F59E0B; }
+    .preview-dot.green { background: #10B981; }
+
+    .preview-nav {
+      margin-left: 8px;
+      height: 14px;
+      background: #E2E8F0;
+      border-radius: 3px;
+      flex: 1;
+      display: flex;
+      align-items: center;
+      padding: 0 8px;
+    }
+
+    .preview-nav span {
+      font-size: 7px;
+      color: #94A3B8;
+    }
+
+    .preview-body {
+      padding: 16px;
+    }
+
+    /* Simulated hero section */
+    .sim-hero {
+      margin-bottom: 14px;
+    }
+
+    .sim-hero .sim-badge {
+      display: inline-block;
+      width: 60px;
+      height: 8px;
+      background: #6366F1;
+      border-radius: 4px;
+      opacity: 0.2;
+      margin-bottom: 8px;
+    }
+
+    .sim-hero .sim-h1 {
+      height: 12px;
+      width: 90%;
+      background: #1E293B;
+      border-radius: 4px;
+      margin-bottom: 6px;
+    }
+
+    .sim-hero .sim-h1-2 {
+      height: 12px;
+      width: 70%;
+      background: #1E293B;
+      border-radius: 4px;
+      margin-bottom: 10px;
+    }
+
+    .sim-hero .sim-p {
+      height: 6px;
+      width: 85%;
+      background: #CBD5E1;
+      border-radius: 3px;
+      margin-bottom: 4px;
+    }
+
+    .sim-hero .sim-p2 {
+      height: 6px;
+      width: 65%;
+      background: #CBD5E1;
+      border-radius: 3px;
+      margin-bottom: 12px;
+    }
+
+    .sim-buttons {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 16px;
+    }
+
+    .sim-btn-primary {
+      width: 72px;
+      height: 22px;
+      background: #6366F1;
+      border-radius: 6px;
+    }
+
+    .sim-btn-secondary {
+      width: 72px;
+      height: 22px;
+      background: transparent;
+      border: 1.5px solid #6366F1;
+      border-radius: 6px;
+    }
+
+    /* Simulated card grid */
+    .sim-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    .sim-card {
+      background: #F8FAFC;
+      border: 1px solid #E2E8F0;
+      border-radius: 8px;
+      padding: 10px;
+    }
+
+    .sim-card-icon {
+      width: 20px;
+      height: 20px;
+      background: #EEF2FF;
+      border-radius: 5px;
+      margin-bottom: 6px;
+    }
+
+    .sim-card-line {
+      height: 4px;
+      border-radius: 2px;
+      margin-bottom: 3px;
+    }
+
+    .sim-card-line.w-full { width: 100%; background: #CBD5E1; }
+    .sim-card-line.w-70 { width: 70%; background: #E2E8F0; }
+
+    /* Resize handle overlay */
+    .resize-handle {
+      position: absolute;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      width: 16px;
+      background: linear-gradient(90deg, transparent, rgba(99, 102, 241, 0.08));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .resize-dots {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .resize-dots span {
+      width: 3px;
+      height: 3px;
+      border-radius: 50%;
+      background: #818CF8;
+      opacity: 0.5;
+    }
+
+    /* Dimension labels */
+    .dim-label-bottom {
+      position: absolute;
+      bottom: -24px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 10px;
+      color: #64748B;
+      font-family: 'Inter', monospace;
+      background: #1E293B;
+      padding: 2px 8px;
+      border-radius: 4px;
+      border: 1px solid #334155;
+      white-space: nowrap;
+    }
+
+    /* Bottom nav */
+    .bottom-nav {
+      height: 60px;
+      border-top: 1px solid #1E293B;
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      padding: 0 20px;
+      margin-top: 30px;
+    }
+
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+      font-size: 10px;
+      color: #475569;
+    }
+
+    .nav-item.active { color: #818CF8; }
+    .nav-item svg { width: 20px; height: 20px; stroke: currentColor; fill: none; }
+  </style>
+</head>
+<body>
+  <div class="screen">
+    <div class="status-bar">
+      <span class="time">9:41</span>
+      <div class="status-icons">
+        <svg viewBox="0 0 16 16"><path d="M1 12h2v3H1zm4-4h2v7H5zm4-3h2v10H9zm4-4h2v14h-2z"/></svg>
+        <svg viewBox="0 0 16 16"><path d="M8 2C4.7 2 2 4.7 2 8s2.7 6 6 6 6-2.7 6-6-2.7-6-6-6zm3.5 7H8V4.5h1.5V7.5h2V9z"/></svg>
+      </div>
+    </div>
+
+    <!-- URL bar -->
+    <div class="url-bar">
+      <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <span class="url-text">
+        <span class="protocol">https://</span><span class="domain">preview-a3f2c1.acme.pages.dev</span>
+      </span>
+      <div class="url-action">
+        <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+      </div>
+    </div>
+
+    <!-- Resolution bar -->
+    <div class="resolution-bar">
+      <div class="resolution-display">
+        <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+        1440 × 900
+      </div>
+      <div class="device-presets">
+        <!-- Phone -->
+        <div class="device-preset">
+          <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+        </div>
+        <!-- Tablet -->
+        <div class="device-preset">
+          <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+        </div>
+        <!-- Desktop (active) -->
+        <div class="device-preset active">
+          <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+        </div>
+        <!-- Custom -->
+        <div class="device-preset">
+          <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+        </div>
+      </div>
+    </div>
+
+    <!-- Preview viewport -->
+    <div style="flex: 1; padding: 0 16px; position: relative;">
+      <div class="preview-container">
+        <div class="preview-toolbar">
+          <div class="preview-dot red"></div>
+          <div class="preview-dot yellow"></div>
+          <div class="preview-dot green"></div>
+          <div class="preview-nav"><span>preview-a3f2c1.acme.pages.dev</span></div>
+        </div>
+        <div class="preview-body">
+          <div class="sim-hero">
+            <div class="sim-badge"></div>
+            <div class="sim-h1"></div>
+            <div class="sim-h1-2"></div>
+            <div class="sim-p"></div>
+            <div class="sim-p2"></div>
+          </div>
+          <div class="sim-buttons">
+            <div class="sim-btn-primary"></div>
+            <div class="sim-btn-secondary"></div>
+          </div>
+          <div class="sim-grid">
+            <div class="sim-card">
+              <div class="sim-card-icon"></div>
+              <div class="sim-card-line w-full"></div>
+              <div class="sim-card-line w-70"></div>
+            </div>
+            <div class="sim-card">
+              <div class="sim-card-icon"></div>
+              <div class="sim-card-line w-full"></div>
+              <div class="sim-card-line w-70"></div>
+            </div>
+            <div class="sim-card">
+              <div class="sim-card-icon"></div>
+              <div class="sim-card-line w-full"></div>
+              <div class="sim-card-line w-70"></div>
+            </div>
+            <div class="sim-card">
+              <div class="sim-card-icon"></div>
+              <div class="sim-card-line w-full"></div>
+              <div class="sim-card-line w-70"></div>
+            </div>
+          </div>
+        </div>
+        <div class="resize-handle">
+          <div class="resize-dots">
+            <span></span><span></span><span></span>
+          </div>
+        </div>
+      </div>
+      <div class="dim-label-bottom">Desktop — 1440 × 900</div>
+    </div>
+
+    <div class="bottom-nav">
+      <div class="nav-item">
+        <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>
+        <span>Deploys</span>
+      </div>
+      <div class="nav-item active">
+        <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+        <span>Preview</span>
+      </div>
+      <div class="nav-item">
+        <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
+        <span>Alerts</span>
+      </div>
+      <div class="nav-item">
+        <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
+        <span>Settings</span>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

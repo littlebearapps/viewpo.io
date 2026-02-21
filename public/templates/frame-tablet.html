@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=900">
+  <title>Viewpo — Tablet Frame</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      width: 900px;
+      height: 680px;
+      overflow: hidden;
+      font-family: 'Inter', system-ui, sans-serif;
+      background: transparent;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .tablet-frame {
+      width: 860px;
+      height: 640px;
+      background: #1a1a1a;
+      border-radius: 30px;
+      padding: 20px;
+      position: relative;
+      box-shadow:
+        0 0 0 2px #2a2a2a,
+        0 0 0 4px #0a0a0a,
+        0 20px 60px rgba(0, 0, 0, 0.5),
+        0 10px 30px rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    }
+
+    /* Camera */
+    .tablet-frame::before {
+      content: '';
+      position: absolute;
+      top: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 8px;
+      height: 8px;
+      background: #2a2a2a;
+      border-radius: 50%;
+      border: 1px solid #333;
+    }
+
+    .tablet-screen {
+      width: 100%;
+      height: 100%;
+      background: #0F172A;
+      border-radius: 14px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* Screen content slot */
+    .screen-content {
+      width: 100%;
+      height: 100%;
+      position: relative;
+    }
+
+    /* Placeholder content */
+    .placeholder {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      color: #64748B;
+      font-size: 14px;
+    }
+
+    .placeholder-label {
+      font-family: 'Inter', monospace;
+      font-size: 12px;
+      color: #475569;
+      background: #1E293B;
+      display: inline-block;
+      padding: 4px 14px;
+      border-radius: 6px;
+      margin-top: 16px;
+    }
+
+    /* Resolution label */
+    .frame-label {
+      position: absolute;
+      bottom: -30px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-family: 'Inter', monospace;
+      font-size: 11px;
+      color: #64748B;
+      white-space: nowrap;
+    }
+  </style>
+</head>
+<body>
+  <div style="position: relative;">
+    <div class="tablet-frame">
+      <div class="tablet-screen">
+        <div class="screen-content">
+          <!-- Screen content injected here -->
+          <div class="placeholder">
+            <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="#334155" stroke-width="1.5" stroke-linecap="round">
+              <rect x="4" y="2" width="16" height="20" rx="2"/>
+              <line x1="12" y1="18" x2="12.01" y2="18"/>
+            </svg>
+            <p style="margin-top: 12px;">iPad Pro 11"</p>
+            <span class="placeholder-label">1024 × 768</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="frame-label">iPad Pro 11" — 1024 × 768</div>
+  </div>
+</body>
+</html>
