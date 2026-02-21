@@ -1,6 +1,9 @@
 # Viewpo.io - Cloudflare Pages configuration
-# D1 binding for roadmap voting system
+name = "viewpo-io"
+pages_build_output_dir = "dist"
+compatibility_date = "2024-12-01"
 
+# D1 binding for roadmap voting system
 [[d1_databases]]
 binding = "DB"
 database_name = "viewpo-roadmap"
