@@ -67,7 +67,7 @@ On Starter and Pro plans, generate shareable links and QR codes for any deployme
 | Starter | $9/month | Unlimited projects, all providers, sharing |
 | Pro | $29/month | Team workspaces (up to 10), deploy comparison, API access |
 
-See the full [pricing details](https://viewpo.io/#pricing) on the homepage.
+See the full [pricing details](/pricing/) for a detailed feature comparison.
 
 ## Need more help?
 

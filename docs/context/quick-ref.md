@@ -15,7 +15,7 @@
 | **Alt Domains** | viewpo.app, viewpo.dev (both redirect to viewpo.io) |
 | **CF Pages Project** | `viewpo-io` |
 | **CF Zone** | `840ca9d145596b47b9868868e4cd7b81` |
-| **Status** | Marketing site live — 10+ pages, dark mode, Plausible analytics, SEO/GEO optimised, Trello-powered roadmap with D1 voting |
+| **Status** | Marketing site live — 30+ pages (incl. 13 use case detail pages, features, pricing, beta programme), dark mode, Plausible analytics, SEO/GEO optimised, Trello-powered roadmap with D1 voting, 43 graphics |
 
 ---
 
@@ -34,17 +34,21 @@ npm run build            # Build to dist/
 
 | Page | URL | File | Audience |
 |------|-----|------|----------|
-| Homepage | `/` | `src/pages/index.astro` | All segments — hero, features, pricing, FAQ |
+| Homepage | `/` | `src/pages/index.astro` | All segments — hero, features, pricing, FAQ, CTA |
 | Teams | `/teams/` | `src/pages/teams.astro` | Team leads, agencies, PMs, designers |
-| Creators | `/creators/` | `src/pages/creators.astro` | Vibe coders, AI builders |
-| Roadmap | `/roadmap/` | `src/pages/roadmap.astro` | SSR — Trello-powered roadmap with voting + feedback form |
+| Creators | `/creators/` | `src/pages/creators.astro` | Vibe coders, AI builders (Cursor, v0, Bolt, Lovable, Replit) |
+| Use Cases Index | `/use-cases/` | `src/pages/use-cases/index.astro` | All segments — persona + situation use case overview |
+| Use Case Detail (x13) | `/use-cases/[slug]/` | `src/pages/use-cases/[slug].astro` | Per-audience deep dives (7 personas, 6 situations) |
+| Roadmap | `/roadmap/` | `src/pages/roadmap.astro` | SSR — Trello-powered roadmap with D1 voting + feedback form |
 | Help Centre | `/help/` | `src/pages/help/index.astro` | Help hub |
-| Getting Started | `/help/getting-started/` | `src/pages/help/[...slug].astro` | Getting started guide |
-| FAQ | `/help/faq/` | `src/pages/help/[...slug].astro` | Frequently asked questions |
-| Contact | `/help/contact/` | `src/pages/help/[...slug].astro` | Contact form |
+| Help Pages | `/help/[...slug]/` | `src/pages/help/[...slug].astro` | Getting started, FAQ, contact |
 | Confirmed | `/confirmed/` | `src/pages/confirmed.astro` | Post-email-confirmation landing page |
 | Preferences | `/preferences/` | `src/pages/preferences.astro` | Email preferences / unsubscribe |
 | Privacy | `/privacy/` | `src/pages/privacy.astro` | Legal — privacy policy (ACL, GDPR, APP-compliant) |
+| Features | `/features/` | `src/pages/features.astro` | All — detailed features with grouped layout and competitor comparison |
+| Pricing | `/pricing/` | `src/pages/pricing.astro` | All — tier cards, feature comparison table, pricing FAQ |
+| Beta Programme | `/beta/` | `src/pages/beta.astro` | Prospective testers — curated beta application form |
+| EULA | `/eula/` | `src/pages/eula.astro` | Legal — end user licence agreement |
 | Terms | `/terms/` | `src/pages/terms.astro` | Legal — terms of service (ACL-compliant, Lemon Squeezy MoR) |
 
 ---
@@ -53,16 +57,24 @@ npm run build            # Build to dist/
 
 | Path | Description |
 |------|-------------|
-| `src/pages/` | All pages (static + SSR) |
+| `src/pages/` | 15+ pages (index, features, pricing, beta, teams, creators, use-cases/index, use-cases/[slug], roadmap, help, confirmed, preferences, privacy, terms, eula) |
+| `src/pages/use-cases/` | Use case index + dynamic [slug] page rendering 13 use cases from data |
+| `src/data/use-cases.ts` | 13 use case definitions (7 personas, 6 situations) with full content, hero images, OG images |
+| `src/content/docs/help/` | Starlight help content (getting-started, faq, contact) |
+| `src/content.config.ts` | Content collection config for Starlight docs |
+| `src/styles/starlight-custom.css` | Starlight brand overrides (indigo accent, Outfit/Inter fonts, slate grays) |
 | `src/layouts/BaseLayout.astro` | Shared layout — meta tags, JSON-LD schemas, fonts, Plausible proxy + `plausible.init()`, Turnstile script, theme persistence, View Transitions, gclid capture (dormant) |
 | `src/pages/js/script.js.ts` | Plausible script proxy (Astro API route, `prerender = false`) |
 | `src/pages/api/event.ts` | Plausible event proxy (Astro API route, `prerender = false`) |
 | `src/pages/api/vote.ts` | Roadmap vote API (SSR, D1 + SHA-256 fingerprint dedup) |
 | `src/pages/api/feedback.ts` | Feedback form API (SSR, Turnstile + Trello card creation) |
 | `src/lib/roadmap/` | Roadmap library — `types.ts`, `adapter.ts` (Trello), `cache.ts` (CF Cache SWR), `mock.ts` |
-| `src/components/` | 20 components (Hero, FAQ, PricingTable, ViewportDemo, SignupModal, ContactModal, RoadmapGrid, RoadmapCard, FeedbackForm, Footer, Header, ThemeToggle, etc.) |
+| `src/components/` | 30 top-level components + 9 use-case sub-components |
+| `src/components/use-cases/` | UseCaseHeroVisual, MiniDeviceMockup, CharacterCard, StatCallout, PullQuote, LimitationsCard, AnimatedTimeline, SectionDivider, DevicePlaceholder |
 | `src/styles/global.css` | Brand tokens, animations, `@variant dark` for Tailwind v4 |
-| `src/utils/constants.ts` | API base URL (email.viewpo.io), Turnstile site key, feedback categories, 6 device presets, 17-device library, pricing tiers (Free/Starter/Pro), FAQ data (13 items), homepage FAQ selection |
+| `src/utils/constants.ts` | API base URL (email.viewpo.io), Turnstile site key, feedback categories, 6 device presets, 17-device library, pricing tiers (Free/Starter/Pro), FAQ data (13 items), homepage FAQ selection, `FEATURES_DATA` (6 features with bullets/groups), `PRICING_COMPARISON` (20 comparison rows), `PRICING_FAQ_ITEMS` (7 pricing FAQs), `BETA_FAQ_ITEMS` (7 beta FAQs) |
+| `public/graphics/` | All site graphics — hero phone screens (4), use case heroes (13), bento features (6), mini mockups (4), OG images (16) |
+| `public/templates/` | HTML/CSS graphic templates — parameterised via URL hash, used to generate screenshots |
 | `wrangler.toml` | D1 binding (`DB` → `viewpo-roadmap`) for roadmap voting |
 | `migrations/0001_create_votes.sql` | D1 schema — `votes` + `voter_fingerprints` tables |
 | `src/scripts/scroll-reveal.ts` | IntersectionObserver scroll animation |
@@ -107,9 +119,9 @@ npm run build            # Build to dist/
 All schemas in `BaseLayout.astro`:
 - **Organization** — every page (name, logo, knowsAbout, parentOrganization: Little Bear Apps)
 - **WebPage** — every page (datePublished, dateModified — dynamic at build time)
-- **SoftwareApplication** — homepage only (featureList x6, applicationSubCategory, operatingSystem array)
+- **SoftwareApplication** — homepage + `/features/` (featureList x6, applicationSubCategory, operatingSystem array)
 - **WebSite** — homepage only
-- **FAQPage** — homepage (`FAQ.astro`), `/teams/`, `/creators/`, `/roadmap/` (all with dateModified)
+- **FAQPage** — homepage (`FAQ.astro`), `/teams/`, `/creators/`, `/roadmap/`, `/pricing/` (pricing FAQs), `/beta/` (beta FAQs), each use case detail page (all with dateModified)
 
 ---
 
@@ -238,15 +250,32 @@ SignupModal and ContactModal both POST to `email.viewpo.io`. The full email conf
 
 ---
 
+## Graphics & Figma
+
+43 graphics across 6 categories, generated from parameterised HTML/CSS templates in `public/templates/`.
+
+| Category | Count | Location |
+|----------|-------|----------|
+| Hero phone screens | 4 | `public/graphics/hero/` |
+| Use case heroes | 13 | `public/graphics/use-cases/hero-*.png` |
+| Bento feature cards | 6 | `public/graphics/features/` |
+| Mini mockups | 4 | `public/graphics/use-cases/mini-*.png` |
+| OG images (per-page) | 16 | `public/graphics/og/` |
+
+**Figma file**: https://www.figma.com/design/3eiSLxMkmfVAH4keyMMicr (all OG images captured)
+
+**Graphic generation workflow**: Edit HTML template → serve via `python3 -m http.server` → screenshot via chrome-devtools → optimise with `pngquant` → optionally push to Figma via MCP
+
+---
+
 ## Deferred (Not Yet Implemented)
 
-- Blog, docs, changelog pages
-- Product screenshots (MVP UI not finalised)
+- Blog, changelog pages
 - Playwright E2E tests
 - Comparison pages (Viewpo vs Responsively, vs BrowserStack)
 - Self-hosted Google Fonts (currently loaded via Google CDN)
 - Register "Viewpo" as additional business name on ABN via ASIC
-- Dedicated OG images for /teams/, /creators/, /roadmap/ (currently use default)
+- Dedicated OG images for /teams/, /creators/, /features/, /pricing/, /beta/ (currently use default)
 - BreadcrumbList schema on subpages
 - HowTo schema on homepage How It Works section
 - hreflang tags

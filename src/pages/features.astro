@@ -1,0 +1,337 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Header from '@components/Header.astro';
+import Footer from '@components/Footer.astro';
+import Section from '@components/Section.astro';
+import SectionHeader from '@components/SectionHeader.astro';
+import Badge from '@components/Badge.astro';
+import { FEATURES_DATA } from '@utils/constants';
+
+const title = 'Viewpo Features — Viewport Viewer, Deploy Dashboard & More | Viewpo';
+const description = 'See every Viewpo feature in detail. Viewport viewer with 23 presets, unified deploy dashboard for Cloudflare, Vercel, Netlify and GitHub, push notifications, share links, and team workspaces.';
+
+const coreFeatures = FEATURES_DATA.filter(f => f.group === 'core');
+const collabFeatures = FEATURES_DATA.filter(f => f.group === 'collaboration');
+
+const useCaseLabelMap: Record<string, string> = {
+  'remote-monitoring': 'Remote Developers',
+  'indie-hackers': 'Indie Founders',
+  'freelancers': 'Freelancers',
+  'agencies': 'Agencies',
+  'teams': 'Team Leads',
+  'qa-design': 'QA & Design',
+  'responsive-testing': 'Responsive Testing',
+  'ipad-testing': 'iPad Testing',
+  'client-feedback': 'Client Feedback',
+  'team-review': 'Team Review',
+  'live-demos': 'Live Demos',
+  'production-monitoring': 'Production Monitoring',
+};
+
+const competitors = ['Viewpo', 'Polypane', 'Responsively', 'Vercel Comments', 'BugHerd'] as const;
+const comparisonRows = [
+  { capability: 'Multi-viewport viewer', values: [true, true, true, false, false] },
+  { capability: 'Bypasses X-Frame-Options', values: [true, true, true, true, false] },
+  { capability: 'Multi-provider dashboard', values: [true, false, false, false, false] },
+  { capability: 'Mobile app (iOS/iPadOS/macOS)', values: [true, false, false, false, false] },
+  { capability: 'Dark/light mode override', values: [true, true, false, false, false] },
+  { capability: 'Device presets + library', values: ['23 + custom', 'Custom', '30+', 'N/A', 'N/A'] },
+  { capability: '"Latest for branch" share links', values: [true, false, false, false, false] },
+  { capability: 'QR code sharing', values: [true, false, false, false, false] },
+  { capability: 'Push notifications', values: [true, false, false, false, false] },
+  { capability: 'Team workspaces', values: ['Roadmap', false, false, 'Vercel only', true] },
+  { capability: 'Starting price', values: ['Free', '$9/mo', 'Free', '$20+/mo', '$33/mo'] },
+] as const;
+
+const featuresSoftwareApp = {
+  '@context': 'https://schema.org',
+  '@type': 'SoftwareApplication',
+  name: 'Viewpo',
+  applicationCategory: 'DeveloperApplication',
+  operatingSystem: 'iOS, iPadOS, macOS',
+  description: 'Native app for previewing deployments at any viewport size. Unified dashboard for Cloudflare Pages, Vercel, Netlify, and GitHub with real CSS viewport simulation.',
+  featureList: FEATURES_DATA.map(f => f.subtitle),
+  dateModified: new Date().toISOString().split('T')[0],
+  url: 'https://viewpo.io/features/',
+  offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+};
+---
+
+<BaseLayout title={title} description={description}>
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify(featuresSoftwareApp)} />
+  </Fragment>
+  <Header slot="header" />
+
+  <div class="relative overflow-x-clip">
+    <!-- Ambient glow -->
+    <div class="pointer-events-none absolute inset-0" aria-hidden="true">
+      <div class="absolute -top-40 -left-40 w-[600px] h-[600px] rounded-full bg-primary/15 blur-[160px] dark:bg-primary/[0.07]"></div>
+      <div class="absolute top-[30%] right-[5%] w-[400px] h-[400px] rounded-full bg-indigo-300/10 blur-[130px] dark:bg-indigo-400/[0.05]"></div>
+      <div class="absolute top-[65%] left-[15%] w-[450px] h-[450px] rounded-full bg-secondary/10 blur-[140px] dark:bg-secondary/[0.05]"></div>
+    </div>
+
+    <!-- Hero -->
+    <section class="pt-16 sm:pt-24 pb-12 sm:pb-16">
+      <div class="container-wide">
+        <div class="max-w-2xl mx-auto text-center">
+          <div class="hero-entrance">
+            <Badge variant="default">All Features</Badge>
+          </div>
+          <h1 class="font-heading font-bold text-3xl sm:text-4xl md:text-5xl text-foreground dark:text-white mt-4 mb-4 hero-entrance hero-entrance-delay-1">
+            Everything Viewpo Can Do
+          </h1>
+          <p class="text-lg text-foreground/60 dark:text-neutral-400 leading-relaxed mb-8 hero-entrance hero-entrance-delay-2">
+            Viewport viewer, unified dashboard, push notifications, and sharing tools — built for developers who ship from anywhere.
+          </p>
+          <div class="flex flex-wrap items-center justify-center gap-3 hero-entrance hero-entrance-delay-3">
+            <button
+              type="button"
+              data-open-signup
+              class="inline-flex items-center gap-2 bg-primary hover:bg-primary-hover text-white text-sm font-heading font-semibold px-6 py-3 rounded-xl transition-all hover:scale-[1.02] active:scale-[0.98] plausible-event-name=CTA+Features+Join+Beta"
+            >
+              Join the Beta
+            </button>
+            <a
+              href="/pricing/"
+              class="inline-flex items-center gap-2 border border-neutral-300 dark:border-neutral-700 text-foreground dark:text-neutral-300 text-sm font-heading font-semibold px-6 py-3 rounded-xl transition-all hover:bg-foreground/5 dark:hover:bg-white/5 hover:scale-[1.02] active:scale-[0.98] plausible-event-name=CTA+Features+See+Pricing"
+            >
+              See Pricing
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Core Experience -->
+    <Section id="core" padding="md">
+      <div class="mb-12 reveal">
+        <Badge variant="default">Core Experience</Badge>
+        <h2 class="font-heading font-bold text-2xl md:text-3xl text-foreground dark:text-white mt-3">
+          Built for previewing on the go
+        </h2>
+        <p class="text-foreground/60 dark:text-neutral-400 mt-2 max-w-xl">
+          See your deploys, know when they land, and verify they look right — all from your phone.
+        </p>
+      </div>
+
+      <div class="space-y-16 md:space-y-24">
+        {coreFeatures.map((feature, i) => (
+          <div class:list={['grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center reveal', i % 2 === 1 ? 'lg:[direction:rtl]' : '']}>
+            <!-- Text side -->
+            <div class={i % 2 === 1 ? 'lg:[direction:ltr]' : ''}>
+              <h3 class="font-heading font-semibold text-xl md:text-2xl text-foreground dark:text-white mb-2">
+                {feature.subtitle}
+              </h3>
+              <p class="text-foreground/60 dark:text-neutral-400 leading-relaxed mb-6">
+                {feature.description}
+              </p>
+              <ul class="space-y-3 mb-6">
+                {feature.bullets.map(bullet => (
+                  <li class="flex items-start gap-3 text-sm text-foreground/65 dark:text-neutral-400">
+                    <svg class="w-4 h-4 text-primary flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                    </svg>
+                    <span>{bullet}</span>
+                  </li>
+                ))}
+              </ul>
+              {feature.relatedUseCases && feature.relatedUseCases.length > 0 && (
+                <div class="flex flex-wrap gap-2">
+                  {feature.relatedUseCases.map(slug => (
+                    <a
+                      href={`/use-cases/${slug}/`}
+                      class="text-xs font-medium px-2.5 py-1 rounded-full bg-foreground/5 dark:bg-neutral-800 text-foreground/50 dark:text-neutral-500 hover:text-foreground dark:hover:text-neutral-300 hover:bg-foreground/10 dark:hover:bg-neutral-700 transition-colors"
+                    >
+                      {useCaseLabelMap[slug] ?? slug}
+                    </a>
+                  ))}
+                </div>
+              )}
+            </div>
+            <!-- Visual side -->
+            <div class:list={['rounded-2xl border border-neutral-200 dark:border-neutral-700/50 bg-white/50 dark:bg-neutral-900/40 backdrop-blur-sm p-6 md:p-8', i % 2 === 1 ? 'lg:[direction:ltr]' : '']}>
+              <div class="flex items-center gap-3 mb-3">
+                <h4 class="font-heading font-semibold text-base text-foreground dark:text-white">{feature.title}</h4>
+              </div>
+              <p class="text-sm text-foreground/50 dark:text-neutral-500 leading-relaxed">
+                {feature.subtitle}
+              </p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </Section>
+
+    <!-- Collaboration -->
+    <Section id="collaboration" padding="md">
+      <div class="mb-12 reveal">
+        <Badge variant="secondary">Collaboration</Badge>
+        <h2 class="font-heading font-bold text-2xl md:text-3xl text-foreground dark:text-white mt-3">
+          Share, review, and get sign-off
+        </h2>
+        <p class="text-foreground/60 dark:text-neutral-400 mt-2 max-w-xl">
+          Send controlled previews to clients and teammates. Get feedback without scheduling a call.
+        </p>
+      </div>
+
+      <div class="space-y-16 md:space-y-24">
+        {collabFeatures.map((feature, i) => (
+          <div class:list={['grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center reveal', i % 2 === 1 ? 'lg:[direction:rtl]' : '']}>
+            <!-- Text side -->
+            <div class={i % 2 === 1 ? 'lg:[direction:ltr]' : ''}>
+              <div class="flex items-center gap-2 mb-2">
+                <h3 class="font-heading font-semibold text-xl md:text-2xl text-foreground dark:text-white">
+                  {feature.subtitle}
+                </h3>
+                {feature.badge && (
+                  <Badge variant="muted">{feature.badge}</Badge>
+                )}
+              </div>
+              <p class="text-foreground/60 dark:text-neutral-400 leading-relaxed mb-6">
+                {feature.description}
+              </p>
+              <ul class="space-y-3 mb-6">
+                {feature.bullets.map(bullet => (
+                  <li class="flex items-start gap-3 text-sm text-foreground/65 dark:text-neutral-400">
+                    <svg class="w-4 h-4 text-primary flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                    </svg>
+                    <span>{bullet}</span>
+                  </li>
+                ))}
+              </ul>
+              {feature.relatedUseCases && feature.relatedUseCases.length > 0 && (
+                <div class="flex flex-wrap gap-2">
+                  {feature.relatedUseCases.map(slug => (
+                    <a
+                      href={`/use-cases/${slug}/`}
+                      class="text-xs font-medium px-2.5 py-1 rounded-full bg-foreground/5 dark:bg-neutral-800 text-foreground/50 dark:text-neutral-500 hover:text-foreground dark:hover:text-neutral-300 hover:bg-foreground/10 dark:hover:bg-neutral-700 transition-colors"
+                    >
+                      {useCaseLabelMap[slug] ?? slug}
+                    </a>
+                  ))}
+                </div>
+              )}
+            </div>
+            <!-- Visual side -->
+            <div class:list={['rounded-2xl border border-neutral-200 dark:border-neutral-700/50 bg-white/50 dark:bg-neutral-900/40 backdrop-blur-sm p-6 md:p-8', i % 2 === 1 ? 'lg:[direction:ltr]' : '']}>
+              <div class="flex items-center gap-3 mb-3">
+                <h4 class="font-heading font-semibold text-base text-foreground dark:text-white">{feature.title}</h4>
+                {feature.badge && (
+                  <Badge variant="muted">{feature.badge}</Badge>
+                )}
+              </div>
+              <p class="text-sm text-foreground/50 dark:text-neutral-500 leading-relaxed">
+                {feature.subtitle}
+              </p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </Section>
+
+    <!-- Competitor Comparison -->
+    <Section id="comparison" background="muted" padding="md">
+      <SectionHeader
+        title="How Viewpo Compares"
+        subtitle="The only mobile-first viewport viewer with multi-provider deployment aggregation."
+      />
+
+      <div class="overflow-x-auto -mx-6 px-6 reveal reveal-delay-1">
+        <table class="w-full min-w-[640px] text-sm">
+          <thead>
+            <tr class="border-b border-neutral-200 dark:border-neutral-700">
+              <th class="text-left py-3 pr-4 font-heading font-semibold text-foreground dark:text-white">Capability</th>
+              {competitors.map(name => (
+                <th class:list={['py-3 px-3 text-center font-heading font-semibold', name === 'Viewpo' ? 'text-primary' : 'text-foreground/60 dark:text-neutral-400']}>
+                  {name}
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {comparisonRows.map(row => (
+              <tr class="border-b border-neutral-100 dark:border-neutral-800">
+                <td class="py-3 pr-4 text-foreground/70 dark:text-neutral-400">{row.capability}</td>
+                {row.values.map((val, vi) => (
+                  <td class:list={['py-3 px-3 text-center', vi === 0 ? 'font-medium text-foreground dark:text-white' : 'text-foreground/50 dark:text-neutral-500']}>
+                    {val === true ? (
+                      <svg class:list={['w-5 h-5 mx-auto', vi === 0 ? 'text-emerald-500' : 'text-emerald-400/60']} fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                      </svg>
+                    ) : val === false ? (
+                      <span class="text-foreground/20 dark:text-neutral-700">&mdash;</span>
+                    ) : (
+                      <span>{val}</span>
+                    )}
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </Section>
+
+    <!-- Platform Availability -->
+    <Section id="platforms" padding="md">
+      <SectionHeader
+        title="Native on Every Apple Device"
+        subtitle="Built with SwiftUI. One codebase, three platforms — not a web wrapper."
+      />
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-5 reveal reveal-delay-1">
+        {[
+          { platform: 'iPhone', desc: 'Tab bar navigation, haptic feedback, orientation auto-switching, and notifications that go straight to the viewer.', icon: '📱' },
+          { platform: 'iPad', desc: 'Adaptive sidebar layout, pointer and trackpad support, Split View multitasking alongside your code editor.', icon: '📱' },
+          { platform: 'macOS', desc: 'Native macOS app with sidebar navigation, keyboard shortcuts, and full-size viewport rendering.', icon: '💻' },
+        ].map(item => (
+          <div class="rounded-2xl border border-neutral-200 dark:border-neutral-700/50 bg-white/50 dark:bg-neutral-900/40 backdrop-blur-sm p-6 card-lift">
+            <p class="text-2xl mb-3" aria-hidden="true">{item.icon}</p>
+            <h3 class="font-heading font-semibold text-lg text-foreground dark:text-white mb-2">{item.platform}</h3>
+            <p class="text-sm text-foreground/60 dark:text-neutral-400 leading-relaxed">{item.desc}</p>
+          </div>
+        ))}
+      </div>
+    </Section>
+
+    <!-- CTA -->
+    <Section id="features-cta" padding="lg">
+      <div class="max-w-2xl mx-auto reveal">
+        <div class="rounded-2xl border border-neutral-200 dark:border-neutral-700/50 bg-white/40 dark:bg-neutral-900/30 backdrop-blur-sm p-8 md:p-12 text-center relative overflow-hidden">
+          <!-- Dot grid -->
+          <div class="absolute inset-0 bg-dot-pattern opacity-50 dark:opacity-30" aria-hidden="true"></div>
+          <!-- Glow -->
+          <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] rounded-full bg-primary/10 blur-[100px] dark:bg-primary/[0.05]" aria-hidden="true"></div>
+
+          <div class="relative">
+            <h2 class="font-heading font-bold text-2xl md:text-3xl text-foreground dark:text-white mb-3">
+              Ready to try Viewpo?
+            </h2>
+            <p class="text-foreground/60 dark:text-neutral-400 mb-6 max-w-md mx-auto">
+              Preview your deploys at any resolution, from any device. Join the beta and start shipping with confidence.
+            </p>
+            <div class="flex flex-wrap items-center justify-center gap-3">
+              <button
+                type="button"
+                data-open-signup
+                class="inline-flex items-center gap-2 bg-primary hover:bg-primary-hover text-white text-sm font-heading font-semibold px-6 py-3 rounded-xl transition-all hover:scale-[1.02] active:scale-[0.98] plausible-event-name=CTA+Features+Bottom+Join+Beta"
+              >
+                Join the Beta
+              </button>
+              <a
+                href="/pricing/"
+                class="inline-flex items-center gap-2 border border-neutral-300 dark:border-neutral-700 text-foreground dark:text-neutral-300 text-sm font-heading font-semibold px-6 py-3 rounded-xl transition-all hover:bg-foreground/5 dark:hover:bg-white/5 hover:scale-[1.02] active:scale-[0.98] plausible-event-name=CTA+Features+Bottom+See+Pricing"
+              >
+                See Pricing
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </Section>
+  </div>
+
+  <Footer slot="footer" />
+</BaseLayout>
