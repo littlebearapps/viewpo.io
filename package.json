@@ -12,7 +12,9 @@
   "dependencies": {
     "@astrojs/cloudflare": "^12.2.0",
     "@astrojs/sitemap": "^3.2.1",
+    "@astrojs/svelte": "^7.2.5",
     "astro": "^5.1.1",
+    "svelte": "^5.51.3",
     "wrangler": "^4.56.0"
   },
   "devDependencies": {

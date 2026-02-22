@@ -1,0 +1,90 @@
+---
+import BentoFeatureCard from './BentoFeatureCard.svelte';
+import SectionHeader from './SectionHeader.astro';
+
+const features = [
+  {
+    title: 'Viewport Viewer',
+    subtitle: 'See Any Resolution, From Any Device',
+    description: '23 device presets — from iPhone SE to 4K — plus any custom resolution. View a 27-inch desktop layout on your iPhone. Real CSS viewport simulation, not a screenshot.',
+    span: '1' as const,
+    visual: 'viewport',
+  },
+  {
+    title: 'Unified Dashboard',
+    subtitle: 'Every Provider, One Screen',
+    description: 'Cloudflare, GitHub, Vercel, and Netlify in a single feed. Pin your active branches to the top and toggle watch to get notified — everything else stays quiet.',
+    span: '1' as const,
+    visual: 'pinwatch',
+  },
+  {
+    title: 'Push Notifications',
+    subtitle: 'Know the Moment It\u2019s Ready',
+    description: 'Get notified when builds succeed or fail. Tap the notification to open the preview — no dashboards, no hunting for URLs.',
+    span: '1' as const,
+    visual: 'notifications',
+  },
+  {
+    title: 'Share Links & QR Codes',
+    subtitle: 'Share a Preview in Seconds',
+    description: 'Generate a link or QR code for any update. Recipients see it at the right viewport — no account needed.',
+    span: '1' as const,
+    visual: 'qr',
+  },
+  {
+    title: 'Review & Approval',
+    subtitle: 'Get Feedback and Approval Instantly',
+    description: 'Clients sign off via a share link. Internal teams — designers, PMs, leads — leave comments and approve directly on the preview.',
+    span: '1' as const,
+    visual: 'team',
+    badge: 'Roadmap',
+  },
+  {
+    title: 'Team Workspaces',
+    subtitle: 'Everyone on the Same Page',
+    description: 'Invite teammates and clients with Owner, Member, or Viewer roles. Notify your team on Slack, Google Chat, or Microsoft Teams when updates land.',
+    span: '1' as const,
+    visual: 'roles',
+    badge: 'Roadmap',
+  },
+];
+---
+
+<section id="features" class="py-20 md:py-28 lg:pt-64">
+  <div class="max-w-7xl mx-auto px-6">
+    <!-- Header -->
+    <SectionHeader
+      title="Everything you need to preview and ship"
+      subtitle="See how your site looks at every screen size. Get notified when updates land. Share with your team."
+    />
+
+    <!-- Bento Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-5" role="list">
+      {features.map((feature, i) => (
+        <div class={`reveal reveal-delay-${Math.min(i + 1, 4)} ${feature.span === '2' ? 'md:col-span-2' : ''}`}>
+          <BentoFeatureCard
+            client:visible
+            title={feature.title}
+            subtitle={feature.subtitle}
+            description={feature.description}
+            span={feature.span}
+            visual={feature.visual}
+            badge={feature.badge ?? ''}
+          />
+        </div>
+      ))}
+    </div>
+
+    <div class="mt-12 text-center reveal">
+      <a
+        href="/features/"
+        class="inline-flex items-center gap-2 font-heading font-semibold text-sm text-primary hover:text-primary-hover transition-colors group plausible-event-name=Features+See+All"
+      >
+        See all features in detail
+        <svg class="w-4 h-4 transition-transform group-hover:translate-x-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+        </svg>
+      </a>
+    </div>
+  </div>
+</section>

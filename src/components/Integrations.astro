@@ -1,0 +1,173 @@
+---
+import Section from './Section.astro';
+import SectionHeader from './SectionHeader.astro';
+
+const providers = [
+  {
+    name: 'Vercel',
+    available: true,
+    activeColor: 'text-foreground dark:text-white',
+    brandColor: 'group-hover:text-foreground dark:group-hover:text-white',
+    icon: `<path d="m12 1.608 12 20.784H0Z"/>`,
+  },
+  {
+    name: 'Cloudflare Pages',
+    available: true,
+    activeColor: 'text-orange-400',
+    brandColor: 'group-hover:text-orange-500',
+    icon: `<path d="M16.5088 16.8447c.1475-.5068.0908-.9707-.1553-1.3154-.2246-.3164-.6045-.499-1.0615-.5205l-8.6592-.1123a.1559.1559 0 0 1-.1333-.0713c-.0283-.042-.0351-.0986-.021-.1553.0278-.084.1123-.1484.2036-.1562l8.7359-.1123c1.0351-.0489 2.1601-.8868 2.5537-1.9136l.499-1.3013c.0215-.0561.0293-.1128.0147-.168-.5625-2.5463-2.835-4.4453-5.5499-4.4453-2.5039 0-4.6284 1.6177-5.3876 3.8614-.4927-.3658-1.1187-.5625-1.794-.499-1.2026.119-2.1665 1.083-2.2861 2.2856-.0283.31-.0069.6128.0635.894C1.5683 13.171 0 14.7754 0 16.752c0 .1748.0142.3515.0352.5273.0141.083.0844.1475.1689.1475h15.9814c.0909 0 .1758-.0645.2032-.1553l.12-.4268zm2.7568-5.5634c-.0771 0-.1611 0-.2383.0112-.0566 0-.1054.0415-.127.0976l-.3378 1.1744c-.1475.5068-.0918.9707.1543 1.3164.2256.3164.6055.498 1.0625.5195l1.8437.1133c.0557 0 .1055.0263.1329.0703.0283.043.0351.1074.0214.1562-.0283.084-.1132.1485-.204.1553l-1.921.1123c-1.041.0488-2.1582.8867-2.5527 1.914l-.1406.3585c-.0283.0713.0215.1416.0986.1416h6.5977c.0771 0 .1474-.0489.169-.126.1122-.4082.1757-.837.1757-1.2803 0-2.6025-2.125-4.727-4.7344-4.727"/>`,
+  },
+  {
+    name: 'GitHub',
+    available: true,
+    activeColor: 'text-foreground dark:text-white',
+    brandColor: 'group-hover:text-foreground dark:group-hover:text-white',
+    icon: `<path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/>`,
+  },
+  {
+    name: 'Netlify',
+    available: true,
+    activeColor: 'text-teal-400',
+    brandColor: 'group-hover:text-teal-500',
+    icon: `<path d="M6.49 19.04h-.23L5.13 17.9v-.23l1.73-1.71h1.2l.15.15v1.2L6.5 19.04ZM5.13 6.31V6.1l1.13-1.13h.23L8.2 6.68v1.2l-.15.15h-1.2L5.13 6.31Zm9.96 9.09h-1.65l-.14-.13v-3.83c0-.68-.27-1.2-1.1-1.23-.42 0-.9 0-1.43.02l-.07.08v4.96l-.14.14H8.9l-.13-.14V8.73l.13-.14h3.7a2.6 2.6 0 0 1 2.61 2.6v4.08l-.13.14Zm-8.37-2.44H.14L0 12.82v-1.64l.14-.14h6.58l.14.14v1.64l-.14.14Zm17.14 0h-6.58l-.14-.14v-1.64l.14-.14h6.58l.14.14v1.64l-.14.14ZM11.05 6.55V1.64l.14-.14h1.65l.14.14v4.9l-.14.14h-1.65l-.14-.13Zm0 15.81v-4.9l.14-.14h1.65l.14.13v4.91l-.14.14h-1.65l-.14-.14Z"/>`,
+  },
+  {
+    name: 'Railway',
+    roadmap: true,
+    brandColor: 'group-hover:text-purple-500',
+    icon: `<path d="M.113 11.587c0 .2.013.399.026.596l7.66-.596zm7.899-.617L.2 13.364c.121.575.29 1.13.507 1.66l7.305-3.69zm-.308 4.248L.812 18.83c.259.39.545.76.857 1.108L8.076 16.4a15 15 0 0 1-.372-1.182M2.1 20.35c.287.3.593.581.916.843l4.584-4.583a13 13 0 0 1-.908-1.118zm6.333 2.455a10 10 0 0 0 1.66.508l2.393-7.502a15 15 0 0 1-1.182-.372zm4.248-.308.596 7.66c.197.013.396.026.596.026l-.596-7.66c-.2 0-.398-.01-.596-.026m1.793-.107.363 7.503c.576-.12 1.13-.29 1.661-.507l-1.661-6.633a15 15 0 0 1-.363-.363m2.24-.818 3.613 6.799a10 10 0 0 0 1.108-.857l-3.539-5.314a15 15 0 0 1-1.182-.628m2.04-1.42 4.584 4.584c.3-.287.581-.593.843-.916l-4.309-3.296a13 13 0 0 1-.628-.372m-5.173-8.567c-.2 0-.398.01-.596.026l.596 7.66.596-7.66a10 10 0 0 0-.596-.026m1.793.107-.363 7.503a15 15 0 0 1 .363.363l1.661-6.633A10 10 0 0 0 15.574 11.692m2.24.818L14.201 6.71a10 10 0 0 0-1.108.857l3.539 5.314c.422.166.819.378 1.182.628m2.04 1.42-4.584-4.584a10 10 0 0 0-.843.916l4.309 3.296c.164.118.31.253.628.372"/>`,
+  },
+  {
+    name: 'Render',
+    roadmap: true,
+    brandColor: 'group-hover:text-emerald-500',
+    icon: `<path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm0 18c-4.411 0-8-3.589-8-8s3.589-8 8-8 8 3.589 8 8-3.589 8-8 8zm-1-13h2v8h-2zm0 10h2v2h-2z"/>`,
+  },
+  {
+    name: 'DigitalOcean',
+    roadmap: true,
+    brandColor: 'group-hover:text-blue-500',
+    icon: `<path d="M12.04 2C6.532 2 2.076 6.3 2.076 11.732c0 4.465 3.024 8.235 7.13 9.393v-3.632H6.75v-2.145h2.456V13.1c0-2.445 1.488-3.758 3.656-3.758 1.048 0 1.953.078 2.215.114v2.556h-1.52c-1.192 0-1.424.567-1.424 1.395v1.823h2.843l-.37 2.145h-2.473v3.7c4.352-.975 7.611-4.858 7.611-9.471C19.744 6.3 15.396 2 12.04 2z"/>`,
+  },
+];
+---
+
+<Section id="integrations" padding="md">
+  <SectionHeader
+    title="Zero Config Connection."
+    subtitle="OAuth for GitHub, Vercel, and Netlify. API token for Cloudflare. Connect once, see everything."
+    class="mb-12 md:mb-16"
+  />
+
+  <!-- Active integrations -->
+  <div class="relative max-w-3xl mx-auto">
+    <!-- Connector line (desktop only) -->
+    <div class="hidden md:block absolute top-1/2 left-0 right-0 -translate-y-1/2 z-0" aria-hidden="true">
+      <div class="h-px bg-gradient-to-r from-transparent via-neutral-300 dark:via-neutral-700 to-transparent"></div>
+      <!-- Animated dot -->
+      <div class="absolute top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-primary shadow-[0_0_8px_rgba(99,102,241,0.6)] pipeline-dot"></div>
+    </div>
+
+    <!-- Active providers row -->
+    <div class="grid grid-cols-4 gap-4 sm:gap-6 md:gap-8 relative z-10">
+      {providers.filter(p => p.available).map((provider, i) => (
+        <div class={`reveal reveal-delay-${i + 1} group flex flex-col items-center gap-3`}>
+          <div class="relative w-16 h-16 sm:w-18 sm:h-18 md:w-20 md:h-20 rounded-2xl backdrop-blur-sm border flex items-center justify-center transition-all duration-300 group-hover:shadow-lg group-hover:scale-105 bg-white dark:bg-neutral-900/80 border-neutral-200 dark:border-neutral-700 group-hover:border-neutral-400 dark:group-hover:border-neutral-500">
+            <svg
+              class={`w-7 h-7 sm:w-8 sm:h-8 md:w-9 md:h-9 transition-colors duration-300 ${provider.activeColor} ${provider.brandColor}`}
+              viewBox="0 0 24 24"
+              fill="currentColor"
+            >
+              <Fragment set:html={provider.icon} />
+            </svg>
+            <span class="absolute -top-1.5 -right-1.5 w-5 h-5 bg-emerald-500 rounded-full flex items-center justify-center shadow-sm">
+              <svg class="w-3 h-3 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12" />
+              </svg>
+            </span>
+          </div>
+          <span class="font-heading font-medium text-xs sm:text-sm transition-colors duration-300 text-center leading-tight text-foreground/70 dark:text-neutral-400 group-hover:text-foreground dark:group-hover:text-neutral-200">
+            {provider.name}
+          </span>
+        </div>
+      ))}
+    </div>
+
+    <!-- Central Viewpo hub (desktop) -->
+    <div class="hidden md:flex absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-primary/10 dark:bg-primary/20 border border-primary/30 items-center justify-center pipeline-hub" aria-hidden="true">
+      <div class="w-3 h-3 rounded-full bg-primary shadow-[0_0_12px_rgba(99,102,241,0.5)]"></div>
+    </div>
+  </div>
+
+  <!-- Roadmap integrations -->
+  <div class="max-w-3xl mx-auto mt-10 md:mt-12">
+    <p class="text-center text-foreground/40 dark:text-neutral-500 text-xs font-mono uppercase tracking-wider mb-5 reveal reveal-delay-3">On the Roadmap</p>
+    <div class="grid grid-cols-3 gap-4 sm:gap-6 md:gap-8 max-w-lg mx-auto">
+      {providers.filter(p => p.roadmap).map((provider, i) => (
+        <div class={`reveal reveal-delay-${Math.min(i + 3, 4)} group flex flex-col items-center gap-3`}>
+          <div class="relative w-16 h-16 sm:w-18 sm:h-18 md:w-20 md:h-20 rounded-2xl backdrop-blur-sm border flex items-center justify-center transition-all duration-300 group-hover:shadow-lg group-hover:scale-105 bg-neutral-50/60 dark:bg-neutral-900/40 border-neutral-200/60 dark:border-neutral-800 group-hover:border-neutral-300 dark:group-hover:border-neutral-700">
+            <svg
+              class={`w-7 h-7 sm:w-8 sm:h-8 md:w-9 md:h-9 transition-colors duration-300 text-neutral-300 dark:text-neutral-700 ${provider.brandColor}`}
+              viewBox="0 0 24 24"
+              fill="currentColor"
+            >
+              <Fragment set:html={provider.icon} />
+            </svg>
+            <span class="absolute -top-2 -right-2 text-[8px] font-mono font-semibold uppercase tracking-wider text-neutral-400 dark:text-neutral-500 bg-neutral-100 dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-full px-1.5 py-0.5 leading-none whitespace-nowrap">
+              Roadmap
+            </span>
+          </div>
+          <span class="font-heading font-medium text-xs sm:text-sm transition-colors duration-300 text-center leading-tight text-foreground/40 dark:text-neutral-600 group-hover:text-foreground/60 dark:group-hover:text-neutral-400">
+            {provider.name}
+          </span>
+        </div>
+      ))}
+    </div>
+  </div>
+
+  <!-- Roadmap nudge -->
+  <p class="text-center text-foreground/40 dark:text-neutral-500 text-sm mt-10 reveal reveal-delay-4">
+    Missing your workflow? <a href="/roadmap" class="text-primary hover:underline plausible-event-name=CTA+View+Roadmap">View the public roadmap</a> or <a href="/roadmap#request" class="text-primary hover:underline plausible-event-name=CTA+Request+Feature">request a feature</a>.
+  </p>
+</Section>
+
+<style>
+  @keyframes pipeline-travel {
+    0% {
+      left: 0%;
+      opacity: 0;
+    }
+    10% {
+      opacity: 1;
+    }
+    50% {
+      left: 50%;
+      opacity: 1;
+    }
+    52% {
+      opacity: 0;
+    }
+    100% {
+      left: 50%;
+      opacity: 0;
+    }
+  }
+
+  @keyframes pipeline-hub-pulse {
+    0%, 100% {
+      box-shadow: 0 0 0 0 rgba(99, 102, 241, 0.3);
+    }
+    50% {
+      box-shadow: 0 0 0 8px rgba(99, 102, 241, 0);
+    }
+  }
+
+  .pipeline-dot {
+    animation: pipeline-travel 3s ease-in-out infinite;
+  }
+
+  .pipeline-hub {
+    animation: pipeline-hub-pulse 3s ease-in-out infinite;
+    animation-delay: 1.5s;
+  }
+</style>

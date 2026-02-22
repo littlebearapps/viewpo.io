@@ -1,0 +1,73 @@
+---
+import type { UseCaseCharacter } from '@/data/use-cases';
+
+interface Props {
+  character: UseCaseCharacter;
+  accentText: string;
+  accentBg: string;
+  accentBorder: string;
+}
+
+const { character, accentText, accentBg, accentBorder } = Astro.props;
+const initials = character.name.split(' ').map(n => n[0]).join('');
+---
+
+<div class="my-12 reveal">
+  <div class="relative max-w-3xl lg:-ml-4 lg:pl-4">
+    <!-- Accent left border -->
+    <div class={`absolute left-0 top-4 bottom-4 w-1 rounded-full ${accentBg}`} aria-hidden="true"></div>
+
+    <div class="rounded-2xl border border-neutral-200 dark:border-neutral-700/50 bg-white/60 dark:bg-neutral-900/40 backdrop-blur-sm p-6 sm:p-8 ml-4 lg:ml-6">
+      <!-- Header: avatar + name + location -->
+      <div class="flex items-center gap-4 mb-5">
+        <div class={`w-14 h-14 rounded-full ${accentBg} flex items-center justify-center flex-shrink-0`}>
+          <span class={`text-lg font-heading font-bold ${accentText}`}>{initials}</span>
+        </div>
+        <div>
+          <h3 class="font-heading font-bold text-base text-foreground dark:text-white">
+            {character.name}
+          </h3>
+          <p class="text-sm text-foreground/50 dark:text-neutral-500">
+            {character.role} &middot; {character.location} &middot; {character.age}
+          </p>
+        </div>
+      </div>
+
+      <!-- Quote -->
+      <p class="text-foreground/70 dark:text-neutral-300 italic leading-relaxed mb-5">
+        &ldquo;{character.quote}&rdquo;
+      </p>
+
+      <!-- Tools + Devices -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div>
+          <p class="text-[11px] font-heading font-semibold uppercase tracking-wider text-foreground/30 dark:text-neutral-600 mb-2">Tools</p>
+          <div class="flex flex-wrap gap-1.5">
+            {character.tools.map(tool => (
+              <span class="inline-flex items-center rounded-full px-2.5 py-1 text-xs font-medium bg-foreground/[0.04] dark:bg-white/[0.06] text-foreground/50 dark:text-neutral-400 border border-foreground/[0.06] dark:border-white/[0.06]">
+                {tool}
+              </span>
+            ))}
+          </div>
+        </div>
+        <div>
+          <p class="text-[11px] font-heading font-semibold uppercase tracking-wider text-foreground/30 dark:text-neutral-600 mb-2">Devices</p>
+          <div class="flex flex-wrap gap-1.5">
+            {character.devices.map(device => (
+              <span class={`inline-flex items-center rounded-full px-2.5 py-1 text-xs font-medium ${accentBg} ${accentText} border ${accentBorder}`}>
+                {device}
+              </span>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <!-- Quirk -->
+      {character.quirk && (
+        <p class="mt-4 text-xs text-foreground/35 dark:text-neutral-600 italic text-right">
+          {character.quirk}
+        </p>
+      )}
+    </div>
+  </div>
+</div>

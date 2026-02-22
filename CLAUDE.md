@@ -22,18 +22,18 @@ npm run build            # Build to dist/
 
 | Page | Path | Audience |
 |------|------|----------|
-| Homepage | `src/pages/index.astro` | All segments — features, pricing, FAQ, CTA |
+| Homepage | `src/pages/index.astro` | All segments — hero, features, pricing, FAQ, CTA |
 | Teams | `src/pages/teams.astro` | Team leads, agencies, PMs, designers |
 | Creators | `src/pages/creators.astro` | Vibe coders, AI builders (Cursor, v0, Bolt, Lovable, Replit) |
+| Use Cases Index | `src/pages/use-cases/index.astro` | All segments — persona + situation use case overview |
+| Use Case Detail (x13) | `src/pages/use-cases/[slug].astro` | Per-audience deep dives (7 personas, 6 situations) |
+| Roadmap | `src/pages/roadmap.astro` | SSR — Trello-powered roadmap with D1 voting + feedback form |
+| Help Centre | `src/pages/help/index.astro` | Help hub |
+| Help Pages | `src/pages/help/[...slug].astro` | Getting started, FAQ, contact |
 | Confirmed | `src/pages/confirmed.astro` | Post-email-confirmation landing page |
 | Preferences | `src/pages/preferences.astro` | Email preferences / unsubscribe |
-| Roadmap | `src/pages/roadmap.astro` | All users — public roadmap + feature requests (UserJot embed placeholder) |
 | Privacy | `src/pages/privacy.astro` | Legal — privacy policy (ACL, GDPR, APP-compliant) |
 | Terms | `src/pages/terms.astro` | Legal — terms of service (ACL-compliant, Lemon Squeezy MoR) |
-| Help Centre | `src/content/docs/help/index.mdx` | All users — Starlight-powered help centre landing |
-| Getting Started | `src/content/docs/help/getting-started.md` | New users — setup guide |
-| FAQ | `src/content/docs/help/faq.md` | All users — extended FAQ |
-| Contact | `src/content/docs/help/contact.md` | All users — support contact info |
 
 ---
 
@@ -61,24 +61,30 @@ npm run build            # Build to dist/
 
 | Path | Description |
 |------|-------------|
-| `src/pages/` | 8 pages (index, teams, creators, roadmap, confirmed, preferences, privacy, terms) |
-| `src/content/docs/help/` | 4 Starlight help pages (index, getting-started, faq, contact) |
+| `src/pages/` | 10+ pages (index, teams, creators, use-cases/index, use-cases/[slug], roadmap, help, confirmed, preferences, privacy, terms) |
+| `src/pages/use-cases/` | Use case index + dynamic [slug] page rendering 13 use cases from data |
+| `src/data/use-cases.ts` | 13 use case definitions (7 personas, 6 situations) with full content, hero images, OG images |
+| `src/content/docs/help/` | Starlight help content (getting-started, faq, contact) |
 | `src/content.config.ts` | Content collection config for Starlight docs |
 | `src/styles/starlight-custom.css` | Starlight brand overrides (indigo accent, Outfit/Inter fonts, slate grays) |
-| `src/layouts/BaseLayout.astro` | Shared layout — meta tags, JSON-LD schemas, fonts, Plausible proxy + `plausible.init()`, theme persistence, View Transitions, gclid capture (dormant) |
-| `src/components/` | 17 components (Hero, FAQ, PricingTable, ViewportDemo, SignupModal, ContactModal, etc.) |
+| `src/layouts/BaseLayout.astro` | Shared layout — meta tags, JSON-LD schemas, fonts, Plausible proxy + `plausible.init()`, Turnstile script, theme persistence, View Transitions, gclid capture (dormant) |
+| `src/components/` | 30 top-level components + 9 use-case sub-components |
+| `src/components/use-cases/` | UseCaseHeroVisual, MiniDeviceMockup, CharacterCard, StatCallout, PullQuote, LimitationsCard, AnimatedTimeline, SectionDivider, DevicePlaceholder |
 | `src/styles/global.css` | Brand tokens, animations, dark mode variant |
-| `src/utils/constants.ts` | API base URL (email.viewpo.io), device presets, pricing tiers, FAQ data |
+| `src/utils/constants.ts` | API base URL (email.viewpo.io), Turnstile site key, 6 device presets, 17-device library, pricing tiers (Free/Starter/Pro), FAQ data (13 items), homepage FAQ selection |
+| `public/graphics/` | All site graphics — hero phone screens (4), use case heroes (13), bento features (6), mini mockups (4), OG images (16) |
+| `public/templates/` | HTML/CSS graphic templates — parameterised via URL hash, used to generate screenshots |
 | `public/robots.txt` | AI crawlers explicitly allowed (GPTBot, ClaudeBot, etc.) |
 | `public/llms.txt` | AI-readable site index following llmstxt.org standard |
 | `public/_headers` | Security headers + `/_astro/*` immutable cache |
-| `public/og-default.png` | OG social share image (1200x630, 15KB) |
+| `public/og-default.png` | Default OG social share image (1200x630, 15KB) |
 | `public/logo.png` | Logo for Organization schema (512x512) |
 | `public/favicon.svg` | SVG favicon (indigo V mark) |
 | `.github/workflows/ci.yml` | CI — build check on PRs |
 | `.github/workflows/deploy-production.yml` | Deploy to CF Pages on push to main |
 | `docs/viewpo-purpose.md` | Product purpose document |
-| `docs/content/features-and-benefits.md` | Feature copy reference |
+| `docs/features-and-benefits.md` | Feature details and benefits reference |
+| `docs/use-cases.md` | Persona and situational use cases |
 
 ---
 
@@ -89,7 +95,7 @@ All schemas in `BaseLayout.astro`:
 - **WebPage** — every page (datePublished, dateModified — dynamic at build time)
 - **SoftwareApplication** — homepage only (featureList, applicationSubCategory, operatingSystem array)
 - **WebSite** — homepage only
-- **FAQPage** — homepage (`FAQ.astro`), `/teams/`, `/creators/` (with dateModified)
+- **FAQPage** — homepage (`FAQ.astro`), `/teams/`, `/creators/`, `/roadmap/`, each use case detail page (with dateModified)
 
 ---
 
@@ -151,12 +157,32 @@ Auto-deploy on push to `main` via GitHub Actions (`deploy-production.yml`).
 
 ---
 
+## Graphics & Figma
+
+43 graphics across 6 categories, generated from parameterised HTML/CSS templates in `public/templates/`.
+
+| Category | Count | Location |
+|----------|-------|----------|
+| Hero phone screens | 4 | `public/graphics/hero/` |
+| Use case heroes | 13 | `public/graphics/use-cases/hero-*.png` |
+| Bento feature cards | 6 | `public/graphics/features/` |
+| Mini mockups | 4 | `public/graphics/use-cases/mini-*.png` |
+| OG images (per-page) | 16 | `public/graphics/og/` |
+
+**Figma file**: https://www.figma.com/design/3eiSLxMkmfVAH4keyMMicr (all OG images captured)
+
+**Graphic generation workflow**: Edit HTML template → serve via `python3 -m http.server` → screenshot via chrome-devtools → optimise with `pngquant` → optionally push to Figma via MCP
+
+---
+
 ## Deferred (Not Yet Implemented)
 
 - Blog, changelog pages
-- Product screenshots (MVP UI not finalised)
 - Playwright E2E tests
 - PR preview deploys
 - Comparison pages (Viewpo vs Responsively, vs BrowserStack)
 - Self-hosted Google Fonts (currently loaded via Google CDN)
 - Register "Viewpo" as additional business name on ABN via ASIC
+- Dedicated OG images for /teams/ and /creators/ (currently use default)
+- BreadcrumbList schema on subpages
+- HowTo schema on homepage How It Works section

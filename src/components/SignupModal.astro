@@ -11,29 +11,15 @@ import { TURNSTILE_SITE_KEY, API_BASE_URL } from '@utils/constants';
       </svg>
     </button>
 
-    <!-- Header: Beta mode (default) -->
-    <div id="signup-header-beta" class="text-center mb-6">
-      <div class="inline-flex items-center gap-2 bg-primary/10 text-primary dark:text-indigo-300 text-sm font-medium px-3 py-1 rounded-full mb-4">
-        <span class="w-2 h-2 bg-success rounded-full animate-pulse"></span>
-        Beta spots opening soon
-      </div>
-      <h2 id="signup-modal-title" class="font-heading font-bold text-2xl md:text-3xl mb-2">
-        Join the Viewpo Beta
-      </h2>
-      <p class="text-foreground/60 text-sm">
-        Be among the first to try Viewpo on iOS, iPadOS, and macOS. The beta is distributed via Apple TestFlight — you'll need an Apple device and a free <a href="https://developer.apple.com/testflight/" target="_blank" rel="noopener noreferrer" class="text-links hover:text-primary transition-colors underline underline-offset-2">TestFlight</a> account.
-      </p>
-    </div>
-
-    <!-- Header: Notify mode -->
-    <div id="signup-header-notify" class="hidden text-center mb-6">
+    <!-- Header -->
+    <div class="text-center mb-6">
       <div class="inline-flex items-center gap-2 bg-secondary/10 text-secondary dark:text-orange-300 text-sm font-medium px-3 py-1 rounded-full mb-4">
         <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
           <path stroke-linecap="round" stroke-linejoin="round" d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0" />
         </svg>
         Coming soon
       </div>
-      <h2 class="font-heading font-bold text-2xl md:text-3xl mb-2">
+      <h2 id="signup-modal-title" class="font-heading font-bold text-2xl md:text-3xl mb-2">
         Get Notified at Launch
       </h2>
       <p class="text-foreground/60 text-sm">
@@ -72,8 +58,8 @@ import { TURNSTILE_SITE_KEY, API_BASE_URL } from '@utils/constants';
         />
       </div>
 
-      <!-- Platform selector (notify mode only) -->
-      <div id="signup-platform-selector" class="hidden">
+      <!-- Platform selector -->
+      <div id="signup-platform-selector">
         <label class="block text-sm font-medium text-foreground/70 mb-2">
           Notify me for
         </label>
@@ -101,7 +87,7 @@ import { TURNSTILE_SITE_KEY, API_BASE_URL } from '@utils/constants';
         id="signup-submit"
         class="w-full inline-flex items-center justify-center gap-2 bg-primary hover:bg-primary-hover text-white font-heading font-semibold px-6 py-3 rounded-xl transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary disabled:opacity-50 disabled:cursor-not-allowed"
       >
-        <span id="signup-submit-text">Join the Beta</span>
+        <span id="signup-submit-text">Notify Me</span>
         <svg id="signup-spinner" class="hidden w-5 h-5 animate-spin" viewBox="0 0 24 24" fill="none">
           <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
           <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
@@ -112,24 +98,8 @@ import { TURNSTILE_SITE_KEY, API_BASE_URL } from '@utils/constants';
       <div id="signup-status" class="hidden text-center text-sm py-2 px-3 rounded-lg" role="alert"></div>
     </form>
 
-    <!-- Success state: Beta -->
-    <div id="signup-success-beta" class="hidden text-center py-4">
-      <div class="inline-flex items-center justify-center w-14 h-14 bg-success/10 rounded-full mb-4">
-        <svg class="w-7 h-7 text-success" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
-        </svg>
-      </div>
-      <h3 class="font-heading font-semibold text-xl mb-2">Check your inbox</h3>
-      <p class="text-foreground/60 text-sm mb-4">
-        We've sent a confirmation link to your email. Click it to join the beta list.
-      </p>
-      <button type="button" class="text-sm text-links hover:text-primary transition-colors" data-close-modal>
-        Close
-      </button>
-    </div>
-
-    <!-- Success state: Notify -->
-    <div id="signup-success-notify" class="hidden text-center py-4">
+    <!-- Success state -->
+    <div id="signup-success" class="hidden text-center py-4">
       <div class="inline-flex items-center justify-center w-14 h-14 bg-success/10 rounded-full mb-4">
         <svg class="w-7 h-7 text-success" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
           <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
@@ -158,34 +128,18 @@ import { TURNSTILE_SITE_KEY, API_BASE_URL } from '@utils/constants';
     const submitText = document.getElementById('signup-submit-text');
     const spinner = document.getElementById('signup-spinner');
     const statusEl = document.getElementById('signup-status');
-    const successBetaEl = document.getElementById('signup-success-beta');
-    const successNotifyEl = document.getElementById('signup-success-notify');
-    const headerBetaEl = document.getElementById('signup-header-beta');
-    const headerNotifyEl = document.getElementById('signup-header-notify');
+    const successEl = document.getElementById('signup-success');
     const turnstileContainer = document.getElementById('signup-turnstile');
-    const platformSelectorEl = document.getElementById('signup-platform-selector');
     const platformButtons = document.querySelectorAll('.platform-option');
 
     if (!dialog || !form) return;
 
     let turnstileWidgetId = null;
-    let currentMode = 'beta'; // 'beta' or 'notify'
-    let selectedPlatforms = new Set(['all']); // default: all
+    let selectedPlatforms = new Set(['all']);
 
-    const modeConfig = {
-      beta: {
-        submitLabel: 'Join the Beta',
-        loadingLabel: 'Signing up...',
-        products: ['viewpo-beta'],
-        plausibleEvent: 'Beta+Signup+Submit',
-      },
-      notify: {
-        submitLabel: 'Notify Me',
-        loadingLabel: 'Signing up...',
-        products: ['viewpo-launch'],
-        plausibleEvent: 'Launch+Notify+Submit',
-      },
-    };
+    const SUBMIT_LABEL = 'Notify Me';
+    const LOADING_LABEL = 'Signing up...';
+    const PLAUSIBLE_EVENT = 'Launch+Notify+Submit';
 
     // Platform selector logic
     const individualPlatforms = ['android', 'windows', 'linux'];
@@ -203,16 +157,13 @@ import { TURNSTILE_SITE_KEY, API_BASE_URL } from '@utils/constants';
         const platform = btn.dataset.platform;
 
         if (platform === 'all') {
-          // Clicking "All" selects only "all", deselects individuals
           selectedPlatforms.clear();
           selectedPlatforms.add('all');
         } else {
-          // Clicking an individual platform
           selectedPlatforms.delete('all');
 
           if (selectedPlatforms.has(platform)) {
             selectedPlatforms.delete(platform);
-            // If nothing selected, revert to "all"
             if (selectedPlatforms.size === 0) {
               selectedPlatforms.add('all');
             }
@@ -220,7 +171,6 @@ import { TURNSTILE_SITE_KEY, API_BASE_URL } from '@utils/constants';
             selectedPlatforms.add(platform);
           }
 
-          // If all three individuals are selected, switch to "all"
           if (individualPlatforms.every((p) => selectedPlatforms.has(p))) {
             selectedPlatforms.clear();
             selectedPlatforms.add('all');
@@ -231,40 +181,23 @@ import { TURNSTILE_SITE_KEY, API_BASE_URL } from '@utils/constants';
       });
     });
 
-    // Open modal from any element with data-open-signup
-    // data-open-signup (no value or "beta") = beta mode
-    // data-open-signup="notify" = notify mode
+    // Bind triggers: only data-open-signup="notify" elements
     function bindTriggers() {
       document.querySelectorAll('[data-open-signup]').forEach((trigger) => {
         trigger.addEventListener('click', (e) => {
           e.preventDefault();
-          const mode = trigger.getAttribute('data-open-signup') || 'beta';
-          openModal(mode === 'notify' ? 'notify' : 'beta');
+          openModal();
         });
       });
     }
 
-    function openModal(mode) {
-      currentMode = mode;
-      const config = modeConfig[mode];
-
-      // Swap header
-      headerBetaEl.classList.toggle('hidden', mode !== 'beta');
-      headerNotifyEl.classList.toggle('hidden', mode !== 'notify');
-
-      // Show/hide platform selector
-      if (platformSelectorEl) {
-        platformSelectorEl.classList.toggle('hidden', mode !== 'notify');
-      }
-
+    function openModal() {
       // Reset platform selection
       selectedPlatforms.clear();
       selectedPlatforms.add('all');
       updatePlatformUI();
 
-      // Set submit button text
-      submitText.textContent = config.submitLabel;
-
+      submitText.textContent = SUBMIT_LABEL;
       dialog.showModal();
 
       // Render Turnstile widget after dialog is visible
@@ -281,7 +214,6 @@ import { TURNSTILE_SITE_KEY, API_BASE_URL } from '@utils/constants';
       btn.addEventListener('click', () => dialog.close());
     });
 
-    // Click backdrop to close
     dialog.addEventListener('click', (e) => {
       if (e.target === dialog) dialog.close();
     });
@@ -289,8 +221,7 @@ import { TURNSTILE_SITE_KEY, API_BASE_URL } from '@utils/constants';
     // Reset form when modal closes
     dialog.addEventListener('close', () => {
       form.classList.remove('hidden');
-      successBetaEl.classList.add('hidden');
-      successNotifyEl.classList.add('hidden');
+      successEl.classList.add('hidden');
       statusEl.classList.add('hidden');
       form.reset();
       if (window.turnstile && turnstileWidgetId !== null) {
@@ -302,7 +233,6 @@ import { TURNSTILE_SITE_KEY, API_BASE_URL } from '@utils/constants';
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
 
-      const config = modeConfig[currentMode];
       const email = form.querySelector('[name="email"]').value.trim();
       const firstName = form.querySelector('[name="first_name"]').value.trim();
 
@@ -319,19 +249,17 @@ import { TURNSTILE_SITE_KEY, API_BASE_URL } from '@utils/constants';
 
       // Loading state
       submitBtn.disabled = true;
-      submitText.textContent = config.loadingLabel;
+      submitText.textContent = LOADING_LABEL;
       spinner.classList.remove('hidden');
       statusEl.classList.add('hidden');
 
       try {
-        // Build products array with platform tags for notify mode
-        const products = [...config.products];
-        if (currentMode === 'notify') {
-          if (selectedPlatforms.has('all')) {
-            products.push('viewpo-launch-android', 'viewpo-launch-windows', 'viewpo-launch-linux');
-          } else {
-            selectedPlatforms.forEach((p) => products.push(`viewpo-launch-${p}`));
-          }
+        // Build products array with platform tags
+        const products = ['viewpo-launch'];
+        if (selectedPlatforms.has('all')) {
+          products.push('viewpo-launch-android', 'viewpo-launch-windows', 'viewpo-launch-linux');
+        } else {
+          selectedPlatforms.forEach((p) => products.push(`viewpo-launch-${p}`));
         }
 
         const gclid = sessionStorage.getItem('gclid');
@@ -351,16 +279,10 @@ import { TURNSTILE_SITE_KEY, API_BASE_URL } from '@utils/constants';
         const data = await res.json();
 
         if (data.success) {
-          // Show appropriate success state
           form.classList.add('hidden');
-          if (currentMode === 'beta') {
-            successBetaEl.classList.remove('hidden');
-          } else {
-            successNotifyEl.classList.remove('hidden');
-          }
-          // Track with Plausible
+          successEl.classList.remove('hidden');
           if (window.plausible) {
-            window.plausible(config.plausibleEvent, { props: { email_domain: email.split('@')[1] } });
+            window.plausible(PLAUSIBLE_EVENT, { props: { email_domain: email.split('@')[1] } });
           }
         } else {
           showStatus((data.errors ? data.errors.join(', ') : data.error) || 'Something went wrong. Please try again.', 'error');
@@ -374,7 +296,7 @@ import { TURNSTILE_SITE_KEY, API_BASE_URL } from '@utils/constants';
 
       // Reset button
       submitBtn.disabled = false;
-      submitText.textContent = config.submitLabel;
+      submitText.textContent = SUBMIT_LABEL;
       spinner.classList.add('hidden');
     });
 

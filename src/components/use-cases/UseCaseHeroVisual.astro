@@ -1,0 +1,79 @@
+---
+interface Props {
+  accentBorder: string;
+  accentGlow: string;
+  accentText: string;
+  accentBg: string;
+  heroImage?: string;
+  heroAlt?: string;
+}
+
+const { accentBorder, accentGlow, accentText, accentBg, heroImage, heroAlt = 'Viewpo product mockup' } = Astro.props;
+---
+
+<div class="relative flex items-center justify-center">
+  <!-- Accent glow behind device -->
+  <div class={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] rounded-full ${accentGlow} blur-[100px] -z-10 pointer-events-none`} aria-hidden="true"></div>
+
+  {heroImage ? (
+    <!-- Use case-specific hero graphic -->
+    <div class="float-slow">
+      <img
+        src={heroImage}
+        alt={heroAlt}
+        width="480"
+        height="400"
+        loading="eager"
+        class="rounded-xl"
+      />
+    </div>
+  ) : (
+    <!-- Fallback: skeleton phone mockup -->
+    <div class="float-slow">
+      <div class={`w-[140px] rounded-[1.6rem] border-2 ${accentBorder} bg-white dark:bg-neutral-800 shadow-xl overflow-hidden`}>
+        <!-- Dynamic Island -->
+        <div class="flex justify-center pt-3 pb-2">
+          <div class="w-14 h-4 bg-neutral-900 dark:bg-neutral-600 rounded-full"></div>
+        </div>
+        <!-- Screen content -->
+        <div class="mx-2 mb-2 rounded-lg bg-neutral-100 dark:bg-neutral-700 overflow-hidden aspect-[9/16] relative">
+          <div class="absolute inset-0 animate-shimmer bg-gradient-to-r from-transparent via-white/25 to-transparent dark:via-white/5"></div>
+          <!-- Skeleton notification -->
+          <div class="p-2.5 space-y-2.5">
+            <div class={`rounded-lg ${accentBg} p-2`}>
+              <div class="flex items-center gap-1.5 mb-1.5">
+                <div class={`w-2 h-2 rounded-full ${accentText} bg-current`}></div>
+                <div class="h-1.5 w-12 rounded bg-foreground/10 dark:bg-white/10"></div>
+              </div>
+              <div class="h-1 w-full rounded bg-foreground/8 dark:bg-white/8"></div>
+              <div class="h-1 w-3/4 rounded bg-foreground/8 dark:bg-white/8 mt-1"></div>
+            </div>
+            <!-- Skeleton viewport viewer -->
+            <div class="rounded-md bg-white/60 dark:bg-neutral-600/40 p-1.5">
+              <div class="flex gap-1 justify-center mb-1.5">
+                <div class="w-3 h-1 rounded-full bg-neutral-300 dark:bg-neutral-500"></div>
+                <div class={`w-3 h-1 rounded-full ${accentText} bg-current opacity-60`}></div>
+                <div class="w-3 h-1 rounded-full bg-neutral-300 dark:bg-neutral-500"></div>
+              </div>
+              <div class="h-12 rounded bg-neutral-200/50 dark:bg-neutral-600/30"></div>
+            </div>
+            <!-- Skeleton list items -->
+            <div class="space-y-1.5">
+              <div class="h-1.5 w-full rounded bg-neutral-200/40 dark:bg-neutral-600/30"></div>
+              <div class="h-1.5 w-5/6 rounded bg-neutral-200/40 dark:bg-neutral-600/30"></div>
+              <div class="h-1.5 w-3/4 rounded bg-neutral-200/40 dark:bg-neutral-600/30"></div>
+            </div>
+          </div>
+        </div>
+        <!-- Home indicator -->
+        <div class="flex justify-center pb-2.5">
+          <div class="w-12 h-[2px] bg-neutral-300 dark:bg-neutral-500 rounded-full"></div>
+        </div>
+      </div>
+    </div>
+  )}
+
+  <!-- Floating accent shapes -->
+  <div class={`absolute -top-4 -right-6 w-8 h-8 rounded-lg ${accentBg} border ${accentBorder} float-slow-reverse opacity-60`} aria-hidden="true" style="animation-delay: -2s;"></div>
+  <div class={`absolute -bottom-2 -left-8 w-6 h-6 rounded-md ${accentBg} border ${accentBorder} float-slow opacity-40`} aria-hidden="true" style="animation-delay: -4s;"></div>
+</div>

@@ -1,0 +1,494 @@
+---
+import type { GetStaticPaths } from 'astro';
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Header from '@components/Header.astro';
+import Footer from '@components/Footer.astro';
+import Button from '@components/Button.astro';
+import Badge from '@components/Badge.astro';
+import FAQAccordion from '@components/FAQAccordion.svelte';
+import UseCaseHeroVisual from '@components/use-cases/UseCaseHeroVisual.astro';
+import PullQuote from '@components/use-cases/PullQuote.astro';
+import CharacterCard from '@components/use-cases/CharacterCard.astro';
+import StatCallout from '@components/use-cases/StatCallout.astro';
+import MiniDeviceMockup from '@components/use-cases/MiniDeviceMockup.astro';
+import DevicePlaceholder from '@components/use-cases/DevicePlaceholder.astro';
+import AnimatedTimeline from '@components/use-cases/AnimatedTimeline.svelte';
+import LimitationsCard from '@components/use-cases/LimitationsCard.astro';
+import SectionDivider from '@components/use-cases/SectionDivider.astro';
+import { USE_CASES, type UseCase } from '@/data/use-cases';
+
+export const getStaticPaths: GetStaticPaths = () => {
+  return USE_CASES.map((uc) => ({
+    params: { slug: uc.slug },
+    props: { useCase: uc },
+  }));
+};
+
+interface Props {
+  useCase: UseCase;
+}
+
+const { useCase } = Astro.props;
+const currentDate = new Date().toISOString().split('T')[0];
+
+const accentMap: Record<string, { text: string; bg: string; border: string; iconBg: string; glowBg: string }> = {
+  cyan:    { text: 'text-cyan-400',    bg: 'bg-cyan-400/10',    border: 'border-cyan-400/20',    iconBg: 'bg-cyan-400/10 dark:bg-cyan-400/[0.08]',    glowBg: 'bg-cyan-400/15' },
+  violet:  { text: 'text-violet-400',  bg: 'bg-violet-400/10',  border: 'border-violet-400/20',  iconBg: 'bg-violet-400/10 dark:bg-violet-400/[0.08]',  glowBg: 'bg-violet-400/15' },
+  orange:  { text: 'text-orange-400',  bg: 'bg-orange-400/10',  border: 'border-orange-400/20',  iconBg: 'bg-orange-400/10 dark:bg-orange-400/[0.08]',  glowBg: 'bg-orange-400/15' },
+  teal:    { text: 'text-teal-400',    bg: 'bg-teal-400/10',    border: 'border-teal-400/20',    iconBg: 'bg-teal-400/10 dark:bg-teal-400/[0.08]',    glowBg: 'bg-teal-400/15' },
+  emerald: { text: 'text-emerald-400', bg: 'bg-emerald-400/10', border: 'border-emerald-400/20', iconBg: 'bg-emerald-400/10 dark:bg-emerald-400/[0.08]', glowBg: 'bg-emerald-400/15' },
+  pink:    { text: 'text-pink-400',    bg: 'bg-pink-400/10',    border: 'border-pink-400/20',    iconBg: 'bg-pink-400/10 dark:bg-pink-400/[0.08]',    glowBg: 'bg-pink-400/15' },
+  amber:   { text: 'text-amber-400',   bg: 'bg-amber-400/10',   border: 'border-amber-400/20',   iconBg: 'bg-amber-400/10 dark:bg-amber-400/[0.08]',   glowBg: 'bg-amber-400/15' },
+  rose:    { text: 'text-rose-400',    bg: 'bg-rose-400/10',    border: 'border-rose-400/20',    iconBg: 'bg-rose-400/10 dark:bg-rose-400/[0.08]',    glowBg: 'bg-rose-400/15' },
+};
+
+const accent = accentMap[useCase.accentColour] ?? accentMap.cyan;
+const typeLabel = useCase.type === 'persona' ? 'Who It\'s For' : 'When You Need It';
+
+// Map variants for mini device mockups on solution steps
+const stepMockupVariants = ['notification', 'viewer', 'screenshot'] as const;
+
+// Determine demo placeholder positions
+const demosAfterPain = useCase.demoPlaceholders?.filter(d => d.placement === 'after-pain') ?? [];
+const demosAfterSolution = useCase.demoPlaceholders?.filter(d => d.placement === 'after-solution') ?? [];
+const demosAfterFeatures = useCase.demoPlaceholders?.filter(d => d.placement === 'after-features') ?? [];
+const demosAfterWorkflow = useCase.demoPlaceholders?.filter(d => d.placement === 'after-workflow') ?? [];
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  dateModified: currentDate,
+  mainEntity: useCase.faqs.map((faq) => ({
+    '@type': 'Question',
+    name: faq.question,
+    acceptedAnswer: {
+      '@type': 'Answer',
+      text: faq.answer,
+    },
+  })),
+};
+---
+
+<BaseLayout title={useCase.metaTitle} description={useCase.metaDescription} ogImage={useCase.ogImage}>
+  <Header slot="header" />
+
+  <div class="relative overflow-x-clip">
+    <!-- Ambient glow -->
+    <div class="pointer-events-none absolute inset-0" aria-hidden="true">
+      <div class={`absolute -top-40 -left-40 w-[600px] h-[600px] rounded-full ${accent.glowBg} blur-[160px] dark:opacity-50`}></div>
+      <div class="absolute top-[30%] right-[5%] w-[400px] h-[400px] rounded-full bg-indigo-300/10 blur-[130px] dark:bg-indigo-400/[0.05]"></div>
+      <div class={`absolute top-[60%] left-[20%] w-[450px] h-[450px] rounded-full ${accent.glowBg} blur-[140px] dark:opacity-30`}></div>
+    </div>
+
+    <!-- A. Hero — 2-column grid -->
+    <section class="pt-16 sm:pt-24 pb-12 sm:pb-16">
+      <div class="container-wide">
+        <!-- Breadcrumb -->
+        <nav class="mb-8 text-sm reveal" aria-label="Breadcrumb">
+          <a href="/use-cases/" class="text-foreground/50 hover:text-foreground transition-colors">Use Cases</a>
+          <span class="text-foreground/30 mx-2">/</span>
+          <span class="text-foreground/70">{useCase.title}</span>
+        </nav>
+
+        <div class="grid grid-cols-1 lg:grid-cols-[1fr_auto] gap-8 lg:gap-16 items-center">
+          <!-- Left: text content -->
+          <div class="max-w-2xl">
+            <!-- Type badge -->
+            <div class="mb-4 reveal hero-entrance">
+              <Badge variant="default">
+                {typeLabel}
+              </Badge>
+            </div>
+
+            <!-- Icon -->
+            <div class={`w-14 h-14 rounded-2xl ${accent.iconBg} flex items-center justify-center mb-6 reveal hero-entrance`} style="animation-delay: 0.1s;">
+              <svg class={`w-7 h-7 ${accent.text}`} fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                <Fragment set:html={useCase.icon} />
+              </svg>
+            </div>
+
+            <!-- Title -->
+            <h1 class="font-heading font-bold text-3xl sm:text-4xl md:text-5xl text-foreground dark:text-white mb-3 reveal hero-entrance" style="animation-delay: 0.15s;">
+              {useCase.title}
+            </h1>
+
+            <!-- Subtitle -->
+            <p class="text-lg text-foreground/60 dark:text-neutral-400 mb-8 reveal hero-entrance" style="animation-delay: 0.2s;">
+              {useCase.subtitle}
+            </p>
+          </div>
+
+          <!-- Right: floating phone mockup (desktop only) -->
+          <div class="hidden lg:flex items-center justify-center">
+            <UseCaseHeroVisual
+              accentBorder={accent.border}
+              accentGlow={accent.glowBg}
+              accentText={accent.text}
+              accentBg={accent.bg}
+              heroImage={useCase.heroImage}
+              heroAlt={`Viewpo ${useCase.title} mockup`}
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <SectionDivider />
+
+    <!-- B. Pain / Situation — enhanced with pull quotes + stats -->
+    <section class="pb-16 sm:pb-20">
+      <div class="container-wide">
+        <div class="max-w-4xl">
+          <h2 class="font-heading font-bold text-2xl md:text-3xl text-foreground dark:text-white mb-6 reveal">
+            {useCase.painTitle}
+          </h2>
+          {useCase.painContent.map((paragraph, i) => (
+            <>
+              <p class={`text-foreground/65 dark:text-neutral-400 leading-relaxed mb-4 text-base reveal reveal-delay-${Math.min(i + 1, 3)} ${i % 2 === 1 ? 'ml-4 lg:ml-8' : ''}`}>
+                {paragraph}
+              </p>
+              {/* Insert pull quote after matching paragraph index */}
+              {useCase.pullQuotes?.filter(pq => pq.afterParagraph === i).map(pq => (
+                <PullQuote text={pq.text} source={pq.source} accentBorder={accent.border} accentText={accent.text} />
+              ))}
+            </>
+          ))}
+
+          {/* Stats after pain content */}
+          {useCase.stats && useCase.stats.length > 0 && (
+            <StatCallout stats={useCase.stats} accentText={accent.text} />
+          )}
+        </div>
+      </div>
+    </section>
+
+    {/* Demo placeholders after pain */}
+    {demosAfterPain.length > 0 && (
+      <section class="pb-12">
+        <div class="container-wide">
+          <div class="flex gap-6 justify-center flex-wrap">
+            {demosAfterPain.map(demo => (
+              <DevicePlaceholder device={demo.device} caption={demo.caption} accentBorder={accent.border} />
+            ))}
+          </div>
+        </div>
+      </section>
+    )}
+
+    <!-- C. Character Card — between Pain and Solution -->
+    {useCase.character && (
+      <>
+        <SectionDivider />
+        <section class="pb-8">
+          <div class="container-wide">
+            <CharacterCard
+              character={useCase.character}
+              accentText={accent.text}
+              accentBg={accent.bg}
+              accentBorder={accent.border}
+            />
+          </div>
+        </section>
+        <SectionDivider />
+      </>
+    )}
+
+    <!-- D. Solution — zigzag + mini mockups -->
+    <section class="pb-16 sm:pb-20">
+      <div class="container-wide">
+        <div class="max-w-4xl">
+          <h2 class="font-heading font-bold text-2xl md:text-3xl text-foreground dark:text-white mb-6 reveal">
+            {useCase.solutionTitle}
+          </h2>
+
+          {useCase.solutionIntro && (
+            <p class="text-foreground/65 dark:text-neutral-400 leading-relaxed mb-8 text-base reveal reveal-delay-1">
+              {useCase.solutionIntro}
+            </p>
+          )}
+
+          <div class="space-y-6">
+            {useCase.solutionSteps.map((step, i) => (
+              <div class={`flex gap-4 md:gap-6 items-start reveal reveal-delay-${Math.min(i + 1, 3)} ${i % 2 === 1 ? 'md:flex-row-reverse' : ''}`}>
+                {/* Mini device mockup on steps 0 and 2 (desktop only) */}
+                {(i === 0 || i === 2) && (
+                  <div class="hidden md:flex items-center">
+                    <MiniDeviceMockup
+                      variant={stepMockupVariants[i === 0 ? 0 : i === 2 ? 2 : 1]}
+                      accentBg={accent.bg}
+                      accentText={accent.text}
+                    />
+                  </div>
+                )}
+                <div class="flex gap-4 items-start flex-1">
+                  <div class={`flex-shrink-0 w-10 h-10 rounded-xl ${accent.iconBg} flex items-center justify-center`}>
+                    <span class={`text-sm font-heading font-bold ${accent.text}`}>{i + 1}</span>
+                  </div>
+                  <p class="text-foreground/70 dark:text-neutral-300 leading-relaxed pt-2">
+                    {step.text}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {/* Demo placeholders after solution */}
+    {demosAfterSolution.length > 0 && (
+      <section class="pb-12">
+        <div class="container-wide">
+          <div class="flex gap-6 justify-center flex-wrap">
+            {demosAfterSolution.map(demo => (
+              <DevicePlaceholder device={demo.device} caption={demo.caption} accentBorder={accent.border} />
+            ))}
+          </div>
+        </div>
+      </section>
+    )}
+
+    <!-- E. Features — card grid -->
+    <section class="pb-16 sm:pb-20">
+      <div class="container-wide">
+        <div class="max-w-4xl">
+          <h2 class="font-heading font-bold text-2xl md:text-3xl text-foreground dark:text-white mb-8 reveal">
+            {useCase.featuresTitle}
+          </h2>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 reveal reveal-delay-1">
+            {useCase.features.map((row) => (
+              <div class="rounded-xl border border-neutral-200 dark:border-neutral-800 bg-white/40 dark:bg-neutral-900/30 backdrop-blur-sm p-4 transition-all duration-200 hover:translate-y-[-2px] hover:shadow-md">
+                <div class="flex items-start gap-3">
+                  <div class={`w-2 h-2 rounded-full ${accent.text} bg-current mt-2 flex-shrink-0`}></div>
+                  <div>
+                    <p class={`font-heading font-semibold text-sm ${accent.text} mb-1`}>{row.feature}</p>
+                    <p class="text-sm text-foreground/60 dark:text-neutral-400 leading-relaxed">{row.description}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {/* Demo placeholders after features */}
+    {demosAfterFeatures.length > 0 && (
+      <section class="pb-12">
+        <div class="container-wide">
+          <div class="flex gap-6 justify-center flex-wrap">
+            {demosAfterFeatures.map(demo => (
+              <DevicePlaceholder device={demo.device} caption={demo.caption} accentBorder={accent.border} />
+            ))}
+          </div>
+        </div>
+      </section>
+    )}
+
+    <!-- F. Workflow — AnimatedTimeline -->
+    <section class="pb-16 sm:pb-20">
+      <div class="container-wide">
+        <div class="max-w-4xl">
+          <h2 class="font-heading font-bold text-2xl md:text-3xl text-foreground dark:text-white mb-8 reveal">
+            {useCase.workflowTitle}
+          </h2>
+
+          <div class="reveal reveal-delay-1">
+            <AnimatedTimeline
+              entries={useCase.workflow}
+              accentText={accent.text}
+              accentBg={accent.bg}
+              accentBorder={accent.border}
+              client:visible
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {/* Demo placeholders after workflow */}
+    {demosAfterWorkflow.length > 0 && (
+      <section class="pb-12">
+        <div class="container-wide">
+          <div class="flex gap-6 justify-center flex-wrap">
+            {demosAfterWorkflow.map(demo => (
+              <DevicePlaceholder device={demo.device} caption={demo.caption} accentBorder={accent.border} />
+            ))}
+          </div>
+        </div>
+      </section>
+    )}
+
+    <!-- G. Comparison Table — enhanced with icons -->
+    {useCase.comparison && (
+      <section class="pb-16 sm:pb-20">
+        <div class="container-wide">
+          <div class="max-w-4xl">
+            <h2 class="font-heading font-bold text-2xl md:text-3xl text-foreground dark:text-white mb-8 reveal">
+              {useCase.comparison.title}
+            </h2>
+
+            <div class="rounded-xl border border-neutral-200 dark:border-neutral-800 overflow-x-auto reveal reveal-delay-1">
+              <table class="w-full text-sm min-w-[500px]">
+                <thead>
+                  <tr class="bg-foreground/[0.03] dark:bg-white/[0.03]">
+                    <th class="text-left px-5 py-3 font-heading font-semibold text-foreground dark:text-white"></th>
+                    {useCase.comparison.headers.map((header) => (
+                      <th class="text-left px-5 py-3 font-heading font-semibold text-foreground dark:text-white">{header}</th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {useCase.comparison.rows.map((row) => {
+                    const isViewpo = row.label.toLowerCase().includes('viewpo');
+                    return (
+                      <tr class:list={['border-t border-neutral-200 dark:border-neutral-800', isViewpo && `${accent.bg} border-l-[3px] ${accent.border}`]}>
+                        <td class:list={['px-5 py-3.5 font-medium whitespace-nowrap', isViewpo ? `${accent.text} font-semibold` : 'text-foreground dark:text-white']}>
+                          {isViewpo && (
+                            <span class={`inline-block w-1.5 h-1.5 rounded-full ${accent.text} bg-current mr-2`}></span>
+                          )}
+                          {row.label}
+                        </td>
+                        {row.cells.map((cell) => {
+                          const cellLower = cell.toLowerCase().trim();
+                          const isYes = cellLower === 'yes' || cellLower === 'yes (native)' || cellLower === 'yes (real)' || cellLower.startsWith('yes');
+                          const isNo = cellLower === 'no' || cellLower.startsWith('no ');
+                          return (
+                            <td class:list={['px-5 py-3.5', isViewpo ? 'text-foreground dark:text-white font-medium' : 'text-foreground/65 dark:text-neutral-400']}>
+                              {isYes && (
+                                <svg class="inline w-4 h-4 text-emerald-500 mr-1 -mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+                              )}
+                              {isNo && !isYes && (
+                                <svg class="inline w-4 h-4 text-neutral-400 mr-1 -mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+                              )}
+                              {cell}
+                            </td>
+                          );
+                        })}
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+    )}
+
+    <!-- I. Limitations — amber info card -->
+    {useCase.limitations && (
+      <section class="pb-8">
+        <div class="container-wide">
+          <div class="max-w-4xl">
+            <LimitationsCard limitations={useCase.limitations} />
+          </div>
+        </div>
+      </section>
+    )}
+
+    <!-- J. Cross-References — enhanced cards with accent borders -->
+    <section class="pb-16 sm:pb-20">
+      <div class="container-wide">
+        <div class="max-w-4xl">
+          <h2 class="font-heading font-bold text-2xl md:text-3xl text-foreground dark:text-white mb-8 reveal">
+            {useCase.crossRefTitle}
+          </h2>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 reveal reveal-delay-1">
+            {useCase.crossRefs.map((ref) => {
+              const refAccent = accentMap[ref.accentColour] ?? accentMap.cyan;
+              return (
+                <a
+                  href={`/use-cases/${ref.slug}/`}
+                  class={`group block rounded-xl border border-neutral-200 dark:border-neutral-700/50 border-l-[3px] ${refAccent.border} bg-white/50 dark:bg-neutral-900/40 backdrop-blur-sm p-5 transition-all duration-300 hover:shadow-lg hover:bg-white/70 dark:hover:bg-neutral-900/60 card-lift`}
+                >
+                  <div class="flex items-center gap-2 mb-1.5">
+                    <div class={`w-2 h-2 rounded-full ${refAccent.text} bg-current flex-shrink-0`}></div>
+                    <p class={`font-heading font-bold text-sm ${refAccent.text}`}>{ref.label}</p>
+                  </div>
+                  <p class="text-sm text-foreground/55 dark:text-neutral-400 leading-relaxed">{ref.hook}</p>
+                  <span class="inline-flex items-center gap-1 text-xs font-medium text-foreground/40 dark:text-neutral-500 mt-3 group-hover:text-foreground/60 dark:group-hover:text-neutral-300 transition-colors">
+                    Read more
+                    <svg class="w-3 h-3 transition-transform group-hover:translate-x-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                    </svg>
+                  </span>
+                </a>
+              );
+            })}
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="pb-16 sm:pb-20">
+      <div class="container-wide">
+        <div class="max-w-4xl">
+          <h2 class="font-heading font-bold text-2xl md:text-3xl text-foreground dark:text-white mb-8 reveal">
+            Frequently Asked Questions
+          </h2>
+
+          <div class="reveal reveal-delay-1">
+            <FAQAccordion items={useCase.faqs} client:visible />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- L. Composite Disclaimer -->
+    {useCase.compositeDisclaimer && (
+      <div class="container-wide pb-4">
+        <div class="max-w-4xl">
+          <p class="text-xs text-foreground/30 dark:text-neutral-600 italic text-center">
+            These stories are composites representing common workflows we've observed. They're not real individuals.
+          </p>
+        </div>
+      </div>
+    )}
+
+    <!-- K. CTA — card with dot grid + glow -->
+    <section class="pb-20 sm:pb-28">
+      <div class="container-wide">
+        <div class="max-w-3xl mx-auto">
+          <div class="relative rounded-2xl border border-neutral-200 dark:border-neutral-700/50 bg-white/40 dark:bg-neutral-900/30 backdrop-blur-sm overflow-hidden reveal">
+            <!-- Dot grid pattern -->
+            <div class="absolute inset-0 bg-dot-pattern opacity-30 dark:opacity-10 pointer-events-none" aria-hidden="true"></div>
+            <!-- Accent glow -->
+            <div class={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] rounded-full ${accent.glowBg} blur-[120px] pointer-events-none`} aria-hidden="true"></div>
+
+            <div class="relative z-10 px-8 py-12 sm:py-16 text-center">
+              <h2 class="font-heading font-bold text-2xl md:text-3xl text-foreground dark:text-white mb-4">
+                Ready to try Viewpo?
+              </h2>
+              <p class="text-foreground/60 dark:text-neutral-400 text-lg mb-8 leading-relaxed max-w-lg mx-auto">
+                Join the beta and preview every deploy at any resolution — from your iPhone, iPad, or Mac.
+              </p>
+              <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                <a
+                  href="/beta/"
+                  class="inline-flex items-center justify-center gap-2 font-heading font-medium rounded-xl transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 hover:scale-[1.02] active:scale-[0.98] px-7 py-3.5 text-base bg-primary text-white hover:bg-primary-hover focus:ring-primary shadow-md hover:shadow-lg plausible-event-name=CTA+UseCase+Join+Beta"
+                >
+                  Join the Beta
+                  <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                  </svg>
+                </a>
+                <Button href="/use-cases/" variant="ghost" size="md">
+                  View All Use Cases
+                </Button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- FAQ Schema -->
+  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+
+  <Footer slot="footer" />
+</BaseLayout>

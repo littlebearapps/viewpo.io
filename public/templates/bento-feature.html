@@ -1,0 +1,1047 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=400">
+  <title>Viewpo — Bento Feature Card</title>
+  <script src="https://mcp.figma.com/mcp/html-to-design/capture.js" async></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      width: 400px;
+      height: 240px;
+      overflow: hidden;
+      font-family: 'Inter', system-ui, sans-serif;
+      background: #0F172A;
+      color: #E2E8F0;
+    }
+
+    .card {
+      width: 400px;
+      height: 240px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%);
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Subtle grid pattern */
+    .card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(99, 102, 241, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(99, 102, 241, 0.03) 1px, transparent 1px);
+      background-size: 20px 20px;
+    }
+
+    .variant { display: none; }
+    .variant.active { display: flex; }
+
+    /* ============================================
+       VARIANT: viewport-preview
+       ============================================ */
+    .viewport-preview {
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      padding: 20px;
+    }
+
+    .vp-browser {
+      width: 340px;
+      background: #1E293B;
+      border: 1px solid #334155;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .vp-toolbar {
+      height: 28px;
+      background: #0F172A;
+      border-bottom: 1px solid #334155;
+      display: flex;
+      align-items: center;
+      padding: 0 10px;
+      gap: 6px;
+    }
+
+    .vp-dots { display: flex; gap: 4px; }
+    .vp-dot { width: 6px; height: 6px; border-radius: 50%; }
+    .vp-dot.r { background: #EF4444; }
+    .vp-dot.y { background: #F59E0B; }
+    .vp-dot.g { background: #10B981; }
+
+    .vp-url {
+      flex: 1;
+      height: 18px;
+      background: #1E293B;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      padding: 0 8px;
+      font-size: 9px;
+      color: #64748B;
+    }
+
+    .vp-content {
+      padding: 12px;
+      position: relative;
+    }
+
+    /* Simulated website content */
+    .vp-hero-block {
+      height: 12px;
+      width: 60%;
+      background: #334155;
+      border-radius: 3px;
+      margin-bottom: 6px;
+    }
+
+    .vp-text-block {
+      height: 6px;
+      background: #1E293B;
+      border-radius: 2px;
+      margin-bottom: 4px;
+    }
+
+    .vp-cards {
+      display: flex;
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    .vp-card-item {
+      flex: 1;
+      height: 40px;
+      background: #0F172A;
+      border-radius: 4px;
+      border: 1px solid #334155;
+    }
+
+    /* Resize handles */
+    .vp-handle-left, .vp-handle-right {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .vp-handle-left { left: -2px; }
+    .vp-handle-right { right: -2px; }
+
+    .vp-handle-grip {
+      width: 4px;
+      height: 24px;
+      background: #6366F1;
+      border-radius: 2px;
+      opacity: 0.8;
+    }
+
+    /* Resolution bar */
+    .vp-resolution-bar {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .vp-res-badge {
+      padding: 3px 10px;
+      border-radius: 6px;
+      font-size: 10px;
+      font-weight: 600;
+      font-family: 'Inter', monospace;
+    }
+
+    .vp-res-badge.active {
+      background: rgba(99, 102, 241, 0.15);
+      color: #818CF8;
+    }
+
+    .vp-res-badge.inactive {
+      color: #475569;
+    }
+
+    /* ============================================
+       VARIANT: pin-watch
+       ============================================ */
+    .pin-watch {
+      flex-direction: column;
+      gap: 8px;
+      padding: 16px 30px;
+      width: 100%;
+    }
+
+    .pw-card {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 14px;
+      background: #1E293B;
+      border: 1px solid #334155;
+      border-radius: 10px;
+    }
+
+    .pw-pin-icon {
+      width: 20px;
+      height: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .pw-pin-icon svg {
+      width: 14px;
+      height: 14px;
+      fill: #6366F1;
+    }
+
+    .pw-info { flex: 1; }
+
+    .pw-branch {
+      font-size: 12px;
+      font-weight: 600;
+      color: #F1F5F9;
+      margin-bottom: 2px;
+    }
+
+    .pw-meta {
+      font-size: 10px;
+      color: #64748B;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .pw-provider-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 3px;
+    }
+
+    .pw-status {
+      font-size: 10px;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 6px;
+    }
+
+    .pw-status.live {
+      background: rgba(16, 185, 129, 0.15);
+      color: #34D399;
+    }
+
+    .pw-status.building {
+      background: rgba(251, 146, 60, 0.15);
+      color: #FB923C;
+    }
+
+    .pw-bell {
+      width: 20px;
+      height: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .pw-bell svg {
+      width: 16px;
+      height: 16px;
+      stroke: #6366F1;
+      fill: none;
+      stroke-width: 2;
+    }
+
+    .pw-bell.active svg {
+      fill: #6366F1;
+      stroke: #6366F1;
+    }
+
+    .pw-refresh {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 9px;
+      color: #818CF8;
+      align-self: center;
+    }
+
+    .pw-refresh svg {
+      width: 12px;
+      height: 12px;
+      stroke: #818CF8;
+      fill: none;
+      stroke-width: 2;
+    }
+
+    /* ============================================
+       VARIANT: notifications
+       ============================================ */
+    .notifications-preview {
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      padding: 16px 24px;
+      width: 100%;
+    }
+
+    .notif-permission {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 16px;
+      background: #1E293B;
+      border: 1px solid #334155;
+      border-radius: 10px;
+      width: 100%;
+    }
+
+    .notif-perm-icon {
+      width: 28px;
+      height: 28px;
+      background: rgba(99, 102, 241, 0.15);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .notif-perm-icon svg {
+      width: 16px;
+      height: 16px;
+      stroke: #818CF8;
+      fill: none;
+      stroke-width: 2;
+    }
+
+    .notif-perm-text {
+      flex: 1;
+    }
+
+    .notif-perm-title {
+      font-size: 11px;
+      font-weight: 600;
+      color: #F1F5F9;
+    }
+
+    .notif-perm-desc {
+      font-size: 9px;
+      color: #64748B;
+    }
+
+    .notif-perm-toggle {
+      width: 36px;
+      height: 20px;
+      background: #6366F1;
+      border-radius: 10px;
+      position: relative;
+    }
+
+    .notif-perm-toggle::after {
+      content: '';
+      position: absolute;
+      top: 3px;
+      right: 3px;
+      width: 14px;
+      height: 14px;
+      background: white;
+      border-radius: 50%;
+    }
+
+    .notif-examples {
+      display: flex;
+      gap: 8px;
+      width: 100%;
+    }
+
+    .notif-example {
+      flex: 1;
+      padding: 10px 12px;
+      background: #1E293B;
+      border: 1px solid #334155;
+      border-radius: 10px;
+    }
+
+    .notif-ex-header {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 4px;
+    }
+
+    .notif-ex-icon {
+      width: 18px;
+      height: 18px;
+      border-radius: 5px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .notif-ex-icon svg {
+      width: 10px;
+      height: 10px;
+      stroke-width: 2;
+      fill: none;
+    }
+
+    .notif-ex-icon.success {
+      background: rgba(16, 185, 129, 0.15);
+    }
+
+    .notif-ex-icon.success svg { stroke: #34D399; }
+
+    .notif-ex-icon.building {
+      background: rgba(251, 146, 60, 0.15);
+    }
+
+    .notif-ex-icon.building svg { stroke: #FB923C; }
+
+    .notif-ex-app {
+      font-size: 9px;
+      font-weight: 600;
+      color: #94A3B8;
+    }
+
+    .notif-ex-time {
+      font-size: 8px;
+      color: #475569;
+      margin-left: auto;
+    }
+
+    .notif-ex-title {
+      font-size: 10px;
+      font-weight: 600;
+      color: #F1F5F9;
+      line-height: 1.3;
+    }
+
+    .notif-ex-body {
+      font-size: 9px;
+      color: #64748B;
+      margin-top: 2px;
+    }
+
+    /* ============================================
+       VARIANT: qr-sharing
+       ============================================ */
+    .qr-sharing {
+      align-items: center;
+      gap: 20px;
+      padding: 20px 30px;
+    }
+
+    .qs-qr {
+      width: 120px;
+      height: 120px;
+      background: white;
+      border-radius: 12px;
+      padding: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .qs-qr-inner {
+      width: 100px;
+      height: 100px;
+      position: relative;
+    }
+
+    .qs-finder {
+      position: absolute;
+      width: 28px;
+      height: 28px;
+      border: 4px solid #1E293B;
+      border-radius: 4px;
+    }
+
+    .qs-finder::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 10px;
+      height: 10px;
+      background: #1E293B;
+      border-radius: 2px;
+    }
+
+    .qs-finder.tl { top: 0; left: 0; }
+    .qs-finder.tr { top: 0; right: 0; }
+    .qs-finder.bl { bottom: 0; left: 0; }
+
+    .qs-logo {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 22px;
+      height: 22px;
+      background: #6366F1;
+      border-radius: 5px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid white;
+    }
+
+    .qs-logo svg {
+      width: 12px;
+      height: 12px;
+    }
+
+    .qs-right {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .qs-label {
+      font-size: 13px;
+      font-weight: 600;
+      color: #F1F5F9;
+      font-family: 'Outfit', sans-serif;
+    }
+
+    .qs-sublabel {
+      font-size: 10px;
+      color: #64748B;
+    }
+
+    .qs-link {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 12px;
+      background: #1E293B;
+      border: 1px solid #334155;
+      border-radius: 8px;
+    }
+
+    .qs-link-text {
+      font-size: 11px;
+      font-family: 'Inter', monospace;
+      color: #818CF8;
+    }
+
+    .qs-copy-btn {
+      width: 22px;
+      height: 22px;
+      background: rgba(99, 102, 241, 0.15);
+      border-radius: 5px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .qs-copy-btn svg {
+      width: 12px;
+      height: 12px;
+      stroke: #818CF8;
+      fill: none;
+      stroke-width: 2;
+    }
+
+    .qs-badge {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 10px;
+      color: #34D399;
+    }
+
+    .qs-badge svg {
+      width: 12px;
+      height: 12px;
+      stroke: #34D399;
+      fill: none;
+      stroke-width: 2;
+    }
+
+    /* ============================================
+       VARIANT: team-workspace
+       ============================================ */
+    .team-workspace {
+      flex-direction: column;
+      gap: 10px;
+      padding: 16px 24px;
+      width: 100%;
+    }
+
+    .tw-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .tw-title {
+      font-size: 12px;
+      font-weight: 700;
+      color: #F1F5F9;
+      font-family: 'Outfit', sans-serif;
+    }
+
+    .tw-count {
+      font-size: 10px;
+      color: #64748B;
+    }
+
+    .tw-members {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .tw-member {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 12px;
+      background: #1E293B;
+      border: 1px solid #334155;
+      border-radius: 10px;
+    }
+
+    .tw-avatar {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 700;
+      color: white;
+    }
+
+    .tw-member-info { flex: 1; }
+
+    .tw-member-name {
+      font-size: 11px;
+      font-weight: 600;
+      color: #F1F5F9;
+    }
+
+    .tw-member-projects {
+      font-size: 9px;
+      color: #64748B;
+    }
+
+    .tw-role {
+      font-size: 9px;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 6px;
+    }
+
+    .tw-role.owner {
+      background: rgba(99, 102, 241, 0.15);
+      color: #818CF8;
+    }
+
+    .tw-role.member {
+      background: rgba(16, 185, 129, 0.15);
+      color: #34D399;
+    }
+
+    .tw-role.viewer {
+      background: rgba(148, 163, 184, 0.15);
+      color: #94A3B8;
+    }
+
+    /* ============================================
+       VARIANT: role-management
+       ============================================ */
+    .role-management {
+      flex-direction: column;
+      gap: 6px;
+      padding: 16px 20px;
+      width: 100%;
+    }
+
+    .rm-header {
+      font-size: 11px;
+      font-weight: 600;
+      color: #64748B;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 4px;
+    }
+
+    .rm-table {
+      width: 100%;
+      border: 1px solid #334155;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .rm-row {
+      display: flex;
+      align-items: center;
+      padding: 8px 12px;
+      border-bottom: 1px solid #334155;
+      background: #1E293B;
+    }
+
+    .rm-row:last-child { border-bottom: none; }
+
+    .rm-row.header {
+      background: #0F172A;
+      font-size: 9px;
+      font-weight: 600;
+      color: #475569;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .rm-col-name {
+      flex: 1.5;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .rm-col-role {
+      flex: 1;
+      text-align: center;
+    }
+
+    .rm-col-perm {
+      flex: 0.7;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .rm-avatar {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 9px;
+      font-weight: 700;
+      color: white;
+    }
+
+    .rm-name {
+      font-size: 11px;
+      font-weight: 500;
+      color: #E2E8F0;
+    }
+
+    .rm-role-badge {
+      font-size: 9px;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 6px;
+      display: inline-block;
+    }
+
+    .rm-toggle {
+      width: 28px;
+      height: 16px;
+      border-radius: 8px;
+      position: relative;
+    }
+
+    .rm-toggle::after {
+      content: '';
+      position: absolute;
+      top: 2px;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: white;
+    }
+
+    .rm-toggle.on {
+      background: #6366F1;
+    }
+
+    .rm-toggle.on::after {
+      right: 2px;
+    }
+
+    .rm-toggle.off {
+      background: #334155;
+    }
+
+    .rm-toggle.off::after {
+      left: 2px;
+    }
+  </style>
+</head>
+<body>
+  <!-- VARIANT: viewport-preview -->
+  <div class="card variant" id="viewport-preview">
+    <div class="viewport-preview">
+      <div class="vp-browser">
+        <div class="vp-toolbar">
+          <div class="vp-dots">
+            <div class="vp-dot r"></div>
+            <div class="vp-dot y"></div>
+            <div class="vp-dot g"></div>
+          </div>
+          <div class="vp-url">acme-marketing.pages.dev</div>
+        </div>
+        <div class="vp-content">
+          <div class="vp-handle-left"><div class="vp-handle-grip"></div></div>
+          <div class="vp-handle-right"><div class="vp-handle-grip"></div></div>
+          <div class="vp-hero-block"></div>
+          <div class="vp-text-block" style="width: 90%"></div>
+          <div class="vp-text-block" style="width: 75%"></div>
+          <div class="vp-cards">
+            <div class="vp-card-item"></div>
+            <div class="vp-card-item"></div>
+            <div class="vp-card-item"></div>
+          </div>
+        </div>
+      </div>
+      <div class="vp-resolution-bar">
+        <span class="vp-res-badge inactive">375</span>
+        <span class="vp-res-badge inactive">768</span>
+        <span class="vp-res-badge active">1440 x 900</span>
+        <span class="vp-res-badge inactive">2560</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- VARIANT: pin-watch -->
+  <div class="card variant" id="pin-watch">
+    <div class="pin-watch">
+      <div class="pw-card">
+        <div class="pw-pin-icon">
+          <svg viewBox="0 0 24 24"><path d="M16 12V4H17V2H7V4H8V12L6 14V16H11.2V22H12.8V16H18V14L16 12Z"/></svg>
+        </div>
+        <div class="pw-info">
+          <div class="pw-branch">main</div>
+          <div class="pw-meta">
+            <span class="pw-provider-dot" style="background: #F48120;"></span>
+            <span>Cloudflare Pages</span>
+          </div>
+        </div>
+        <span class="pw-status live">Live</span>
+        <div class="pw-bell active">
+          <svg viewBox="0 0 24 24" stroke-linecap="round"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
+        </div>
+      </div>
+      <div class="pw-card">
+        <div class="pw-pin-icon">
+          <svg viewBox="0 0 24 24"><path d="M16 12V4H17V2H7V4H8V12L6 14V16H11.2V22H12.8V16H18V14L16 12Z"/></svg>
+        </div>
+        <div class="pw-info">
+          <div class="pw-branch">feature/checkout</div>
+          <div class="pw-meta">
+            <span class="pw-provider-dot" style="background: #000; border: 1px solid #475569;"></span>
+            <span>Vercel</span>
+          </div>
+        </div>
+        <span class="pw-status building">Building</span>
+        <div class="pw-bell active">
+          <svg viewBox="0 0 24 24" stroke-linecap="round"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
+        </div>
+      </div>
+      <div class="pw-card">
+        <div class="pw-pin-icon">
+          <svg viewBox="0 0 24 24"><path d="M16 12V4H17V2H7V4H8V12L6 14V16H11.2V22H12.8V16H18V14L16 12Z"/></svg>
+        </div>
+        <div class="pw-info">
+          <div class="pw-branch">staging</div>
+          <div class="pw-meta">
+            <span class="pw-provider-dot" style="background: #00C7B7;"></span>
+            <span>Netlify</span>
+          </div>
+        </div>
+        <span class="pw-status live">Live</span>
+        <div class="pw-bell">
+          <svg viewBox="0 0 24 24" stroke-linecap="round"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
+        </div>
+      </div>
+      <div class="pw-refresh">
+        <svg viewBox="0 0 24 24" stroke-linecap="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 11-2.12-9.36L23 10"/></svg>
+        Auto-refreshing every 30s
+      </div>
+    </div>
+  </div>
+
+  <!-- VARIANT: notifications -->
+  <div class="card variant" id="notifications">
+    <div class="notifications-preview">
+      <div class="notif-permission">
+        <div class="notif-perm-icon">
+          <svg viewBox="0 0 24 24" stroke-linecap="round"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
+        </div>
+        <div class="notif-perm-text">
+          <div class="notif-perm-title">Push notifications</div>
+          <div class="notif-perm-desc">Get alerted when builds finish</div>
+        </div>
+        <div class="notif-perm-toggle"></div>
+      </div>
+      <div class="notif-examples">
+        <div class="notif-example">
+          <div class="notif-ex-header">
+            <div class="notif-ex-icon success">
+              <svg viewBox="0 0 24 24" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            <span class="notif-ex-app">Viewpo</span>
+            <span class="notif-ex-time">2m ago</span>
+          </div>
+          <div class="notif-ex-title">Build succeeded</div>
+          <div class="notif-ex-body">main is now live</div>
+        </div>
+        <div class="notif-example">
+          <div class="notif-ex-header">
+            <div class="notif-ex-icon building">
+              <svg viewBox="0 0 24 24" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            </div>
+            <span class="notif-ex-app">Viewpo</span>
+            <span class="notif-ex-time">30s ago</span>
+          </div>
+          <div class="notif-ex-title">Build started</div>
+          <div class="notif-ex-body">feature/auth on Vercel</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- VARIANT: qr-sharing -->
+  <div class="card variant" id="qr-sharing">
+    <div class="qr-sharing">
+      <div class="qs-qr">
+        <div class="qs-qr-inner">
+          <div class="qs-finder tl"></div>
+          <div class="qs-finder tr"></div>
+          <div class="qs-finder bl"></div>
+          <div class="qs-logo">
+            <svg viewBox="0 0 32 32" fill="none">
+              <path d="M7 8 L16 26 L25 8" stroke="white" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+      <div class="qs-right">
+        <div class="qs-label">Scan to preview</div>
+        <div class="qs-sublabel">Open on your phone instantly</div>
+        <div class="qs-link">
+          <span class="qs-link-text">a3f2c1.pages.dev</span>
+          <div class="qs-copy-btn">
+            <svg viewBox="0 0 24 24" stroke-linecap="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+          </div>
+        </div>
+        <div class="qs-badge">
+          <svg viewBox="0 0 24 24" stroke-linecap="round"><path d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          No account needed
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- VARIANT: team-workspace -->
+  <div class="card variant" id="team-workspace">
+    <div class="team-workspace">
+      <div class="tw-header">
+        <span class="tw-title">Team Members</span>
+        <span class="tw-count">4 members</span>
+      </div>
+      <div class="tw-members">
+        <div class="tw-member">
+          <div class="tw-avatar" style="background: #6366F1;">NK</div>
+          <div class="tw-member-info">
+            <div class="tw-member-name">Nathan K.</div>
+            <div class="tw-member-projects">acme-marketing, docs-site</div>
+          </div>
+          <span class="tw-role owner">Owner</span>
+        </div>
+        <div class="tw-member">
+          <div class="tw-avatar" style="background: #EC4899;">SJ</div>
+          <div class="tw-member-info">
+            <div class="tw-member-name">Sarah J.</div>
+            <div class="tw-member-projects">acme-marketing</div>
+          </div>
+          <span class="tw-role member">Member</span>
+        </div>
+        <div class="tw-member">
+          <div class="tw-avatar" style="background: #F59E0B;">MC</div>
+          <div class="tw-member-info">
+            <div class="tw-member-name">Mike C.</div>
+            <div class="tw-member-projects">saas-dashboard</div>
+          </div>
+          <span class="tw-role viewer">Viewer</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- VARIANT: role-management -->
+  <div class="card variant" id="role-management">
+    <div class="role-management">
+      <div class="rm-header">Permissions</div>
+      <div class="rm-table">
+        <div class="rm-row header">
+          <div class="rm-col-name">Member</div>
+          <div class="rm-col-role">Role</div>
+          <div class="rm-col-perm">Deploy</div>
+          <div class="rm-col-perm">Edit</div>
+        </div>
+        <div class="rm-row">
+          <div class="rm-col-name">
+            <div class="rm-avatar" style="background: #6366F1;">NK</div>
+            <span class="rm-name">Nathan K.</span>
+          </div>
+          <div class="rm-col-role">
+            <span class="rm-role-badge" style="background: rgba(99,102,241,0.15); color: #818CF8;">Admin</span>
+          </div>
+          <div class="rm-col-perm"><div class="rm-toggle on"></div></div>
+          <div class="rm-col-perm"><div class="rm-toggle on"></div></div>
+        </div>
+        <div class="rm-row">
+          <div class="rm-col-name">
+            <div class="rm-avatar" style="background: #EC4899;">SJ</div>
+            <span class="rm-name">Sarah J.</span>
+          </div>
+          <div class="rm-col-role">
+            <span class="rm-role-badge" style="background: rgba(16,185,129,0.15); color: #34D399;">Editor</span>
+          </div>
+          <div class="rm-col-perm"><div class="rm-toggle on"></div></div>
+          <div class="rm-col-perm"><div class="rm-toggle on"></div></div>
+        </div>
+        <div class="rm-row">
+          <div class="rm-col-name">
+            <div class="rm-avatar" style="background: #F59E0B;">MC</div>
+            <span class="rm-name">Mike C.</span>
+          </div>
+          <div class="rm-col-role">
+            <span class="rm-role-badge" style="background: rgba(148,163,184,0.15); color: #94A3B8;">Viewer</span>
+          </div>
+          <div class="rm-col-perm"><div class="rm-toggle off"></div></div>
+          <div class="rm-col-perm"><div class="rm-toggle off"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const hash = window.location.hash.slice(1);
+    const params = new URLSearchParams(hash);
+    const variant = params.get('variant') || 'viewport-preview';
+    const el = document.getElementById(variant);
+    if (el) el.classList.add('active');
+  </script>
+</body>
+</html>

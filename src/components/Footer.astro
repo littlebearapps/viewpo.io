@@ -2,7 +2,7 @@
 const currentYear = new Date().getFullYear();
 ---
 
-<footer class="relative pt-16 pb-8">
+<footer class="relative pt-16 pb-8 bg-muted dark:bg-neutral-800/50">
   <!-- Gradient top divider -->
   <div class="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent" aria-hidden="true"></div>
 
@@ -17,15 +17,14 @@ const currentYear = new Date().getFullYear();
           <span>Viewpo</span>
         </a>
         <p class="text-sm text-foreground/60 leading-relaxed mb-5">
-          Preview deploys from Cloudflare Pages, Vercel, Netlify, and GitHub Pages — all in one dashboard with a built-in viewport viewer for iOS, iPadOS, and macOS.
+          Preview deploys from Cloudflare Pages, Vercel, Netlify, and GitHub — all in one dashboard with a built-in viewport viewer for iOS, iPadOS, and macOS.
         </p>
-        <button
-          type="button"
-          data-open-signup
-          class="inline-flex items-center gap-2 bg-primary hover:bg-primary-hover text-white text-sm font-heading font-medium px-4 py-2 rounded-lg transition-all hover:scale-[1.02] active:scale-[0.98] plausible-event-name=CTA+Footer+Join+Beta"
+        <a
+          href="/beta/"
+          class="inline-flex items-center gap-2 bg-primary hover:bg-primary-hover text-white text-sm font-heading font-medium px-4 py-2 rounded-xl transition-all hover:scale-[1.02] active:scale-[0.98] plausible-event-name=CTA+Footer+Join+Beta"
         >
           Join the Beta
-        </button>
+        </a>
         <p class="text-xs text-foreground/40 mt-2">Requires Apple TestFlight</p>
       </div>
 
@@ -33,10 +32,11 @@ const currentYear = new Date().getFullYear();
       <div>
         <h3 class="font-heading font-semibold text-sm text-foreground mb-4">Viewpo</h3>
         <ul class="space-y-2.5">
-          <li><a href="/#features" class="text-sm text-foreground/60 hover:text-foreground transition-colors">Features</a></li>
-          <li><a href="/#pricing" class="text-sm text-foreground/60 hover:text-foreground transition-colors">Pricing</a></li>
+          <li><a href="/features/" class="text-sm text-foreground/60 hover:text-foreground transition-colors">Features</a></li>
+          <li><a href="/pricing/" class="text-sm text-foreground/60 hover:text-foreground transition-colors">Pricing</a></li>
           <li><a href="/roadmap/" class="text-sm text-foreground/60 hover:text-foreground transition-colors">Roadmap</a></li>
           <li><a href="/roadmap/#feedback-section" class="text-sm text-foreground/60 hover:text-foreground transition-colors">Feature Requests</a></li>
+          <li><a href="/beta/" class="text-sm text-foreground/60 hover:text-foreground transition-colors">Beta Programme</a></li>
         </ul>
       </div>
 
@@ -44,8 +44,12 @@ const currentYear = new Date().getFullYear();
       <div>
         <h3 class="font-heading font-semibold text-sm text-foreground mb-4">Use Cases</h3>
         <ul class="space-y-2.5">
-          <li><a href="/teams/" class="text-sm text-foreground/60 hover:text-foreground transition-colors">Teams</a></li>
-          <li><a href="/creators/" class="text-sm text-foreground/60 hover:text-foreground transition-colors">Creators</a></li>
+          <li><a href="/use-cases/remote-monitoring/" class="text-sm text-foreground/60 hover:text-foreground transition-colors">Remote Developers</a></li>
+          <li><a href="/use-cases/indie-hackers/" class="text-sm text-foreground/60 hover:text-foreground transition-colors">Indie Founders</a></li>
+          <li><a href="/use-cases/freelancers/" class="text-sm text-foreground/60 hover:text-foreground transition-colors">Freelancers</a></li>
+          <li><a href="/use-cases/agencies/" class="text-sm text-foreground/60 hover:text-foreground transition-colors">Agencies</a></li>
+          <li><a href="/use-cases/teams/" class="text-sm text-foreground/60 hover:text-foreground transition-colors">Team Leads</a></li>
+          <li><a href="/use-cases/qa-design/" class="text-sm text-foreground/60 hover:text-foreground transition-colors">QA & Design</a></li>
         </ul>
       </div>
 
@@ -73,7 +77,7 @@ const currentYear = new Date().getFullYear();
             placeholder="you@example.com"
             aria-label="Email address for newsletter"
             disabled
-            class="flex-1 min-w-0 bg-foreground/5 border border-foreground/10 rounded-lg px-3 py-2 text-sm text-foreground placeholder:text-foreground/30 disabled:opacity-50 disabled:cursor-not-allowed"
+            class="flex-1 min-w-0 bg-foreground/5 border border-neutral-200 dark:border-neutral-800 rounded-lg px-3 py-2 text-sm text-foreground placeholder:text-foreground/30 disabled:opacity-50 disabled:cursor-not-allowed"
           />
           <button
             type="submit"
@@ -88,7 +92,7 @@ const currentYear = new Date().getFullYear();
     </div>
 
     <!-- Bottom bar: copyright + legal links -->
-    <div class="border-t border-foreground/10 pt-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+    <div class="border-t border-neutral-200 dark:border-neutral-800 pt-6 flex flex-col sm:flex-row items-center justify-between gap-4">
       <p class="text-sm text-foreground/40">
         &copy; {currentYear} <a href="https://littlebearapps.com" class="hover:text-foreground transition-colors" target="_blank" rel="noopener noreferrer">Little Bear Apps</a> &middot; Made in Australia
       </p>

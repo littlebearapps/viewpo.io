@@ -21,6 +21,12 @@ const cards = [
     icon: 'M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z',
   },
   {
+    title: 'Integrations',
+    description: 'See which deployment providers Viewpo connects to and how to set up each one.',
+    href: '/help/integrations/',
+    icon: 'M13 13v8h8v-8h-8zM3 21h8v-8H3v8zM3 3v8h8V3H3zm13.66-1.31L11 7.34 16.66 13l5.66-5.66-5.66-5.65z',
+  },
+  {
     title: 'Contact Support',
     description: "Can't find what you need? Reach out to our team — we aim to respond within 2 business days.",
     href: '/help/contact/',
@@ -29,7 +35,7 @@ const cards = [
 ];
 ---
 
-<BaseLayout title={title} description={description}>
+<BaseLayout title={title} description={description} ogImage="/graphics/og/og-help.png">
   <Header slot="header" />
 
   <section class="py-16 sm:py-24">
@@ -58,7 +64,7 @@ const cards = [
             {cards.map((card) => (
               <a
                 href={card.href}
-                class="group block p-6 rounded-xl border border-foreground/10 bg-background hover:border-primary/30 hover:shadow-lg transition-all"
+                class="group block p-6 rounded-xl border border-neutral-200 dark:border-neutral-800 bg-white/70 dark:bg-neutral-900/60 backdrop-blur-sm hover:border-primary/30 hover:shadow-lg transition-all"
               >
                 <div class="flex items-start gap-4">
                   <div class="shrink-0 w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">

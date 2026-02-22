@@ -1,0 +1,635 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Header from '@components/Header.astro';
+import Footer from '@components/Footer.astro';
+import Section from '@components/Section.astro';
+import SectionHeader from '@components/SectionHeader.astro';
+import Badge from '@components/Badge.astro';
+import Card from '@components/Card.astro';
+import FAQAccordion from '@components/FAQAccordion.svelte';
+import { TURNSTILE_SITE_KEY, API_BASE_URL, BETA_FAQ_ITEMS } from '@utils/constants';
+
+const title = 'Viewpo Beta Programme — Apply for Early Access | Viewpo';
+const description = 'Apply to join the Viewpo private beta. Test deploy previews from Cloudflare, Vercel, Netlify, and GitHub on your iPhone, iPad, or Mac. Limited to 25 testers.';
+---
+
+<BaseLayout title={title} description={description}>
+  <Header slot="header" />
+
+  <div class="relative overflow-x-clip">
+    <!-- Ambient glow -->
+    <div class="pointer-events-none absolute inset-0" aria-hidden="true">
+      <div class="absolute -top-40 left-1/2 -translate-x-1/2 w-[600px] h-[600px] rounded-full bg-primary/15 blur-[160px] dark:bg-primary/[0.07]"></div>
+      <div class="absolute top-[40%] right-[5%] w-[400px] h-[400px] rounded-full bg-secondary/10 blur-[130px] dark:bg-secondary/[0.05]"></div>
+      <div class="absolute top-[75%] left-[15%] w-[350px] h-[350px] rounded-full bg-indigo-300/10 blur-[120px] dark:bg-indigo-400/[0.05]"></div>
+    </div>
+
+    <!-- Hero -->
+    <section class="pt-20 sm:pt-28 pb-12 sm:pb-16">
+      <div class="container-wide">
+        <div class="max-w-2xl mx-auto text-center">
+          <div class="hero-entrance">
+            <Badge variant="highlight">Private Beta</Badge>
+          </div>
+          <h1 class="font-heading font-bold text-3xl sm:text-4xl md:text-5xl text-foreground dark:text-white mt-4 mb-5 hero-entrance hero-entrance-delay-1">
+            Help Shape the Future of Deploy Previews
+          </h1>
+          <p class="text-lg text-foreground/60 dark:text-neutral-400 leading-relaxed mb-3 hero-entrance hero-entrance-delay-2">
+            We're looking for 25 developers, designers, and team leads to test Viewpo before launch. In return, you'll get free access and a direct line to our roadmap.
+          </p>
+          <p class="text-sm text-foreground/40 dark:text-neutral-600 mb-8 hero-entrance hero-entrance-delay-3">
+            Applications reviewed weekly &middot; Requires Apple TestFlight
+          </p>
+          <div class="hero-entrance hero-entrance-delay-3">
+            <a
+              href="#apply"
+              class="inline-flex items-center gap-2 bg-primary hover:bg-primary-hover text-white text-sm font-heading font-semibold px-8 py-3.5 rounded-xl transition-all hover:scale-[1.02] active:scale-[0.98] shadow-md hover:shadow-lg plausible-event-name=Beta+Apply+Scroll"
+            >
+              Apply for the Beta
+              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- What You Get -->
+    <Section id="what-you-get" padding="md">
+      <SectionHeader
+        title="What You Get"
+        subtitle="More than early access — you'll help shape a product built for your workflow."
+      />
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-5 max-w-5xl mx-auto">
+        <Card class="reveal reveal-delay-1 p-6 md:p-8 text-center">
+          <div class="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-primary/10 dark:bg-primary/20 mb-4">
+            <svg class="w-6 h-6 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M15.59 14.37a6 6 0 01-5.84 7.38v-4.8m5.84-2.58a14.98 14.98 0 006.16-12.12A14.98 14.98 0 009.631 8.41m5.96 5.96a14.926 14.926 0 01-5.841 2.58m-.119-8.54a6 6 0 00-7.381 5.84h4.8m2.581-5.84a14.927 14.927 0 00-2.58 5.84m2.699 2.7c-.103.021-.207.041-.311.06a15.09 15.09 0 01-2.448-2.448 14.9 14.9 0 01.06-.312m-2.24 2.39a4.493 4.493 0 00-1.757 4.306 4.493 4.493 0 004.306-1.758M16.5 9a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0z" />
+            </svg>
+          </div>
+          <h3 class="font-heading font-semibold text-lg text-foreground dark:text-white mb-2">Early Access</h3>
+          <p class="text-sm text-foreground/60 dark:text-neutral-400 leading-relaxed">
+            TestFlight invite, pre-release builds, and new features before anyone else. Weekly updates with the latest improvements.
+          </p>
+        </Card>
+
+        <Card class="reveal reveal-delay-2 p-6 md:p-8 text-center">
+          <div class="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-secondary/10 dark:bg-secondary/20 mb-4">
+            <svg class="w-6 h-6 text-secondary" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9.53 16.122a3 3 0 00-5.78 1.128 2.25 2.25 0 01-2.4 2.245 4.5 4.5 0 008.4-2.245c0-.399-.078-.78-.22-1.128zm0 0a15.998 15.998 0 003.388-1.62m-5.043-.025a15.994 15.994 0 011.622-3.395m3.42 3.42a15.995 15.995 0 004.764-4.648l3.876-5.814a1.151 1.151 0 00-1.597-1.597L14.146 6.32a15.996 15.996 0 00-4.649 4.763m3.42 3.42a6.776 6.776 0 00-3.42-3.42" />
+            </svg>
+          </div>
+          <h3 class="font-heading font-semibold text-lg text-foreground dark:text-white mb-2">Shape the Product</h3>
+          <p class="text-sm text-foreground/60 dark:text-neutral-400 leading-relaxed">
+            Direct input on the roadmap and priority feature requests. Your feedback drives what we build next.
+          </p>
+        </Card>
+
+        <Card class="reveal reveal-delay-3 p-6 md:p-8 text-center">
+          <div class="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-success/10 dark:bg-success/20 mb-4">
+            <svg class="w-6 h-6 text-success" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M21 11.25v8.25a1.5 1.5 0 01-1.5 1.5H5.25a1.5 1.5 0 01-1.5-1.5v-8.25M12 4.875A2.625 2.625 0 109.375 7.5H12m0-2.625V7.5m0-2.625A2.625 2.625 0 1114.625 7.5H12m0 0V21m-8.625-9.75h18c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125h-18c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125z" />
+            </svg>
+          </div>
+          <h3 class="font-heading font-semibold text-lg text-foreground dark:text-white mb-2">Free Access</h3>
+          <p class="text-sm text-foreground/60 dark:text-neutral-400 leading-relaxed">
+            All testers get 6 months of the Starter plan free. Top contributors earn 12 months of Pro ($348 value) and a Founding Tester badge.
+          </p>
+        </Card>
+      </div>
+    </Section>
+
+    <!-- Who We're Looking For -->
+    <Section id="criteria" background="muted" padding="md">
+      <SectionHeader
+        title="Who We're Looking For"
+        subtitle="We want a diverse mix of real-world workflows, not just power users."
+      />
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 max-w-4xl mx-auto">
+        <div class="flex gap-4 reveal reveal-delay-1">
+          <div class="flex-shrink-0 w-10 h-10 rounded-lg bg-primary/10 dark:bg-primary/20 flex items-center justify-center">
+            <svg class="w-5 h-5 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5" />
+            </svg>
+          </div>
+          <div>
+            <h3 class="font-heading font-semibold text-foreground dark:text-white mb-1">Deploy regularly</h3>
+            <p class="text-sm text-foreground/60 dark:text-neutral-400">Ship to Cloudflare Pages, Vercel, Netlify, or GitHub at least weekly.</p>
+          </div>
+        </div>
+
+        <div class="flex gap-4 reveal reveal-delay-2">
+          <div class="flex-shrink-0 w-10 h-10 rounded-lg bg-primary/10 dark:bg-primary/20 flex items-center justify-center">
+            <svg class="w-5 h-5 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 1.5H8.25A2.25 2.25 0 006 3.75v16.5a2.25 2.25 0 002.25 2.25h7.5A2.25 2.25 0 0018 20.25V3.75a2.25 2.25 0 00-2.25-2.25H13.5m-3 0V3h3V1.5m-3 0h3m-3 18.75h3" />
+            </svg>
+          </div>
+          <div>
+            <h3 class="font-heading font-semibold text-foreground dark:text-white mb-1">Use Apple devices</h3>
+            <p class="text-sm text-foreground/60 dark:text-neutral-400">iPhone, iPad, or Mac running iOS/iPadOS 17+ or macOS 14+.</p>
+          </div>
+        </div>
+
+        <div class="flex gap-4 reveal reveal-delay-3">
+          <div class="flex-shrink-0 w-10 h-10 rounded-lg bg-primary/10 dark:bg-primary/20 flex items-center justify-center">
+            <svg class="w-5 h-5 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25a2.25 2.25 0 01-2.25-2.25v-2.25z" />
+            </svg>
+          </div>
+          <div>
+            <h3 class="font-heading font-semibold text-foreground dark:text-white mb-1">Manage multiple projects</h3>
+            <p class="text-sm text-foreground/60 dark:text-neutral-400">Juggle 3+ sites or work across multiple deployment providers.</p>
+          </div>
+        </div>
+
+        <div class="flex gap-4 reveal reveal-delay-4">
+          <div class="flex-shrink-0 w-10 h-10 rounded-lg bg-primary/10 dark:bg-primary/20 flex items-center justify-center">
+            <svg class="w-5 h-5 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M7.5 8.25h9m-9 3H12m-9.75 1.51c0 1.6 1.123 2.994 2.707 3.227 1.129.166 2.27.293 3.423.379.35.026.67.21.865.501L12 21l2.755-4.133a1.14 1.14 0 01.865-.501 48.172 48.172 0 003.423-.379c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0012 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018z" />
+            </svg>
+          </div>
+          <div>
+            <h3 class="font-heading font-semibold text-foreground dark:text-white mb-1">Willing to share feedback</h3>
+            <p class="text-sm text-foreground/60 dark:text-neutral-400">Complete testing tasks and submit structured feedback over 4-6 weeks.</p>
+          </div>
+        </div>
+      </div>
+    </Section>
+
+    <!-- How It Works -->
+    <Section id="how-it-works" padding="md">
+      <SectionHeader
+        title="How the Beta Works"
+        subtitle="From application to rewards in four steps."
+      />
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-5xl mx-auto">
+        {[
+          { step: '1', title: 'Apply', desc: 'Fill out the form below. It takes about 2 minutes.' },
+          { step: '2', title: 'Get selected', desc: 'We review applications weekly and send TestFlight invites to accepted testers.' },
+          { step: '3', title: 'Test & feedback', desc: 'Use Viewpo in your real workflow. Complete testing tasks, report issues, share your experience.' },
+          { step: '4', title: 'Earn rewards', desc: 'Meet the feedback criteria and unlock your free Starter or Pro subscription.' },
+        ].map((item, i) => (
+          <div class={`reveal reveal-delay-${i + 1} text-center`}>
+            <div class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-primary text-white font-heading font-bold text-sm mb-4">
+              {item.step}
+            </div>
+            <h3 class="font-heading font-semibold text-foreground dark:text-white mb-2">{item.title}</h3>
+            <p class="text-sm text-foreground/60 dark:text-neutral-400 leading-relaxed">{item.desc}</p>
+          </div>
+        ))}
+      </div>
+    </Section>
+
+    <!-- Feedback Expectations -->
+    <Section id="expectations" background="muted" padding="md">
+      <div class="max-w-3xl mx-auto">
+        <div class="text-center mb-10 reveal">
+          <h2 class="font-heading font-bold text-2xl md:text-3xl text-foreground dark:text-white mb-3">
+            What We Ask From Testers
+          </h2>
+          <p class="text-foreground/60 dark:text-neutral-400">
+            We've kept it simple — no endless surveys or weekly calls (unless you want them).
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 reveal reveal-delay-1">
+          <!-- All testers -->
+          <div>
+            <h3 class="font-heading font-semibold text-foreground dark:text-white mb-4 flex items-center gap-2">
+              <Badge variant="default">All Testers</Badge>
+              6 months Starter free
+            </h3>
+            <ul class="space-y-3">
+              {[
+                'Complete the onboarding survey (5 minutes)',
+                'Submit at least 3 bug reports or feature requests with context',
+                'Complete a 15-minute exit survey at the end of the beta',
+              ].map((item) => (
+                <li class="flex items-start gap-2.5 text-sm">
+                  <svg class="w-4 h-4 text-primary flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                  </svg>
+                  <span class="text-foreground/65 dark:text-neutral-400">{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <!-- Founding Testers -->
+          <div>
+            <h3 class="font-heading font-semibold text-foreground dark:text-white mb-4 flex items-center gap-2">
+              <Badge variant="highlight">Founding Tester</Badge>
+              12 months Pro free
+            </h3>
+            <ul class="space-y-3">
+              {[
+                'Everything above, plus:',
+                '2 additional validated bug reports or detailed feature feedback',
+                'Optional: join weekly Design Partner calls for deeper involvement',
+              ].map((item) => (
+                <li class="flex items-start gap-2.5 text-sm">
+                  <svg class="w-4 h-4 text-primary flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                  </svg>
+                  <span class="text-foreground/65 dark:text-neutral-400">{item}</span>
+                </li>
+              ))}
+            </ul>
+            <p class="mt-4 text-xs text-foreground/40 dark:text-neutral-600">
+              $348 value &middot; Founding Tester badge &middot; Priority feature requests
+            </p>
+          </div>
+        </div>
+      </div>
+    </Section>
+
+    <!-- Application Form -->
+    <Section id="apply" padding="lg">
+      <SectionHeader
+        title="Apply for the Beta"
+        subtitle="Takes about 2 minutes. We review applications weekly."
+      />
+
+      <div class="max-w-xl mx-auto reveal reveal-delay-1">
+        <Card class="p-6 md:p-8">
+          <form id="beta-form" class="space-y-5" novalidate>
+            <!-- Email -->
+            <div>
+              <label for="beta-email" class="block text-sm font-medium text-foreground/70 dark:text-neutral-300 mb-1.5">
+                Email address <span class="text-red-500">*</span>
+              </label>
+              <input
+                type="email"
+                id="beta-email"
+                name="email"
+                required
+                placeholder="you@example.com"
+                autocomplete="email"
+                class="w-full bg-foreground/5 dark:bg-white/5 border border-neutral-200 dark:border-neutral-700 rounded-lg px-3.5 py-2.5 text-sm text-foreground dark:text-white placeholder:text-foreground/30 dark:placeholder:text-neutral-600 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-colors"
+              />
+            </div>
+
+            <!-- First name -->
+            <div>
+              <label for="beta-name" class="block text-sm font-medium text-foreground/70 dark:text-neutral-300 mb-1.5">
+                First name <span class="text-red-500">*</span>
+              </label>
+              <input
+                type="text"
+                id="beta-name"
+                name="first_name"
+                required
+                placeholder="Your first name"
+                autocomplete="given-name"
+                class="w-full bg-foreground/5 dark:bg-white/5 border border-neutral-200 dark:border-neutral-700 rounded-lg px-3.5 py-2.5 text-sm text-foreground dark:text-white placeholder:text-foreground/30 dark:placeholder:text-neutral-600 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-colors"
+              />
+            </div>
+
+            <!-- Role -->
+            <div>
+              <label for="beta-role" class="block text-sm font-medium text-foreground/70 dark:text-neutral-300 mb-1.5">
+                Your role <span class="text-red-500">*</span>
+              </label>
+              <select
+                id="beta-role"
+                name="role"
+                required
+                class="w-full bg-foreground/5 dark:bg-white/5 border border-neutral-200 dark:border-neutral-700 rounded-lg px-3.5 py-2.5 text-sm text-foreground dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-colors"
+              >
+                <option value="" disabled selected>Select your role</option>
+                <option value="developer">Developer</option>
+                <option value="designer">Designer</option>
+                <option value="qa-tester">QA / Tester</option>
+                <option value="agency-freelancer">Agency / Freelancer</option>
+                <option value="team-lead-pm">Team Lead / PM</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+
+            <!-- Providers -->
+            <fieldset>
+              <legend class="block text-sm font-medium text-foreground/70 dark:text-neutral-300 mb-2">
+                Deployment providers you use <span class="text-red-500">*</span>
+              </legend>
+              <div class="flex flex-wrap gap-3">
+                {['Cloudflare Pages', 'Vercel', 'Netlify', 'GitHub Pages', 'Other'].map((provider) => (
+                  <label class="inline-flex items-center gap-2 text-sm cursor-pointer">
+                    <input
+                      type="checkbox"
+                      name="providers"
+                      value={provider.toLowerCase().replace(/\s+/g, '-')}
+                      class="w-4 h-4 rounded border-neutral-300 dark:border-neutral-600 text-primary focus:ring-primary/50 bg-foreground/5 dark:bg-white/5"
+                    />
+                    <span class="text-foreground/70 dark:text-neutral-400">{provider}</span>
+                  </label>
+                ))}
+              </div>
+            </fieldset>
+
+            <!-- Active projects -->
+            <fieldset>
+              <legend class="block text-sm font-medium text-foreground/70 dark:text-neutral-300 mb-2">
+                How many active projects? <span class="text-red-500">*</span>
+              </legend>
+              <div class="flex flex-wrap gap-3">
+                {[
+                  { value: '1-3', label: '1-3' },
+                  { value: '4-10', label: '4-10' },
+                  { value: '10+', label: '10+' },
+                ].map((option) => (
+                  <label class="inline-flex items-center gap-2 text-sm cursor-pointer">
+                    <input
+                      type="radio"
+                      name="projects"
+                      value={option.value}
+                      required
+                      class="w-4 h-4 border-neutral-300 dark:border-neutral-600 text-primary focus:ring-primary/50"
+                    />
+                    <span class="text-foreground/70 dark:text-neutral-400">{option.label}</span>
+                  </label>
+                ))}
+              </div>
+            </fieldset>
+
+            <!-- Devices -->
+            <fieldset>
+              <legend class="block text-sm font-medium text-foreground/70 dark:text-neutral-300 mb-2">
+                Apple devices available <span class="text-red-500">*</span>
+              </legend>
+              <div class="flex flex-wrap gap-3">
+                {['iPhone', 'iPad', 'Mac'].map((device) => (
+                  <label class="inline-flex items-center gap-2 text-sm cursor-pointer">
+                    <input
+                      type="checkbox"
+                      name="devices"
+                      value={device.toLowerCase()}
+                      class="w-4 h-4 rounded border-neutral-300 dark:border-neutral-600 text-primary focus:ring-primary/50 bg-foreground/5 dark:bg-white/5"
+                    />
+                    <span class="text-foreground/70 dark:text-neutral-400">{device}</span>
+                  </label>
+                ))}
+              </div>
+            </fieldset>
+
+            <!-- Motivation -->
+            <div>
+              <label for="beta-motivation" class="block text-sm font-medium text-foreground/70 dark:text-neutral-300 mb-1.5">
+                What's the #1 problem you want Viewpo to solve? <span class="text-red-500">*</span>
+              </label>
+              <textarea
+                id="beta-motivation"
+                name="motivation"
+                required
+                maxlength="500"
+                rows="3"
+                placeholder="e.g. I check preview deploys on my phone but can't see the desktop layout properly..."
+                class="w-full bg-foreground/5 dark:bg-white/5 border border-neutral-200 dark:border-neutral-700 rounded-lg px-3.5 py-2.5 text-sm text-foreground dark:text-white placeholder:text-foreground/30 dark:placeholder:text-neutral-600 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-colors resize-none"
+              ></textarea>
+              <p class="text-xs text-foreground/30 dark:text-neutral-600 mt-1">Max 500 characters</p>
+            </div>
+
+            <!-- Turnstile -->
+            <div id="beta-turnstile" class="flex justify-center"></div>
+
+            <!-- Submit -->
+            <button
+              type="submit"
+              id="beta-submit"
+              class="w-full inline-flex items-center justify-center gap-2 bg-primary hover:bg-primary-hover text-white font-heading font-semibold px-6 py-3 rounded-xl transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary disabled:opacity-50 disabled:cursor-not-allowed plausible-event-name=Beta+Application+Submit"
+            >
+              <span id="beta-submit-text">Submit Application</span>
+              <svg id="beta-spinner" class="hidden w-5 h-5 animate-spin" viewBox="0 0 24 24" fill="none">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+              </svg>
+            </button>
+
+            <!-- Status -->
+            <div id="beta-status" class="hidden text-center text-sm py-2 px-3 rounded-lg" role="alert"></div>
+          </form>
+
+          <!-- Success State -->
+          <div id="beta-success" class="hidden text-center py-6">
+            <div class="inline-flex items-center justify-center w-14 h-14 bg-success/10 rounded-full mb-4">
+              <svg class="w-7 h-7 text-success" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+              </svg>
+            </div>
+            <h3 class="font-heading font-semibold text-xl text-foreground dark:text-white mb-2">Application received!</h3>
+            <p class="text-foreground/60 dark:text-neutral-400 text-sm mb-2">
+              We review applications weekly and will be in touch soon. Check your inbox for a confirmation email.
+            </p>
+            <p class="text-foreground/40 dark:text-neutral-600 text-xs">
+              In the meantime, make sure you have <a href="https://developer.apple.com/testflight/" target="_blank" rel="noopener noreferrer" class="text-links hover:text-primary transition-colors underline underline-offset-2">TestFlight</a> installed.
+            </p>
+          </div>
+
+          <p class="text-foreground/40 dark:text-neutral-600 text-xs text-center mt-4">
+            No spam, ever. <a href="/privacy/" class="text-links hover:text-primary transition-colors underline underline-offset-2">Privacy Policy</a>
+          </p>
+        </Card>
+      </div>
+    </Section>
+
+    <!-- Not Ready? Waitlist -->
+    <Section id="waitlist" background="muted" padding="md">
+      <div class="max-w-2xl mx-auto text-center reveal">
+        <h2 class="font-heading font-semibold text-xl md:text-2xl text-foreground dark:text-white mb-3">
+          Not ready to apply?
+        </h2>
+        <p class="text-foreground/60 dark:text-neutral-400 mb-6">
+          Join the waitlist and we'll let you know when broader access opens up. No commitment required.
+        </p>
+        <button
+          type="button"
+          data-open-signup="notify"
+          class="inline-flex items-center gap-2 border border-neutral-300 dark:border-neutral-700 text-foreground dark:text-neutral-300 text-sm font-heading font-semibold px-6 py-3 rounded-xl transition-all hover:bg-foreground/5 dark:hover:bg-white/5 hover:scale-[1.02] active:scale-[0.98] plausible-event-name=Beta+Waitlist+Click"
+        >
+          Join the Waitlist
+        </button>
+      </div>
+    </Section>
+
+    <!-- Beta FAQ -->
+    <Section id="beta-faq" padding="md">
+      <SectionHeader
+        title="Beta Programme FAQ"
+        subtitle="Common questions about the Viewpo beta."
+      />
+
+      <div class="max-w-3xl mx-auto reveal reveal-delay-2">
+        <FAQAccordion items={BETA_FAQ_ITEMS} client:visible />
+      </div>
+    </Section>
+  </div>
+
+  <!-- FAQPage JSON-LD for beta FAQs -->
+  <script is:inline define:vars={{ betaFAQs: BETA_FAQ_ITEMS }}>
+    const schema = {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "dateModified": new Date().toISOString().split('T')[0],
+      "mainEntity": betaFAQs.map((item) => ({
+        "@type": "Question",
+        "name": item.question,
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": item.answer,
+        },
+      })),
+    };
+    const el = document.createElement('script');
+    el.type = 'application/ld+json';
+    el.textContent = JSON.stringify(schema);
+    document.head.appendChild(el);
+  </script>
+
+  <!-- Beta form script -->
+  <script define:vars={{ TURNSTILE_SITE_KEY, API_BASE_URL }}>
+    function initBetaForm() {
+      const form = document.getElementById('beta-form');
+      const submitBtn = document.getElementById('beta-submit');
+      const submitText = document.getElementById('beta-submit-text');
+      const spinner = document.getElementById('beta-spinner');
+      const statusEl = document.getElementById('beta-status');
+      const successEl = document.getElementById('beta-success');
+      const turnstileContainer = document.getElementById('beta-turnstile');
+
+      if (!form) return;
+
+      let turnstileWidgetId = null;
+
+      // Render Turnstile when it's available
+      function renderTurnstile() {
+        if (window.turnstile && turnstileContainer && turnstileWidgetId === null) {
+          turnstileWidgetId = window.turnstile.render(turnstileContainer, {
+            sitekey: TURNSTILE_SITE_KEY,
+            theme: document.documentElement.classList.contains('dark') ? 'dark' : 'light',
+          });
+        }
+      }
+
+      // Try rendering immediately, then retry after a short delay if Turnstile isn't loaded yet
+      renderTurnstile();
+      if (turnstileWidgetId === null) {
+        setTimeout(renderTurnstile, 1000);
+        setTimeout(renderTurnstile, 3000);
+      }
+
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const email = form.querySelector('[name="email"]').value.trim();
+        const firstName = form.querySelector('[name="first_name"]').value.trim();
+        const role = form.querySelector('[name="role"]').value;
+        const providers = Array.from(form.querySelectorAll('[name="providers"]:checked')).map((el) => el.value);
+        const projects = form.querySelector('[name="projects"]:checked')?.value;
+        const devices = Array.from(form.querySelectorAll('[name="devices"]:checked')).map((el) => el.value);
+        const motivation = form.querySelector('[name="motivation"]').value.trim();
+
+        // Basic validation
+        if (!email || !firstName || !role || providers.length === 0 || !projects || devices.length === 0 || !motivation) {
+          showStatus('Please fill in all required fields.', 'error');
+          return;
+        }
+
+        // Get Turnstile token
+        let turnstileToken = null;
+        if (window.turnstile && turnstileWidgetId !== null) {
+          turnstileToken = window.turnstile.getResponse(turnstileWidgetId);
+        }
+
+        if (!turnstileToken) {
+          showStatus('Please complete the verification.', 'error');
+          return;
+        }
+
+        // Loading state
+        submitBtn.disabled = true;
+        submitText.textContent = 'Submitting...';
+        spinner.classList.remove('hidden');
+        statusEl.classList.add('hidden');
+
+        try {
+          // Build application data string for backend compatibility
+          const applicationData = [
+            `Role: ${role}`,
+            `Providers: ${providers.join(', ')}`,
+            `Active projects: ${projects}`,
+            `Devices: ${devices.join(', ')}`,
+            `Motivation: ${motivation}`,
+          ].join('\n');
+
+          const gclid = sessionStorage.getItem('gclid');
+
+          const res = await fetch(`${API_BASE_URL}/api/newsletter-signup`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              email,
+              first_name: firstName,
+              products: ['viewpo-beta-application'],
+              turnstileToken,
+              application_data: applicationData,
+              ...(gclid && { gclid }),
+            }),
+          });
+
+          const data = await res.json();
+
+          if (data.success) {
+            form.classList.add('hidden');
+            successEl.classList.remove('hidden');
+            if (window.plausible) {
+              window.plausible('Beta+Application+Submit', {
+                props: {
+                  email_domain: email.split('@')[1],
+                  role: role,
+                  providers: providers.join(','),
+                  projects: projects,
+                },
+              });
+            }
+          } else {
+            showStatus(
+              (data.errors ? data.errors.join(', ') : data.error) || 'Something went wrong. Please try again.',
+              'error'
+            );
+            if (window.turnstile && turnstileWidgetId !== null) {
+              window.turnstile.reset(turnstileWidgetId);
+            }
+          }
+        } catch {
+          showStatus('Network error. Please check your connection and try again.', 'error');
+        }
+
+        submitBtn.disabled = false;
+        submitText.textContent = 'Submit Application';
+        spinner.classList.add('hidden');
+      });
+
+      function showStatus(message, type) {
+        statusEl.textContent = message;
+        statusEl.classList.remove(
+          'hidden',
+          'bg-red-50', 'text-red-700', 'dark:bg-red-900/20', 'dark:text-red-400',
+          'bg-green-50', 'text-green-700', 'dark:bg-green-900/20', 'dark:text-green-400'
+        );
+        if (type === 'error') {
+          statusEl.classList.add('bg-red-50', 'text-red-700', 'dark:bg-red-900/20', 'dark:text-red-400');
+        } else {
+          statusEl.classList.add('bg-green-50', 'text-green-700', 'dark:bg-green-900/20', 'dark:text-green-400');
+        }
+      }
+    }
+
+    initBetaForm();
+    document.addEventListener('astro:after-swap', initBetaForm);
+  </script>
+
+  <Footer slot="footer" />
+</BaseLayout>

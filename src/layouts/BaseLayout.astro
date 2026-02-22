@@ -11,7 +11,7 @@ interface Props {
 
 const {
   title,
-  description = 'See your preview deploys on any device, at any viewport. One dashboard for Cloudflare Pages, Vercel, Netlify, and GitHub Pages.',
+  description = 'All your preview deployments from Cloudflare Pages, Vercel, Netlify, and GitHub in one dashboard. Preview at any resolution from any device.',
   ogImage = '/og-default.png',
 } = Astro.props;
 
@@ -57,13 +57,13 @@ const currentDate = new Date().toISOString().split('T')[0];
       "name": "Viewpo",
       "url": "https://viewpo.io",
       "logo": "https://viewpo.io/logo.png",
-      "description": "Preview deployment aggregator with viewport viewer for iOS, iPadOS, and macOS",
+      "description": "Native app that aggregates preview deployments from Cloudflare Pages, Vercel, Netlify, and GitHub into one dashboard with a viewport viewer for iOS, iPadOS, and macOS.",
       "parentOrganization": {
         "@type": "Organization",
         "name": "Little Bear Apps",
         "url": "https://littlebearapps.com"
       },
-      "knowsAbout": ["preview deployments", "viewport testing", "Cloudflare Pages", "Vercel", "Netlify", "responsive design", "responsive web design", "mobile testing"],
+      "knowsAbout": ["preview deployments", "viewport testing", "Cloudflare Pages", "Vercel", "Netlify", "GitHub deployments", "responsive design", "responsive web design", "mobile testing", "deploy notifications"],
       "sameAs": ["https://github.com/littlebearapps"],
       "areaServed": "Worldwide"
     })} />
@@ -78,14 +78,16 @@ const currentDate = new Date().toISOString().split('T')[0];
           "applicationCategory": "DeveloperApplication",
           "applicationSubCategory": "Utility",
           "operatingSystem": ["iOS", "iPadOS", "macOS"],
-          "description": "Aggregates preview deployments from Cloudflare Pages, Vercel, Netlify, and GitHub Pages into one dashboard with a viewport viewer.",
+          "description": "Aggregates preview deployments from Cloudflare Pages, Vercel, Netlify, and GitHub into one dashboard with a viewport viewer. 6 presets, 17-device library, and custom sizes.",
           "featureList": [
-            "Viewport viewer at any screen resolution",
-            "Preview aggregation from multiple hosting providers",
+            "Viewport viewer with 6 presets and 17-device library",
+            "Unified dashboard for Cloudflare, Vercel, Netlify, and GitHub",
+            "Push notifications for deploy status",
             "Shareable preview links and QR codes",
-            "Team workspaces with feedback",
-            "Real-time deploy notifications",
-            "OAuth account linking"
+            "Team workspaces with Owner, Member, and Viewer roles",
+            "One-tap OAuth connection for GitHub, Vercel, and Netlify",
+            "Custom viewport sizes",
+            "Branch pinning and filtering"
           ],
           "datePublished": "2026-02-01",
           "dateModified": currentDate,

@@ -1,0 +1,163 @@
+---
+interface Props {
+  words: string[];
+  /** Typing speed in ms per character */
+  speed?: number;
+  /** Delete speed in ms per character */
+  deleteSpeed?: number;
+  /** Pause after typing a word (ms) */
+  pauseDuration?: number;
+}
+
+const {
+  words,
+  speed = 80,
+  deleteSpeed = 50,
+  pauseDuration = 2000,
+} = Astro.props;
+
+// Use the longest word to reserve space and prevent layout shift
+const longestWord = words.reduce((a, b) => (a.length > b.length ? a : b), '');
+---
+
+<span
+  class="typewriter-wrapper"
+  data-typewriter-words={JSON.stringify(words)}
+  data-typewriter-speed={speed}
+  data-typewriter-delete-speed={deleteSpeed}
+  data-typewriter-pause={pauseDuration}
+>
+  {/* Invisible sizer — reserves width of longest word to prevent CLS */}
+  <span class="typewriter-sizer" aria-hidden="true">{longestWord}</span>
+  {/* Visible typed text + cursor in a single inline flow */}
+  <span class="typewriter-visible" aria-label={words.join(', ')}>
+    <span class="typewriter-text">{words[0]}</span><span class="typewriter-cursor" aria-hidden="true">|</span>
+  </span>
+</span>
+
+<style>
+  .typewriter-wrapper {
+    display: inline-grid;
+    vertical-align: baseline;
+  }
+
+  .typewriter-sizer,
+  .typewriter-visible {
+    grid-area: 1 / 1;
+  }
+
+  .typewriter-sizer {
+    visibility: hidden;
+    white-space: nowrap;
+    /* Match text rendering for accurate sizing */
+    -webkit-text-fill-color: transparent;
+    /* Account for cursor width in sizer */
+    padding-right: 0.1em;
+  }
+
+  .typewriter-visible {
+    white-space: nowrap;
+    overflow: hidden;
+  }
+
+  .typewriter-text {
+    background: linear-gradient(135deg, #6366F1 0%, #818CF8 50%, #6366F1 100%);
+    background-size: 200% 200%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: typewriter-gradient 6s ease-in-out infinite;
+  }
+
+  @keyframes typewriter-gradient {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+  }
+
+  .typewriter-cursor {
+    animation: blink 0.7s step-end infinite;
+    font-weight: 300;
+    color: #6366F1;
+    -webkit-text-fill-color: #6366F1;
+  }
+
+  @keyframes blink {
+    0%, 100% { opacity: 0.7; }
+    50% { opacity: 0; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .typewriter-text {
+      animation: none;
+      background-size: 100% 100%;
+    }
+
+    .typewriter-cursor {
+      animation: none;
+      display: none;
+    }
+  }
+</style>
+
+<script>
+  function initTypewriter(wrapper: HTMLElement): void {
+    const words: string[] = JSON.parse(wrapper.dataset.typewriterWords || '[]');
+    const speed = Number(wrapper.dataset.typewriterSpeed) || 80;
+    const deleteSpeed = Number(wrapper.dataset.typewriterDeleteSpeed) || 50;
+    const pause = Number(wrapper.dataset.typewriterPause) || 2000;
+    const textEl = wrapper.querySelector('.typewriter-text') as HTMLElement;
+
+    if (!textEl || words.length === 0) return;
+
+    // Respect reduced motion
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    let wordIndex = 0;
+    let charIndex = words[0].length;
+    let isDeleting = false;
+
+    function tick(): void {
+      const currentWord = words[wordIndex];
+
+      if (!isDeleting) {
+        // Typing
+        charIndex++;
+        textEl.textContent = currentWord.slice(0, charIndex);
+
+        if (charIndex === currentWord.length) {
+          // Finished typing — pause then delete
+          isDeleting = true;
+          setTimeout(tick, pause);
+          return;
+        }
+        setTimeout(tick, speed);
+      } else {
+        // Deleting
+        charIndex--;
+        textEl.textContent = currentWord.slice(0, charIndex);
+
+        if (charIndex === 0) {
+          // Finished deleting — move to next word
+          isDeleting = false;
+          wordIndex = (wordIndex + 1) % words.length;
+          setTimeout(tick, speed);
+          return;
+        }
+        setTimeout(tick, deleteSpeed);
+      }
+    }
+
+    // Start after initial pause
+    setTimeout(() => {
+      isDeleting = true;
+      tick();
+    }, pause);
+  }
+
+  function initAll(): void {
+    document.querySelectorAll<HTMLElement>('.typewriter-wrapper').forEach(initTypewriter);
+  }
+
+  initAll();
+  document.addEventListener('astro:after-swap', initAll);
+</script>
