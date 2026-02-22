@@ -83,6 +83,24 @@ try {
       // D1 read failure is non-fatal — items keep default vote counts
     }
   }
+
+  // Merge "Testing" items into "In Progress" for public display
+  // (external users don't need to see the internal testing/in-progress distinction)
+  const testingCol = columns.find((c) => c.status === 'testing');
+  const inProgressCol = columns.find((c) => c.status === 'in-progress');
+  if (testingCol && inProgressCol) {
+    // Remap testing items to in-progress status
+    for (const item of testingCol.items) {
+      item.status = 'in-progress';
+    }
+    inProgressCol.items.push(...testingCol.items);
+    inProgressCol.items.sort((a, b) => b.votes - a.votes);
+    columns = columns.filter((c) => c.status !== 'testing');
+  }
+
+  // Reorder: In Progress → Planned → Shipped
+  const ORDER = ['in-progress', 'planned', 'shipped'] as const;
+  columns.sort((a, b) => ORDER.indexOf(a.status as typeof ORDER[number]) - ORDER.indexOf(b.status as typeof ORDER[number]));
 } catch {
   fetchError = true;
 }
