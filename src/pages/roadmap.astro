@@ -98,8 +98,8 @@ try {
     columns = columns.filter((c) => c.status !== 'testing');
   }
 
-  // Reorder: In Progress → Planned → Shipped
-  const ORDER = ['in-progress', 'planned', 'shipped'] as const;
+  // Reorder: Planned → In Progress → Shipped (natural Kanban flow)
+  const ORDER = ['planned', 'in-progress', 'shipped'] as const;
   columns.sort((a, b) => ORDER.indexOf(a.status as typeof ORDER[number]) - ORDER.indexOf(b.status as typeof ORDER[number]));
 } catch {
   fetchError = true;

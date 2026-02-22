@@ -48,8 +48,8 @@ const statusStyles: Record<string, { text: string; bg: string }> = {
   shipped: { text: 'text-success', bg: 'bg-success/10' },
 };
 
-// Column display order: In Progress → Planned → Shipped
-const COLUMN_ORDER = ['in-progress', 'planned', 'shipped'];
+// Column display order: Planned → In Progress → Shipped (natural Kanban flow)
+const COLUMN_ORDER = ['planned', 'in-progress', 'shipped'];
 ---
 
 <div id="roadmap-grid">
