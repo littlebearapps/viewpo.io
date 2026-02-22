@@ -5,6 +5,7 @@ import Footer from '@components/Footer.astro';
 import Section from '@components/Section.astro';
 import SectionHeader from '@components/SectionHeader.astro';
 import Badge from '@components/Badge.astro';
+import FeatureVisual from '@components/features/FeatureVisual.astro';
 import { FEATURES_DATA } from '@utils/constants';
 
 const title = 'Viewpo Features — Viewport Viewer, Deploy Dashboard & More | Viewpo';
@@ -149,14 +150,7 @@ const featuresSoftwareApp = {
               )}
             </div>
             <!-- Visual side -->
-            <div class:list={['rounded-2xl border border-neutral-200 dark:border-neutral-700/50 bg-white/50 dark:bg-neutral-900/40 backdrop-blur-sm p-6 md:p-8', i % 2 === 1 ? 'lg:[direction:ltr]' : '']}>
-              <div class="flex items-center gap-3 mb-3">
-                <h4 class="font-heading font-semibold text-base text-foreground dark:text-white">{feature.title}</h4>
-              </div>
-              <p class="text-sm text-foreground/50 dark:text-neutral-500 leading-relaxed">
-                {feature.subtitle}
-              </p>
-            </div>
+            <FeatureVisual visual={feature.id} class={i % 2 === 1 ? 'lg:[direction:ltr]' : ''} />
           </div>
         ))}
       </div>
@@ -214,17 +208,7 @@ const featuresSoftwareApp = {
               )}
             </div>
             <!-- Visual side -->
-            <div class:list={['rounded-2xl border border-neutral-200 dark:border-neutral-700/50 bg-white/50 dark:bg-neutral-900/40 backdrop-blur-sm p-6 md:p-8', i % 2 === 1 ? 'lg:[direction:ltr]' : '']}>
-              <div class="flex items-center gap-3 mb-3">
-                <h4 class="font-heading font-semibold text-base text-foreground dark:text-white">{feature.title}</h4>
-                {feature.badge && (
-                  <Badge variant="muted">{feature.badge}</Badge>
-                )}
-              </div>
-              <p class="text-sm text-foreground/50 dark:text-neutral-500 leading-relaxed">
-                {feature.subtitle}
-              </p>
-            </div>
+            <FeatureVisual visual={feature.id} class={i % 2 === 1 ? 'lg:[direction:ltr]' : ''} />
           </div>
         ))}
       </div>
