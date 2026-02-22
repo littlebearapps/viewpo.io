@@ -8,6 +8,7 @@
     statusLabel: string;
     cta: string;
     ctaAction: string;
+    ctaHref?: string;
   }
 
   let { items }: { items: DeviceCard[] } = $props();
@@ -56,14 +57,23 @@
         </span>
       </div>
 
-      <!-- Ghost CTA button -->
-      <button
-        type="button"
-        {...(card.ctaAction === 'signup' ? { 'data-open-signup': '' } : card.ctaAction === 'notify' ? { 'data-open-signup': 'notify' } : {})}
-        class="mt-auto w-full inline-flex items-center justify-center gap-1.5 font-heading font-medium text-xs sm:text-sm px-3 py-2 sm:px-4 sm:py-2.5 rounded-lg border border-neutral-300 dark:border-neutral-700 text-foreground/70 dark:text-neutral-400 hover:border-primary/40 hover:text-primary dark:hover:text-primary transition-all duration-200 cursor-pointer plausible-event-name=Device+{card.name.replace(/\s+/g, '+')}"
-      >
-        {card.cta}
-      </button>
+      <!-- Ghost CTA -->
+      {#if card.ctaHref}
+        <a
+          href={card.ctaHref}
+          class="mt-auto w-full inline-flex items-center justify-center gap-1.5 font-heading font-medium text-xs sm:text-sm px-3 py-2 sm:px-4 sm:py-2.5 rounded-lg border border-neutral-300 dark:border-neutral-700 text-foreground/70 dark:text-neutral-400 hover:border-primary/40 hover:text-primary dark:hover:text-primary transition-all duration-200 cursor-pointer plausible-event-name=Device+{card.name.replace(/\s+/g, '+')}"
+        >
+          {card.cta}
+        </a>
+      {:else}
+        <button
+          type="button"
+          {...(card.ctaAction === 'notify' ? { 'data-open-signup': 'notify' } : {})}
+          class="mt-auto w-full inline-flex items-center justify-center gap-1.5 font-heading font-medium text-xs sm:text-sm px-3 py-2 sm:px-4 sm:py-2.5 rounded-lg border border-neutral-300 dark:border-neutral-700 text-foreground/70 dark:text-neutral-400 hover:border-primary/40 hover:text-primary dark:hover:text-primary transition-all duration-200 cursor-pointer plausible-event-name=Device+{card.name.replace(/\s+/g, '+')}"
+        >
+          {card.cta}
+        </button>
+      {/if}
     </div>
   {/each}
 </div>
